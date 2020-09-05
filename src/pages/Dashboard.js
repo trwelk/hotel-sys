@@ -11,6 +11,8 @@ import Header from '../components/layout/Header';
 import { BrowserRouter, Route,Switch } from 'react-router-dom';
 import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
+import Finance from '../components/frontOffice/Finance';
+import Editable from '../components/frontOffice/rooms/Editable';
 
 
 function Copyright() {
@@ -194,11 +196,15 @@ function Dashboard(props) {
         <div className={classes.app}>
           <Header onDrawerToggle={handleDrawerToggle} />
           <main className={classes.main}>
+
             <Switch>    
             <Route     exact path='/' component={LayoutContent}/>
             <Route     exact path='/res' component={ReservatonBoxView}/>
+            <Route exact path="/ed" component={Editable}/>
 
             </Switch>
+
+
           </main>
           <footer className={classes.footer}>
             <Copyright />

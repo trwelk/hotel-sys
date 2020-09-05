@@ -115,6 +115,7 @@ function Navigator(props) {
               </ListItemText>
             </ListItem>
             {children.map(({ id: childId, icon, active }) => (
+              <a href={childId}>
               <ListItem
                 key={childId}
                 button
@@ -129,6 +130,7 @@ function Navigator(props) {
                   {childId}
                 </ListItemText>
               </ListItem>
+              </a>
             ))}
 
             <Divider className={classes.divider} />

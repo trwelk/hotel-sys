@@ -32,7 +32,8 @@ import {deleteRoomType} from '../../../redux/actions/frontOfficeActions/RoomType
             new Promise((resolve, reject) => {
               setTimeout(() => {
                 //setData([...data, newData]);
-                props.insertRoomType(newData)
+                props.insertRoomType(newData);
+                
                 resolve();
               }, 1000)
             }),
