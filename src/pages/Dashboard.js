@@ -14,6 +14,7 @@ import ReservatonBoxView from '../components/frontOffice/reservation/Reservation
 import Finance from '../components/frontOffice/Finance';
 import Editable from '../components/frontOffice/rooms/Editable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
+import EmployeeList from '../components/hr/employee/EmployeeList';
 
 function Copyright() {
   return (
@@ -202,8 +203,8 @@ function Dashboard(props) {
             <Route exact path='/res' component={ReservatonBoxView}/>
             <Route exact path='/ed' component={Editable}/>
             <Route exact path='/Food & Beverages' component={fnbProdMgmt}/>
+            <Route exact path="/hr/employee" component={EmployeeList}/>
             </Switch>
-
 
           </main>
           <footer className={classes.footer}>
