@@ -4,27 +4,24 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 
-import {updateRoomType} from '../../../redux/actions/frontOfficeActions/RoomTypeActions'
-import {insertRoomType} from '../../../redux/actions/frontOfficeActions/RoomTypeActions'
-import {deleteRoomType} from '../../../redux/actions/frontOfficeActions/RoomTypeActions'
-
- function Editable(props) {
+import {insertEmployee, updateEmployee} from '../../../redux/actions/hrActions/EmployeeActions'
+function EmployeeList(props) {
  
     const { useState } = React;
     const [columns, setColumns] = useState([
-      { title: 'ID', field: 'id' },
-      { title: 'Name', field: 'name' },
-      { title: 'Brief', field: 'brief'},
+      { title: 'Employee ID', field: 'id' },
+      { title: 'Employee Name', field: 'name' },
+      { title: 'Employee Salary', field: 'Salary'},
       {
-        title: 'Description',
-        field: 'descriptions',
+        title: 'Address',
+        field: 'address',
       },
     ]); 
-    const room = useSelector(state => state.firestore.ordered.roomtype)
-    const data = room ? (room.map(room => ({...room}))) : (null)
+    const employees = useSelector(state => state.firestore.ordered.employee)
+    const data = employees ? (employees.map(employee => ({...employee}))) : (null)
     const table = data ? (
         <MaterialTable
-        title="Editable Preview"
+        title="EmployeeList Preview"
         columns={columns}
         data={data}
         editable={{
@@ -32,7 +29,7 @@ import {deleteRoomType} from '../../../redux/actions/frontOfficeActions/RoomType
             new Promise((resolve, reject) => {
               setTimeout(() => {
                 //setData([...data, newData]);
-                props.insertRoomType(newData);
+                props.insertEmployee(newData)
                 resolve();
               }, 1000)
             }),
@@ -44,7 +41,7 @@ import {deleteRoomType} from '../../../redux/actions/frontOfficeActions/RoomType
                 dataUpdate[index] = newData;
                 //setData([...dataUpdate]);
                 console.log(newData,oldData)
-                props.updateRoomType(newData)
+                props.updateEmployee(newData)
                 resolve();
               }, 1000)
             }),
@@ -75,16 +72,14 @@ import {deleteRoomType} from '../../../redux/actions/frontOfficeActions/RoomType
        
         )
   }
+
  
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateRoomType: (payload) => dispatch(updateRoomType(payload)),
-        insertRoomType: (payload) => dispatch(insertRoomType(payload)),
-        deleteRoomType: (roomId) => dispatch(deleteRoomType(roomId))
-
-
+        insertEmployee: (payload) => dispatch(insertEmployee(payload)),
+        updateEmployee: (payload) => dispatch(updateEmployee(payload)),
     }
 }
   export default compose(connect(null,mapDispatchToProps),firestoreConnect([
-    {collection: 'roomtype'}
-  ])) (Editable)
+    {collection: 'employee'}
+  ])) (EmployeeList)
