@@ -13,6 +13,7 @@ import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
 import Finance from '../components/frontOffice/Finance';
 import Editable from '../components/frontOffice/rooms/Editable';
+import EmployeeList from '../components/hr/employee/EmployeeList';
 
 
 function Copyright() {
@@ -197,12 +198,19 @@ function Dashboard(props) {
           <Header onDrawerToggle={handleDrawerToggle} />
           <main className={classes.main}>
 
-            <Switch>    
+
+
+            <Switch>  
+
             <Route     exact path='/' component={LayoutContent}/>
             <Route     exact path='/res' component={ReservatonBoxView}/>
             <Route exact path="/ed" component={Editable}/>
+            <Route exact path="/hr/employee" component={EmployeeList}/>
 
             </Switch>
+
+
+
 
 
           </main>
