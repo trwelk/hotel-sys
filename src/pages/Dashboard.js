@@ -5,16 +5,18 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
+
+import { BrowserRouter, Route,Switch } from 'react-router-dom';
+
+import LayoutContent from '../components/layout/LayoutContent';
+import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
+import Editable from '../components/frontOffice/rooms/Editable';
+import EmployeeList from '../components/hr/employee/EmployeeList';
 import Navigator from '../components/layout/Navigator';
 import Content from '../components/layout/LayoutContent';
 import Header from '../components/layout/Header';
-import { BrowserRouter, Route,Switch } from 'react-router-dom';
-import LayoutContent from '../components/layout/LayoutContent';
-import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
-import Finance from '../components/frontOffice/Finance';
-import Editable from '../components/frontOffice/rooms/Editable';
-import EmployeeList from '../components/hr/employee/EmployeeList';
-
+import RoomHandling from './frontOfficePages/RoomHandling';
+import PermanentDrawerLeft from '../components/frontOffice/rooms/MasterDetail';
 
 function Copyright() {
   return (
@@ -191,7 +193,9 @@ function Dashboard(props) {
             />
           </Hidden>
           <Hidden xsDown implementation="css">
-            <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+            <Navigator PaperProps={{ style: { width: drawerWidth } }} 
+              
+            />
           </Hidden>
         </nav>
         <div className={classes.app}>
@@ -202,10 +206,14 @@ function Dashboard(props) {
 
             <Switch>  
 
-            <Route     exact path='/' component={LayoutContent}/>
+            <Route     exact path='/' component={PermanentDrawerLeft}/>
             <Route     exact path='/res' component={ReservatonBoxView}/>
             <Route exact path="/ed" component={Editable}/>
             <Route exact path="/hr/employee" component={EmployeeList}/>
+
+
+            <Route exact path="/room" component={RoomHandling}/>
+
 
             </Switch>
 
