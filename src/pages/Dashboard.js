@@ -11,6 +11,7 @@ import { BrowserRouter, Route,Switch } from 'react-router-dom';
 import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
 import Editable from '../components/frontOffice/rooms/Editable';
+import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import EmployeeList from '../components/hr/employee/EmployeeList';
 import Navigator from '../components/layout/Navigator';
 import Content from '../components/layout/LayoutContent';
@@ -204,22 +205,17 @@ function Dashboard(props) {
 
 
 
-            <Switch>  
-
-            <Route     exact path='/' component={PermanentDrawerLeft}/>
-            <Route     exact path='/res' component={ReservatonBoxView}/>
-            <Route exact path="/ed" component={Editable}/>
-            <Route exact path="/hr/employee" component={EmployeeList}/>
 
 
+
+            <Switch>    
+            <Route exact path='/' component={LayoutContent}/>
             <Route exact path="/room" component={RoomHandling}/>
-
-
+            <Route exact path='/res' component={ReservatonBoxView}/>
+            <Route exact path='/ed' component={Editable}/>
+            <Route exact path='/Food & Beverages' component={fnbProdMgmt}/>
+            <Route exact path="/hr/employee" component={EmployeeList}/>
             </Switch>
-
-
-
-
 
           </main>
           <footer className={classes.footer}>
