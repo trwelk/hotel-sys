@@ -8,14 +8,16 @@ import Link from '@material-ui/core/Link';
 import Navigator from '../components/layout/Navigator';
 import Content from '../components/layout/LayoutContent';
 import Header from '../components/layout/Header';
-import { BrowserRouter, Route,Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
 import Finance from '../components/frontOffice/Finance';
 import Editable from '../components/frontOffice/rooms/Editable';
+import editOrderTable from '../components/fnbServices/editOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import AddMenu from '../components/F&bProduction/management/AddNewMenu';
 import EmployeeList from '../components/hr/employee/EmployeeList';
+
 
 function Copyright() {
   return (
@@ -179,25 +181,26 @@ function Dashboard(props) {
 
   return (
     <BrowserRouter>
-    <ThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <nav className={classes.drawer}>
-          <Hidden smUp implementation="js">
-            <Navigator
-              PaperProps={{ style: { width: drawerWidth } }}
-              variant="temporary"
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-            />
-          </Hidden>
-          <Hidden xsDown implementation="css">
-            <Navigator PaperProps={{ style: { width: drawerWidth } }} />
-          </Hidden>
-        </nav>
-        <div className={classes.app}>
-          <Header onDrawerToggle={handleDrawerToggle} />
-          <main className={classes.main}>
+      <ThemeProvider theme={theme}>
+        <div className={classes.root}>
+          <CssBaseline />
+          <nav className={classes.drawer}>
+            <Hidden smUp implementation="js">
+              <Navigator
+                PaperProps={{ style: { width: drawerWidth } }}
+                variant="temporary"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+              />
+            </Hidden>
+            <Hidden xsDown implementation="css">
+              <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+            </Hidden>
+          </nav>
+          <div className={classes.app}>
+            <Header onDrawerToggle={handleDrawerToggle} />
+            <main className={classes.main}>
+
 
             <Switch>    
             <Route exact path='/' component={LayoutContent}/>
@@ -205,6 +208,7 @@ function Dashboard(props) {
             <Route exact path='/ed' component={Editable}/>
             <Route exact path='/Food & Beverages' component={fnbProdMgmt}/>
             <Route exact path='/newMenu' component={AddMenu}/>
+            <Route exact path="/foodOrder" component={editOrderTable} />
             <Route exact path="/hr/employee" component={EmployeeList}/>
             </Switch>
 
@@ -212,9 +216,9 @@ function Dashboard(props) {
           <footer className={classes.footer}>
             <Copyright />
           </footer>
+
         </div>
-      </div>
-    </ThemeProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }
