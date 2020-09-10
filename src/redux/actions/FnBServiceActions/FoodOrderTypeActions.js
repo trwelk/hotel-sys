@@ -1,13 +1,13 @@
 export const updateOrderType = (payload) => {
     console.log(payload)
-    return (dispatch,getState,{getFirestore,getFirebase}) => {
+    return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
         firestore.collection("foodOrder").doc(payload.orId).update({
             // ID:payload.orId,
-            TableNO:payload.tableNO,
-            RoomNO:payload.room,
-            description:payload.description,
-            Status:payload.status,
+            TableNO: payload.tableNO,
+            RoomNO: payload.room,
+            description: payload.description,
+            Status: payload.status,
             // DateAndTime:payload.dateAndTime,
             // ID:payload.Proid,
             // Name:payload.ProName,
@@ -19,7 +19,7 @@ export const updateOrderType = (payload) => {
 
 export const insertOrderType = (payload) => {
     console.log(payload)
-    return (dispatch,getState,{getFirestore,getFirebase}) => {
+    return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
         firestore.collection('foodOrder').doc(payload.orId).set({
             ...payload
@@ -34,7 +34,7 @@ export const insertOrderType = (payload) => {
 
 export const deleteOrderType = (payload) => {
     console.log(payload)
-    return (dispatch,getState,{getFirestore,getFirebase}) => {
+    return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
         firestore.collection('foodOrder').doc(payload).delete()
             .then((response) => {
@@ -47,28 +47,28 @@ export const deleteOrderType = (payload) => {
 }
 export const updateOrderType1 = (payload1) => {
     console.log(payload1)
-    return (dispatch,getState,{getFirestore,getFirebase}) => {
+    return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
-        firestore.collection("orderProducts").doc(payload1.id).update({
-            ID:payload1.orId,
+        firestore.collection("orderProducts").doc(payload1.Proid).update({
+            ID: payload1.orId,
             // TableNO:payload.tableNO,
             // RoomNO:payload.room,
             // description:payload.description,
             // Status:payload.status,
-            DateAndTime:payload1.dateAndTime,
-            ProductID:payload1.Proid,
-            ProductName:payload1.ProName,
-            Quntity:payload1.quntity,
-            Amount:payload1.Amount,
+            // DateAndTime: payload1.dateAndTime,
+            ProductID: payload1.Proid,
+            ProductName: payload1.ProName,
+            Quntity: payload1.quntity,
+            Amount: payload1.Amount,
         });
     }
 }
 
 export const insertOrderType1 = (payload1) => {
     console.log(payload1)
-    return (dispatch,getState,{getFirestore,getFirebase}) => {
+    return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
-        firestore.collection('orderProducts').doc(payload1.id).set({
+        firestore.collection('orderProducts').doc(payload1.Proid).set({
             ...payload1
         }).then((response) => {
             console.log(response)
@@ -81,7 +81,7 @@ export const insertOrderType1 = (payload1) => {
 
 export const deleteOrderType1 = (payload1) => {
     console.log(payload1)
-    return (dispatch,getState,{getFirestore,getFirebase}) => {
+    return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
         firestore.collection('orderProducts').doc(payload1).delete()
             .then((response) => {
