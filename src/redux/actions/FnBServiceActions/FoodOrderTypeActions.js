@@ -2,17 +2,17 @@ export const updateOrderType = (payload) => {
     console.log(payload)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
-        firestore.collection("foodOrder").doc(payload.orId).update({
-            // ID:payload.orId,
-            TableNO: payload.tableNO,
-            RoomNO: payload.room,
+        firestore.collection("foodOrder").doc(payload.id).update({
+            tableNO: payload.tableNO,
+            room: payload.room,
             description: payload.description,
-            Status: payload.status,
+            status: payload.status
             // DateAndTime:payload.dateAndTime,
             // ID:payload.Proid,
             // Name:payload.ProName,
             // Quntity:payload.quntity,
             // Amount:payload.Amount,
+            // orId:payload.orId,
         });
     }
 }
@@ -21,7 +21,7 @@ export const insertOrderType = (payload) => {
     console.log(payload)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
-        firestore.collection('foodOrder').doc(payload.orId).set({
+        firestore.collection('foodOrder').doc(payload.id).set({
             ...payload
         }).then((response) => {
             console.log(response)
@@ -32,11 +32,11 @@ export const insertOrderType = (payload) => {
 
 }
 
-export const deleteOrderType = (payload) => {
-    console.log(payload)
+export const deleteOrderType = (orderId) => {
+    console.log(orderId)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
-        firestore.collection('foodOrder').doc(payload).delete()
+        firestore.collection('foodOrder').doc(orderId).delete()
             .then((response) => {
                 console.log(response)
             }).catch((error) => {

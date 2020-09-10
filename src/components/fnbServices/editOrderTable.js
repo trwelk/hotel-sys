@@ -15,16 +15,16 @@ function EditOrderTable(props) {
   const { useState } = React;
   const [columns, setColumns] = useState([
 
-    { title: 'ID', field: 'orId' },
-    { title: 'TableNO', field: 'tableNO', filtering: false },
+    { title: 'ID', field: 'id' },
+    { title: 'TableNO', field: 'tableNO'/*, filtering: false*/ },
     {
       title: 'RoomNO',
       field: 'room',
     },
     {
       title: 'Description',
-      field: 'descriptions',
-      filtering: false,
+      field: 'descriptions'
+      /* ,filtering: false*/
     },
     {
       title: 'Status',
@@ -40,7 +40,7 @@ function EditOrderTable(props) {
   ]);
 
   const Order = useSelector(state => state.firestore.ordered.foodOrder)
-  const data = Order ? (Order.map(order => ({ ...order }))) : (null)
+  const data = Order ? (Order.map(Order => ({ ...Order }))) : (null)
   const table = data ? (
     <MaterialTable
       title="Editable Preview"
@@ -80,10 +80,10 @@ function EditOrderTable(props) {
             }, 1000)
           }),
       }}
-      options={{
-        filtering: true
+    // options={{
+    //   filtering: true
 
-      }}
+    // }}
     />
 
 
@@ -93,7 +93,7 @@ function EditOrderTable(props) {
   // const { useState } = React;
   const [columns1, setColumns1] = useState([
 
-    { title: 'ID', field: 'orId' },
+    { title: 'ID', field: 'id' },
 
     // { title: 'DateAndTime', field: 'dateAndTime', type: 'datetime', filtering: false },
     // { title: 'TotalAmount', field: 'totalAmount',  type :'numeric' , filtering: false},
@@ -167,7 +167,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateOrderType: (payload) => dispatch(updateOrderType(payload)),
     insertOrderType: (payload) => dispatch(insertOrderType(payload)),
-    deleteOrderType: (payload) => dispatch(deleteOrderType(payload)),
+    deleteOrderType: (orderId) => dispatch(deleteOrderType(orderId)),
     updateOrderType1: (payload1) => dispatch(updateOrderType1(payload1)),
     insertOrderType1: (payload1) => dispatch(insertOrderType1(payload1)),
     deleteOrderType1: (payload1) => dispatch(deleteOrderType1(payload1))
