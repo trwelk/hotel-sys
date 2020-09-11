@@ -14,6 +14,9 @@ import ReservatonBoxView from '../components/frontOffice/reservation/Reservation
 import Finance from '../components/frontOffice/Finance';
 import Editable from '../components/frontOffice/rooms/Editable';
 import editOrderTable from '../components/fnbServices/editOrderTable';
+import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
+import AddMenu from '../components/F&bProduction/management/AddNewMenu';
+import EmployeeList from '../components/hr/employee/EmployeeList';
 
 
 function Copyright() {
@@ -198,20 +201,22 @@ function Dashboard(props) {
             <Header onDrawerToggle={handleDrawerToggle} />
             <main className={classes.main}>
 
-              <Switch>
-                <Route exact path='/' component={LayoutContent} />
-                <Route exact path='/res' component={ReservatonBoxView} />
-                <Route exact path="/ed" component={Editable} />
-                <Route exact path="/foodOrder" component={editOrderTable} />
 
-              </Switch>
+            <Switch>    
+            <Route exact path='/' component={LayoutContent}/>
+            <Route exact path='/res' component={ReservatonBoxView}/>
+            <Route exact path='/ed' component={Editable}/>
+            <Route exact path='/Food & Beverages' component={fnbProdMgmt}/>
+            <Route exact path='/newMenu' component={AddMenu}/>
+            <Route exact path="/foodOrder" component={editOrderTable} />
+            <Route exact path="/hr/employee" component={EmployeeList}/>
+            </Switch>
 
+          </main>
+          <footer className={classes.footer}>
+            <Copyright />
+          </footer>
 
-            </main>
-            <footer className={classes.footer}>
-              <Copyright />
-            </footer>
-          </div>
         </div>
       </ThemeProvider>
     </BrowserRouter>
