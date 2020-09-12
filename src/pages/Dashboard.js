@@ -17,6 +17,7 @@ import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import AddMenu from '../components/F&bProduction/management/AddNewMenu';
 import EmployeeList from '../components/hr/employee/EmployeeList';
+import MenuForm from "../components/F&bProduction/management/MenuForm";
 
 
 function Copyright() {
@@ -162,7 +163,7 @@ const styles = {
   },
   main: {
     flex: 1,
-    padding: theme.spacing(6, 4),
+    padding: '0px',
     background: '#eaeff1',
   },
   footer: {
@@ -210,6 +211,7 @@ function Dashboard(props) {
             <Route exact path='/newMenu' component={AddMenu}/>
             <Route exact path="/foodOrder" component={editOrderTable} />
             <Route exact path="/hr/employee" component={EmployeeList}/>
+            <Route exact path="/form" component={MenuForm} />
             </Switch>
 
           </main>
