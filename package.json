@@ -12,6 +12,7 @@
     "firebase": "^7.18.0",
     "material-table": "^1.68.1",
     "material-ui": "^0.20.2",
+    "material-ui-phone-number": "^2.2.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-material-ui-form": "^1.1.7",
@@ -45,4 +46,5 @@
       "last 1 safari version"
     ]
   }
+  
 }

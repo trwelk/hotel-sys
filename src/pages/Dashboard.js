@@ -216,7 +216,7 @@ function Dashboard(props) {
             <Route exact path="/sup" component={currentSuppliers}/>
             <Route exact path="/req" component={purchasesRequestManagement}/>
             <Route exact path="/porder" component={purchasesOrder}/>
-            <Route exact path="/addsup" component={addSuppliers}/>
+            <Route exact path="/Purchases & Inventory" component={addSuppliers}/>
 
             </Switch>
 

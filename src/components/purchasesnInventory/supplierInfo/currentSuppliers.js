@@ -31,7 +31,7 @@ import { insertSupplierInfo, updateSupplierInfo, deleteSupplierInfo} from '../..
           //   new Promise((resolve, reject) => {
           //     setTimeout(() => {
           //       //setData([...data, newData]);
-          //       props.insertSupplierInfo(newData)
+          //       props.insertSupplierInfo(newData)  
           //       resolve();
           //     }, 1000)
           //   }),

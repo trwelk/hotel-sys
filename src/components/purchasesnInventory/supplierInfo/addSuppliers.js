@@ -8,10 +8,14 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import MuiPhoneNumber from 'material-ui-phone-number';
+import { InputLabel, Select } from '@material-ui/core';
+import { MenuItem } from 'material-ui';
+import { FormControl} from '@material-ui/core';
 
 function Copyright() {
   return (
@@ -44,9 +48,12 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  formControl:{
+      minWidth:100
+  }
 }));
 
-export default function SignUp() {
+export default function AddSuppliers() {
   const classes = useStyles();
 
   return (
@@ -54,10 +61,10 @@ export default function SignUp() {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <AddIcon/>
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Add Supplier
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
@@ -96,21 +103,67 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
+            <MuiPhoneNumber
+                    name="phone"
+                    varient = "outlined"
+                    required
+                    fullWidth
+                    label="Phone Number"
+                    data-cy="user-phone"
+                    defaultCountry={"us"}
+                    //value={this.state.phone}
+                    //onChange={this.handlePhoneChange}
+                  />
+            </Grid>
+            <Grid item xs={12}>
+                <FormControl varient = "outlined" required fullWidth>
+                <InputLabel>Location</InputLabel>
+                <Select id = "location">
+                     <MenuItem value = {1}>Kilinochchi</MenuItem>
+                     <MenuItem value = {2}>Jaffna</MenuItem>
+                     <MenuItem value = {3}>Mannar</MenuItem>
+                     <MenuItem value = {4}>Mullaitivu</MenuItem>
+                     <MenuItem value = {5}>Vavuniya</MenuItem>
+                     <MenuItem value = {6}>Puttalam</MenuItem>
+                     <MenuItem value = {7}>Kurunegala</MenuItem>
+                     <MenuItem value = {8}>Gampaha</MenuItem>
+                     <MenuItem value = {9}>Colombo</MenuItem>
+                     <MenuItem value = {10}>Kalutara</MenuItem>
+                     <MenuItem value = {11}>Anuradhapura</MenuItem>
+                     <MenuItem value = {12}>Polonnaruwa</MenuItem>
+                     <MenuItem value = {13}>Matale</MenuItem>
+                     <MenuItem value = {14}>Kandy</MenuItem>
+                     <MenuItem value = {15}>Nuwara Eliya</MenuItem>
+                     <MenuItem value = {16}>Kegalle</MenuItem>
+                     <MenuItem value = {17}>Ratnapura</MenuItem>
+                     <MenuItem value = {18}>Trincomalee</MenuItem>
+                     <MenuItem value = {19}>Batticaloa</MenuItem>
+                     <MenuItem value = {20}>Ampara</MenuItem>
+                     <MenuItem value = {21}>Badulla</MenuItem>
+                     <MenuItem value = {22}>Monaragala</MenuItem>
+                     <MenuItem value = {23}>Hambantota</MenuItem>
+                     <MenuItem value = {24}>Matara</MenuItem>
+                     <MenuItem value = {24}>Galle</MenuItem>
+                </Select>
+                </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+                <FormControl varient = "outlined" required fullWidth>
+                <InputLabel>Department</InputLabel>
+                <Select id = "department">
+                    <MenuItem value = {"frontOffice"}>Front Office</MenuItem>
+                    <MenuItem value = {"finance"}>Finance</MenuItem>
+                    <MenuItem value = {"humanResources"}>Human Resources</MenuItem>
+                    <MenuItem value = {"fnb"}>Food and Beverages</MenuItem>
+                    <MenuItem value = {"maintainance"}>Maintainance</MenuItem>
+                    <MenuItem value = {"housekeeping"}>House Keeping</MenuItem>
+                </Select>
+                </FormControl>
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+                label="I accept the Terms and Conditions"
               />
             </Grid>
           </Grid>
@@ -121,20 +174,10 @@ export default function SignUp() {
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            Add Supplier
           </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }
