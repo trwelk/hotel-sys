@@ -18,16 +18,18 @@ import SettingsInputComponentIcon from '@material-ui/icons/SettingsInputComponen
 import TimerIcon from '@material-ui/icons/Timer';
 import SettingsIcon from '@material-ui/icons/Settings';
 import PhonelinkSetupIcon from '@material-ui/icons/PhonelinkSetup';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 const categories = [
   {
     id: 'MODULES',
     children: [
-      { id: 'Front Office', icon: <PeopleIcon />, active: true },
+      { id: 'Front Office', icon: <PeopleIcon /> },
       { id: 'Finance', icon: <DnsRoundedIcon /> },
       { id: 'Human Resource', icon: <PermMediaOutlinedIcon /> },
       { id: 'Food & Beverages', icon: <PublicIcon /> },
       { id: 'Maintainence', icon: <SettingsEthernetIcon /> },
+      { id: 'Purchases & Inventory', icon: <ShoppingCartIcon/>, active: true},
       { id: 'Add your Module here', icon: <SettingsInputComponentIcon /> },
     ],
   },
