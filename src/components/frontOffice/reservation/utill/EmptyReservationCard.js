@@ -11,8 +11,7 @@ import { useGutterBorderedGridStyles } from '@mui-treasury/styles/grid/gutterBor
 
 import PersonIcon from '@material-ui/icons/Person';
 import IconButton from '@material-ui/core/IconButton';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
-import CancelIcon from '@material-ui/icons/Cancel';
+import NewReservationForm from '../forms/NewReservationForm';
 
 const useStyles = makeStyles(({ palette }) => ({
   card: {
@@ -53,7 +52,7 @@ const useStyles = makeStyles(({ palette }) => ({
   },
 }));
 
-export const ReservationCard = React.memo(function ProfileCard() {
+function EmptyReservationCard (props) {
   const styles = useStyles();
   const shadowStyles = useFadedShadowStyles();
   const borderedGridStyles = useGutterBorderedGridStyles({
@@ -66,18 +65,14 @@ export const ReservationCard = React.memo(function ProfileCard() {
     <Card className={cx(styles.card, shadowStyles.root)}>
       <Box display={'flex'} style={{padding: "8px 0"}}>
         <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
-        <IconButton color="primary" aria-label="add to shopping cart">
-            <MenuBookIcon/>
-            </IconButton>
+        <IconButton  aria-label="add to shopping cart">
+        <NewReservationForm roomType={props.roomType}  startDay={new Date(Date.parse(props.month + ' ' + (props.startDay + 1) +' 2020'))} roomNo={props.roomNo} />
+      </IconButton>
         </Box>
-        <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
-          <IconButton color="primary" aria-label="add to shopping cart">
-            <CancelIcon />
-          </IconButton>
-        </Box>
+      
       </Box>
     </Card>
   );
-});
+}
 
-export default ReservationCard
+export default EmptyReservationCard
