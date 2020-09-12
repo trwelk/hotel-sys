@@ -11,10 +11,28 @@ import Header from '../components/layout/Header';
 import { BrowserRouter, Route,Switch } from 'react-router-dom';
 import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
-import Finance from '../components/frontOffice/Finance';
+//import Finance from '../components/frontOffice/Finance';
 import Editable from '../components/frontOffice/rooms/Editable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import EmployeeList from '../components/hr/employee/EmployeeList';
+import PettyRequest from '../components/finance/petty/PettyRequest';
+import PettyCashManagement from '../components/finance/petty/PettyCashManagement';
+import PettyCashMain from '../components/finance/petty/PettyCashMain';
+import CashFlowMain from '../components/finance/cashflow/CashFlowMain';
+import CashInflow from '../components/finance/cashflow/CashInflow';
+import CashOutFlow from '../components/finance/cashflow/CashOutFlow';
+import AssetMain from '../components/finance/asset/AssetMain';
+import AssetRequest from '../components/finance/asset/AssetRequest';
+import AssetList from '../components/finance/asset/AssetList';
+import BarInvoice from '../components/finance/invoice/BarInvoice';
+import FrontInvoice from '../components/finance/invoice/FrontInvoice';
+import InvoiceMain from '../components/finance/invoice/InvoiceMain';
+import LoanMain from '../components/finance/loan/LoanMain';
+import Loan from '../components/finance/loan/Loan';
+import LoanIssue from '../components/finance/loan/LoanIssue';
+import SalaryMain from '../components/finance/salary/SalaryMain';
+import Attendance from '../components/finance/salary/Attendance';
+import SalaryMgmt from '../components/finance/salary/SalaryMgmt';
 
 function Copyright() {
   return (
@@ -204,6 +222,25 @@ function Dashboard(props) {
             <Route exact path='/ed' component={Editable}/>
             <Route exact path='/Food & Beverages' component={fnbProdMgmt}/>
             <Route exact path="/hr/employee" component={EmployeeList}/>
+            <Route exact path='/finance/assetmain' component={AssetMain} />
+            <Route exact path = '/finance/assetrequest' component = {AssetRequest} />
+            <Route exact path='/finance/assetlist' component={AssetList} />
+            <Route exact path='/finance/cashmain' component={CashFlowMain}/>
+            <Route exact path='/finance/cashin' component={CashInflow}/>
+            <Route exact path='/finance/cashout' component={CashOutFlow}/>
+            <Route exact path='/finance/invoicemain' component={InvoiceMain}/>
+            <Route exact path='/finance/invoicefront' component={FrontInvoice}/>
+            <Route exact path='/finance/invoicebar' component={BarInvoice}/>
+            <Route exact path='/finance/loanmain' component={LoanMain} />
+            <Route exact path='/finance/loanrequest' component={Loan} />
+            <Route exact path='/finance/loanissue' component={LoanIssue} />
+            <Route exact path='/finance/pettymain' component={PettyCashMain} />
+            <Route exact path="/finance/pettyrequest" component={PettyRequest}/>
+            <Route exact path='/finance/pettymanagement' component={PettyCashManagement} />
+            <Route exact path = '/finance/salarymain' component = {SalaryMain} />
+            <Route exact path = '/finance/salattendance' component = {Attendance} />
+            <Route exact path = '/finance/salary' component = {SalaryMgmt} />
+          
             </Switch>
 
           </main>
