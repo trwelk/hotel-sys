@@ -211,6 +211,8 @@ function Dashboard(props) {
             <Route exact path='/res' component={ReservatonBoxView}/>
             <Route exact path='/ed' component={Editable}/>
             <Route exact path='/Food & Beverages' component={fnbProdMgmt}/>
+            <Route exact path="/hr/employee" component={EmployeeList}/>
+            <Route exact path="/newMenu" component={MenuForm} />
             <Route exact path='/newMenu' component={AddMenu}/>
             <Route exact path="/foodOrder" component={editOrderTable} />
             <Route exact path="/hr/employee" component={EmployeeList}/>
@@ -218,7 +220,6 @@ function Dashboard(props) {
             <Route exact path="/req" component={purchasesRequestManagement}/>
             <Route exact path="/porder" component={purchasesOrder}/>
             <Route exact path="/Purchases & Inventory" component={addSuppliers}/>
-            <Route exact path="/form" component={MenuForm} />
             </Switch>
 
           </main>
