@@ -4,11 +4,11 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 
-import { updateOrderType } from '../../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
-import { insertOrderType } from '../../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
-import { deleteOrderType } from '../../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
+import { updateOrderType } from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
+import { insertOrderType } from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
+import { deleteOrderType } from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
 
-function editProductTable(props) {
+function EditProductTable(props) {
 
   const { useState } = React;
   const [columns, setColumns] = useState([
@@ -85,4 +85,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 export default compose(connect(null, mapDispatchToProps), firestoreConnect([
   { collection: 'orderProducts' }
-]))(editProductTable)
+]))(EditProductTable)

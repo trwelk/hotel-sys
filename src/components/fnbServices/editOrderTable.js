@@ -1,6 +1,6 @@
 import React from 'react'
 import MaterialTable from 'material-table'
-import editProductTable from './editProductTable'
+import EditProductTable from './EditProductTable'
 
 function EditOrderTable() {
   return (
@@ -30,7 +30,7 @@ function EditOrderTable() {
       title="Detail Panel With RowClick Preview"
       detailPanel={rowData => {
         return (
-          <editProductTable/>
+          <EditProductTable/>
         )
       }}
       options={{
