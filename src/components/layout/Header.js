@@ -43,7 +43,7 @@ const styles = (theme) => ({
 
 function Header(props) {
   const { classes, onDrawerToggle } = props;
-
+  console.log(props)
   return (
     <React.Fragment>
       <AppBar color="primary" position="sticky" elevation={0}>

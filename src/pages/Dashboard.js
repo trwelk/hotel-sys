@@ -8,7 +8,7 @@ import Link from '@material-ui/core/Link';
 import Navigator from '../components/layout/Navigator';
 import Content from '../components/layout/LayoutContent';
 import Header from '../components/layout/Header';
-import { BrowserRouter, Route,Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
 import Finance from '../components/frontOffice/Finance';
@@ -17,6 +17,11 @@ import currentSuppliers from '../components/purchasesnInventory/supplierInfo/cur
 import purchasesRequestManagement from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment'
 import purchasesOrder from '../components/purchasesnInventory/purchasesManagment/purchasesOrder'
 import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
+import editOrderTable from '../components/fnbServices/editOrderTable';
+import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
+import AddMenu from '../components/F&bProduction/management/AddNewMenu';
+import EmployeeList from '../components/hr/employee/EmployeeList';
+
 
 function Copyright() {
   return (
@@ -180,44 +185,49 @@ function Dashboard(props) {
 
   return (
     <BrowserRouter>
-    <ThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <nav className={classes.drawer}>
-          <Hidden smUp implementation="js">
-            <Navigator
-              PaperProps={{ style: { width: drawerWidth } }}
-              variant="temporary"
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-            />
-          </Hidden>
-          <Hidden xsDown implementation="css">
-            <Navigator PaperProps={{ style: { width: drawerWidth } }} />
-          </Hidden>
-        </nav>
-        <div className={classes.app}>
-          <Header onDrawerToggle={handleDrawerToggle} />
-          <main className={classes.main}>
+      <ThemeProvider theme={theme}>
+        <div className={classes.root}>
+          <CssBaseline />
+          <nav className={classes.drawer}>
+            <Hidden smUp implementation="js">
+              <Navigator
+                PaperProps={{ style: { width: drawerWidth } }}
+                variant="temporary"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+              />
+            </Hidden>
+            <Hidden xsDown implementation="css">
+              <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+            </Hidden>
+          </nav>
+          <div className={classes.app}>
+            <Header onDrawerToggle={handleDrawerToggle} />
+            <main className={classes.main}>
 
             <Switch>    
-            <Route     exact path='/' component={LayoutContent}/>
-            <Route     exact path='/res' component={ReservatonBoxView}/>
-            <Route     exact path="/ed" component={Editable}/>
-            <Route     exact path="/sup" component={currentSuppliers}/>
-            <Route     exact path="/req" component={purchasesRequestManagement}/>
-            <Route     exact path="/porder" component={purchasesOrder}/>
-            <Route     exact path="/addsup" component={addSuppliers}/>
-            </Switch>
+            <Route exact path='/' component={LayoutContent}/>
+            <Route exact path='/res' component={ReservatonBoxView}/>
+            <Route exact path='/ed' component={Editable}/>
+            <Route exact path='/Food & Beverages' component={fnbProdMgmt}/>
+            <Route exact path='/newMenu' component={AddMenu}/>
+            <Route exact path="/foodOrder" component={editOrderTable} />
+            <Route exact path="/hr/employee" component={EmployeeList}/>
+            <Route exact path="/sup" component={currentSuppliers}/>
+            <Route exact path="/req" component={purchasesRequestManagement}/>
+            <Route exact path="/porder" component={purchasesOrder}/>
+            <Route exact path="/addsup" component={addSuppliers}/>
 
+            </Switch>
 
           </main>
           <footer className={classes.footer}>
             <Copyright />
           </footer>
+
         </div>
-      </div>
-    </ThemeProvider>
+        </div>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }
