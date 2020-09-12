@@ -65,8 +65,8 @@ import {deleteRoomType} from '../../../redux/actions/frontOfficeActions/RoomType
     ) : (<div>Loading</div>)
 
 
-  
 
+    
   
     return(
         <div>

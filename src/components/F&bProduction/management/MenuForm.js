@@ -106,11 +106,6 @@ function MenuForm(props) {
             type="currency"
             id="price"
           />
-          <FormControlLabel
-            control={
-            <Controller as={Checkbox} control={control} name="remember" color="primary" defaultValue={false} />}
-            label="Remember me"
-          />
           <Button
             id="submit"
             type="submit"

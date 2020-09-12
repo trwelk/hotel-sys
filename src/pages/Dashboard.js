@@ -13,6 +13,10 @@ import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
 import Finance from '../components/frontOffice/Finance';
 import Editable from '../components/frontOffice/rooms/Editable';
+import currentSuppliers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
+import purchasesRequestManagement from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment'
+import purchasesOrder from '../components/purchasesnInventory/purchasesManagment/purchasesOrder'
+import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
 import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import AddMenu from '../components/F&bProduction/management/AddNewMenu';
@@ -163,7 +167,7 @@ const styles = {
   },
   main: {
     flex: 1,
-    padding: '0px',
+    padding: "0px",
     background: '#eaeff1',
   },
   footer: {
@@ -202,16 +206,20 @@ function Dashboard(props) {
             <Header onDrawerToggle={handleDrawerToggle} />
             <main className={classes.main}>
 
-
             <Switch>    
             <Route exact path='/' component={LayoutContent}/>
             <Route exact path='/res' component={ReservatonBoxView}/>
             <Route exact path='/ed' component={Editable}/>
             <Route exact path='/Food & Beverages' component={fnbProdMgmt}/>
+            <Route exact path="/hr/employee" component={EmployeeList}/>
+            <Route exact path="/newMenu" component={MenuForm} />
             <Route exact path='/newMenu' component={AddMenu}/>
             <Route exact path="/foodOrder" component={editOrderTable} />
             <Route exact path="/hr/employee" component={EmployeeList}/>
-            <Route exact path="/form" component={MenuForm} />
+            <Route exact path="/sup" component={currentSuppliers}/>
+            <Route exact path="/req" component={purchasesRequestManagement}/>
+            <Route exact path="/porder" component={purchasesOrder}/>
+            <Route exact path="/Purchases & Inventory" component={addSuppliers}/>
             </Switch>
 
           </main>
