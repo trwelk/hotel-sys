@@ -10,6 +10,7 @@ function App() {
   const room = useSelector(state => {
     console.log(state)
   })
+//    <Dashboard/>
 
   return (
     <div className="App">
