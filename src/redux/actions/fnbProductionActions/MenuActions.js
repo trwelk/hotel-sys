@@ -18,7 +18,9 @@ export const insertMenu = (payload) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
         firestore.collection('Menu').doc(payload.id).set({
-            ...payload
+            id:payload.id,
+            menuName:payload.menuName,
+            price:payload.price
         }).then((response) => {
             console.log(response)
         }).catch((response) => {
