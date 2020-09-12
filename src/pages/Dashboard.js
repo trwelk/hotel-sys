@@ -13,7 +13,7 @@ import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
 import Finance from '../components/frontOffice/Finance';
 import Editable from '../components/frontOffice/rooms/Editable';
-import editOrderTable from '../components/fnbServices/editOrderTable';
+import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import AddMenu from '../components/F&bProduction/management/AddNewMenu';
 import EmployeeList from '../components/hr/employee/EmployeeList';
@@ -217,6 +217,7 @@ function Dashboard(props) {
             <Copyright />
           </footer>
 
+        </div>
         </div>
       </ThemeProvider>
     </BrowserRouter>
