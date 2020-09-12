@@ -205,9 +205,8 @@ function Dashboard(props) {
             <Route exact path='/res' component={ReservatonBoxView}/>
             <Route exact path='/ed' component={Editable}/>
             <Route exact path='/Food & Beverages' component={fnbProdMgmt}/>
-            <Route exact path='/newMenu' component={AddMenu}/>
             <Route exact path="/hr/employee" component={EmployeeList}/>
-            <Route exact path="/form" component={MenuForm} />
+            <Route exact path="/newMenu" component={MenuForm} />
             </Switch>
 
           </main>
