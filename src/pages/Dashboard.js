@@ -17,10 +17,11 @@ import currentSuppliers from '../components/purchasesnInventory/supplierInfo/cur
 import purchasesRequestManagement from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment'
 import purchasesOrder from '../components/purchasesnInventory/purchasesManagment/purchasesOrder'
 import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
-import editOrderTable from '../components/fnbServices/editOrderTable';
+import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import AddMenu from '../components/F&bProduction/management/AddNewMenu';
 import EmployeeList from '../components/hr/employee/EmployeeList';
+import MenuForm from "../components/F&bProduction/management/MenuForm";
 
 
 function Copyright() {
@@ -217,7 +218,7 @@ function Dashboard(props) {
             <Route exact path="/req" component={purchasesRequestManagement}/>
             <Route exact path="/porder" component={purchasesOrder}/>
             <Route exact path="/Purchases & Inventory" component={addSuppliers}/>
-
+            <Route exact path="/form" component={MenuForm} />
             </Switch>
 
           </main>

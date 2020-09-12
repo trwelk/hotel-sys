@@ -4,11 +4,19 @@
 // import { useSelector, connect } from 'react-redux';
 // import { compose } from 'redux';
 
+<<<<<<< HEAD
 // import { updateOrderType } from '../../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
 // import { insertOrderType } from '../../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
 // import { deleteOrderType } from '../../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
 
 // function editProductTable(props) {
+=======
+import { updateOrderType } from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
+import { insertOrderType } from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
+import { deleteOrderType } from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
+
+function EditProductTable(props) {
+>>>>>>> b82b5cae84c2552820de901a05a50893be8e5e9e
 
 //   const { useState } = React;
 //   const [columns, setColumns] = useState([
@@ -81,8 +89,16 @@
 //     deleteOrderType: (orderId) => dispatch(deleteOrderType(orderId))
 
 
+<<<<<<< HEAD
 //   }
 // }
 // export default compose(connect(null, mapDispatchToProps), firestoreConnect([
 //   { collection: 'orderProducts' }
 // ]))(editProductTable)
+=======
+  }
+}
+export default compose(connect(null, mapDispatchToProps), firestoreConnect([
+  { collection: 'orderProducts' }
+]))(EditProductTable)
+>>>>>>> b82b5cae84c2552820de901a05a50893be8e5e9e
