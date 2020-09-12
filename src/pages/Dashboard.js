@@ -13,7 +13,10 @@ import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
 import Finance from '../components/frontOffice/Finance';
 import Editable from '../components/frontOffice/rooms/Editable';
-
+import currentSuppliers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
+import purchasesRequestManagement from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment'
+import purchasesOrder from '../components/purchasesnInventory/purchasesManagment/purchasesOrder'
+import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
 
 function Copyright() {
   return (
@@ -158,7 +161,7 @@ const styles = {
   },
   main: {
     flex: 1,
-    padding: theme.spacing(6, 4),
+    padding: "0px",
     background: '#eaeff1',
   },
   footer: {
@@ -200,8 +203,11 @@ function Dashboard(props) {
             <Switch>    
             <Route     exact path='/' component={LayoutContent}/>
             <Route     exact path='/res' component={ReservatonBoxView}/>
-            <Route exact path="/ed" component={Editable}/>
-
+            <Route     exact path="/ed" component={Editable}/>
+            <Route     exact path="/sup" component={currentSuppliers}/>
+            <Route     exact path="/req" component={purchasesRequestManagement}/>
+            <Route     exact path="/porder" component={purchasesOrder}/>
+            <Route     exact path="/addsup" component={addSuppliers}/>
             </Switch>
 
 
