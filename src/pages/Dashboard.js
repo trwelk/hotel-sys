@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-iport { BrowserRouter, Route,Switch } from 'react-router-dom';
+import { BrowserRouter, Route,Switch } from 'react-router-dom';
 import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
 import Editable from '../components/frontOffice/rooms/Editable';
@@ -23,6 +23,9 @@ import Header from '../components/layout/Header';
 import RoomHandling from './frontOfficePages/RoomHandling';
 import PermanentDrawerLeft from '../components/frontOffice/rooms/MasterDetail';
 import MenuForm from "../components/F&bProduction/management/MenuForm";
+import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
+import EditOrderTable from '../components/fnbServices/EditOrderTable';
+import OrderForm from '../components/fnbServices/OrderForm';
 
 
 function Copyright() {
@@ -216,7 +219,8 @@ function Dashboard(props) {
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/newMenu" component={MenuForm} />
             <Route exact path='/newMenu' component={AddMenu}/>
-            <Route exact path="/foodOrder" component={editOrderTable} />
+            <Route exact path='/newOrder' component={OrderForm}/>
+            <Route exact path="/foodOrder" component={FnBserviceMng} />
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/sup" component={currentSuppliers}/>
             <Route exact path="/req" component={purchasesRequestManagement}/>

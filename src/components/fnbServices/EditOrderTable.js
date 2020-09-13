@@ -1,14 +1,17 @@
 import React from 'react'
 import MaterialTable from 'material-table'
-import EditProductTable from './EditProductTable'
-import { firestoreConnect } from 'react-redux-firebase';
-import { useSelector, connect } from 'react-redux';
-import { compose } from 'redux';
+import EditProductTable from '../../components/fnbServices/EditProductTable'
+import { Button } from '@material-ui/core'
 
-function EditOrderTable(){
-  const { useState } = React;
-  const [columns, setColumns] = useState([
-    { title: 'ID', field: 'OrId' },
+function EditOrderTable() {
+    return (
+      <div>
+        <Button variant="contained" color="primary" href='/newOrder' fullWidth='true'>
+          Add A Order
+        </Button>
+      <MaterialTable
+        columns={[
+          { title: 'ID', field: 'OrId' },
     { title: 'TableNO', field: 'tableNO'/*, filtering: false*/ },
     {
       title: 'RoomNO',
@@ -24,48 +27,103 @@ function EditOrderTable(){
       field: 'status',
       lookup: { 1: 'done', 2: 'in pogress' },
     },
-  ]);
-     
-      const Order = useSelector(state => state.firestore.ordered.foodOrder)
-      const data = Order ? (Order.map(Order => ({ ...Order }))) : (null)
-
-  return (
-    <MaterialTable
-    columns={[
-      { title: 'ID', field: 'OrId' },
-    { title: 'TableNO', field: 'tableNO'/*, filtering: false*/ },
-    {
-      title: 'RoomNO',
-      field: 'room',
-    },
-    {
-      title: 'Description',
-      field: 'descriptions'
-      /* ,filtering: false*/
-    },
-    {
-      title: 'Status',
-      field: 'status',
-      lookup: { 1: 'done', 2: 'in pogress' },
-    },
-    ]}
-      title="Detail Panel With RowClick Preview"
-      detailPanel={rowData => {
-        return (
-          <EditProductTable/>
-        )
-      }}
-      options={{
+        ]}
+        data={[
+          { OrId: 'O13', tableNO: '3', room: 34, descriptions: 'ddsf' ,status:1},
+          { OrId: ' O12', tableNO: '4', room: 3, descriptions: 'kjkasdl' ,status:2 },
+        ]}
+        title="Detail Panel With RowClick Preview"
+        detailPanel={rowData => {
+          return (
+               <EditProductTable/> 
+          )
+        }}
+        options={{
+          filtering: true,
         rowStyle: {
           backgroundColor: 'grey',
         }
+          
+          
       }}
-      onRowClick={(event, rowData, togglePanel) => togglePanel()}
-    />
-  )
-}
+        onRowClick={(event, rowData, togglePanel) => togglePanel()}
+      />
+    </div>)
+  }
 
-export default EditOrderTable
+  export default EditOrderTable
+
+
+
+// ------------------------------------------------------------------------------------------
+// import React from 'react'
+// import MaterialTable from 'material-table'
+// import EditProductTable from './EditProductTable'
+// import { firestoreConnect } from 'react-redux-firebase';
+// import { useSelector, connect } from 'react-redux';
+// import { compose } from 'redux';
+
+// function EditOrderTable(){
+//   const { useState } = React;
+//   const [columns, setColumns] = useState([
+//     { title: 'ID', field: 'OrId' },
+//     { title: 'TableNO', field: 'tableNO'/*, filtering: false*/ },
+//     {
+//       title: 'RoomNO',
+//       field: 'room',
+//     },
+//     {
+//       title: 'Description',
+//       field: 'descriptions'
+//       /* ,filtering: false*/
+//     },
+//     {
+//       title: 'Status',
+//       field: 'status',
+//       lookup: { 1: 'done', 2: 'in pogress' },
+//     },
+//   ]);
+     
+//       const Order = useSelector(state => state.firestore.ordered.foodOrder)
+//       const data = Order ? (Order.map(Order => ({ ...Order }))) : (null)
+
+//   return (
+//     <MaterialTable
+//     columns={[
+//       { title: 'ID', field: 'OrId' },
+//     { title: 'TableNO', field: 'tableNO'/*, filtering: false*/ },
+//     {
+//       title: 'RoomNO',
+//       field: 'room',
+//     },
+//     {
+//       title: 'Description',
+//       field: 'descriptions'
+//       /* ,filtering: false*/
+//     },
+//     {
+//       title: 'Status',
+//       field: 'status',
+//       lookup: { 1: 'done', 2: 'in pogress' },
+//     },
+//     ]}
+//       title="Detail Panel With RowClick Preview"
+//       detailPanel={rowData => {
+//         return (
+//           <EditProductTable/>
+//         )
+//       }}
+//       options={{
+//         rowStyle: {
+//           backgroundColor: 'grey',
+//         }
+//       }}
+//       onRowClick={(event, rowData, togglePanel) => togglePanel()}
+//     />
+//   )
+// }
+
+// export default EditOrderTable
 // ------------------------------------------------------------------
 
 // import React from 'react'
