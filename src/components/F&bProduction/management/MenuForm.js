@@ -3,10 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -17,6 +14,7 @@ import { insertMenu } from '../../../redux/actions/fnbProductionActions/MenuActi
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
+import { MenuItem, Select } from '@material-ui/core';
 
 function Copyright() {
   return (
@@ -55,6 +53,31 @@ function MenuForm(props) {
   const classes = useStyles();
   const {register,handleSubmit, control} = useForm()
 
+  const types = [
+    {
+      value:'1',
+      label:'Wedding'
+    },
+    {
+      value:'2',
+      label:'Breakfast'
+    },
+    {
+      value:'3',
+      label:'Lunch'
+    },
+    {
+      value:'4',
+      label:'Dinner'
+    },
+  ];
+
+    const [type, setType] = React.useState('1');
+  
+    const handleChange = (event) => {
+      setType(event.target.value);
+    };
+  
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -68,6 +91,7 @@ function MenuForm(props) {
         <form className={classes.form} noValidate onSubmit={handleSubmit((data)=>
             new Promise((resolve,reject)=>{
                 setTimeout(() => {
+                    alert(JSON.stringify(data));
                     props.insertMenu(data)
                     resolve();
                 },1000)
@@ -106,6 +130,23 @@ function MenuForm(props) {
             type="currency"
             id="price"
           />
+          <Select
+                    id="menuType"
+                    select
+                    label="Select"
+                    value={type}
+                    inputRef={register}
+                    onChange={handleChange}
+                    helperText="Please select menu type"
+                    variant="outlined"
+                    name="menuType"
+                    >
+                    {types.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+          </Select>
           <Button
             id="submit"
             type="submit"
