@@ -13,7 +13,8 @@ import {deleteAssetList} from '../../../redux/actions/financeActions/AssetMgmtAc
     const [columns, setColumns] = useState([
         { title: 'Asset ID', field: 'assetID' },
         { title: 'Request ID', field: 'requestID' },
-        { title: 'Department', field: 'department' },
+        { title: 'Department', field: 'department', lookup : 
+        {33:'Front-Office', 34: 'Finance', 35: 'Housekeeping', 36: 'Purchases', 37: 'HR', 38: 'F&B Service', 39: 'F&B Production', 40: 'Maintenance'}},
         //{ title: 'Purchased Date', field: 'purchaseDate'},
         { title: 'Expected Life Years', field: 'lifeYears' },
         { title: 'Purchased Value', field: 'purchaseValue'},
@@ -30,6 +31,7 @@ import {deleteAssetList} from '../../../redux/actions/financeActions/AssetMgmtAc
         columns={columns}
         data={data}
         editable={{
+
           onRowAdd: newData =>
             new Promise((resolve, reject) => {
               setTimeout(() => {

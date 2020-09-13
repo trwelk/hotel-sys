@@ -14,12 +14,13 @@ import {deleteAssetRequest} from '../../../redux/actions/financeActions/AssetReq
     const [columns, setColumns] = useState([
       { title: 'Request ID', field: 'requestID' },
       //{ title: 'Date', field: 'date' },
-      { title: 'Asset Type', field: 'assetType'},
+      { title: 'Asset Type', field: 'assetType', 
+      lookup: { 33: 'Machinery', 34: 'Investments', 35: 'Inventory', 36: 'Furniture', 37: 'Vehicle', 38: 'Buidling' }},
       { title: 'Description', field: 'description' },
       { title: 'Quantity', field: 'quantity'},
       { title: 'Unit Price', field: 'unitPrice'},
       { title: 'Total Amount', field: 'totalAmount'},
-      { title: 'Status', field: 'status'},
+      { title: 'Status', field: 'status', lookup: { 33: 'Requested', 34: 'Pending', 35: 'Rejected', 36: 'Accepted', 37: 'Purchased' }},
     ]); 
     const room = useSelector(state => state.firestore.ordered.assetRequest)
     const data = room ? (room.map(room => ({...room}))) : (null)
