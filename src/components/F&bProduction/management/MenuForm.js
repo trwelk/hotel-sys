@@ -14,7 +14,8 @@ import { insertMenu } from '../../../redux/actions/fnbProductionActions/MenuActi
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
-import { MenuItem, Select } from '@material-ui/core';
+import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import WeddingTemplate from './WeddingMenuTemplate';
 
 function Copyright() {
   return (
@@ -27,6 +28,14 @@ function Copyright() {
       {'.'}
     </Typography>
   );
+}
+
+function SetMenuType(MenuType){
+  if (MenuType == 1) {
+    return <WeddingTemplate />
+  } else {
+    return "Byeeeee"
+  }
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -50,34 +59,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function MenuForm(props) {
+
   const classes = useStyles();
-  const {register,handleSubmit, control} = useForm()
+  const {register,handleSubmit} = useForm()
 
-  const types = [
-    {
-      value:'1',
-      label:'Wedding'
-    },
-    {
-      value:'2',
-      label:'Breakfast'
-    },
-    {
-      value:'3',
-      label:'Lunch'
-    },
-    {
-      value:'4',
-      label:'Dinner'
-    },
-  ];
+  const [type, setType] = React.useState(1);
 
-    const [type, setType] = React.useState('1');
-  
-    const handleChange = (event) => {
-      setType(event.target.value);
-    };
-  
+  const handleChange = (event) => {
+    setType(event.target.value);
+    SetMenuType(event.target.value);
+  };
+
+  const displayType = document.getElementById('MenuType');
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -130,23 +124,23 @@ function MenuForm(props) {
             type="currency"
             id="price"
           />
-          <Select
-                    id="menuType"
-                    select
-                    label="Select"
-                    value={type}
-                    inputRef={register}
-                    onChange={handleChange}
-                    helperText="Please select menu type"
-                    variant="outlined"
-                    name="menuType"
-                    >
-                    {types.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-          </Select>
+    <FormControl className={classes.formControl}>
+        <InputLabel id="MenuType">Menu Type</InputLabel>
+        <Select
+          labelId="MenuType"
+          id="MenuType"
+          value={type}
+          onChange={handleChange}
+        >      <MenuItem value="" disabled>
+        <em>select the value</em>
+      </MenuItem>
+          <MenuItem key={1} value={1}>Wedding</MenuItem>
+          <MenuItem key={2} value={2}>Breakfast</MenuItem>
+          <MenuItem key={3} value={3}>Lunch</MenuItem>
+          <MenuItem key={4} value={4}>Dinner</MenuItem>
+        </Select>
+      </FormControl>
+          <h3 id="selected">{SetMenuType(type)}</h3>
           <Button
             id="submit"
             type="submit"
