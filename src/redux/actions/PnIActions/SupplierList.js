@@ -3,12 +3,13 @@ export const updateSupplierInfo = (payload) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
         firestore.collection('supplier').doc(payload.sId).update({
-            name:payload.sName,
+            firstName:payload.firstName,
+            lastName:payload.lastName,
             email:payload.email,
-            phone:payload.phone,
+            //phone:payload.phone,
             itemtype:payload.itemtype,
-            location:payload.location,
-            department:payload.department,
+            //location:payload.location,
+            //department:payload.department,
             period:payload.period
         }); 
     }
@@ -20,7 +21,15 @@ export const insertSupplierInfo = (payload) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
         firestore.collection('supplier').doc(payload.sId).set({
-            ...payload
+            sId:payload.sId,
+            firstName:payload.firstName,
+            lastName:payload.lastName,
+            email:payload.email,
+            //phone:payload.phone,
+            itemtype:payload.itemtype,
+            //location:payload.loaction,
+            //department:payload.department,
+            period:payload.period
         }).then((response) => {
             console.log(response)
         }).catch((response) => {

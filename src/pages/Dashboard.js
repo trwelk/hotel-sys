@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-iport { BrowserRouter, Route,Switch } from 'react-router-dom';
+import { BrowserRouter, Route,Switch } from 'react-router-dom';
 import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
 import Editable from '../components/frontOffice/rooms/Editable';
