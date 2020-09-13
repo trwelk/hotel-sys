@@ -3,10 +3,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -17,6 +14,8 @@ import { insertMenu } from '../../../redux/actions/fnbProductionActions/MenuActi
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
+import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import WeddingTemplate from './WeddingMenuTemplate';
 
 function Copyright() {
   return (
@@ -29,6 +28,14 @@ function Copyright() {
       {'.'}
     </Typography>
   );
+}
+
+function SetMenuType(MenuType){
+  if (MenuType == 1) {
+    return <WeddingTemplate />
+  } else {
+    return "Byeeeee"
+  }
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -52,8 +59,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function MenuForm(props) {
+
   const classes = useStyles();
-  const {register,handleSubmit, control} = useForm()
+  const {register,handleSubmit} = useForm()
+
+  const [type, setType] = React.useState(1);
+
+  const handleChange = (event) => {
+    setType(event.target.value);
+    SetMenuType(event.target.value);
+  };
+
+  const displayType = document.getElementById('MenuType');
 
   return (
     <Container component="main" maxWidth="xs">
@@ -68,6 +85,7 @@ function MenuForm(props) {
         <form className={classes.form} noValidate onSubmit={handleSubmit((data)=>
             new Promise((resolve,reject)=>{
                 setTimeout(() => {
+                    alert(JSON.stringify(data));
                     props.insertMenu(data)
                     resolve();
                 },1000)
@@ -106,6 +124,23 @@ function MenuForm(props) {
             type="currency"
             id="price"
           />
+    <FormControl className={classes.formControl}>
+        <InputLabel id="MenuType">Menu Type</InputLabel>
+        <Select
+          labelId="MenuType"
+          id="MenuType"
+          value={type}
+          onChange={handleChange}
+        >      <MenuItem value="" disabled>
+        <em>select the value</em>
+      </MenuItem>
+          <MenuItem key={1} value={1}>Wedding</MenuItem>
+          <MenuItem key={2} value={2}>Breakfast</MenuItem>
+          <MenuItem key={3} value={3}>Lunch</MenuItem>
+          <MenuItem key={4} value={4}>Dinner</MenuItem>
+        </Select>
+      </FormControl>
+          <h3 id="selected">{SetMenuType(type)}</h3>
           <Button
             id="submit"
             type="submit"

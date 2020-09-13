@@ -20,7 +20,8 @@ export const insertMenu = (payload) => {
         firestore.collection('Menu').doc(payload.id).set({
             id:payload.id,
             menuName:payload.menuName,
-            price:payload.price
+            price:payload.price,
+            // type:payload.type
         }).then((response) => {
             console.log(response)
         }).catch((response) => {

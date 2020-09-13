@@ -15,7 +15,6 @@ import purchasesOrder from '../components/purchasesnInventory/purchasesManagment
 import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
 import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
-import AddMenu from '../components/F&bProduction/management/AddNewMenu';
 import EmployeeList from '../components/hr/employee/EmployeeList';
 import Navigator from '../components/layout/Navigator';
 import Content from '../components/layout/LayoutContent';
@@ -218,9 +217,13 @@ function Dashboard(props) {
             <Route exact path='/Food & Beverages' component={fnbProdMgmt}/>
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/newMenu" component={MenuForm} />
+<<<<<<< HEAD
             <Route exact path='/newMenu' component={AddMenu}/>
             <Route exact path='/newOrder' component={OrderForm}/>
             <Route exact path="/foodOrder" component={FnBserviceMng} />
+=======
+            <Route exact path="/foodOrder" component={editOrderTable} />
+>>>>>>> d571d5591d6d77a7e0d43b46bb96e7ff1232f799
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/sup" component={currentSuppliers}/>
             <Route exact path="/req" component={purchasesRequestManagement}/>
