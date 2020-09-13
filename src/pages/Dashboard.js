@@ -5,13 +5,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import Navigator from '../components/layout/Navigator';
-import Content from '../components/layout/LayoutContent';
-import Header from '../components/layout/Header';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+iport { BrowserRouter, Route,Switch } from 'react-router-dom';
 import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
-import Finance from '../components/frontOffice/Finance';
 import Editable from '../components/frontOffice/rooms/Editable';
 import currentSuppliers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
 import purchasesRequestManagement from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment'
@@ -20,6 +16,11 @@ import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSupp
 import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import EmployeeList from '../components/hr/employee/EmployeeList';
+import Navigator from '../components/layout/Navigator';
+import Content from '../components/layout/LayoutContent';
+import Header from '../components/layout/Header';
+import RoomHandling from './frontOfficePages/RoomHandling';
+import PermanentDrawerLeft from '../components/frontOffice/rooms/MasterDetail';
 import MenuForm from "../components/F&bProduction/management/MenuForm";
 
 
@@ -207,6 +208,7 @@ function Dashboard(props) {
 
             <Switch>    
             <Route exact path='/' component={LayoutContent}/>
+            <Route exact path="/room" component={RoomHandling}/>
             <Route exact path='/res' component={ReservatonBoxView}/>
             <Route exact path='/ed' component={Editable}/>
             <Route exact path='/Food & Beverages' component={fnbProdMgmt}/>
