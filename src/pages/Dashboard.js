@@ -21,7 +21,7 @@ import Content from '../components/layout/LayoutContent';
 import Header from '../components/layout/Header';
 import RoomHandling from './frontOfficePages/RoomHandling';
 import PermanentDrawerLeft from '../components/frontOffice/rooms/MasterDetail';
-import MenuForm from "../components/F&bProduction/management/MenuForm";
+import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
 
 
 function Copyright() {
