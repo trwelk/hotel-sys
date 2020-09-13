@@ -5,30 +5,17 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useForm, Controller} from 'react-hook-form';
-import { insertMenu } from '../../../redux/actions/fnbProductionActions/MenuActions'
+import { insertMenu } from '../../../../redux/actions/fnbProductionActions/MenuActions'
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
-import WeddingTemplate from './WeddingMenuTemplate';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { FormControl, Grid, InputLabel, ListItemIcon, MenuItem, Select } from '@material-ui/core';
+import WeddingTemplate from '../Templates/WeddingMenuTemplate';
 
 function SetMenuType(MenuType){
   if (MenuType == 1) {
@@ -77,7 +64,7 @@ function MenuForm(props) {
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <ImportContactsIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Add Menu
@@ -90,9 +77,11 @@ function MenuForm(props) {
                     resolve();
                 },1000)
             }))}>
+              <Grid container spacing={1}>
+              <Grid item xs={4}>
         <TextField
             variant="outlined"
-            margin="normal"
+            margin="dense"
             inputRef={register}
             required
             fullWidth
@@ -100,10 +89,11 @@ function MenuForm(props) {
             label="Menu Id"
             name="id"
             autoFocus
-          />
+          />   </Grid>  
+          <Grid item xs={5}>         
           <TextField
             variant="outlined"
-            margin="normal"
+            margin="dense"
             inputRef={register}
             required
             fullWidth
@@ -113,18 +103,21 @@ function MenuForm(props) {
             autoComplete="name"
             autoFocus
           />
+          </Grid>  
+          </Grid>   
+          <Grid item xs={4}>    
           <TextField
             variant="outlined"
-            margin="normal"
+            margin="dense"
             inputRef={register}
             required
             fullWidth
             name="price"
-            label="PRICE (LKR)"
+            label="Price (LKR)"
             type="currency"
             id="price"
-          />
-    <FormControl className={classes.formControl}>
+          /></Grid> 
+    <FormControl className={classes.formControl} margin="normal">
         <InputLabel id="MenuType">Menu Type</InputLabel>
         <Select
           labelId="MenuType"
@@ -140,7 +133,7 @@ function MenuForm(props) {
           <MenuItem key={4} value={4}>Dinner</MenuItem>
         </Select>
       </FormControl>
-          <h3 id="selected">{SetMenuType(type)}</h3>
+          <div id="selected">{SetMenuType(type)}</div>
           <Button
             id="submit"
             type="submit"
@@ -154,9 +147,6 @@ function MenuForm(props) {
           </Button>
         </form>
       </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }
