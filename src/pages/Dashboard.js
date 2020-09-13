@@ -22,6 +22,9 @@ import Header from '../components/layout/Header';
 import RoomHandling from './frontOfficePages/RoomHandling';
 import PermanentDrawerLeft from '../components/frontOffice/rooms/MasterDetail';
 import MenuForm from "../components/F&bProduction/management/MenuForm";
+import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
+import EditOrderTable from '../components/fnbServices/EditOrderTable';
+import OrderForm from '../components/fnbServices/OrderForm';
 
 
 function Copyright() {
@@ -214,7 +217,13 @@ function Dashboard(props) {
             <Route exact path='/Food & Beverages' component={fnbProdMgmt}/>
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/newMenu" component={MenuForm} />
+<<<<<<< HEAD
+            <Route exact path='/newMenu' component={AddMenu}/>
+            <Route exact path='/newOrder' component={OrderForm}/>
+            <Route exact path="/foodOrder" component={FnBserviceMng} />
+=======
             <Route exact path="/foodOrder" component={editOrderTable} />
+>>>>>>> d571d5591d6d77a7e0d43b46bb96e7ff1232f799
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/sup" component={currentSuppliers}/>
             <Route exact path="/req" component={purchasesRequestManagement}/>

@@ -1,12 +1,12 @@
-export const updateOrderType = (payload) => {
+export const updateProductType = (payload) => {
     console.log(payload)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
         firestore.collection("orderProducts").doc(payload.id).update({
-            ID:payload.id,
-            Name:payload.ProName,
-            Quntity:payload.quntity,
-            Amount:payload.amount
+            id:payload.id,
+            ProName:payload.ProName,
+            quntity:payload.quntity,
+            amount:payload.amount
             // tableNO: payload.tableNO,
             // room: payload.room,
             // description: payload.description,
@@ -17,7 +17,7 @@ export const updateOrderType = (payload) => {
     }
 }
 
-export const insertOrderType = (payload) => {
+export const insertProductType = (payload) => {
     console.log(payload)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
@@ -32,7 +32,7 @@ export const insertOrderType = (payload) => {
 
 }
 
-export const deleteOrderType = (orderId) => {
+export const deleteProductType = (orderId) => {
     console.log(orderId)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
@@ -46,55 +46,102 @@ export const deleteOrderType = (orderId) => {
 
 }
 
+export const updateBarInvRec = (payload) => {
+    console.log(payload)
+    return (dispatch,getState,{getFirestore,getFirebase}) => {
+        const firestore = getFirestore();
+        firestore.collection('barInventory').doc(payload.id).update({
+            id:payload.id,
+            itemName:payload.itemName,
+            price:payload.price,
+            qty:payload.qty,
+            expDate:payload.expDate,
+            lastModified:payload.lastModified,
+            stkStatus:payload.stkStatus
+        });
+    }
+
+}
+
+export const insertBarInvRec = (payload) => {
+    console.log(payload)
+    return (dispatch,getState,{getFirestore,getFirebase}) => {
+        const firestore = getFirestore();
+        firestore.collection('barInventory').doc(payload.id).set({
+            ...payload
+        }).then((response) => {
+            console.log(response)
+        }).catch((response) => {
+            console.log(response)
+        })
+    }
+
+}
+
+export const deleteBarInvRec = (InventoryId) => {
+    console.log(InventoryId)
+    return (dispatch,getState,{getFirestore,getFirebase}) => {
+        const firestore = getFirestore();
+        firestore.collection('barInventory').doc(InventoryId).delete()
+            .then((response) => {
+                console.log(response)
+            }).catch((error) => {
+                console.log(error)
+            })
+    }
+
+}
 
 
-// export const updateOrderType = (payload) => {
-//     console.log(payload)
-//     return (dispatch, getState, { getFirestore, getFirebase }) => {
-//         const firestore = getFirestore();
-//         firestore.collection("foodOrder").doc(payload.id).update({
-//             tableNO: payload.tableNO,
-//             room: payload.room,
-//             description: payload.description,
-//             status: payload.status
-//             // DateAndTime:payload.dateAndTime,
-//             // ID:payload.Proid,
-//             // Name:payload.ProName,
-//             // Quntity:payload.quntity,
-//             // Amount:payload.Amount,
-//             // orId:payload.orId,
-//         });
-//     }
-// }
 
-// export const insertOrderType = (payload) => {
-//     console.log(payload)
-//     return (dispatch, getState, { getFirestore, getFirebase }) => {
-//         const firestore = getFirestore();
-//         firestore.collection('foodOrder').doc(payload.id).set({
-//             ...payload
-//         }).then((response) => {
-//             console.log(response)
-//         }).catch((response) => {
-//             console.log(response)
-//         })
-//     }
+export const updateOrderType = (payload) => {
+    console.log(payload)
+    return (dispatch, getState, { getFirestore, getFirebase }) => {
+        const firestore = getFirestore();
+        firestore.collection("foodOrder").doc(payload.id).update({
+            id:payload.id,
+            tableNO: payload.tableNO,
+            room: payload.room,
+            description: payload.description,
+            status: payload.status
+            // DateAndTime:payload.dateAndTime,
+            // ID:payload.Proid,
+            // Name:payload.ProName,
+            // Quntity:payload.quntity,
+            // Amount:payload.Amount,
+            // orId:payload.orId,
+        });
+    }
+}
 
-// }
+export const insertOrderType = (payload) => {
+    console.log(payload)
+    return (dispatch, getState, { getFirestore, getFirebase }) => {
+        const firestore = getFirestore();
+        firestore.collection('foodOrder').doc(payload.id).set({
+            ...payload
+        }).then((response) => {
+            console.log(response)
+        }).catch((response) => {
+            console.log(response)
+        })
+    }
 
-// export const deleteOrderType = (orderId) => {
-//     console.log(orderId)
-//     return (dispatch, getState, { getFirestore, getFirebase }) => {
-//         const firestore = getFirestore();
-//         firestore.collection('foodOrder').doc(orderId).delete()
-//             .then((response) => {
-//                 console.log(response)
-//             }).catch((error) => {
-//                 console.log(error)
-//             })
-//     }
+}
 
-// }
+export const deleteOrderType = (orderId) => {
+    console.log(orderId)
+    return (dispatch, getState, { getFirestore, getFirebase }) => {
+        const firestore = getFirestore();
+        firestore.collection('foodOrder').doc(orderId).delete()
+            .then((response) => {
+                console.log(response)
+            }).catch((error) => {
+                console.log(error)
+            })
+    }
+
+}
 // export const updateOrderType1 = (payload1) => {
 //     console.log(payload1)
 //     return (dispatch, getState, { getFirestore, getFirebase }) => {
