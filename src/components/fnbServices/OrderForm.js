@@ -20,6 +20,11 @@ import { compose } from 'redux';
 import MaterialTable from 'material-table'
 import { useSelector, connect } from 'react-redux';
 import { db } from '../../config/fbConfig';
+import { FormControl, InputLabel, Select } from '@material-ui/core';
+import { MenuItem } from 'material-ui';
+// import WeddingTemplate from './WeddingMenuTemplate';
+// import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+
 
 
 function Copyright() {
@@ -62,7 +67,7 @@ function OrderForm(props) {
     const [columns, setColumns] = useState([
         { title: 'ProductID', field: 'id' }, 
         { title: 'ProductName', field: 'ProName' },
-        { title: 'Quntity', field: 'quntity', type :'numeric', filtering: false },
+        { title: 'Quantity', field: 'quantity', type :'numeric', filtering: false },
         { title: 'Amount', field: 'amount', type :'numeric', filtering: false },
     
       ]);
@@ -203,6 +208,22 @@ function OrderForm(props) {
                         autoComplete="name"
                         autoFocus
                     />
+                    {/* <FormControl className={classes.formControl}>
+        <InputLabel id="MenuType">Menu Type</InputLabel>
+        <Select
+          labelId="MenuType"
+          id="MenuType"
+          value={type}
+          onChange={handleChange}
+        >      <MenuItem value="" disabled>
+        <em>select the value</em>
+      </MenuItem>
+          <MenuItem key={1} value={1}>in Progress</MenuItem>
+          <MenuItem key={2} value={2}>done</MenuItem>
+          <MenuItem key={3} value={3}>served</MenuItem>
+          <MenuItem key={4} value={4}>Dinner</MenuItem>
+        </Select>
+      </FormControl> */}
                     <TextField
                         variant="outlined"
                         margin="normal"

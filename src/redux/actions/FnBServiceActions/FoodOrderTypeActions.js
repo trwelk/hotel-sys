@@ -3,9 +3,10 @@ export const updateProductType = (payload) => {
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
         firestore.collection("orderProducts").doc(payload.id).update({
+            orderNo:payload.orderNo,
             id:payload.id,
             ProName:payload.ProName,
-            quntity:payload.quntity,
+            quantity:payload.quantity,
             amount:payload.amount
             // tableNO: payload.tableNO,
             // room: payload.room,
@@ -98,8 +99,8 @@ export const updateOrderType = (payload) => {
     console.log(payload)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
-        firestore.collection("foodOrder").doc(payload.id).update({
-            id:payload.id,
+        firestore.collection("foodOrder").doc(payload.orderNo).update({
+            orderNo:payload.orderNo,
             tableNO: payload.tableNO,
             room: payload.room,
             description: payload.description,
@@ -107,7 +108,7 @@ export const updateOrderType = (payload) => {
             // DateAndTime:payload.dateAndTime,
             // ID:payload.Proid,
             // Name:payload.ProName,
-            // Quntity:payload.quntity,
+            // quantity:payload.quantity,
             // Amount:payload.Amount,
             // orId:payload.orId,
         });
@@ -118,7 +119,7 @@ export const insertOrderType = (payload) => {
     console.log(payload)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
-        firestore.collection('foodOrder').doc(payload.id).set({
+        firestore.collection('foodOrder').doc(payload.orderNo).set({
             ...payload
         }).then((response) => {
             console.log(response)

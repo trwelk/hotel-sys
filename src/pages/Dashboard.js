@@ -217,9 +217,9 @@ function Dashboard(props) {
             <Route exact path='/Food & Beverages' component={fnbProdMgmt}/>
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/newMenu" component={MenuForm} />
+            {/* <Route exact path='/newMenu' component={AddMenu}/> */}
             <Route exact path='/newOrder' component={OrderForm}/>
             <Route exact path="/foodOrder" component={FnBserviceMng} />
-            <Route exact path="/foodOrder" component={editOrderTable} />
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/sup" component={currentSuppliers}/>
             <Route exact path="/req" component={purchasesRequestManagement}/>
