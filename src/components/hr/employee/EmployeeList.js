@@ -5,8 +5,6 @@ import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 
 import {insertEmployee, updateEmployee} from '../../../redux/actions/hrActions/EmployeeActions'
-import { Card } from '@material-ui/core';
-import EmployeeCard from './EmployeeCard';
 function EmployeeList(props) {
  
     const { useState } = React;
@@ -20,19 +18,7 @@ function EmployeeList(props) {
       },
     ]); 
     const employees = useSelector(state => state.firestore.ordered.employee)
-    const employeeTypes = useSelector(state => state.firestore.ordered.Type)
-    const Typedata = employeeTypes ? (employeeTypes.map(type => ({...type}))) : (null)
-
     const data = employees ? (employees.map(employee => ({...employee}))) : (null)
-    //const a,b,c ;
-    const aCount =  data.filter(employee => employee.type == a).length
-    const bCount =  data.filter(employee => employee.type == b).length
-    const cCount =  data.filter(employee => employee.type == c).length
-
-    const cardList = Typedata.map((type) => <EmployeeCard employeeType={type} />)   
-
-
-
     const table = data ? (
         <MaterialTable
         title="EmployeeList Preview"
@@ -95,7 +81,5 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
   export default compose(connect(null,mapDispatchToProps),firestoreConnect([
-    {collection: 'employee'},
-    {collection: 'employeeType'}
-
+    {collection: 'employee'}
   ])) (EmployeeList)
