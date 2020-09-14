@@ -62,7 +62,6 @@ function MenuForm(props) {
 
   const classes = useStyles();
   const {register,handleSubmit} = useForm()
-
   const [type, setType] = React.useState(1);
 
   const handleChange = (event) => {

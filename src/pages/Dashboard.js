@@ -21,7 +21,8 @@ import Content from '../components/layout/LayoutContent';
 import Header from '../components/layout/Header';
 import RoomHandling from './frontOfficePages/RoomHandling';
 import PermanentDrawerLeft from '../components/frontOffice/rooms/MasterDetail';
-import MenuForm from "../components/F&bProduction/management/MenuForm";
+import MenuForm from '../components/F&bProduction/management/MenuForm';
+import purchasesRequest from '../components/purchasesnInventory/purchasesManagment/purchasesRequest';
 
 
 function Copyright() {
@@ -217,9 +218,10 @@ function Dashboard(props) {
             <Route exact path="/foodOrder" component={editOrderTable} />
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/sup" component={currentSuppliers}/>
-            <Route exact path="/req" component={purchasesRequestManagement}/>
+            <Route exact path="/reqMng" component={purchasesRequestManagement}/>
             <Route exact path="/porder" component={purchasesOrder}/>
             <Route exact path="/Purchases & Inventory" component={addSuppliers}/>
+            <Route exact path="/pReq" component={purchasesRequest}/>
             </Switch>
 
           </main>

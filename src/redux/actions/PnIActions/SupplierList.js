@@ -10,7 +10,7 @@ export const updateSupplierInfo = (payload) => {
             itemtype:payload.itemtype,
             //location:payload.location,
             //department:payload.department,
-            period:payload.period
+            date:payload.date
         }); 
     }
 
@@ -29,7 +29,7 @@ export const insertSupplierInfo = (payload) => {
             itemtype:payload.itemtype,
             //location:payload.loaction,
             //department:payload.department,
-            period:payload.period
+            date:payload.date
         }).then((response) => {
             console.log(response)
         }).catch((response) => {

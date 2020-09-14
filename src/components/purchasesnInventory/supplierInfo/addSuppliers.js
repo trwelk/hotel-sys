@@ -14,7 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import MuiPhoneNumber from 'material-ui-phone-number';
 import { InputLabel, Select } from '@material-ui/core';
-import { MenuItem } from 'material-ui';
+import { MenuItem } from '@material-ui/core';
 import { FormControl } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { compose } from 'redux'
@@ -64,6 +64,19 @@ const useStyles = makeStyles((theme) => ({
 function AddSuppliers(props) {
   const classes = useStyles();
   const { register, handleSubmit } = useForm()
+  const [ type, setType ] = React.useState(1);
+  const [dName, setDepartment] = React.useState("frontoffice");
+
+ 
+  const handleLocation = (event) => {
+      setType(event.target.value);
+    
+  }
+
+  const handleDepartment = (event) => {
+    setDepartment(event.target.value);
+  }
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -125,8 +138,6 @@ function AddSuppliers(props) {
                 id="email"
                 label="Email Address"
                 name="email"
-                validators={['reqired', 'isEmail']}
-                errorMessage={['this field is  required', 'email is not valid']}
                 autoComplete="email"
                 inputRef={register}
               />
@@ -139,29 +150,31 @@ function AddSuppliers(props) {
                 id="itemtype"
                 label="Item Type"
                 name="itemtype"
-                validators={['reqired']}
-                errorMessage={['this field is  required']}
                 inputRef={register}
               />
             </Grid>
             <Grid item xs={12}>
               <MuiPhoneNumber
                 name="phone"
+                id="phone"
                 varient="outlined"
+                inputProps={{ maxLength: 200 }}
                 required
                 fullWidth
                 label="Phone Number"
-                data-cy="user-phone"
-                defaultCountry={"us"}
-                //value={this.state.phone}
-                //onChange={this.handlePhoneChange}
                 inputRef={register}
+                autoComplete="off"
               />
             </Grid>
             <Grid item xs={12}>
-                <FormControl varient="outlined" required fullWidth>
-                  <InputLabel>Location</InputLabel>
-                  <Select id="location">
+                <FormControl className = {classes.formControl}  fullWidth>
+                  <InputLabel id="location">Location</InputLabel>
+                  <Select 
+                    labelId = "location"
+                    id = "location"
+                    value= {type}
+                    onChange={handleLocation}>
+
                     <MenuItem value={1}>Kilinochchi</MenuItem>
                     <MenuItem value={2}>Jaffna</MenuItem>
                     <MenuItem value={3}>Mannar</MenuItem>
@@ -186,26 +199,44 @@ function AddSuppliers(props) {
                     <MenuItem value={22}>Monaragala</MenuItem>
                     <MenuItem value={23}>Hambantota</MenuItem>
                     <MenuItem value={24}>Matara</MenuItem>
-                    <MenuItem value={24}>Galle</MenuItem>
+                    <MenuItem value={25}>Galle</MenuItem>
+
                   </Select>
                 </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+            <FormControl varient="outlined" required fullWidth>
+                <InputLabel id="department">Department</InputLabel>
+                <Select 
+                  id="department"
+                  labelId = "department"
+                  value={dName}
+                  onChange={handleDepartment}>
+                  <MenuItem value={"frontOffice"}>Front Office</MenuItem>
+                  <MenuItem value={"finance"}>Finance</MenuItem>
+                  <MenuItem value={"humanResources"}>Human Resources</MenuItem>
+                  <MenuItem value={"fnb"}>Food and Beverages</MenuItem>
+                  <MenuItem value={"maintainance"}>Maintainance</MenuItem>
+                  <MenuItem value={"housekeeping"}>House Keeping</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
                 <TextField
                   variant="outlined"
                   required
                   fullWidth
-                  id="period"
-                  label="Period"
-                  name="period"
+                  id="date"
+                  name="date"
                   validators={['reqired']}
                   errorMessage={['this field is  required']}
                   inputRef={register}
+                  type = 'date'
                 />
             </Grid>
             <Grid item xs={12}>
                   <FormControlLabel
-                    control={<Checkbox value="allowExtraEmails" color="primary" />}
+                    control={<Checkbox value="allowExtraEmails" color="primary"/>}
                     label="I accept the Terms and Conditions"
                   />
             </Grid>
