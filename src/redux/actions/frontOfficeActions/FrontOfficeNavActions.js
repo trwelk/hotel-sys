@@ -1,5 +1,3 @@
-
-
 export const onMasterClick = (roomType) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
              dispatch({type:'MASTER_ROOM_TYPE_SELECTED',
@@ -14,14 +12,14 @@ export const handleMonthPickReservation = (month) => {
         console.log(getState())
 
              dispatch({type:'MONTH_SELECTED',
-                        month:month})
+                        month:month -1})
     }
 }
 
 
 export const handleDayPick = (day) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
-        console.log(getState())
+        console.log(day)
 
              dispatch({type:'DAY_SELECTED',
                         day:day})

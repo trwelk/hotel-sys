@@ -14,7 +14,6 @@ import PoolService from '../components/maintenance/PoolService';
 import currentSuppliers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
 import purchasesRequestManagement from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment'
 import purchasesOrder from '../components/purchasesnInventory/purchasesManagment/purchasesOrder'
-import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
 import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import EmployeeList from '../components/hr/employee/EmployeeList';
@@ -27,10 +26,13 @@ import RoomList from '../components/frontOffice/rooms/RoomList';
 import InsertReservationForm from '../components/frontOffice/reservation/forms/InsertReservationForm';
 import CustomerTable from '../components/frontOffice/customer/CustomerTable';
 import FeedBackTable from '../components/frontOffice/feedback/FeedBackTable';
-import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
+/*import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
+import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
+import AssetRequest from '../components/frontOffice/reservation/'
+
 import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
 import EditOrderTable from '../components/fnbServices/EditOrderTable';
-import OrderForm from '../components/fnbServices/OrderForm';
+import OrderForm from '../components/fnbServices/OrderForm';*/
 
 
 function Copyright() {
@@ -227,6 +229,7 @@ function Dashboard(props) {
             <Route exact path="/cust" component={CustomerTable}/>
             <Route exact path="/feed" component={FeedBackTable}/>
 
+
             <Route exact path="/poolservice" component={PoolService}/>
             <Route exact path="/newMenu" component={MenuForm} />
             {/* <Route exact path='/newMenu' component={AddMenu}/> */}
@@ -237,6 +240,7 @@ function Dashboard(props) {
             <Route exact path="/req" component={purchasesRequestManagement}/>
             <Route exact path="/porder" component={purchasesOrder}/>
             <Route exact path="/Purchases & Inventory" component={addSuppliers}/>
+            */}
             </Switch>
 
           </main>
