@@ -11,7 +11,8 @@ import { insertSupplierInfo, updateSupplierInfo, deleteSupplierInfo} from '../..
     const { useState } = React;
     const [columns, setColumns] = useState([
       { title: 'Supplier ID', field: 'sId' },
-      { title: 'Supplier Name', field: 'sName' },
+      { title: 'First Name', field: 'firstName' },
+      { title: 'Last Name', field: 'lastName' },
       { title: 'Email', field: 'email' },
       { title: 'Phone', field: 'phone' },
       { title: 'Supplier Item Type', field: 'itemtype'},
