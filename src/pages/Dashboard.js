@@ -13,6 +13,7 @@ import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
 import Finance from '../components/frontOffice/Finance';
 import Editable from '../components/frontOffice/rooms/Editable';
+import PoolService from '../components/maintenance/PoolService';
 
 
 function Copyright() {
@@ -202,6 +203,7 @@ function Dashboard(props) {
             <Route     exact path='/res' component={ReservatonBoxView}/>
             <Route exact path="/ed" component={Editable}/>
 
+            <Route exact path="/poolservice" component={PoolService}/>
             </Switch>
 
 
