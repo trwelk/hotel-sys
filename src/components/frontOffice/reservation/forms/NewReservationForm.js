@@ -19,7 +19,7 @@ import TextField from '@material-ui/core/TextField';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { connect } from "react-redux";
+import { connect,useSelector } from "react-redux";
 
 import {insertReservation} from '../../../../redux/actions/frontOfficeActions/ReservationActions'
 
@@ -44,9 +44,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
       marginTop: theme.spacing(6),
-      marginBottom: theme.spacing(6),
-      padding: theme.spacing(3),
     },
+    width: "87%",
+    boxShadow: "0px 1px 12px black",
+    height: "87",
+    marginTop: "24px"
   },
   stepper: {
     padding: theme.spacing(3, 0, 5),
@@ -59,23 +61,23 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
+  MuiDialogPaperScrollPaper:{
+    background: "transparent",overflowY: "hidden"
+
+  }
 }));
 
 const steps = ['Reservation Details'];
 
 function NewReservationForm(props) {
     const [open, setOpen] = React.useState(false);
-    const [state, setState] = useState({ firstName: "", lastName: "",startDay:props.startDay,endDay:props.startDay,roomNo:props.roomNo,roomType:props.roomType,phone:"",customerEmail:""});
+    const [state, setState] = useState({ firstName: "", lastName: "",roomNo:props.roomNo,roomType:props.roomType,phone:"",customerEmail:""});
+    const month = useSelector(state => state.frontOffice.selectedMonth )
+    const startDay = new Date(Date.parse(month + ' ' + (props.startDay ) +' 2020'))
 
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [startDay, setStartDay] = useState(props.startDay);
-    const [endDay, setEndDay] = useState(props.startDay);
-    const [customerEmail, setCustomerEmail] = useState("");
+  console.log(startDay)
     const [roomNo, setRoomNo] = useState(props.roomNo);
     const [roomType, RoomType] = useState(props.roomType);
-    const [status, setStatus] = useState("");
-    const [phone, setPhone] = useState("");
 
 
 
@@ -108,15 +110,13 @@ function NewReservationForm(props) {
     <AddCircleIcon variant="outlined" color="secondary" onClick={handleClickOpen}/>
 
 <Dialog
-fullWidth={true}
-maxWidth="lg"
+style={{background: "transparent",overflowY: "hidden"}}
 open={open}
 onClose={handleClose}
-aria-labelledby="max-width-dialog-title"
 > 
     <React.Fragment>
       <CssBaseline />
-      <main className={classes.layout}>
+      <main className={classes.layout} style={{display:"flex",justifyContent: "center"}}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
             Checkout

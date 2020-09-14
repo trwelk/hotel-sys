@@ -4,42 +4,32 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 
-import {updateRoom} from '../../../redux/actions/frontOfficeActions/RoomActions'
-import {insertRoom} from '../../../redux/actions/frontOfficeActions/RoomActions'
-import {deleteRoom} from '../../../redux/actions/frontOfficeActions/RoomActions'
-
+import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    '& > * + *': {
-      marginTop: theme.spacing(2),
-    },
-  },
-}));
+import {updateRoomType} from '../../../redux/actions/frontOfficeActions/RoomTypeActions'
+import {insertRoomType} from '../../../redux/actions/frontOfficeActions/RoomTypeActions'
+import {deleteRoomType} from '../../../redux/actions/frontOfficeActions/RoomTypeActions'
+import NewReservationForm from '../reservation/forms/NewReservationForm';
 
- function RoomList(props) {
+
+function RoomTypeTable(props) {
  
-    var roomTypeFilter = null;
-
-    const classes = useStyles();
     const { useState } = React;
     const [columns, setColumns] = useState([
-      { title: 'Room Type', field: 'roomType' ,editable: 'never' },
-      { title: 'Room Id', field: 'id' ,validate: rowData => rowData.id === null ? 'Room Id cannot be empty' : ''},
-      { title: 'Room No', field: 'roomNo' ,type: 'numeric'},
-      { title: 'Location', field: 'location'},
-      { title: 'Floor Number', field: 'floor' ,type: 'numeric'},
+      { title: 'ID', field: 'id' ,},
+      { title: 'Name', field: 'name' },
+      { title: 'Brief', field: 'brief'},
       {
-        title: 'Maintainance needed',
-        field: 'maintainanceRequired' ,
-        lookup: { 12: 'false', 56: 'true' }
+        title: 'Description',
+        field: 'description',
+      
       },
     ]); 
+
     const [state, setState] = React.useState({
       open: false,
       vertical: 'bottom',
@@ -48,45 +38,47 @@ const useStyles = makeStyles((theme) => ({
     const { vertical, horizontal, open ,error} = state;
 
 
-    const rooms = useSelector(state => state.firestore.ordered.room)
-    const roomsCopy = rooms ? (rooms.map(room => ({...room}))) : (null)
-    roomTypeFilter = props.id ? props.id : roomsCopy ? roomsCopy[0].roomType : null;
-    const data = roomTypeFilter ? (roomsCopy.filter(room =>  room.roomType == roomTypeFilter)) : (roomsCopy)
+    const room = useSelector(state => state.firestore.ordered.roomtype)    
+    const data = room ? (room.map(room => ({...room}))) : (null)
+    
 
-//--------------------------------------------INTERNAL METHODS--------------------------------------------------------------------------------
+    //--------------------------------------------INTERNAL METHODS--------------------------------------------------------------------------------
     const validateData___  = (data) => {
       if(data.id == null || data.id == ""){
         return "Field ID Cannot be null"
 
       }
-      else if(data.maintainanceRequired == null || data.maintainanceRequired == ""){
-        return "Field Maintainance Required Cannot be null"
+      else if(data.id.length != 5 ){
+        return "Field ID sould contain 5 characters"
+
       }
-      else if(data.floor == null || data.floor == ""){
-        return "Field Floor Cannot be null"
+      else if(data.name == null || data.name == ""){
+        return "Field Name Cannot be null"
       }
-      else if(data.location == null || data.location == ""){
-        return "Field Location Cannot be null"
+      else if(data.brief == null || data.brief == ""){
+        return "Field BRIEF Cannot be null"
       }
-      else if(data.roomNo == null || data.roomNo == ""){
-        return "Field Room No Cannot be null"
+      else if(data.description == null || data.description == ""){
+        return "Field Description Cannot be null"
       }
       else
       return null;
     }
 
-    const handleClick = (newState) => () => {
-      setState({ open: true, ...newState });
-    };
-  
-    const handleClose = () => {
-      setState({ ...state, open: false });
-    };
 
-//---------------------------------------UI-ELEMENTS--------------------------------------------------------------------------  
+
+  const handleClick = (newState) => () => {
+    setState({ open: true, ...newState });
+  };
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
+
+//--------------------------------------------------------UI-ELEMENTS-------------------------------------------------------------     
     const table = data ? (
-        <MaterialTable style={{borderRadius: "0px"}}
-        title={roomTypeFilter ? roomTypeFilter : "All Rooms"}
+        <MaterialTable style={{padding:"0px"}}
+        title="RoomTypeTable Preview"
         columns={columns}
         data={data}
         editable={{
@@ -104,6 +96,7 @@ const useStyles = makeStyles((theme) => ({
                     resolve();
                   }, 1000)
                 }
+              
             }),
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
@@ -127,17 +120,19 @@ const useStyles = makeStyles((theme) => ({
                 dataDelete.splice(index, 1);
                 //setData([...dataDelete]);
                 console.log(oldData)
-                props.deleteRoom(oldData.id)
+                props.deleteRoomType(oldData.id)
                 resolve()
               }, 1000)
             }),
         }}
-
+        options={{
+        headerStyle: {
+          backgroundColor: '#01579b',
+          color: '#FFF'
+        }
+      }}
       />
-    ) 
-    : 
-    (<div>Loading</div>)
-
+    ) : (<div>Loading</div>)
 
     const feedBackToast =  (<Snackbar 
       autoHideDuration={200000}
@@ -146,7 +141,7 @@ const useStyles = makeStyles((theme) => ({
       onClose={handleClose}
       key={vertical + horizontal}
       >
-          <div className={classes.root}>
+          <div >
 
         <Alert variant="filled" severity="error" style={{display: "flex",alignItems: "center"}}>
         <h3>{error}</h3>
@@ -154,10 +149,11 @@ const useStyles = makeStyles((theme) => ({
         </Alert>
         </div>
       </Snackbar>)
+  
 
   
     return(
-        <div>
+        <div style={{padding_left: "5px"}}>
              {table}
              {feedBackToast}
         </div>
@@ -165,14 +161,15 @@ const useStyles = makeStyles((theme) => ({
         )
   }
  
-const mapDispatchToProps = (dispatch) => {
+  const mapDispatchToProps = (dispatch) => {
     return {
-        updateRoom: (payload) => dispatch(updateRoom(payload)),
-        insertRoom: (payload) => dispatch(insertRoom(payload)),
-        deleteRoom: (roomId) => dispatch(deleteRoom(roomId))
+        updateRoomType: (payload) => dispatch(updateRoomType(payload)),
+        insertRoomType: (payload) => dispatch(insertRoomType(payload)),
+        deleteRoomType: (roomId) => dispatch(deleteRoomType(roomId))
+
 
     }
 }
   export default compose(connect(null,mapDispatchToProps),firestoreConnect([
-    {collection: 'room'}
-  ])) (RoomList)
+    {collection: 'roomtype'}
+  ])) (RoomTypeTable)

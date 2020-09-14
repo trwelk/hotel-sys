@@ -8,10 +8,12 @@ import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
 import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded';
 import { useGutterBorderedGridStyles } from '@mui-treasury/styles/grid/gutterBordered';
+import { useSelector, connect } from 'react-redux';
 
 import PersonIcon from '@material-ui/icons/Person';
 import IconButton from '@material-ui/core/IconButton';
 import NewReservationForm from '../forms/NewReservationForm';
+import {handleDayPick} from '../../../../redux/actions/frontOfficeActions/FrontOfficeNavActions'
 
 const useStyles = makeStyles(({ palette }) => ({
   card: {
@@ -61,12 +63,15 @@ function EmptyReservationCard (props) {
   });
   //        <Avatar className={styles.avatar} src={'https://i.pravatar.cc/300'} />
 
+  const handleClick = (e) => {
+    props.handleDayPick(props.startDay)
+  }
   return (
     <Card className={cx(styles.card, shadowStyles.root)}>
       <Box display={'flex'} style={{padding: "8px 0"}}>
         <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
-        <IconButton  aria-label="add to shopping cart">
-        <NewReservationForm roomType={props.roomType}  startDay={new Date(Date.parse(props.month + ' ' + (props.startDay + 1) +' 2020'))} roomNo={props.roomNo} />
+        <IconButton  aria-label="add to shopping cart" onClick={handleClick}>
+        <NewReservationForm  roomType={props.roomType}  startDay={props.startDay} roomNo={props.roomNo} />
       </IconButton>
         </Box>
       
@@ -75,4 +80,10 @@ function EmptyReservationCard (props) {
   );
 }
 
-export default EmptyReservationCard
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleDayPick: (payload) => dispatch(handleDayPick(payload)),
+
+  }
+}
+export default connect(null,mapDispatchToProps)( EmptyReservationCard)

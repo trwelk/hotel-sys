@@ -1,6 +1,7 @@
 import React from 'react'
 import MaterialTable from 'material-table'
-import Editable from '../../components/frontOffice/rooms/Editable'
+import RoomTypeTable from '../../components/frontOffice/rooms/RoomTypeTable'
+import MasterDetail from '../../components/frontOffice/rooms/MasterDetail'
 
 function RoomHandling() {
     return (
@@ -22,7 +23,7 @@ function RoomHandling() {
         title="Detail Panel With RowClick Preview"
         detailPanel={rowData => {
           return (
-               <Editable/> 
+               <RoomTypeTable/> 
           )
         }}
         options={{

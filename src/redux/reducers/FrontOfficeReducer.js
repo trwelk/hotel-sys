@@ -1,5 +1,7 @@
 const initState = {
-    selectedRoom:null
+    selectedRoom:null,
+    selectedMonth:9,
+    selectedDay:2
 }
 
 const FrontOfficeReducer = (state = initState, action) => {
@@ -9,6 +11,17 @@ const FrontOfficeReducer = (state = initState, action) => {
                 ...state,
                 selectedRoom:action.roomType
             });
+        case 'MONTH_SELECTED':
+                return ({
+                    ...state,
+                    selectedMonth:action.month,
+                    
+                });
+        case 'DAY_SELECTED':
+                    return ({
+                        ...state,
+                        selectedDay:action.day
+                    });
             default :
             return state;
     }
