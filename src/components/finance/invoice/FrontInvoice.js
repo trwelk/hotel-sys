@@ -14,7 +14,7 @@ import {deleteFrontInvoice} from '../../../redux/actions/financeActions/FrontInv
         { title: 'Invoice No', field: 'frontInvoice' },
         //{ title: 'Date', field: 'date' },
         { title: 'Prepared BY', field: 'preparedBy' },
-        { title: 'Customer Type', field: 'customerType'},
+        { title: 'Customer Type', field: 'customerType', lookup: {30: 'Guest', 31: 'Non-Guest'}},
         { title: 'Reservation ID', field: 'reservationID'},
         { title: 'Guest ID', field: 'guestID' },
         { title: 'Room Charges', field: 'roomCharges'},
@@ -28,8 +28,8 @@ import {deleteFrontInvoice} from '../../../redux/actions/financeActions/FrontInv
         { title: 'Total Amount', field: 'totalAmount'},
        
     ]); 
-    const room = useSelector(state => state.firestore.ordered.frontInvoice)
-    const data = room ? (room.map(room => ({...room}))) : (null)
+    const frontin = useSelector(state => state.firestore.ordered.frontInvoice)
+    const data = frontin ? (frontin.map(frontin => ({...frontin}))) : (null)
     const table = data ? (
         <MaterialTable
         title="Front-Office Invoices"
@@ -88,7 +88,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         updateFrontInvoice: (payload) => dispatch(updateFrontInvoice(payload)),
         insertFrontInvoice: (payload) => dispatch(insertFrontInvoice(payload)),
-        deleteFrontInvoice: (roomId) => dispatch(deleteFrontInvoice(roomId))
+        deleteFrontInvoice: (frontInvoice) => dispatch(deleteFrontInvoice(frontInvoice))
 
 
     }

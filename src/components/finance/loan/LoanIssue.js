@@ -15,7 +15,7 @@ import {deleteLoanIssue} from '../../../redux/actions/financeActions/LoanListAct
         { title: 'Loan Request ID', field: 'loanRequestID' },
         //{ title: 'Request Date', field: 'reqDate' },
         //{ title: 'Issue Date', field: 'issueDate' },
-        { title: 'Duration', field: 'duration'},
+        { title: 'Duration', field: 'duration', lookup: {30:'3 Months', 31: '6 Months', 32:'1 Year'}},
         //{ title: 'Final Date', field: 'finalDate' },
         { title: 'Loan Limit', field: 'loanLimit'},
         { title: 'Loan Amount', field: 'loanAmount' },
@@ -27,8 +27,8 @@ import {deleteLoanIssue} from '../../../redux/actions/financeActions/LoanListAct
         //{ title: 'Total Amount', field: 'totalAmount'},
         //{ title: 'Status', field: 'status' },
     ]); 
-    const room = useSelector(state => state.firestore.ordered.loanIssue)
-    const data = room ? (room.map(room => ({...room}))) : (null)
+    const loanis = useSelector(state => state.firestore.ordered.loanIssue)
+    const data = loanis ? (loanis.map(loanis => ({...loanis}))) : (null)
     const table = data ? (
         <MaterialTable
         title="Loan List"
@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         updateLoanIssue: (payload) => dispatch(updateLoanIssue(payload)),
         insertLoanIssue: (payload) => dispatch(insertLoanIssue(payload)),
-        deleteLoanIssue: (roomId) => dispatch(deleteLoanIssue(roomId))
+        deleteLoanIssue: (loanID) => dispatch(deleteLoanIssue(loanID))
 
 
     }

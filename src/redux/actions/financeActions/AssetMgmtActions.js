@@ -23,11 +23,11 @@ export const insertAssetList = (payload) => {
     }
 }
 
-export const deleteAssetList = (requestID) => {
-    console.log(requestID)
+export const deleteAssetList = (assetID) => {
+    console.log(assetID)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('assetList').doc(requestID).delete()
+        firestore.collection('assetList').doc(assetID).delete()
             .then((response) => {
                 console.log(response)
             }).catch((error) => {

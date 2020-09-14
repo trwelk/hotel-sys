@@ -14,7 +14,7 @@ import {deleteCashIn} from '../../../redux/actions/financeActions/CashInActions'
         { title: 'Inflow No', field: 'inflowID' },
         //{ title: 'Date', field: 'date' },
         { title: 'Description', field: 'description'},
-        { title: 'Category', field: 'category'},
+        { title: 'Category', field: 'category', lookup : {33: 'Front-Office', 34: 'Bar', 35:'Other'}},
         { title: 'Inoivce Amount', field: 'invoiceAmount' },
         //{ title: 'OT Pay', field: 'otPay'},
         //{ title: 'Allowances', field: 'allowances' },
@@ -26,8 +26,8 @@ import {deleteCashIn} from '../../../redux/actions/financeActions/CashInActions'
         //{ title: 'Total Amount', field: 'totalAmount'},
         //{ title: 'On Loan', field: 'loan'},
     ]); 
-    const room = useSelector(state => state.firestore.ordered.cashInflow)
-    const data = room ? (room.map(room => ({...room}))) : (null)
+    const cashin = useSelector(state => state.firestore.ordered.cashInflow)
+    const data = cashin ? (cashin.map(cashin  => ({...cashin }))) : (null)
     const table = data ? (
         <MaterialTable
         title="Cash Inflows"
@@ -87,7 +87,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         updateCashIn: (payload) => dispatch(updateCashIn(payload)),
         insertCashIn: (payload) => dispatch(insertCashIn(payload)),
-        deleteCashIn: (roomId) => dispatch(deleteCashIn(roomId))
+        deleteCashIn: (inflowID) => dispatch(deleteCashIn(inflowID))
 
 
     }

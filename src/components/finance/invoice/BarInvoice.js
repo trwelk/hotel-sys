@@ -14,7 +14,7 @@ import {deleteBarInvoice} from '../../../redux/actions/financeActions/BarInvoice
         { title: 'Invoice No', field: 'barInvoice' },
         //{ title: 'Date', field: 'date' },
         { title: 'Prepared BY', field: 'preparedBy' },
-        { title: 'Customer Type', field: 'customerType'},
+        { title: 'Customer Type', field: 'customerType', lookup: {30: 'Guest', 31: 'Non-Guest'}},
         { title: 'Invoice Amount', field: 'invoiceAmount' },
         { title: 'Service Charges', field: 'serviceCharges'},
         { title: 'Payment Type', field: 'paymentType'},
@@ -22,8 +22,8 @@ import {deleteBarInvoice} from '../../../redux/actions/financeActions/BarInvoice
         { title: 'Total Amount', field: 'totalAmount'},
        
     ]); 
-    const room = useSelector(state => state.firestore.ordered.barInvoice)
-    const data = room ? (room.map(room => ({...room}))) : (null)
+    const barin = useSelector(state => state.firestore.ordered.barInvoice)
+    const data = barin ? (barin.map(barin => ({...barin}))) : (null)
     const table = data ? (
         <MaterialTable
         title="Bar Invoices"
@@ -80,7 +80,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         updateBarInvoice: (payload) => dispatch(updateBarInvoice(payload)),
         insertBarInvoice: (payload) => dispatch(insertBarInvoice(payload)),
-        deleteBarInvoice: (roomId) => dispatch(deleteBarInvoice(roomId))
+        deleteBarInvoice: (barInvoice) => dispatch(deleteBarInvoice(barInvoice))
 
 
     }

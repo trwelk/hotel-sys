@@ -25,8 +25,8 @@ import {deleteSalary} from '../../../redux/actions/financeActions/PayrollActions
         //{ title: 'Total Amount', field: 'totalAmount'},
         //{ title: 'On Loan', field: 'loan'},
     ]); 
-    const room = useSelector(state => state.firestore.ordered.salaryMgmt)
-    const data = room ? (room.map(room => ({...room}))) : (null)
+    const salmg = useSelector(state => state.firestore.ordered.salaryMgmt)
+    const data = salmg ? (salmg.map(salmg => ({...salmg}))) : (null)
     const table = data ? (
         <MaterialTable
         title="Staff Payroll"
@@ -85,7 +85,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         updateSalary: (payload) => dispatch(updateSalary(payload)),
         insertSalary: (payload) => dispatch(insertSalary(payload)),
-        deleteSalary: (roomId) => dispatch(deleteSalary(roomId))
+        deleteSalary: (salaryID) => dispatch(deleteSalary(salaryID))
 
 
     }

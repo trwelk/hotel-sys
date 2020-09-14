@@ -1,5 +1,7 @@
+//import {CalculatedField} from '@syncfusion/ej2-react-pivotview';
 import React from 'react'
 import MaterialTable from 'material-table'
+//import rowData from 'material-table'
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
@@ -13,7 +15,7 @@ import {deleteAssetRequest} from '../../../redux/actions/financeActions/AssetReq
     const { useState } = React;
     const [columns, setColumns] = useState([
       { title: 'Request ID', field: 'requestID' },
-      //{ title: 'Date', field: 'date' },
+      //{ title: 'Request Date', field: 'date', type: 'date' },
       { title: 'Asset Type', field: 'assetType', 
       lookup: { 33: 'Machinery', 34: 'Investments', 35: 'Inventory', 36: 'Furniture', 37: 'Vehicle', 38: 'Buidling' }},
       { title: 'Description', field: 'description' },
@@ -22,8 +24,8 @@ import {deleteAssetRequest} from '../../../redux/actions/financeActions/AssetReq
       { title: 'Total Amount', field: 'totalAmount'},
       { title: 'Status', field: 'status', lookup: { 33: 'Requested', 34: 'Pending', 35: 'Rejected', 36: 'Accepted', 37: 'Purchased' }},
     ]); 
-    const room = useSelector(state => state.firestore.ordered.assetRequest)
-    const data = room ? (room.map(room => ({...room}))) : (null)
+    const assreq = useSelector(state => state.firestore.ordered.assetRequest)
+    const data = assreq ? (assreq.map(assreq => ({...assreq}))) : (null)
     const table = data ? (
         <MaterialTable
         title="Asset Requests"
@@ -79,7 +81,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         updateAssetRequest: (payload) => dispatch(updateAssetRequest(payload)),
         insertAssetRequest: (payload) => dispatch(insertAssetRequest(payload)),
-        deleteAssetRequest: (roomId) => dispatch(deleteAssetRequest(roomId))
+        deleteAssetRequest: (requestID) => dispatch(deleteAssetRequest(requestID))
 
 
     }

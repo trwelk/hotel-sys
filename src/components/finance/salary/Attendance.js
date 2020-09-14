@@ -13,7 +13,8 @@ import {deleteAttendance} from '../../../redux/actions/financeActions/Attendance
     const [columns, setColumns] = useState([
         { title: 'Attendance ID', field: 'attendanceID' },
         { title: 'Employee ID', field: 'employeeID' },
-        { title: 'Department', field: 'department' },
+        { title: 'Department', field: 'department', lookup: 
+        {33:'Front-Office', 34: 'Finance', 35: 'Housekeeping', 36: 'Purchases', 37: 'HR', 38: 'F&B Service', 39: 'F&B Production', 40: 'Maintenance'}},
         { title: 'Month', field: 'month'},
         { title: 'Year', field: 'year' },
         { title: 'Total Working Days', field: 'totWDays'},
@@ -22,10 +23,10 @@ import {deleteAttendance} from '../../../redux/actions/financeActions/Attendance
         { title: 'Actual Working Hours', field: 'actWHours'},
         { title: 'Allowances', field: 'allowances'},
         //{ title: 'Total Amount', field: 'totalAmount'},
-        { title: 'On Loan', field: 'loan'},
+        { title: 'On Loan', field: 'loan', lookup: {30:'Yes', 31:'No'}},
     ]); 
-    const room = useSelector(state => state.firestore.ordered.attendanceFin)
-    const data = room ? (room.map(room => ({...room}))) : (null)
+    const atten = useSelector(state => state.firestore.ordered.attendanceFin)
+    const data = atten ? (atten.map(atten => ({...atten}))) : (null)
     const table = data ? (
         <MaterialTable
         title="Attendance Information"
@@ -85,7 +86,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         updateAttendance: (payload) => dispatch(updateAttendance(payload)),
         insertAttendance: (payload) => dispatch(insertAttendance(payload)),
-        deleteAttendance: (roomId) => dispatch(deleteAttendance(roomId))
+        deleteAttendance: (attendanceID) => dispatch(deleteAttendance(attendanceID))
 
 
     }

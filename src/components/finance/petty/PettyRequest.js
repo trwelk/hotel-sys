@@ -29,8 +29,8 @@ import {deletePettyRequest} from '../../../redux/actions/financeActions/PettyReq
       { title: 'Requested Amount', field: 'requestedAmount'},
       { title: 'Status', field: 'status', lookup: { 33: 'Requested', 34: 'Pending', 35: 'Rejected', 36: 'Accepted', 37: 'Issued' }},
     ]);
-    const room = useSelector(state => state.firestore.ordered.pettycashRequest)
-    const data = room ? (room.map(room => ({...room}))) : (null)
+    const petrq = useSelector(state => state.firestore.ordered.pettycashRequest)
+    const data = petrq ? (petrq.map(petrq => ({...petrq}))) : (null)
     const table = data ? (
         <MaterialTable
         title="Petty Cash Requests"

@@ -21,8 +21,8 @@ import {deletePettyCash} from '../../../redux/actions/financeActions/PettyCashMa
       //{ title: 'Description', field: 'description' },
       { title: 'Variance', field: 'variance', lookup: {33: 'Budget', 34: 'Short', 35: 'Over'}},
     ]); 
-    const room = useSelector(state => state.firestore.ordered.pettycashManagement)
-    const data = room ? (room.map(room => ({...room}))) : (null)
+    const petmg = useSelector(state => state.firestore.ordered.pettycashManagement)
+    const data = petmg ? (petmg.map(petmg => ({...petmg}))) : (null)
     const table = data ? (
         <MaterialTable
         title="Petty Cash Management"
