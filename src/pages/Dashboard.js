@@ -10,6 +10,7 @@ import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
 import RoomTypeTable from '../components/frontOffice/rooms/RoomTypeTable';
 import Editable from '../components/frontOffice/rooms/Editable';
+import PoolService from '../components/maintenance/PoolService';
 import currentSuppliers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
 import purchasesRequestManagement from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment'
 import purchasesOrder from '../components/purchasesnInventory/purchasesManagment/purchasesOrder'
@@ -226,9 +227,7 @@ function Dashboard(props) {
             <Route exact path="/cust" component={CustomerTable}/>
             <Route exact path="/feed" component={FeedBackTable}/>
 
-      
-
- 
+            <Route exact path="/poolservice" component={PoolService}/>
             <Route exact path="/newMenu" component={MenuForm} />
             {/* <Route exact path='/newMenu' component={AddMenu}/> */}
             <Route exact path='/newOrder' component={OrderForm}/>
