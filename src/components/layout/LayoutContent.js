@@ -13,7 +13,7 @@ import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import RoomList from '../frontOffice/rooms/RoomList';
-import Editable from '../frontOffice/rooms/Editable'
+import RoomTypeTable from '../frontOffice/rooms/RoomTypeTable'
 
 const styles = (theme) => ({
   paper: {
@@ -73,7 +73,7 @@ function LayoutContent(props) {
         </Toolbar>
       </AppBar>
       <div className={classes.contentWrapper}>
-                <Editable/>
+                <RoomTypeTable/>
       </div>
     </Paper>
   );

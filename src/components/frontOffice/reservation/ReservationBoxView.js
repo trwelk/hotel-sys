@@ -12,13 +12,19 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Skeleton from '@material-ui/lab/Skeleton';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { firestoreConnect } from 'react-redux-firebase';
+import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
 
 import ReservationCard from './utill/ReservationCard'
 import EmptyReservationCard from './utill/EmptyReservationCard';
+import {handleMonthPickReservation} from '../../../redux/actions/frontOfficeActions/FrontOfficeNavActions'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,18 +51,23 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
 }));
 
 function  ReservatonBoxView (props)  {
  
   const { useState } = React;
   const [spacing, setSpacing] = React.useState(2);
-  const [month, setMonth] = useState(7);
+  const [month, setMonth] = useState(null);
   const [roomType, setRoomType] = React.useState('EXKINGSUITE');
 
   const reservationsDb = useSelector(state => state.firestore.ordered.reservation )
   const roomsDb = useSelector(state => state.firestore.ordered.room )
   const roomTypeDb = useSelector(state => state.firestore.ordered.roomtype )
+  
   let rooms = null;
   let reservations= null;
   let numberOfRooms= null;
@@ -75,9 +86,17 @@ function  ReservatonBoxView (props)  {
     setSpacing(Number(event.target.value));
   };
 
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
+
 
   var box = [ ];
-  for(var i = 0; i < 31; ++i) {
+  for(var i = 1; i < 32; ++i) {
     box[i] = [ ];
       for(var j = 0; j < numberOfRooms ; ++j) {
         box[i][j] = i+j; 
@@ -109,11 +128,7 @@ function  ReservatonBoxView (props)  {
       }
     }
 
-    for(var a = 0 ; a < 31 ; a++){
-      for(var b = 0 ; b < numberOfRooms ; b++){
-        console.log( a,b,box[a][b] );
-      }
-    }
+
   }
   
   const rows = box.map((row,rIndex) => {
@@ -122,7 +137,7 @@ function  ReservatonBoxView (props)  {
         <Grid key={eIndex} item style={{padding:"12px 0px"}}>
           {element.id ? (
             <ReservationCard/>
-          ) : (<EmptyReservationCard month={8} roomType={roomType} roomNo={eIndex} startDay={rIndex}/>)}
+          ) : (<EmptyReservationCard month={month} roomType={roomType} roomNo={eIndex} startDay={rIndex}/>)}
         </Grid>      
       )})
 
@@ -135,7 +150,7 @@ function  ReservatonBoxView (props)  {
                       }}>
           
           {rIndex%2 == 0 ? <EventIcon style={{fill:"white"}}/> : <EventIcon style={{fill:"black"}}/>}
-          {rIndex%2 == 0 ?  <h2 style={{color:"white"}}>{rIndex + 1} </h2> :  <h2 style={{color:"black"}}>{rIndex + 1} </h2>}
+          {rIndex%2 == 0 ?  <h2 style={{color:"white"}}>{rIndex } </h2> :  <h2 style={{color:"black"}}>{rIndex } </h2>}
         </div>
         {paper}
       </Grid>
@@ -145,11 +160,12 @@ function  ReservatonBoxView (props)  {
 
  
   const handleMonthPick = (e) => {
-    console.log(new Date(e.target.value));
     const mo = new Date(e.target.value);
     const month = mo.getMonth();
-    
-    setMonth(month);
+    props.handleMonthPickReservation(month + 1)
+    console.log("tttttttttttttttttttt",month,e)
+
+    setMonth(month + 1);
   };
 
   const roomTypeSelector = roomTypeDb ? (roomTypeDb.map((roomType,index) => {
@@ -160,6 +176,10 @@ function  ReservatonBoxView (props)  {
     setRoomType(event.target.value);
   };
 
+
+
+  if(isLoaded(roomTypeDb)){
+    console.log(month)
   return (
     <div style={{display: "flex",
                 height: "654px",
@@ -171,15 +191,15 @@ function  ReservatonBoxView (props)  {
         style={{color:"white"}}
         id="month"
         type="month"
-        value="2020-08"
         onChange={handleMonthPick}
         className={classes.textField}
         InputLabelProps={{
           shrink: true,
         }}
       /> 
-           <FormControl className={classes.formControl}>
+      <FormControl className={classes.formControl}>
         <Select
+         
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={roomType}
@@ -187,25 +207,46 @@ function  ReservatonBoxView (props)  {
         >
          {roomTypeSelector}
         </Select>
+        {
+          roomTypeDb ? (
+        <Autocomplete
+      id="combo-box-demo"
+      onChange={handleRoomTypeSelector}
+      options={roomTypeDb}
+      getOptionLabel={(option) => option.id}
+      style={{ width: 300 }}
+      renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+    />) : (null)
+        }
       </FormControl>
 </div>
-      <Grid item xs={12} style={{    paddingTop: "51px"}}>
-        {rows}
+      <Grid item xs={12} style={{ paddingTop: "51px"}}>
+        {month ? rows : <div>loading</div>}
       </Grid>
     </Grid>
-
+    <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
 </div>
  
   
   );
+      }
+      else{
+return <div>Loading</div>            }
   
 
 }
 
-export default firestoreConnect([
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleMonthPickReservation: (payload) => dispatch(handleMonthPickReservation(payload)),
+
+  }
+}
+export default compose(connect(null,mapDispatchToProps),firestoreConnect([
   {collection: 'reservation'},
   {collection: 'room'},
   {collection: 'roomtype'}
-
-
-]) (ReservatonBoxView)
+])) (ReservatonBoxView)

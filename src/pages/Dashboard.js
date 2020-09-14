@@ -10,7 +10,7 @@ import { BrowserRouter, Route,Switch } from 'react-router-dom';
 
 import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
-import Editable from '../components/frontOffice/rooms/Editable';
+import RoomTypeTable from '../components/frontOffice/rooms/RoomTypeTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import EmployeeList from '../components/hr/employee/EmployeeList';
 import Navigator from '../components/layout/Navigator';
@@ -18,6 +18,10 @@ import Content from '../components/layout/LayoutContent';
 import Header from '../components/layout/Header';
 import RoomHandling from './frontOfficePages/RoomHandling';
 import PermanentDrawerLeft from '../components/frontOffice/rooms/MasterDetail';
+import RoomList from '../components/frontOffice/rooms/RoomList';
+import InsertReservationForm from '../components/frontOffice/reservation/forms/InsertReservationForm';
+import CustomerTable from '../components/frontOffice/customer/CustomerTable';
+import FeedBackTable from '../components/frontOffice/feedback/FeedBackTable';
 
 function Copyright() {
   return (
@@ -162,7 +166,7 @@ const styles = {
   },
   main: {
     flex: 1,
-    padding: theme.spacing(6, 4),
+    padding: "0px",
     background: '#eaeff1',
   },
   footer: {
@@ -209,18 +213,21 @@ function Dashboard(props) {
 
 
             <Switch>    
-            <Route exact path='/' component={LayoutContent}/>
+            <Route exact path='/' component={RoomList}/>
             <Route exact path="/room" component={RoomHandling}/>
             <Route exact path='/res' component={ReservatonBoxView}/>
-            <Route exact path='/ed' component={Editable}/>
-            <Route exact path='/Food & Beverages' component={fnbProdMgmt}/>
+            <Route exact path='/ed' component={RoomTypeTable}/>
+            <Route exact path='/form' component={InsertReservationForm}/>
+            <Route exact path='/Food&Beverages' component={fnbProdMgmt}/>
+            <Route exact path='/m' component={PermanentDrawerLeft}/>
             <Route exact path="/hr/employee" component={EmployeeList}/>
+            <Route exact path="/cust" component={CustomerTable}/>
+            <Route exact path="/feed" component={FeedBackTable}/>
+
             </Switch>
 
           </main>
-          <footer className={classes.footer}>
-            <Copyright />
-          </footer>
+      
         </div>
       </div>
     </ThemeProvider>
