@@ -33,7 +33,6 @@ import {deleteRoomType} from '../../../redux/actions/frontOfficeActions/RoomType
               setTimeout(() => {
                 //setData([...data, newData]);
                 props.insertRoomType(newData);
-                
                 resolve();
               }, 1000)
             }),
@@ -66,8 +65,8 @@ import {deleteRoomType} from '../../../redux/actions/frontOfficeActions/RoomType
     ) : (<div>Loading</div>)
 
 
-  
 
+    
   
     return(
         <div>
