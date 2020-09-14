@@ -5,13 +5,18 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-
 import { BrowserRouter, Route,Switch } from 'react-router-dom';
-
 import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
 import RoomTypeTable from '../components/frontOffice/rooms/RoomTypeTable';
+import Editable from '../components/frontOffice/rooms/Editable';
+import currentSuppliers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
+import purchasesRequestManagement from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment'
+import purchasesOrder from '../components/purchasesnInventory/purchasesManagment/purchasesOrder'
+import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
+import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
+import AddMenu from '../components/F&bProduction/management/AddNewMenu';
 import EmployeeList from '../components/hr/employee/EmployeeList';
 import Navigator from '../components/layout/Navigator';
 import Content from '../components/layout/LayoutContent';
@@ -22,6 +27,8 @@ import RoomList from '../components/frontOffice/rooms/RoomList';
 import InsertReservationForm from '../components/frontOffice/reservation/forms/InsertReservationForm';
 import CustomerTable from '../components/frontOffice/customer/CustomerTable';
 import FeedBackTable from '../components/frontOffice/feedback/FeedBackTable';
+import MenuForm from "../components/F&bProduction/management/MenuForm";
+
 
 function Copyright() {
   return (
@@ -185,32 +192,25 @@ function Dashboard(props) {
 
   return (
     <BrowserRouter>
-    <ThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <nav className={classes.drawer}>
-          <Hidden smUp implementation="js">
-            <Navigator
-              PaperProps={{ style: { width: drawerWidth } }}
-              variant="temporary"
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-            />
-          </Hidden>
-          <Hidden xsDown implementation="css">
-            <Navigator PaperProps={{ style: { width: drawerWidth } }} 
-              
-            />
-          </Hidden>
-        </nav>
-        <div className={classes.app}>
-          <Header onDrawerToggle={handleDrawerToggle} />
-          <main className={classes.main}>
-
-
-
-
-
+      <ThemeProvider theme={theme}>
+        <div className={classes.root}>
+          <CssBaseline />
+          <nav className={classes.drawer}>
+            <Hidden smUp implementation="js">
+              <Navigator
+                PaperProps={{ style: { width: drawerWidth } }}
+                variant="temporary"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+              />
+            </Hidden>
+            <Hidden xsDown implementation="css">
+              <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+            </Hidden>
+          </nav>
+          <div className={classes.app}>
+            <Header onDrawerToggle={handleDrawerToggle} />
+            <main className={classes.main}>
 
             <Switch>    
             <Route exact path='/' component={RoomList}/>
@@ -224,13 +224,27 @@ function Dashboard(props) {
             <Route exact path="/cust" component={CustomerTable}/>
             <Route exact path="/feed" component={FeedBackTable}/>
 
+      
+
+ 
+            <Route exact path="/newMenu" component={MenuForm} />
+            <Route exact path='/newMenu' component={AddMenu}/>
+            <Route exact path="/foodOrder" component={editOrderTable} />
+            <Route exact path="/hr/employee" component={EmployeeList}/>
+            <Route exact path="/sup" component={currentSuppliers}/>
+            <Route exact path="/req" component={purchasesRequestManagement}/>
+            <Route exact path="/porder" component={purchasesOrder}/>
+            <Route exact path="/Purchases & Inventory" component={addSuppliers}/>
             </Switch>
 
           </main>
-      
+          <footer className={classes.footer}>
+            <Copyright />
+          </footer>
+
         </div>
-      </div>
-    </ThemeProvider>
+        </div>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }
