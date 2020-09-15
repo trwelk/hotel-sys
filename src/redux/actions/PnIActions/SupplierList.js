@@ -6,11 +6,11 @@ export const updateSupplierInfo = (payload) => {
             firstName:payload.firstName,
             lastName:payload.lastName,
             email:payload.email,
-            //phone:payload.phone,
+            phone:payload.phone,
             itemtype:payload.itemtype,
-            //location:payload.location,
-            //department:payload.department,
-            period:payload.period
+            location:payload.location,
+            department:payload.department,
+            date:payload.date
         }); 
     }
 
@@ -29,7 +29,7 @@ export const insertSupplierInfo = (payload) => {
             itemtype:payload.itemtype,
             //location:payload.loaction,
             //department:payload.department,
-            period:payload.period
+            date:payload.date
         }).then((response) => {
             console.log(response)
         }).catch((response) => {
