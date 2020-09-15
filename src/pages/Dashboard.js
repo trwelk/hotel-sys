@@ -34,6 +34,7 @@ import SalaryMain from '../components/finance/salary/SalaryMain';
 import Attendance from '../components/finance/salary/Attendance';
 import SalaryMgmt from '../components/finance/salary/SalaryMgmt';
 
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -240,6 +241,9 @@ function Dashboard(props) {
             <Route exact path = '/finance/salarymain' component = {SalaryMain} />
             <Route exact path = '/finance/salattendance' component = {Attendance} />
             <Route exact path = '/finance/salary' component = {SalaryMgmt} />
+
+
+           
           
             </Switch>
 
