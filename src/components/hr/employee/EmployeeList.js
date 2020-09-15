@@ -3,25 +3,30 @@ import MaterialTable from 'material-table'
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
+import EmployeeForm from '../employee/EmployeeForm'
 
-import {insertEmployee, updateEmployee} from '../../../redux/actions/hrActions/EmployeeActions'
+import {insertEmployee, updateEmployee, deleteEmployee} from '../../../redux/actions/hrActions/EmployeeActions'
 function EmployeeList(props) {
  
     const { useState } = React;
     const [columns, setColumns] = useState([
       { title: 'Employee ID', field: 'id' },
       { title: 'Employee Name', field: 'name' },
-      { title: 'Employee Salary', field: 'Salary'},
-      {
-        title: 'Address',
-        field: 'address',
-      },
+      { title: 'Employee Type', field: 'emptype' },
+      { title: 'Department', field: 'department' },
+      { title: 'Designation', field: 'designation' },
+      { title: 'Joined Date', field: 'joineddate'},
+      { title: 'Reports To', field: 'reportsto'},
+      { title: 'Contact Number', field: 'contactnumber' },
+      { title: 'Address', field: 'address' },
+      { title: 'Date of Birth', field: 'dob'}
+      
     ]); 
     const employees = useSelector(state => state.firestore.ordered.employee)
     const data = employees ? (employees.map(employee => ({...employee}))) : (null)
     const table = data ? (
         <MaterialTable
-        title="EmployeeList Preview"
+        title="Employee List Preview"
         columns={columns}
         data={data}
         editable={{
@@ -53,7 +58,7 @@ function EmployeeList(props) {
                 dataDelete.splice(index, 1);
                 //setData([...dataDelete]);
                 console.log(oldData)
-                props.deleteRoomType(oldData.id)
+                props.deleteEmployee(oldData.id)
                 resolve()
               }, 1000)
             }),
@@ -78,6 +83,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         insertEmployee: (payload) => dispatch(insertEmployee(payload)),
         updateEmployee: (payload) => dispatch(updateEmployee(payload)),
+        deleteEmployee: (empId) => dispatch(deleteEmployee(empId))
     }
 }
   export default compose(connect(null,mapDispatchToProps),firestoreConnect([

@@ -14,7 +14,8 @@ import ReservatonBoxView from '../components/frontOffice/reservation/Reservation
 import Finance from '../components/frontOffice/Finance';
 import Editable from '../components/frontOffice/rooms/Editable';
 import EmployeeList from '../components/hr/employee/EmployeeList';
-
+import AbsenceTypeList from '../components/hr/absence/AbsenceTypeList';
+import EmployeeTypeCard from '../components/hr/employee/EmployeeTypeCard';
 
 function Copyright() {
   return (
@@ -206,7 +207,8 @@ function Dashboard(props) {
             <Route     exact path='/res' component={ReservatonBoxView}/>
             <Route exact path="/ed" component={Editable}/>
             <Route exact path="/hr/employee" component={EmployeeList}/>
-
+            <Route exact path="/hr/absence/abtype" component={AbsenceTypeList}/>
+            <Route exact path="/hr/card" component={EmployeeTypeCard}/>
             </Switch>
 
 
