@@ -4,6 +4,10 @@ import MaterialTable from 'material-table'
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { updateProductType } from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
 import { insertProductType } from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
@@ -20,10 +24,66 @@ function EditProductTable(props) {
     { title: 'Amount', field: 'amount', type :'numeric', filtering: false },
 
   ]);
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'bottom',
+    horizontal: 'right',
+  });
+  const { vertical, horizontal, open ,error} = state;
+
   const orderNo = props.orderNo
   const OrderPro = useSelector(state => state.firestore.ordered.orderProducts)
   const datacopy = OrderPro ? (OrderPro.map(OrderPro => ({ ...OrderPro }))) : (null)
   const data = datacopy ? (datacopy.filter(data => data.orderNo == orderNo)) : datacopy
+//  const Products = product ?(): (null)
+// const Products = useSelector(state => state.firestore.ordered.product )
+// const ProductsSelector = Products ? (Products.map((C) => {
+//   return  <MenuItem value={product.id}>{product.name}</MenuItem>
+// })) :(null)
+  // ------------------new ----------------
+
+  const validateData___  = (data) => {
+    if(data.id == null || data.id == ""){
+      return "Field ID Cannot be null"
+
+    }
+    if(data.orderNo == null || data.orderNo == ""){
+      return "Field ID Cannot be null"
+
+    }
+    else if(data.id.length != 5 ){
+      return "Field ID sould contain 5 characters"
+
+    }
+    else if(data.ProName == null || data.ProName == ""){
+      return "Field Name Cannot be null"
+    }
+    else if(data.quantity == null || data.quantity == ""){
+      return "Field quantity Cannot be null"
+    }
+    else if(data.amount == null || data.amount == ""){
+      return "Field amount Cannot be null"
+    }
+    else
+    return null;
+  }
+
+  
+  const handleClick = (newState) => () => {
+    setState({ open: true, ...newState });
+  };
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
+
+
+
+
+  // const orderNo = props.orderNo
+  // const OrderPro = useSelector(state => state.firestore.ordered.orderProducts)
+  // const datacopy = OrderPro ? (OrderPro.map(OrderPro => ({ ...OrderPro }))) : (null)
+  // const data = datacopy ? (datacopy.filter(data => data.orderNo == orderNo)) : datacopy
   const table = data ? (
     <MaterialTable style={{ padding: "0px" }}
       title="Editable Preview"
@@ -32,23 +92,53 @@ function EditProductTable(props) {
       editable={{
         onRowAdd: newData =>
           new Promise((resolve, reject) => {
-            setTimeout(() => {
-              //setData([...data, newData]);
-              props.insertProductType(newData);
-              resolve();
-            }, 1000)
+            const error = validateData___(newData);
+            if (error != null){
+              setState({ ...state, open: true,error:error });
+              reject();
+            }
+            else{
+              setTimeout(() => {
+                console.log(data)
+                props.insertProductType(newData);
+                resolve();
+              }, 1000)
+            }
+            // setTimeout(() => {
+            //   //setData([...data, newData]);
+             
+            //   resolve();
+            // }, 1000)
           }),
         onRowUpdate: (newData, oldData) =>
           new Promise((resolve, reject) => {
-            setTimeout(() => {
-              const dataUpdate = [...data];
+            const error = validateData___(newData);
+            if (error != null){
+              reject();
+              setState({ ...state, open: true,error:error });
+            }
+            else{
+              setTimeout(() => {
+                const dataUpdate = [...data];
               const index = oldData.tableData.id;
               dataUpdate[index] = newData;
               //setData([...dataUpdate]);
               console.log(newData, oldData)
               props.updateProductType(newData)
               resolve();
-            }, 1000)
+              }, 1000)
+            }
+
+
+            // setTimeout(() => {
+            //   const dataUpdate = [...data];
+            //   const index = oldData.tableData.id;
+            //   dataUpdate[index] = newData;
+            //   //setData([...dataUpdate]);
+            //   console.log(newData, oldData)
+            //   props.updateProductType(newData)
+            //   resolve();
+            // }, 1000)
           }),
         onRowDelete: oldData =>
           new Promise((resolve, reject) => {
@@ -69,6 +159,22 @@ function EditProductTable(props) {
     />
   ) : (<div>Loading</div>)
 
+  const feedBackToast =  (<Snackbar 
+    autoHideDuration={200000}
+    anchorOrigin={{ vertical, horizontal }}
+    open={open}
+    onClose={handleClose}
+    key={vertical + horizontal}
+    >
+        <div >
+
+      <Alert variant="filled" severity="error" style={{display: "flex",alignItems: "center"}}>
+      <h3>{error}</h3>
+      
+      </Alert>
+      </div>
+    </Snackbar>)
+
 
 
 
@@ -76,6 +182,7 @@ function EditProductTable(props) {
   return (
     <div style={{ padding_left: "5px" }}>
       {table}
+      {feedBackToast}
     </div>
 
   )
