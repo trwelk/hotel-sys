@@ -3,13 +3,10 @@ import MaterialTable from 'material-table'
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
-
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
-
-
 import {updateRoomType} from '../../../redux/actions/frontOfficeActions/RoomTypeActions'
 import {insertRoomType} from '../../../redux/actions/frontOfficeActions/RoomTypeActions'
 import {deleteRoomType} from '../../../redux/actions/frontOfficeActions/RoomTypeActions'
