@@ -120,7 +120,7 @@ function  ReservatonBoxView (props)  {
         if(room == reservations[reservation].roomNo ){
           for(var dayOfBooking of reservedDays){
             //add a if condition here to check if dayOfBooking.getMonth is = to the above selected month
-            if(dayOfBooking.getMonth() == month)
+            if(dayOfBooking.getMonth() == month -1)
               box[dayOfBooking.getDate()][room]= reservations[reservation] 
 
           }
@@ -137,7 +137,7 @@ function  ReservatonBoxView (props)  {
         <Grid key={eIndex} item style={{padding:"12px 0px"}}>
           {element.id ? (
             <ReservationCard/>
-          ) : (<EmptyReservationCard month={month} roomType={roomType} roomNo={eIndex} startDay={rIndex}/>)}
+          ) : (<EmptyReservationCard  month={month} roomType={roomType} roomNo={eIndex} startDay={rIndex}/>)}
         </Grid>      
       )})
 
