@@ -21,6 +21,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import DirectionsIcon from '@material-ui/icons/Directions';
 import EditProductTable from './EditProductTable';
+import OrderForm from './OrderForm';
 
 
 const useStyles = makeStyles((theme) => ({

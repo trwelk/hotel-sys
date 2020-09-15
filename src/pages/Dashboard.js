@@ -10,10 +10,10 @@ import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
 import RoomTypeTable from '../components/frontOffice/rooms/RoomTypeTable';
 import Editable from '../components/frontOffice/rooms/Editable';
+import PoolService from '../components/maintenance/PoolService';
 import currentSuppliers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
 import purchasesRequestManagement from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment'
 import purchasesOrder from '../components/purchasesnInventory/purchasesManagment/purchasesOrder'
-import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
 import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import Navigator from '../components/layout/Navigator';
@@ -26,10 +26,14 @@ import InsertReservationForm from '../components/frontOffice/reservation/forms/I
 import CustomerTable from '../components/frontOffice/customer/CustomerTable';
 import FeedBackTable from '../components/frontOffice/feedback/FeedBackTable';
 import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
+import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
+import AssetRequest from '../components/frontOffice/reservation/'
+
 import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
 import EditOrderTable from '../components/fnbServices/EditOrderTable';
 import OrderForm from '../components/fnbServices/OrderForm';
 import ChooseModuleDialog from '../components/layout/ChoosefnbModuleDialog';
+
 
 
 function Copyright() {
@@ -225,6 +229,7 @@ function Dashboard(props) {
             <Route exact path='/m' component={PermanentDrawerLeft}/>
             <Route exact path="/cust" component={CustomerTable}/>
             <Route exact path="/feed" component={FeedBackTable}/>
+            <Route exact path="/poolservice" component={PoolService}/>
             <Route exact path="/newMenu" component={MenuForm} />
             <Route exact path='/newOrder' component={OrderForm}/>
             <Route exact path="/foodOrder" component={FnBserviceMng} />
@@ -232,6 +237,7 @@ function Dashboard(props) {
             <Route exact path="/req" component={purchasesRequestManagement}/>
             <Route exact path="/porder" component={purchasesOrder}/>
             <Route exact path="/Purchases & Inventory" component={addSuppliers}/>
+
             </Switch>
 
           </main>

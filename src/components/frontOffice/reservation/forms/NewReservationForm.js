@@ -72,7 +72,7 @@ const steps = ['Reservation Details'];
 function NewReservationForm(props) {
     const [open, setOpen] = React.useState(false);
     const [state, setState] = useState({ firstName: "", lastName: "",roomNo:props.roomNo,roomType:props.roomType,phone:"",customerEmail:""});
-    const month = useSelector(state => state.frontOffice.selectedMonth )
+    const month = useSelector(state => state.frontOffice.selectedMonth + 1 )
     const startDay = new Date(Date.parse(month + ' ' + (props.startDay ) +' 2020'))
 
   console.log(startDay)
