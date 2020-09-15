@@ -16,7 +16,6 @@ import purchasesOrder from '../components/purchasesnInventory/purchasesManagment
 import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
 import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
-import EmployeeList from '../components/hr/employee/EmployeeList';
 import Navigator from '../components/layout/Navigator';
 import Content from '../components/layout/LayoutContent';
 import Header from '../components/layout/Header';
@@ -30,6 +29,7 @@ import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
 import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
 import EditOrderTable from '../components/fnbServices/EditOrderTable';
 import OrderForm from '../components/fnbServices/OrderForm';
+import ChooseModuleDialog from '../components/layout/ChoosefnbModuleDialog';
 
 
 function Copyright() {
@@ -220,20 +220,14 @@ function Dashboard(props) {
             <Route exact path='/res' component={ReservatonBoxView}/>
             <Route exact path='/ed' component={RoomTypeTable}/>
             <Route exact path='/form' component={InsertReservationForm}/>
-            <Route exact path='/Food&Beverages' component={fnbProdMgmt}/>
+            <Route exact path='/Food & Beverages' component={ChooseModuleDialog}/>
+            <Route exact path="/fnbProduction" component={fnbProdMgmt}/>
             <Route exact path='/m' component={PermanentDrawerLeft}/>
-            <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/cust" component={CustomerTable}/>
             <Route exact path="/feed" component={FeedBackTable}/>
-
-      
-
- 
             <Route exact path="/newMenu" component={MenuForm} />
-            {/* <Route exact path='/newMenu' component={AddMenu}/> */}
             <Route exact path='/newOrder' component={OrderForm}/>
             <Route exact path="/foodOrder" component={FnBserviceMng} />
-            <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/sup" component={currentSuppliers}/>
             <Route exact path="/req" component={purchasesRequestManagement}/>
             <Route exact path="/porder" component={purchasesOrder}/>
