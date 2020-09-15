@@ -3,8 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Box from '@material-ui/core/Box';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,6 +14,8 @@ import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 import { FormControl, Grid, InputLabel, ListItemIcon, MenuItem, Select } from '@material-ui/core';
 import WeddingTemplate from '../Templates/WeddingMenuTemplate';
+import Snackbar from '@material-ui/core/Snackbar';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 function SetMenuType(MenuType){
   if (MenuType == 1) {
@@ -57,7 +57,56 @@ function MenuForm(props) {
     SetMenuType(event.target.value);
   };
 
-  const displayType = document.getElementById('MenuType');
+  const validateData___  = (data) => {
+    if(data.id == null || data.id == ""){
+      return "Field ID Cannot be null"
+
+    }
+    else if(data.id.length != 5 ){
+      return "Field ID sould contain 5 characters"
+
+    }
+    else if(data.menuName == null || data.menuName == ""){
+      return "Field Menu Name Cannot be null"
+    }
+    else if(data.price == null || data.price == ""){
+      return "Field price Cannot be null"
+    }
+    // else if(data.menuType == null || data.menuType == ""){
+    //   return "Field Menu Type Cannot be null"
+    // }
+    else
+    return null;
+  }
+
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'bottom',
+    horizontal: 'right',
+  });
+
+  const { vertical, horizontal, open ,error} = state;
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
+
+  const [Menu,setMenu] = React.useState({id:'',menuType:'',menuName:'',price:''})
+  const feedBackToast =  (<Snackbar 
+    autoHideDuration={200000}
+    anchorOrigin={{ vertical, horizontal }}
+    open={open}
+    onClose={handleClose}
+    key={vertical + horizontal}
+    >
+        <div >
+
+      <Alert variant="filled" severity="error" style={{display: "flex",alignItems: "center"}}>
+      <h3>{error}</h3>
+      
+      </Alert>
+      </div>
+    </Snackbar>)
 
   return (
     <Container component="main" maxWidth="xs">
@@ -71,18 +120,24 @@ function MenuForm(props) {
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit((data)=>
             new Promise((resolve,reject)=>{
+                const error = validateData___(data);
+                if (error != null){
+                  setState({ ...state, open: true,error:error });
+                  reject();
+                }
+                else{
                 setTimeout(() => {
                     alert(JSON.stringify(data));
                     props.insertMenu(data)
                     resolve();
                 },1000)
+              }
             }))}>
               <Grid container spacing={1}>
               <Grid item xs={4}>
         <TextField
             variant="outlined"
             margin="dense"
-            inputRef={register}
             required
             fullWidth
             id="id"
@@ -94,7 +149,6 @@ function MenuForm(props) {
           <TextField
             variant="outlined"
             margin="dense"
-            inputRef={register}
             required
             fullWidth
             id="menuName"
@@ -109,7 +163,6 @@ function MenuForm(props) {
           <TextField
             variant="outlined"
             margin="dense"
-            inputRef={register}
             required
             fullWidth
             name="price"
@@ -121,7 +174,8 @@ function MenuForm(props) {
         <InputLabel id="MenuType">Menu Type</InputLabel>
         <Select
           labelId="MenuType"
-          id="MenuType"
+          id="menuType"
+          name="menuType"
           value={type}
           onChange={handleChange}
         >      <MenuItem value="" disabled>
@@ -147,6 +201,7 @@ function MenuForm(props) {
           </Button>
         </form>
       </div>
+      {feedBackToast}
     </Container>
   );
 }
