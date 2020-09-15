@@ -43,7 +43,7 @@ const styles = (theme) => ({
 
 function Header(props) {
   const { classes, onDrawerToggle } = props;
-
+  console.log(props)
   return (
     <React.Fragment>
       <AppBar color="primary" position="sticky" elevation={0}>
@@ -111,20 +111,7 @@ function Header(props) {
           </Grid>
         </Toolbar>
       </AppBar>
-      <AppBar
-        component="div"
-        className={classes.secondaryBar}
-        color="primary"
-        position="static"
-        elevation={0}
-      >
-        <Tabs value={0} textColor="inherit">
-          <Tab textColor="inherit" label="Rooms" />
-          <Tab textColor="inherit" label="Some stuff" />
-          <Tab textColor="inherit" label="Some more stuff" />
-          <Tab textColor="inherit" label="Some other stuff" />
-        </Tabs>
-      </AppBar>
+
     </React.Fragment>
   );
 }

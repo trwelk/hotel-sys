@@ -9,6 +9,11 @@ import Divider from '@material-ui/core/Divider';
 import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded';
 import { useGutterBorderedGridStyles } from '@mui-treasury/styles/grid/gutterBordered';
 
+import PersonIcon from '@material-ui/icons/Person';
+import IconButton from '@material-ui/core/IconButton';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import CancelIcon from '@material-ui/icons/Cancel';
+
 const useStyles = makeStyles(({ palette }) => ({
   card: {
     borderRadius: 12,
@@ -59,19 +64,16 @@ export const ReservationCard = React.memo(function ProfileCard() {
 
   return (
     <Card className={cx(styles.card, shadowStyles.root)}>
-      <CardContent>
-        <h3 className={styles.heading}>Alan Podemski</h3>
-        <span className={styles.subheader}>Poland</span>
-      </CardContent>
-      <Divider light />
-      <Box display={'flex'}>
+      <Box display={'flex'} style={{padding: "8px 0"}}>
         <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
-          <p className={styles.statLabel}>Followers</p>
-          <p className={styles.statValue}>6941</p>
+        <IconButton color="primary" aria-label="add to shopping cart">
+            <MenuBookIcon/>
+            </IconButton>
         </Box>
         <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
-          <p className={styles.statLabel}>Following</p>
-          <p className={styles.statValue}>12</p>
+          <IconButton color="primary" aria-label="add to shopping cart">
+            <CancelIcon />
+          </IconButton>
         </Box>
       </Box>
     </Card>

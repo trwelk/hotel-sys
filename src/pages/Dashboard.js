@@ -5,14 +5,17 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import Navigator from '../components/layout/Navigator';
-import Content from '../components/layout/LayoutContent';
-import Header from '../components/layout/Header';
 import { BrowserRouter, Route,Switch } from 'react-router-dom';
 import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
 //import Finance from '../components/frontOffice/Finance';
+import RoomTypeTable from '../components/frontOffice/rooms/RoomTypeTable';
 import Editable from '../components/frontOffice/rooms/Editable';
+import PoolService from '../components/maintainence/PoolService';
+import currentSuppliers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
+import purchasesRequestManagement from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment'
+import purchasesOrder from '../components/purchasesnInventory/purchasesManagment/purchasesOrder'
+import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import EmployeeList from '../components/hr/employee/EmployeeList';
 import PettyRequest from '../components/finance/petty/PettyRequest';
@@ -33,7 +36,22 @@ import LoanIssue from '../components/finance/loan/LoanIssue';
 import SalaryMain from '../components/finance/salary/SalaryMain';
 import Attendance from '../components/finance/salary/Attendance';
 import SalaryMgmt from '../components/finance/salary/SalaryMgmt';
-
+import Navigator from '../components/layout/Navigator';
+import Content from '../components/layout/LayoutContent';
+import Header from '../components/layout/Header';
+import RoomHandling from './frontOfficePages/RoomHandling';
+import PermanentDrawerLeft from '../components/frontOffice/rooms/MasterDetail';
+import RoomList from '../components/frontOffice/rooms/RoomList';
+import InsertReservationForm from '../components/frontOffice/reservation/forms/InsertReservationForm';
+import CustomerTable from '../components/frontOffice/customer/CustomerTable';
+import FeedBackTable from '../components/frontOffice/feedback/FeedBackTable';
+import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
+import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
+// import AssetRequest from '../components/frontOffice/reservation/'
+import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
+import EditOrderTable from '../components/fnbServices/EditOrderTable';
+import OrderForm from '../components/fnbServices/OrderForm';
+import ChooseModuleDialog from '../components/layout/ChoosefnbModuleDialog';
 
 function Copyright() {
   return (
@@ -178,7 +196,7 @@ const styles = {
   },
   main: {
     flex: 1,
-    padding: theme.spacing(6, 4),
+    padding: "0px",
     background: '#eaeff1',
   },
   footer: {
@@ -197,32 +215,30 @@ function Dashboard(props) {
 
   return (
     <BrowserRouter>
-    <ThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <nav className={classes.drawer}>
-          <Hidden smUp implementation="js">
-            <Navigator
-              PaperProps={{ style: { width: drawerWidth } }}
-              variant="temporary"
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-            />
-          </Hidden>
-          <Hidden xsDown implementation="css">
-            <Navigator PaperProps={{ style: { width: drawerWidth } }} />
-          </Hidden>
-        </nav>
-        <div className={classes.app}>
-          <Header onDrawerToggle={handleDrawerToggle} />
-          <main className={classes.main}>
+      <ThemeProvider theme={theme}>
+        <div className={classes.root}>
+          <CssBaseline />
+          <nav className={classes.drawer}>
+            <Hidden smUp implementation="js">
+              <Navigator
+                PaperProps={{ style: { width: drawerWidth } }}
+                variant="temporary"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+              />
+            </Hidden>
+            <Hidden xsDown implementation="css">
+              <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+            </Hidden>
+          </nav>
+          <div className={classes.app}>
+            <Header onDrawerToggle={handleDrawerToggle} />
+            <main className={classes.main}>
 
             <Switch>    
-            <Route exact path='/' component={LayoutContent}/>
+            <Route exact path='/' component={RoomList}/>
+            <Route exact path="/room" component={RoomHandling}/>
             <Route exact path='/res' component={ReservatonBoxView}/>
-            <Route exact path='/ed' component={Editable}/>
-            <Route exact path='/Food & Beverages' component={fnbProdMgmt}/>
-            <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path='/finance/assetmain' component={AssetMain} />
             <Route exact path = '/finance/assetrequest' component = {AssetRequest} />
             <Route exact path='/finance/assetlist' component={AssetList} />
@@ -241,19 +257,31 @@ function Dashboard(props) {
             <Route exact path = '/finance/salarymain' component = {SalaryMain} />
             <Route exact path = '/finance/salattendance' component = {Attendance} />
             <Route exact path = '/finance/salary' component = {SalaryMgmt} />
-
-
-           
-          
+            <Route exact path='/ed' component={RoomTypeTable}/>
+            <Route exact path='/form' component={InsertReservationForm}/>
+            <Route exact path='/Food & Beverages' component={ChooseModuleDialog}/>
+            <Route exact path="/fnbProduction" component={fnbProdMgmt}/>
+            <Route exact path='/m' component={PermanentDrawerLeft}/>
+            <Route exact path="/cust" component={CustomerTable}/>
+            <Route exact path="/feed" component={FeedBackTable}/>
+            <Route exact path="/poolservice" component={PoolService}/>
+            <Route exact path="/newMenu" component={MenuForm} />
+            <Route exact path='/newOrder' component={OrderForm}/>
+            <Route exact path="/foodOrder" component={FnBserviceMng} />
+            <Route exact path="/sup" component={currentSuppliers}/>
+            <Route exact path="/req" component={purchasesRequestManagement}/>
+            <Route exact path="/porder" component={purchasesOrder}/>
+            <Route exact path="/Purchases & Inventory" component={addSuppliers}/>
             </Switch>
 
           </main>
           <footer className={classes.footer}>
             <Copyright />
           </footer>
+
         </div>
-      </div>
-    </ThemeProvider>
+        </div>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }
