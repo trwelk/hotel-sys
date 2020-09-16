@@ -1,41 +1,33 @@
-export const updateMenu = (payload) => {
+export const updateBarInvoice = (payload) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('Menu').doc(payload.id).update({
-            id:payload.id,
-            menuName:payload.menuName,
-            price:payload.price,
-            lastModified:payload.lastModified,
-            type:payload.type
+        firestore.collection('barInvoice').doc(payload.id).update({
+            ...payload
         });
     }
 
 }
 
-export const insertMenu = (payload) => {
+export const insertBarInvoice = (payload) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('Menu').doc(payload.id).set({
-            id:payload.id,
-            menuName:payload.menuName,
-            price:payload.price,
-            menutype:payload.menuType
+        firestore.collection('barInvoice').add({
+            ...payload
         }).then((response) => {
             console.log(response)
         }).catch((response) => {
             console.log(response)
         })
     }
-
 }
 
-export const deleteMenu = (MenuId) => {
-    console.log(MenuId)
+export const deleteBarInvoice = (barInvoice) => {
+    console.log(barInvoice)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('Menu').doc(MenuId).delete()
+        firestore.collection('barInvoice').doc(barInvoice).delete()
             .then((response) => {
                 console.log(response)
             }).catch((error) => {

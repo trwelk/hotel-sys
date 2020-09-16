@@ -25,10 +25,10 @@ export const insertSupplierInfo = (payload) => {
             firstName:payload.firstName,
             lastName:payload.lastName,
             email:payload.email,
-            //phone:payload.phone,
             itemtype:payload.itemtype,
-            //location:payload.loaction,
-            //department:payload.department,
+            phone:payload.phone,
+            location:payload.loaction,
+            department:payload.department,
             date:payload.date
         }).then((response) => {
             console.log(response)
