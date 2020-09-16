@@ -10,7 +10,7 @@ import LayoutContent from '../components/layout/LayoutContent';
 import ReservatonBoxView from '../components/frontOffice/reservation/ReservationBoxView';
 import RoomTypeTable from '../components/frontOffice/rooms/RoomTypeTable';
 import Editable from '../components/frontOffice/rooms/Editable';
-import PoolService from '../components/maintenance/PoolService';
+import PoolService from '../components/maintainence/PoolService';
 import currentSuppliers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
 import purchasesRequestManagement from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment'
 import purchasesOrder from '../components/purchasesnInventory/purchasesManagment/purchasesOrder'
@@ -26,6 +26,9 @@ import RoomList from '../components/frontOffice/rooms/RoomList';
 import InsertReservationForm from '../components/frontOffice/reservation/forms/InsertReservationForm';
 import CustomerTable from '../components/frontOffice/customer/CustomerTable';
 import FeedBackTable from '../components/frontOffice/feedback/FeedBackTable';
+import FrontOfficeLandingPage from '../pages/frontOfficePages/FrontOfficeLandingPage'
+import Navigator2 from '../components/layout/Navigator2';
+
 /*import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
 import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
 import AssetRequest from '../components/frontOffice/reservation/'
@@ -202,7 +205,7 @@ function Dashboard(props) {
           <CssBaseline />
           <nav className={classes.drawer}>
             <Hidden smUp implementation="js">
-              <Navigator
+              <Navigator2
                 PaperProps={{ style: { width: drawerWidth } }}
                 variant="temporary"
                 open={mobileOpen}
@@ -210,7 +213,7 @@ function Dashboard(props) {
               />
             </Hidden>
             <Hidden xsDown implementation="css">
-              <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+              <Navigator2 PaperProps={{ style: { width: drawerWidth } }} />
             </Hidden>
           </nav>
           <div className={classes.app}>
@@ -231,16 +234,26 @@ function Dashboard(props) {
 
 
             <Route exact path="/poolservice" component={PoolService}/>
-            <Route exact path="/newMenu" component={MenuForm} />
-            {/* <Route exact path='/newMenu' component={AddMenu}/> */}
-            <Route exact path='/newOrder' component={OrderForm}/>
-            <Route exact path="/foodOrder" component={FnBserviceMng} />
+            {/*                  <Route exact path="/foodOrder" component={FnBserviceMng} />
+       <Route exact path="/newMenu" component={MenuForm} />
+<Route exact path='/newMenu' component={AddMenu}/> 
+            <Route exact path="/Purchases & Inventory" component={addSuppliers}/>
+                        <Route exact path='/newOrder' component={OrderForm}/>
+
+}
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/sup" component={currentSuppliers}/>
             <Route exact path="/req" component={purchasesRequestManagement}/>
             <Route exact path="/porder" component={purchasesOrder}/>
-            <Route exact path="/Purchases & Inventory" component={addSuppliers}/>
             */}
+
+
+
+
+
+
+            <Route exact path="/start" component={FrontOfficeLandingPage}/>
+
             </Switch>
 
           </main>
