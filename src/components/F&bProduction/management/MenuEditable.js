@@ -16,7 +16,7 @@ function MenuEditable(props) {
     { title: 'Menu Name', field: 'menuName' },
     { title: 'Price (LKR)', field: 'price' },
     { title: 'Last Modified', field: 'lastModified' },
-    { title: 'Type', field: 'type', lookup: { 1: 'Wedding', 2: 'Breakfast', 3: 'Lunch', 4: 'Dinner' } },
+    { title: 'Type', field: 'menutype', lookup: { 1: 'Wedding', 2: 'Breakfast', 3: 'Lunch', 4: 'Dinner',5: 'Beverage' } },
   ]);
   const [Itemcolumns, setItemColumns] = useState([
     { title: 'ID', field: 'id' },

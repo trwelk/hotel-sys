@@ -1,41 +1,33 @@
-export const updateMenu = (payload) => {
+export const updateCashIn = (payload) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('Menu').doc(payload.id).update({
-            id:payload.id,
-            menuName:payload.menuName,
-            price:payload.price,
-            lastModified:payload.lastModified,
-            type:payload.type
+        firestore.collection('cashInflow').doc(payload.id).update({
+            ...payload
         });
     }
 
 }
 
-export const insertMenu = (payload) => {
+export const insertCashIn = (payload) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('Menu').doc(payload.id).set({
-            id:payload.id,
-            menuName:payload.menuName,
-            price:payload.price,
-            menutype:payload.menuType
+        firestore.collection('cashInflow').add({
+            ...payload
         }).then((response) => {
             console.log(response)
         }).catch((response) => {
             console.log(response)
         })
     }
-
 }
 
-export const deleteMenu = (MenuId) => {
-    console.log(MenuId)
+export const deleteCashIn = (inflowID) => {
+    console.log(inflowID)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('Menu').doc(MenuId).delete()
+        firestore.collection('cashInflow').doc(inflowID).delete()
             .then((response) => {
                 console.log(response)
             }).catch((error) => {
