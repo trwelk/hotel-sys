@@ -6,10 +6,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import EditOrderTable from './EditOrderTable';
-import BarInventory from'../fnbServices/BarInventory';
-import FoodOrderTable from './FoodOrderTable';
-import OrderForm from './OrderForm';
+import CashInflow from './CashInflow';
+import CashOutFlow from './CashOutFlow';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -63,17 +61,15 @@ export default function SimpleTabs() {
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label="Order Management" {...a11yProps(0)} />
-          <Tab label="Bar Inventory" {...a11yProps(1)} />
+          <Tab label="Cash Inflows" {...a11yProps(0)} />
+          <Tab label="Cash Outflows" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        {/* <EditOrderTable/> */}
-        <OrderForm/>
-        <FoodOrderTable/>
+        <CashInflow />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <BarInventory/>
+        <CashOutFlow />
       </TabPanel>
     </div>
   );

@@ -103,7 +103,7 @@ export const updateOrderType = (payload) => {
             orderNo:payload.orderNo,
             tableNO: payload.tableNO,
             room: payload.room,
-            description: payload.description,
+            descriptions: payload.description,
             status: payload.status
             // DateAndTime:payload.dateAndTime,
             // ID:payload.Proid,
@@ -120,7 +120,11 @@ export const insertOrderType = (payload) => {
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
         firestore.collection('foodOrder').doc(payload.orderNo).set({
-            ...payload
+            orderNo:payload.orderNo,
+            tableNO: payload.tableNO,
+            room: payload.room,
+            descriptions: payload.description,
+            status: payload.status
         }).then((response) => {
             console.log(response)
         }).catch((response) => {

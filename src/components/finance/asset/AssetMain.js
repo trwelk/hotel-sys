@@ -6,10 +6,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import EditOrderTable from './EditOrderTable';
-import BarInventory from'../fnbServices/BarInventory';
-import FoodOrderTable from './FoodOrderTable';
-import OrderForm from './OrderForm';
+import AssetList from './AssetList';
+import AssetRequest from './AssetRequest';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -63,17 +61,15 @@ export default function SimpleTabs() {
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label="Order Management" {...a11yProps(0)} />
-          <Tab label="Bar Inventory" {...a11yProps(1)} />
+          <Tab label="Asset Requests" {...a11yProps(0)} />
+          <Tab label="Asset Management" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        {/* <EditOrderTable/> */}
-        <OrderForm/>
-        <FoodOrderTable/>
+        <AssetRequest />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <BarInventory/>
+        <AssetList />
       </TabPanel>
     </div>
   );
