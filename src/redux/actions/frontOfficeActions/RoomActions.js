@@ -9,12 +9,13 @@ export const updateRoom = (payload) => {
 
 }
 
-export const insertRoom = (payload) => {
-    console.log(payload)
+export const insertRoom = (payload,roomType) => {
+    console.log(payload,roomType)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
         firestore.collection('room').doc(payload.id).set({
             ...payload,
+            roomType:roomType
         }).then((response) => {
             console.log(response)
         }).catch((response) => {

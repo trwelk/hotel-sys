@@ -1,19 +1,18 @@
-export const updateServiceProvider = (payload) => {
+export const updateCustomer = (payload) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection("serviceProvider").doc(payload.id).update({
+        firestore.collection("customer").doc(payload.id).update({
           ...payload
         });
     }
 
 }
 
-export const insertServiceProvider = (payload) => {
-    console.log(payload)
+export const insertCustomer = (payload) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('serviceProvider').add({
+        firestore.collection('customer').doc(payload.id).set({
             ...payload,
         }).then((response) => {
             console.log(response)
@@ -23,10 +22,11 @@ export const insertServiceProvider = (payload) => {
     }
 }
 
-export const deleteServiceProvider = (serice) => {
+export const deleteCustomer = (roomId) => {
+    console.log(roomId)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('serviceProvider').doc(serice).delete()
+        firestore.collection('customer').doc(roomId).delete()
             .then((response) => {
                 console.log(response)
             }).catch((error) => {
