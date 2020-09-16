@@ -18,6 +18,8 @@ import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import RoomTypeTable from './RoomTypeTable';
 import RoomAmnetiesTable from './RoomAmnetiesTable';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 import {onMasterClick} from '../../../redux/actions/frontOfficeActions/FrontOfficeNavActions'
 import RoomList from './RoomList';
@@ -47,7 +49,7 @@ function a11yProps(index) {
         {...other}
       >
         {value === index && (
-          <Box p={3} style={{padding: "0px 28px"}}>
+          <Box p={3} style={{padding: "24px 28px"}}>
             {children}
           </Box>
         )}
@@ -79,8 +81,8 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: "100%",
     position: "relative",
-    background:"white",
-    boxShadow:"0px 3px 1px -2px rgba(0,0,0,0.2) 0px 2px 2px 0px rgba(0,0,0,0.14) 0px 1px 5px 0px rgba(0,0,0,0.12)"
+    background: "#00203ca6",
+    color: "white"
 
   },
   // necessary for content to be below app bar
@@ -122,6 +124,7 @@ function PermanentDrawerLeft(props) {
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
           <Tab label="Room Management" {...a11yProps(0)} />
           <Tab label="Room amenities" {...a11yProps(1)} />
+          <Tab label="Add New Room" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
    <div style={{display: "flex",
@@ -138,17 +141,14 @@ function PermanentDrawerLeft(props) {
       >
         <div className={classes.toolbar} />
         <Divider />
-        <div className={classes.selectorHeader}>
-        <div>Room Types</div>
-        <AddRoomTypeForm/>
-        </div>
+
         <Divider />
         <List>
           {roomtypes ? (roomtypes.map((room, index) => (
             <ListItem className={classes.listItems} button key={room.id} onClick={() => {setRoomType(room.id) }}>
               <ListItemText primary={room.id} />
             </ListItem>
-          ))) : (<div>Loading</div>)}
+          ))) : (<div><CircularProgress style={{marginTop:"200px"}}/></div>)}
         </List>
       </Drawer>
       <TabPanel value={value} index={0}>
@@ -157,6 +157,9 @@ function PermanentDrawerLeft(props) {
       <TabPanel value={value} index={1}>
       <RoomAmnetiesTable id={roomtype}/>
          </TabPanel>
+         <TabPanel value={value} index={2}>
+      <RoomList id={roomtype}/>
+      </TabPanel>
       </div>
       </div>
 
