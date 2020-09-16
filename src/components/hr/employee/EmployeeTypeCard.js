@@ -1,5 +1,7 @@
 import React from 'react';
 import cx from 'clsx';
+import { firestoreConnect } from 'react-redux-firebase';
+import { useSelector, connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
@@ -48,29 +50,43 @@ const useStyles = makeStyles(({ palette }) => ({
   },
 }));
 
-export const EmployeeTypeCard = React.memo(function ProfileCard() {
-  const styles = useStyles();
+//export const EmployeeTypeCard = React.memo(function ProfileCard() {
+  //const styles = useStyles();
+  //const shadowStyles = useFadedShadowStyles();
+  //const borderedGridStyles = useGutterBorderedGridStyles({
+   // borderColor: 'rgba(0, 0, 0, 0.08)',
+   // height: '50%',
+ // });
+  //        <Avatar className={styles.avatar} src={'https://i.pravatar.cc/300'} />
+
+  export const EmployeeCard = (props) => {
+    const employees = useSelector(state => state.firestore.ordered.employee)    
+    const data = employees ? (employees.map(employee => ({...employee}))) : (null)    
+    const count =  data.filter(employee => employee.emptype == props.employeeType.id).length
+    console.log(data,count,props);
+    const styles = useStyles();
   const shadowStyles = useFadedShadowStyles();
   const borderedGridStyles = useGutterBorderedGridStyles({
     borderColor: 'rgba(0, 0, 0, 0.08)',
     height: '50%',
   });
-  //        <Avatar className={styles.avatar} src={'https://i.pravatar.cc/300'} />
-
   return (
     <Card className={cx(styles.card, shadowStyles.root)}>
       <CardContent>
-        <h1 className={styles.heading}>Permanent</h1>
+        <h1 className={styles.heading}>{props.employeeType? props.employeeType.id : (null)}</h1>
       </CardContent>
       <Divider light />
       <Box display={'flex'}>
         
-          <h1>20</h1>
+          <h1>{count}</h1>
         
       </Box>
     </Card>
     
-  );
-});
+  )
+};
 
-export default EmployeeTypeCard
+export default firestoreConnect([    
+  {collection: 'employee'},    
+  {collection: 'employeeType'}
+  ]) (EmployeeCard)

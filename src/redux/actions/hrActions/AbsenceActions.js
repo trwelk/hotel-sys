@@ -3,8 +3,7 @@ export const updateAbsence = (payload) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
         firestore.collection("absence").doc(payload.id).update({
-            description:payload.description,
-            limit:payload.limit
+            ...payload
         });
     }
 
@@ -14,7 +13,7 @@ export const insertAbsence = (payload) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('absence').doc(payload.id).set({
+        firestore.collection('absence').add({
             ...payload
         }).then((response) => {
             console.log(response)
@@ -25,7 +24,7 @@ export const insertAbsence = (payload) => {
 }
 
 export const deleteAbsence = (abId) => {
-    console.log(abTypeId)
+    console.log(abId)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
         firestore.collection('absence').doc(abId).delete()

@@ -3,15 +3,7 @@ export const updateEmployee = (payload) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
         firestore.collection("employee").doc(payload.id).update({
-            name:payload.name,
-            emptype:payload.emptype,
-            department:payload.department,
-            designation:payload.designation,
-            joineddate:payload.joineddate,
-            reportsto:payload.reportsto,
-            contactnumber:payload.contactnumber,
-            address:payload.address,
-            dob:payload.dob
+            ...payload
         });
     }
 
