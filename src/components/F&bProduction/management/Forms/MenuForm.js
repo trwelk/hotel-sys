@@ -65,7 +65,7 @@ function MenuForm(props) {
     if (MenuType == 1) {
       return <WeddingTemplate handleChangeItem={handleChangeItem} WedItems={WedItems} />
     } else {
-      return "Byeeeee"
+      return ("Menu Type:" + MenuType)
     }
   }
 
@@ -128,7 +128,7 @@ function MenuForm(props) {
       else{
       setTimeout(() => {
           alert('Got Wedding Items' + JSON.stringify(WedItems));
-          // props.insertMenu(Menu)
+          props.insertMenu(Menu,WedItems)
           resolve();
       },1000)
     }
@@ -241,9 +241,10 @@ function MenuForm(props) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      insertMenu: (payload) => dispatch(insertMenu(payload)),
+      insertMenu: (payload,ItemsPayload) => dispatch(insertMenu(payload,ItemsPayload)),
     }
   }
+  
   export default compose(connect(null, mapDispatchToProps), firestoreConnect([
     { collection: 'Menu' }]))
     (MenuForm)
