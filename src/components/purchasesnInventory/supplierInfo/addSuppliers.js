@@ -82,9 +82,9 @@ function AddSuppliers(props) {
   const handleSubmit = (e) =>{ 
     e.preventDefault();
     new Promise((resolve, reject) => {
-      alert(JSON.stringify(supplier))
       const error = validateData___(supplier);
       if (error != null) {
+        alert(JSON.stringify(supplier))
         setState({ ...state, open: true, error: error });
         reject();
       } else {
@@ -105,8 +105,8 @@ function AddSuppliers(props) {
 
   //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
   const validateData___ = (data) => {
+    
     if (data.sId.length != 5) {
-      console.log(data.sId.length)
       return "Field ID should contain 5 characters"
     }
     else if (data.sId == null || data.sId == "") {
@@ -153,6 +153,7 @@ function AddSuppliers(props) {
 
   return (
     <Container component="main" maxWidth="xs">
+      {feedBackToast}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -305,13 +306,11 @@ function AddSuppliers(props) {
           >
             Add Supplier
               </Button>
-       
         </form>
 
       </div>
-      {feedBackToast}
+      
     </Container>
-
   );
 }
 
