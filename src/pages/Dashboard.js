@@ -232,25 +232,7 @@ function Dashboard(props) {
             <main className={classes.main}>
 
             <Switch>    
-            <Route exact path='/frontoffice/rooms' component={PermanentDrawerLeft}/>
-            <Route exact path='/frontoffice/customers' component={CustomerTable}/>
-            <Route exact path='/frontoffice/feedback' component={FeedBackTable}/>
-            <Route exact path='/frontoffice/reservation' component={ReservatonBoxView}/>
-            <Route exact path='/frontoffice/roomtypes' component={Editable}/>
-
-
-            <Route exact path='/finance/assetss' component={AssetMain}/>
-            <Route exact path='/finance/cashflow' component={CashFlowMain}/>
-            <Route exact path='/finance/invoice' component={InvoiceMain}/>
-            <Route exact path='/finance/loan' component={LoanMain}/>
-            <Route exact path='/finance/pettycash' component={PettyCashMain}/>
-            <Route exact path='/finance/salary' component={SalaryMain}/>
-
-
-            <Route exact path="/maintenance/pool" component={PoolService}/>
-            <Route exact path="/maintenance/serviceprovider" component={serviceProvider}/>
-            <Route exact path="/maintenance/movement" component={MovementActivity}/>
-            <Route exact path="/maintenance/service" component={MaintenenceService}/>
+    
 
 
             <Route exact path='/' component={RoomList}/>
@@ -286,8 +268,25 @@ function Dashboard(props) {
 
 
 
-            <Route exact path="/start" component={FrontOfficeLandingPage}/>
+            <Route exact path='/frontoffice/rooms' component={PermanentDrawerLeft}/>
+            <Route exact path='/frontoffice/customers' component={CustomerTable}/>
+            <Route exact path='/frontoffice/feedback' component={FeedBackTable}/>
+            <Route exact path='/frontoffice/reservation' component={ReservatonBoxView}/>
+            <Route exact path='/frontoffice/roomtypes' component={Editable}/>
 
+
+            <Route exact path='/finance/assetss' component={AssetMain}/>
+            <Route exact path='/finance/cashflow' component={CashFlowMain}/>
+            <Route exact path='/finance/invoice' component={InvoiceMain}/>
+            <Route exact path='/finance/loan' component={LoanMain}/>
+            <Route exact path='/finance/pettycash' component={PettyCashMain}/>
+            <Route exact path='/finance/salary' component={SalaryMain}/>
+
+
+            <Route exact path="/maintenance/pool" component={PoolService}/>
+            <Route exact path="/maintenance/serviceprovider" component={serviceProvider}/>
+            <Route exact path="/maintenance/movement" component={MovementActivity}/>
+            <Route exact path="/maintenance/service" component={MaintenenceService}/>
             </Switch>
 
           </main>
