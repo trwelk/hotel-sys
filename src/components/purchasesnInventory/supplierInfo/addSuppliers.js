@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -21,7 +21,8 @@ import { firestoreConnect } from 'react-redux-firebase'
 import { useForm, Controller } from 'react-hook-form';
 import { insertSupplierInfo } from "../../../redux/actions/PnIActions/SupplierList";
 import Snackbar from '@material-ui/core/Snackbar';
-import { Alert} from '@material-ui/lab';
+import { Alert } from '@material-ui/lab';
+import { SettingsRemoteSharp } from '@material-ui/icons';
 
 
 
@@ -64,70 +65,95 @@ const useStyles = makeStyles((theme) => ({
 
 function AddSuppliers(props) {
 
-  
+
   const classes = useStyles();
-  const { register, handleSubmit } = useForm();
-
+  //const { register, handleSubmit } = useForm();
+  const [supplier, setSupplier] = useState({ sId: '', firstName:'', lastName:'',email:'', itemtype:'', phone:'', location:1 ,department: "frontoffice", date:''});
   const [location, setLocation] = React.useState(1);
-  const [department, setDepartment] = React.useState(1);
+  const [department, setDepartment] = React.useState("frontoffice");
 
-  const handleLocation =(event) => {
-    setLocation(event.target.value);
-  };
-  const handleDepartment = (event) =>{
-    setDepartment(event.target.value);
+  const handleLocation = (event) => {
+    setLocation(event.target.value)
+}
+  const handleDepartment = (event) => {
+    setDepartment(event.target.value)
+}
+
+  const handleSubmit = (e) =>{ 
+    e.preventDefault();
+    new Promise((resolve, reject) => {
+      alert(JSON.stringify(supplier))
+      const error = validateData___(supplier);
+      if (error != null) {
+        setState({ ...state, open: true, error: error });
+        reject();
+      } else {
+        setTimeout(() => {
+          props.insertSupplierInfo(supplier);
+          resolve();
+        }, 1000)
+      }
+    })
   }
+    const handleSupplier = (event) => {
+      const { name, value } = event.target;
+    setSupplier(prevState => ({
+      ...prevState,
+      [name]: value
+  }));
+    }
 
   //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
-  const validateData = (data) => {
-    if(data.sId.length != 5){
-        return "Field ID should contain 5 characters"
+  const validateData___ = (data) => {
+    if (data.sId.length != 5) {
+      console.log(data.sId.length)
+      return "Field ID should contain 5 characters"
     }
-    else if(data.sId == null  || data.sId == ""){
+    else if (data.sId == null || data.sId == "") {
       return "ID field Cannot be null"
     }
-    else if(data.firstName == null || data.firstName == ""){
+    else if (data.firstName == null || data.firstName == "") {
       return "First Name Cannot be null"
     }
-    else if(data.lastName == null || data.lastName == "" ){
+    else if (data.lastName == null || data.lastName == "") {
       return "Last Name cannot be  null"
     }
-    else if(data.email == null || data.email == ""){
+    else if (data.email == null || data.email == "") {
       return "Email field cannot be null"
     }
-    else 
-    return null
+    else
+      return null
   }
 
-    const [state,setState] = React.useState({
+  const [state, setState] = React.useState({
     open: false,
     vertical: ' bottom',
     horizontal: 'right'
   });
 
-  const { vertical, horizontal, open, error} = state;
+  const { vertical, horizontal, open, error } = state;
 
   const handleClose = () => {
     setState({ ...state, open: false });
   }
-  
-const feedBackToast =  (<Snackbar 
-  autoHideDuration={200000}
-  anchorOrigin={{ vertical, horizontal }}
-  open={open}
-  onClose = { handleClose }
-  key={vertical + horizontal}
+
+  const feedBackToast = (<Snackbar
+    autoHideDuration={200000}
+    anchorOrigin={{ vertical, horizontal }}
+    open={open}
+    onClose={handleClose}
+    key={vertical + horizontal}
   >
     <div >
-    <Alert variant="filled" severity="error" style={{display: "flex",alignItems: "center"}}>
-    <h3>{error}</h3>
-    </Alert>
+      <Alert variant="filled" severity="error" style={{ display: "flex", alignItems: "center" }}>
+        <h3>{error}</h3>
+      </Alert>
     </div>
   </Snackbar>)
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline/>
+      <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <AddIcon />
@@ -135,18 +161,7 @@ const feedBackToast =  (<Snackbar
         <Typography component="h1" variant="h5">
           Add Supplier
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit((data) =>
-          new Promise((resolve, reject) => {
-            const error = validateData(data);
-            if (error != null){
-              setState({ ...state, open: true,error:error });
-              reject();
-            }else{
-            setTimeout(() => {
-              props.insertSupplierInfo(data);
-              resolve();
-            }, 1000)
-            }}))}>
+        <form className={classes.form} noValidate >
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -156,7 +171,7 @@ const feedBackToast =  (<Snackbar
                 id="sId"
                 label="Supplier Id"
                 name="sId"
-                inputRef={register}
+                onChange={handleSupplier}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -168,7 +183,7 @@ const feedBackToast =  (<Snackbar
                 fullWidth
                 id="firstName"
                 label="First Name"
-                inputRef={register}
+                onChange={handleSupplier}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -180,8 +195,7 @@ const feedBackToast =  (<Snackbar
                 label="Last Name"
                 name="lastName"
                 autoComplete="off"
-                inputRef={register}
-              />
+                onChange={handleSupplier} />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -192,8 +206,7 @@ const feedBackToast =  (<Snackbar
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                inputRef={register}
-              />
+                onChange={handleSupplier} />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -204,8 +217,7 @@ const feedBackToast =  (<Snackbar
                 label="Item Type"
                 name="itemtype"
                 validators={['reqired']}
-                inputRef={register}
-              />
+                onChange={handleSupplier} />
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -215,98 +227,99 @@ const feedBackToast =  (<Snackbar
                 required
                 fullWidth
                 label="Phone Number"
-                inputRef={register}
+                onChange={handleSupplier} />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl varient="outlined" required fullWidth>
+                <InputLabel>Location</InputLabel>
+                <Select id="location"
+                  value={location}
+                  onChange={handleLocation}>
+                  <MenuItem key={1} value={1}>Kilinochchi</MenuItem>
+                  <MenuItem key={2} value={2}>Jaffna</MenuItem>
+                  <MenuItem key={3} value={3}>Mannar</MenuItem>
+                  <MenuItem key={4} value={4}>Mullaitivu</MenuItem>
+                  <MenuItem key={5} value={5}>Vavuniya</MenuItem>
+                  <MenuItem key={6} value={6}>Puttalam</MenuItem>
+                  <MenuItem key={7} value={7}>Kurunegala</MenuItem>
+                  <MenuItem key={8} value={8}>Gampaha</MenuItem>
+                  <MenuItem key={9} value={9}>Colombo</MenuItem>
+                  <MenuItem key={10} value={10}>Kalutara</MenuItem>
+                  <MenuItem key={11} value={11}>Anuradhapura</MenuItem>
+                  <MenuItem key={12} value={12}>Polonnaruwa</MenuItem>
+                  <MenuItem key={13} value={13}>Matale</MenuItem>
+                  <MenuItem key={14} value={14}>Kandy</MenuItem>
+                  <MenuItem key={15} value={15}>Nuwara Eliya</MenuItem>
+                  <MenuItem key={16} value={16}>Kegalle</MenuItem>
+                  <MenuItem key={17} value={17}>Ratnapura</MenuItem>
+                  <MenuItem key={18} value={18}>Trincomalee</MenuItem>
+                  <MenuItem key={19} value={19}>Batticaloa</MenuItem>
+                  <MenuItem key={20} value={20}>Ampara</MenuItem>
+                  <MenuItem key={21} value={21}>Badulla</MenuItem>
+                  <MenuItem key={22} value={22}>Monaragala</MenuItem>
+                  <MenuItem key={23} value={23}>Hambantota</MenuItem>
+                  <MenuItem key={24} value={24}>Matara</MenuItem>
+                  <MenuItem key={25} value={25}>Galle</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl varient="outlined" required fullWidth>
+                <InputLabel>Department</InputLabel>
+                <Select id="department"
+                  value={department}
+                  onChange={handleDepartment}>
+                  <MenuItem key={26} value={"frontoffice"}>Front Office</MenuItem>
+                  <MenuItem key={27} value={"foodnbeverages"}>Food and Beverages</MenuItem>
+                  <MenuItem key={28} value={"housekeeping"}>House Keeping</MenuItem>
+                  <MenuItem key={29} value={"finance"}>Finance</MenuItem>
+                  <MenuItem key={30} value={"hr"}>HR</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="date"
+                name="date"
+                type='date'
+                onChange={handleSupplier} />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                label="I accept the Terms and Conditions"
               />
             </Grid>
-            <Grid item xs={12}>
-                <FormControl varient="outlined" required fullWidth>
-                  <InputLabel>Location</InputLabel>
-                  <Select id="location"
-                  value = {location}
-                  onChange = {handleLocation}>
-                    <MenuItem value={1}>Kilinochchi</MenuItem>
-                    <MenuItem value={2}>Jaffna</MenuItem>
-                    <MenuItem value={3}>Mannar</MenuItem>
-                    <MenuItem value={4}>Mullaitivu</MenuItem>
-                    <MenuItem value={5}>Vavuniya</MenuItem>
-                    <MenuItem value={6}>Puttalam</MenuItem>
-                    <MenuItem value={7}>Kurunegala</MenuItem>
-                    <MenuItem value={8}>Gampaha</MenuItem>
-                    <MenuItem value={9}>Colombo</MenuItem>
-                    <MenuItem value={10}>Kalutara</MenuItem>
-                    <MenuItem value={11}>Anuradhapura</MenuItem>
-                    <MenuItem value={12}>Polonnaruwa</MenuItem>
-                    <MenuItem value={13}>Matale</MenuItem>
-                    <MenuItem value={14}>Kandy</MenuItem>
-                    <MenuItem value={15}>Nuwara Eliya</MenuItem>
-                    <MenuItem value={16}>Kegalle</MenuItem>
-                    <MenuItem value={17}>Ratnapura</MenuItem>
-                    <MenuItem value={18}>Trincomalee</MenuItem>
-                    <MenuItem value={19}>Batticaloa</MenuItem>
-                    <MenuItem value={20}>Ampara</MenuItem>
-                    <MenuItem value={21}>Badulla</MenuItem>
-                    <MenuItem value={22}>Monaragala</MenuItem>
-                    <MenuItem value={23}>Hambantota</MenuItem>
-                    <MenuItem value={24}>Matara</MenuItem>
-                    <MenuItem value={24}>Galle</MenuItem>
-                  </Select>
-                </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-                <FormControl varient="outlined" required fullWidth>
-                  <InputLabel>Department</InputLabel>
-                  <Select id="department"
-                  value = {department}
-                  onChange={handleDepartment}>
-                    <MenuItem value={"frontoffice"}>Front Office</MenuItem>
-                    <MenuItem value={"foodnbeverages"}>Food and Beverages</MenuItem>
-                    <MenuItem value={"housekeeping"}>House Keeping</MenuItem>
-                    <MenuItem value={"finance"}>Finance</MenuItem>
-                    <MenuItem value={"hr"}>HR</MenuItem>
-                  </Select>
-                </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="date"
-                  name="date"
-                  type = 'date'
-                  inputRef={register}
-                />
-            </Grid>
-            <Grid item xs={12}>
-                  <FormControlLabel
-                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                    label="I accept the Terms and Conditions"
-                  />
-            </Grid>
           </Grid>
-              <Button
-                type="submit"
-                id="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Add Supplier
+          <Button
+            type="submit"
+            id="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={handleSubmit}
+          >
+            Add Supplier
               </Button>
+       
         </form>
+
       </div>
       {feedBackToast}
     </Container>
-  
+
   );
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-          insertSupplierInfo: (payload) => dispatch(insertSupplierInfo(payload)),
+    insertSupplierInfo: (payload) => dispatch(insertSupplierInfo(payload)),
   }
 }
 export default compose(connect(null, mapDispatchToProps), firestoreConnect([
-  {collection: 'supplier' }
-])) (AddSuppliers)
+  { collection: 'supplier' }
+]))(AddSuppliers)

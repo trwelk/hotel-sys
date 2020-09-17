@@ -3,26 +3,23 @@ import MaterialTable from 'material-table'
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import {insertPurchasesRequest, updatePurchasesRequest, deletePurchasesRequest} from '../../../redux/actions/PnIActions/requestHandler';
+import {insertProduct, updateProduct, deleteProdoct} from '../../../redux/actions/PnIActions/productHandler';
 
 // import headerPnI from '../headerPnI';
 
- function PurchasesRequestManagement(props) {
+ function ProductTable(props) {
  
     const { useState } = React;
     const [columns, setColumns] = useState([
       { title: 'Product ID', field: 'pId'},
       { title: 'Product Name', field: 'pType' },
-      { title: 'Department', field: 'department' },
-      { title: 'Priority', field: 'priority' },
-      { title: 'Quantity', field: 'qty'},
-      { title: 'Date', field: 'date'}
+      
     ]); 
-    const Req = useSelector(state => state.firestore.ordered.request)
-    const data = Req ? (Req.map(req => ({...req}))) : (null)
+    const Pro = useSelector(state => state.firestore.ordered.productMng)
+    const data = Pro ? (Pro.map(pro => ({...pro}))) : (null)
     const table = data ? (
         <MaterialTable
-        title="Purchases Request Management"
+        title="Purchases Order"
         columns={columns}
         data={data}
         editable={{
@@ -78,13 +75,13 @@ import {insertPurchasesRequest, updatePurchasesRequest, deletePurchasesRequest} 
  
 const mapDispatchToProps = (dispatch) => {
     return {
-        insertPurchasesRequest: (payload) => dispatch(insertPurchasesRequest(payload)),
-        updatePurchasesRequest: (payload) => dispatch(updatePurchasesRequest(payload)),
-        deletePurchasesRequest: (purchaseId) => dispatch(deletePurchasesRequest(purchaseId))
+        insertProduct: (payload) => dispatch(insertProduct(payload)),
+        updateProduct: (payload) => dispatch(updateProduct(payload)),
+        deleteProduct: (productId) => dispatch(deleteProdoct(productId))
 
 
     }
 }
   export default compose(connect(null,mapDispatchToProps),firestoreConnect([
-    {collection: 'request'}
-  ])) (PurchasesRequestManagement)
+    {collection: 'productMng'}
+  ])) (ProductTable)

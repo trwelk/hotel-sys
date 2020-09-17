@@ -282,6 +282,8 @@ function Dashboard(props) {
             <Route exact path="/hr/absence/ablist" component={AbsenceList}/>
             <Route exact path="/hr/attendence" component={AttendenceList}/>
 
+            <Route exact path="/pOrd" component={purchasesOrder}/>
+
 
             </Switch>
 

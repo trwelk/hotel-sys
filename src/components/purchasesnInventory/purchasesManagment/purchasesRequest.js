@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -21,8 +21,9 @@ import { firestoreConnect } from 'react-redux-firebase'
 import { useForm, Controller } from 'react-hook-form';
 import { insertPurchasesRequest } from '../../../redux/actions/PnIActions/requestHandler'
 import Snackbar from '@material-ui/core/Snackbar';
-import { Alert} from '@material-ui/lab';
+import { Alert } from '@material-ui/lab';
 import { insertSupplierInfo } from '../../../redux/actions/PnIActions/SupplierList';
+import { useSelector } from 'react-redux';
 
 
 
@@ -65,70 +66,112 @@ const useStyles = makeStyles((theme) => ({
 
 function PurchasesRequest(props) {
 
-  
+
   const classes = useStyles();
-  const { register, handleSubmit } = useForm();
 
-  const [priority, setLocation] = React.useState(1);
-  const [department, setDepartment] = React.useState(1);
+  const [request, setRequest] = useState({pId: '',pType: "Water",qty: '',priority:"Normal" ,date: '',department: "front office" })
+  const [priority, setPriority] = React.useState("Normal");
+  const [department, setDepartment] = React.useState("front Office");
+  const [pType,setProductType] = React.useState();
+  
 
-  const handlePriority =(event) => {
-    setLocation(event.target.value);
+  const handlePriority = (event) => {
+    setPriority(event.target.value);
   };
-  const handleDepartment = (event) =>{
+  const handleDepartment = (event) => {
     setDepartment(event.target.value);
   }
 
-  //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
-  const validateData = (data) => {
-    if(data.sId.length != 5){
-        return "Field ID should contain 5 characters"
-    }
-    else if(data.sId == null  || data.sId == ""){
-      return "ID field Cannot be null"
-    }
-    else if(data.firstName == null || data.firstName == ""){
-      return "First Name Cannot be null"
-    }
-    else if(data.lastName == null || data.lastName == "" ){
-      return "Last Name cannot be  null"
-    }
-    else if(data.email == null || data.email == ""){
-      return "Email field cannot be null"
-    }
-    else 
-    return null
+  const handleProductType = (event) => {
+    setProductType(event.target.value);
   }
 
-    const [state,setState] = React.useState({
+  const handleSubmit = (e) =>{ 
+    e.preventDefault();
+    new Promise((resolve, reject) => {
+      const error = validateData___(request);
+      if (error != null) {
+        alert(JSON.stringify(request))
+        setState({ ...state, open: true, error: error });
+        reject();
+      } else {
+        setTimeout(() => {
+          
+          props.insertPurchasesRequest(request);
+          resolve();
+        }, 1000)
+      }}
+    )
+  }
+
+  const handleRequest = (event) => {
+    const { name, value } = event.target;
+  setRequest(prevState => ({
+    ...prevState,
+    [name]: value
+}));
+  }
+    
+   const productTypeDB = useSelector(state => state.firestore.ordered.supplier)
+
+   const data = productTypeDB ? (productTypeDB.map(product => ({...product}))) : (null)
+
+  //  console.log(productTypeDB)
+
+   const productTypeSelector = data ? (data.map((pType,index) => {
+    return  <MenuItem key={index} value={pType.id}>{pType.itemtype}</MenuItem>
+  })) :(null)
+
+  //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
+  const validateData___= (data) => {
+    if (data.pId.length != 5) {
+      console.log(data.pId.length)
+      return "Field ID should contain 5 characters"
+    }
+    else if (data.pId == null || data.pId == "") {
+      console.log(data.pId)
+      return "ID field Cannot be null"
+    }
+    else if (data.pType == null || data.pType == "") {
+      console.log(data.pType)
+      return "First Product Name Cannot be null"
+    }
+    else if(data.qty == 0 || data.qty < 0){
+      return "Quantity shold be a postive value"
+    }
+    else
+      return null
+  }
+
+  const [state, setState] = React.useState({
     open: false,
     vertical: ' bottom',
     horizontal: 'right'
   });
 
-  const { vertical, horizontal, open, error} = state;
+  const { vertical, horizontal, open, error } = state;
 
   const handleClose = () => {
     setState({ ...state, open: false });
   }
-  
-const feedBackToast =  (<Snackbar 
-  autoHideDuration={200000}
-  anchorOrigin={{ vertical, horizontal }}
-  open={open}
-  onClose = { handleClose }
-  key={vertical + horizontal}
+ 
+  const feedBackToast = (<Snackbar
+    autoHideDuration={200000}
+    anchorOrigin={{ vertical, horizontal }}
+    open={open}
+    onClose={handleClose}
+    key={vertical + horizontal}
   >
     <div >
-    <Alert variant="filled" severity="error" style={{display: "flex",alignItems: "center"}}>
-    <h3>{error}</h3>
-    </Alert>
+      <Alert variant="filled" severity="error" style={{ display: "flex", alignItems: "center" }}>
+        <h3>{error}</h3>
+      </Alert>
     </div>
   </Snackbar>)
 
   return (
     <Container component="main" maxWidth="sm">
-      <CssBaseline/>
+      <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <AddIcon />
@@ -136,18 +179,7 @@ const feedBackToast =  (<Snackbar
         <Typography component="h1" variant="h5">
           Place Your Purchases Request Here...
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit((data) =>
-          new Promise((resolve, reject) => {
-            const error = validateData(data);
-            if (error != null){
-              setState({ ...state, open: true,error:error });
-              reject();
-            }else{
-            setTimeout(() => {
-              props.insertSupplierInfo(data);
-              resolve();
-            }, 1000)
-            }}))}>
+        <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -157,20 +189,22 @@ const feedBackToast =  (<Snackbar
                 id="pId"
                 label="Product Id"
                 name="pId"
-                inputRef={register}
+                onChange={handleRequest}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="off"
-                name="pName"
-                variant="outlined"
-                required
-                fullWidth
-                id="pName"
-                label="Product Name"
-                inputRef={register}
-              />
+              <FormControl varient="outlined" fullWidth>
+              <Select
+                labelId="Product Name"
+                id="pType"
+                name="pType"
+                lable="Product Name"
+                value={pType}
+                onChange={handleProductType}
+              >
+                {productTypeSelector}
+              </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -180,79 +214,81 @@ const feedBackToast =  (<Snackbar
                 id="qty"
                 label="Quantity"
                 name="qty"
-                type = 'number'
+                type='number'
                 autoComplete="off"
-                inputRef={register}
+                onChange={handleRequest}
               />
             </Grid>
             <Grid item xs={12}>
-                <FormControl varient="outlined" required fullWidth>
-                  <InputLabel>Priority</InputLabel>
-                  <Select id="priority"
-                  value = {priority}
-                  onChange = {handlePriority}>
-                    <MenuItem value={"critical"}>Critical</MenuItem>
-                    <MenuItem value={"important"}>Important</MenuItem>
-                    <MenuItem value={"Normal"}>Normal</MenuItem>
-                    <MenuItem value={"Low"}>Low</MenuItem>
-                  </Select>
-                </FormControl>
+              <FormControl varient="outlined" required fullWidth>
+                <InputLabel>Priority</InputLabel>
+                <Select id="priority"
+                  value={priority}
+                  onChange={handlePriority}>
+                  <MenuItem value={"critical"}>Critical</MenuItem>
+                  <MenuItem value={"important"}>Important</MenuItem>
+                  <MenuItem value={"Normal"}>Normal</MenuItem>
+                  <MenuItem value={"Low"}>Low</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="date"
-                  name="date"
-                  type = 'date'
-                  inputRef={register}
-                />
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="date"
+                name="date"
+                type='date'
+                onChange={handleRequest}
+              />
             </Grid>
             <Grid item xs={12}>
-                <FormControl varient="outlined" required fullWidth>
-                  <InputLabel>Department</InputLabel>
-                  <Select id="department"
-                  value = {department}
+              <FormControl varient="outlined" required fullWidth>
+                <InputLabel>Department</InputLabel>
+                <Select id="department"
+                  value={department}
                   onChange={handleDepartment}>
-                    <MenuItem value={"frontoffice"}>Front Office</MenuItem>
-                    <MenuItem value={"foodnbeverages"}>Food and Beverages</MenuItem>
-                    <MenuItem value={"housekeeping"}>House Keeping</MenuItem>
-                    <MenuItem value={"finance"}>Finance</MenuItem>
-                    <MenuItem value={"hr"}>HR</MenuItem>
-                  </Select>
-                </FormControl>
+                  <MenuItem value={"frontoffice"}>Front Office</MenuItem>
+                  <MenuItem value={"foodnbeverages"}>Food and Beverages</MenuItem>
+                  <MenuItem value={"housekeeping"}>House Keeping</MenuItem>
+                  <MenuItem value={"finance"}>Finance</MenuItem>
+                  <MenuItem value={"hr"}>HR</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
-                  <FormControlLabel
-                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                    label="I accept the Terms and Conditions"
-                  />
+              <FormControlLabel
+                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                label="I accept the Terms and Conditions"
+              />
             </Grid>
           </Grid>
-              <Button
-                type="submit"
-                id="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Request Now
+          <Button
+            type="submit"
+            id="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={handleSubmit}
+          >
+            Request Now
               </Button>
         </form>
       </div>
       {feedBackToast}
     </Container>
-  
+
   );
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-          insertPurchasesRequest: (payload) => dispatch(insertPurchasesRequest(payload)),
+    insertPurchasesRequest: (payload) => dispatch(insertPurchasesRequest(payload)),
   }
 }
 export default compose(connect(null, mapDispatchToProps), firestoreConnect([
-  {collection: 'request' }
-])) (PurchasesRequest)
+  {collection: 'request'},
+  {collection: 'supplier'}
+]))(PurchasesRequest)
