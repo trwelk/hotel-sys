@@ -24,10 +24,14 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { connect,useSelector } from "react-redux";
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 import {insertReservation} from '../../../../redux/actions/frontOfficeActions/ReservationActions'
 import { compose } from "redux";
-
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -76,7 +80,7 @@ const steps = ['Reservation Details'];
                                                         
 function NewReservationForm(props) {
     const [open, setOpen] = React.useState(false);
-    const [state, setState] = useState({roomNo:props.roomNo,roomType:props.roomType,phone:"",customer:"",additionalInfo:""});
+    const [state, setState] = useState({roomNo:props.roomNo,roomType:props.roomType,customer:"",additionalInfo:""});
     const month = useSelector(state => state.frontOffice.selectedMonth + 1 )
     const startDay = new Date(Date.parse(month + ' ' + (props.startDay ) +' 2020'))
 
@@ -88,7 +92,12 @@ function NewReservationForm(props) {
     const [roomType, RoomType] = useState(props.roomType);
     const [customer, setCustomer] = useState("");
 
-
+    const [stat, setStat] = React.useState({
+      openn: false,
+      vertical: 'bottom',
+      horizontal: 'right',
+    });
+    const { vertical, horizontal, openn ,error} = stat
 
 
     const handleChange = e => {
@@ -107,10 +116,31 @@ function NewReservationForm(props) {
       };
       const handleSubmit = (evt) => {
         evt.preventDefault();
-        //console.log(new Date(Date.parse(' 02 ' + (state.startDay ) +' 2020')),state.startDay);
-        
-        //alert(state)
-        props.insertReservation(state)
+
+        var error = null
+        error = validateData___(state)
+        console.log(error)
+        if(error != null){
+            setStat({ ...stat, openn: true,error:error });
+        }
+        else{
+          props.insertReservation(state)
+          handleClose()
+        }
+      }
+
+        const validateData___  = (data) => {
+        console.log(data)
+        if(data.roomNo == null || data.roomNo == ""){
+          return "Field Room No Cannot be null"
+  
+        }
+        else if(data.customer == null || data.customer == ""){
+          return "Please provide a value to the  field customer"
+        }
+
+        else
+        return null;
       }
 
   const classes = useStyles();
@@ -129,6 +159,19 @@ function NewReservationForm(props) {
   }
   //console.log(state)
 
+
+
+  //--------------------------------------------------------------------
+
+  const feedBackToast =  (<Snackbar 
+    autoHideDuration={2000}
+    anchorOrigin={{ vertical, horizontal }}
+    open={openn }
+    key={vertical + horizontal}
+    >
+      <Alert severity="error">{error}</Alert>
+    </Snackbar>)
+
   return (
 <React.Fragment>
     <AddCircleIcon variant="outlined" color="secondary" onClick={handleClickOpen}/>
@@ -138,12 +181,13 @@ style={{background: "transparent",overflowY: "hidden"}}
 open={open}
 onClose={handleClose}
 > 
+{feedBackToast}
     <React.Fragment>
       <CssBaseline />
       <main className={classes.layout} style={{display:"flex",justifyContent: "center"}}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
-            Checkout
+            Reservation Details
           </Typography>
           <Stepper className={classes.stepper}>
               <Step key="label">
@@ -234,6 +278,7 @@ onClose={handleClose}
         </Paper>
       </main>
     </React.Fragment>
+
     </Dialog>
 </React.Fragment>
   );

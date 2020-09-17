@@ -18,7 +18,7 @@ import { insertSupplierInfo, updateSupplierInfo, deleteSupplierInfo} from '../..
       { title: 'Supplier Item Type', field: 'itemtype'},
       { title: 'Location', field: 'location'},
       { title: 'Department', field: 'department', lookup: { 1:'Front Office', 2: 'Finance', 3: 'Human Resources', 4: 'Food & Beverages', 5: 'Maintainance', 6: 'House Keeping'}},
-      { title: 'Supply Since', field: 'period'},
+      { title: 'Date', field: 'date'},
     ]); 
     const supplier = useSelector(state => state.firestore.ordered.supplier)
     const data = supplier ? (supplier.map(sup => ({...sup}))) : (null)
@@ -70,7 +70,6 @@ import { insertSupplierInfo, updateSupplierInfo, deleteSupplierInfo} from '../..
   
     return(
         <div>
-          {/* <headerPnI /> */}
              {table}
         </div>
        

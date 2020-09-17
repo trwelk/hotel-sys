@@ -21,7 +21,7 @@ export const insertMenu = (payload) => {
             id:payload.id,
             menuName:payload.menuName,
             price:payload.price,
-            // type:payload.type
+            menutype:payload.menuType
         }).then((response) => {
             console.log(response)
         }).catch((response) => {

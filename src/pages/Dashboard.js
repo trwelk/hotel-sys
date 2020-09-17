@@ -28,6 +28,17 @@ import CustomerTable from '../components/frontOffice/customer/CustomerTable';
 import FeedBackTable from '../components/frontOffice/feedback/FeedBackTable';
 import FrontOfficeLandingPage from '../pages/frontOfficePages/FrontOfficeLandingPage'
 import Navigator2 from '../components/layout/Navigator2';
+import RoomTypeOfReservationsChart from '../components/frontOffice/overview/RoomTypeOfReservationsChart';
+import RoomsAvailableOfRoomTypeChart from '../components/frontOffice/overview/RoomsAvailableOfRoomTypeChart';
+import serviceProvider from '../components/maintainence/serviceProvider';
+import MovementActivity from '../components/maintainence/MovementActivity';
+import MaintenenceService from '../components/maintainence/MaintenenceService';
+import SalaryMain from '../components/finance/salary/SalaryMain';
+import PettyCashMain from '../components/finance/petty/PettyCashMain';
+import LoanMain from '../components/finance/loan/LoanMain';
+import InvoiceMain from '../components/finance/invoice/InvoiceMain';
+import CashFlowMain from '../components/finance/cashflow/CashFlowMain';
+import AssetMain from '../components/finance/asset/AssetMain';
 
 /*import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
 import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
@@ -221,6 +232,27 @@ function Dashboard(props) {
             <main className={classes.main}>
 
             <Switch>    
+            <Route exact path='/frontoffice/rooms' component={PermanentDrawerLeft}/>
+            <Route exact path='/frontoffice/customers' component={CustomerTable}/>
+            <Route exact path='/frontoffice/feedback' component={FeedBackTable}/>
+            <Route exact path='/frontoffice/reservation' component={ReservatonBoxView}/>
+            <Route exact path='/frontoffice/roomtypes' component={Editable}/>
+
+
+            <Route exact path='/finance/assetss' component={AssetMain}/>
+            <Route exact path='/finance/cashflow' component={CashFlowMain}/>
+            <Route exact path='/finance/invoice' component={InvoiceMain}/>
+            <Route exact path='/finance/loan' component={LoanMain}/>
+            <Route exact path='/finance/pettycash' component={PettyCashMain}/>
+            <Route exact path='/finance/salary' component={SalaryMain}/>
+
+
+            <Route exact path="/maintenance/pool" component={PoolService}/>
+            <Route exact path="/maintenance/serviceprovider" component={serviceProvider}/>
+            <Route exact path="/maintenance/movement" component={MovementActivity}/>
+            <Route exact path="/maintenance/service" component={MaintenenceService}/>
+
+
             <Route exact path='/' component={RoomList}/>
             <Route exact path="/room" component={RoomHandling}/>
             <Route exact path='/res' component={ReservatonBoxView}/>
@@ -233,7 +265,9 @@ function Dashboard(props) {
             <Route exact path="/feed" component={FeedBackTable}/>
 
 
-            <Route exact path="/poolservice" component={PoolService}/>
+     
+            <Route exact path="/chart" component={RoomsAvailableOfRoomTypeChart}/>
+
             {/*                  <Route exact path="/foodOrder" component={FnBserviceMng} />
        <Route exact path="/newMenu" component={MenuForm} />
 <Route exact path='/newMenu' component={AddMenu}/> 

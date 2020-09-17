@@ -9,6 +9,7 @@ import Box from '@material-ui/core/Box';
 import EditOrderTable from './EditOrderTable';
 import BarInventory from'../fnbServices/BarInventory';
 import FoodOrderTable from './FoodOrderTable';
+import OrderForm from './OrderForm';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -68,6 +69,7 @@ export default function SimpleTabs() {
       </AppBar>
       <TabPanel value={value} index={0}>
         {/* <EditOrderTable/> */}
+        <OrderForm/>
         <FoodOrderTable/>
       </TabPanel>
       <TabPanel value={value} index={1}>

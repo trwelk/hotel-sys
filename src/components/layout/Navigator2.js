@@ -14,6 +14,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
+import { Link } from 'react-router-dom';
 
 import PeopleIcon from '@material-ui/icons/People';
 
@@ -91,7 +92,7 @@ const maintenanceNav = (
       <ListItemIcon className={classes.itemIcon}>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="Front Office" 
+      <ListItemText primary="Maintenance" 
       classes={{
                 primary: classes.categoryHeaderPrimary,
               }}/>
@@ -103,31 +104,45 @@ const maintenanceNav = (
           <ListItemIcon className={classes.itemIcon}>
             <PeopleIcon />
           </ListItemIcon>
+		  <Link to="/maintenance/pool" >
           <ListItemText  
               classes={{
             primary: classes.itemPrimary,
           }}
-          >Room Handling</ListItemText>
+          >Pool Maintenance</ListItemText></Link>
         </ListItem>
         <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
           <ListItemIcon className={classes.itemIcon}>
             <PeopleIcon />
           </ListItemIcon>
+		  <Link to="/maintenance/service" >
           <ListItemText  
               classes={{
             primary: classes.itemPrimary,
           }}
-          >Customer Handling</ListItemText>
+          >Services Management</ListItemText></Link>
         </ListItem>
         <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
           <ListItemIcon className={classes.itemIcon}>
             <PeopleIcon />
           </ListItemIcon>
+		  <Link to="/maintenance/serviceprovider" >
           <ListItemText  
               classes={{
             primary: classes.itemPrimary,
           }}
-          >Feedback Handling</ListItemText>
+          >Service Providers</ListItemText></Link>
+        </ListItem>
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+          <ListItemIcon className={classes.itemIcon}>
+            <PeopleIcon />
+          </ListItemIcon>
+		  <Link to="/maintenance/movement" >
+          <ListItemText  
+              classes={{
+            primary: classes.itemPrimary,
+          }}
+          >Movement Activity</ListItemText></Link>
         </ListItem>
       </List>
     </Collapse>
@@ -135,55 +150,79 @@ const maintenanceNav = (
 )
 
 const frontOfficeNav = (
-      <div>
-    <ListItem button onClick={handleFrontOffice} className={clsx(classes.item,classes.itemActiveItem)}>
-        <ListItemIcon className={classes.itemIcon}>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Front Office" 
-        classes={{
-                  primary: classes.categoryHeaderPrimary,
-                }}/>
-        {frontOffice ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
-      <Collapse in={frontOffice} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
-            <ListItemIcon className={classes.itemIcon}>
-              <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText  
-                classes={{
-              primary: classes.itemPrimary,
-            }}
-            >Room Handling</ListItemText>
-          </ListItem>
-          <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
-            <ListItemIcon className={classes.itemIcon}>
-              <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText  
-                classes={{
-              primary: classes.itemPrimary,
-            }}
-            >Customer Handling</ListItemText>
-          </ListItem>
-          <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
-            <ListItemIcon className={classes.itemIcon}>
-              <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText  
-                classes={{
-              primary: classes.itemPrimary,
-            }}
-            >Feedback Handling</ListItemText>
-          </ListItem>
-        </List>
-      </Collapse>
-      </div>
-  )
-
-  const financeNav = (
+    <div>
+  <ListItem button onClick={handleFrontOffice} className={clsx(classes.item,classes.itemActiveItem)}>
+      <ListItemIcon className={classes.itemIcon}>
+        <PeopleIcon />
+      </ListItemIcon>
+      <ListItemText primary="Front Office" 
+      classes={{
+                primary: classes.categoryHeaderPrimary,
+              }}/>
+      {frontOffice ? <ExpandLess /> : <ExpandMore />}
+    </ListItem>
+    <Collapse in={frontOffice} timeout="auto" unmountOnExit>
+      <List component="div" disablePadding>
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+          <ListItemIcon className={classes.itemIcon}>
+            <PeopleIcon />
+          </ListItemIcon>
+          <Link to="/frontoffice/rooms" >
+          <ListItemText  
+              classes={{
+            primary: classes.itemPrimary,
+          }}
+          >Room Handling</ListItemText> </Link>
+        </ListItem>
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+          <ListItemIcon className={classes.itemIcon}>
+            <PeopleIcon />
+          </ListItemIcon>
+          <Link to="/frontoffice/customers" >
+          <ListItemText  
+              classes={{
+            primary: classes.itemPrimary,
+          }}
+          >Customer Handling</ListItemText></Link>
+        </ListItem>
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+          <ListItemIcon className={classes.itemIcon}>
+            <PeopleIcon />
+          </ListItemIcon>
+          <Link to="/frontoffice/feedback" >
+          <ListItemText  
+              classes={{
+            primary: classes.itemPrimary,
+          }}
+          >Feedback Handling</ListItemText></Link>
+        </ListItem>
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+          <ListItemIcon className={classes.itemIcon}>
+            <PeopleIcon />
+          </ListItemIcon>
+          <Link to="/frontoffice/reservation" >
+          <ListItemText  
+              classes={{
+            primary: classes.itemPrimary,
+          }}
+          >Reservation Handling</ListItemText></Link>
+        </ListItem>
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+          <ListItemIcon className={classes.itemIcon}>
+            <PeopleIcon />
+          </ListItemIcon>
+          <Link to="/frontoffice/roomtypes" >
+          <ListItemText  
+              classes={{
+            primary: classes.itemPrimary,
+          }}
+          >Room Types</ListItemText></Link>
+        </ListItem>
+      </List>
+    </Collapse>
+    </div>
+)
+const financeNav = (
     <div>
   <ListItem button onClick={handleFinance} className={clsx(classes.item, classes.itemActiveItem)}>
       <ListItemIcon className={classes.itemIcon}>
@@ -201,31 +240,67 @@ const frontOfficeNav = (
           <ListItemIcon className={classes.itemIcon}>
             <StarBorder />
           </ListItemIcon>
+		  <Link to="/finance/assetss" >
           <ListItemText  
               classes={{
             primary: classes.itemPrimary,
           }}
-          >Finance 1</ListItemText>
+          >AssetManagement</ListItemText></Link>
         </ListItem>
         <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
           <ListItemIcon className={classes.itemIcon}>
             <StarBorder />
           </ListItemIcon>
+		  <Link to="/finance/pettycash" >
           <ListItemText  
               classes={{
             primary: classes.itemPrimary,
           }}
-          >Finance 2</ListItemText>
+          >Petty Cash Management</ListItemText></Link>
         </ListItem>
         <ListItem button className={clsx(classes.item, classes.nested,classes.itemActiveItem)}>
           <ListItemIcon className={classes.itemIcon}>
             <StarBorder />
           </ListItemIcon>
+		  <Link to="/finance/cashflow" >
           <ListItemText  
               classes={{
             primary: classes.itemPrimary,
           }}
-          >finance 3</ListItemText>
+          >Cash flow managemnt</ListItemText></Link>
+        </ListItem>
+		        <ListItem button className={clsx(classes.item, classes.nested,classes.itemActiveItem)}>
+          <ListItemIcon className={classes.itemIcon}>
+            <StarBorder />
+          </ListItemIcon>
+		  <Link to="/finance/invoice" >
+          <ListItemText  
+              classes={{
+            primary: classes.itemPrimary,
+          }}
+          >finance 3</ListItemText></Link>
+        </ListItem>
+		        <ListItem button className={clsx(classes.item, classes.nested,classes.itemActiveItem)}>
+          <ListItemIcon className={classes.itemIcon}>
+            <StarBorder />
+          </ListItemIcon>
+		  <Link to="/finance/loan" >
+          <ListItemText  
+              classes={{
+            primary: classes.itemPrimary,
+          }}
+          >Loan Management</ListItemText></Link>
+        </ListItem>
+		        <ListItem button className={clsx(classes.item, classes.nested,classes.itemActiveItem)}>
+          <ListItemIcon className={classes.itemIcon}>
+            <StarBorder />
+          </ListItemIcon>
+		  <Link to="/finance/salary" >
+          <ListItemText  
+              classes={{
+            primary: classes.itemPrimary,
+          }}
+          >Salary Management</ListItemText></Link>
         </ListItem>
       </List>
     </Collapse>
