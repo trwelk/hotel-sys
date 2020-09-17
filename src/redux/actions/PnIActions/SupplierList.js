@@ -27,7 +27,7 @@ export const insertSupplierInfo = (payload) => {
             email:payload.email,
             itemtype:payload.itemtype,
             phone:payload.phone,
-            location:payload.loaction,
+            location:payload.location,
             department:payload.department,
             date:payload.date
         }).then((response) => {

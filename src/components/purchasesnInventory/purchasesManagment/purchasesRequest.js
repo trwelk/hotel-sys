@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -68,14 +68,15 @@ function PurchasesRequest(props) {
 
 
   const classes = useStyles();
-  const { register, handleSubmit } = useForm();
 
-  const [priority, setLocation] = React.useState(1);
-  const [department, setDepartment] = React.useState(1);
+  const [request, setRequest] = useState({pId: '',pType: "Water",qty: '',priority:"Normal" ,date: '',department: "front office" })
+  const [priority, setPriority] = React.useState("Normal");
+  const [department, setDepartment] = React.useState("front Office");
   const [pType,setProductType] = React.useState();
+  
 
   const handlePriority = (event) => {
-    setLocation(event.target.value);
+    setPriority(event.target.value);
   };
   const handleDepartment = (event) => {
     setDepartment(event.target.value);
@@ -85,9 +86,35 @@ function PurchasesRequest(props) {
     setProductType(event.target.value);
   }
 
+  const handleSubmit = (e) =>{ 
+    e.preventDefault();
+    new Promise((resolve, reject) => {
+      const error = validateData___(request);
+      if (error != null) {
+        alert(JSON.stringify(request))
+        setState({ ...state, open: true, error: error });
+        reject();
+      } else {
+        setTimeout(() => {
+          
+          props.insertPurchasesRequest(request);
+          resolve();
+        }, 1000)
+      }}
+    )
+  }
+
+  const handleRequest = (event) => {
+    const { name, value } = event.target;
+  setRequest(prevState => ({
+    ...prevState,
+    [name]: value
+}));
+  }
+    
    const productTypeDB = useSelector(state => state.firestore.ordered.supplier)
 
-   const data = productTypeDB ? (productTypeDB.map(customer => ({...customer}))) : (null)
+   const data = productTypeDB ? (productTypeDB.map(product => ({...product}))) : (null)
 
   //  console.log(productTypeDB)
 
@@ -96,25 +123,25 @@ function PurchasesRequest(props) {
   })) :(null)
 
   //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
-  // const validateData = (data) => {
-  //   if (data.sId.length != 5) {
-  //     return "Field ID should contain 5 characters"
-  //   }
-  //   else if (data.sId == null || data.sId == "") {
-  //     return "ID field Cannot be null"
-  //   }
-  //   else if (data.firstName == null || data.firstName == "") {
-  //     return "First Name Cannot be null"
-  //   }
-  //   else if (data.lastName == null || data.lastName == "") {
-  //     return "Last Name cannot be  null"
-  //   }
-  //   else if (data.email == null || data.email == "") {
-  //     return "Email field cannot be null"
-  //   }
-  //   else
-  //     return null
-  // }
+  const validateData___= (data) => {
+    if (data.pId.length != 5) {
+      console.log(data.pId.length)
+      return "Field ID should contain 5 characters"
+    }
+    else if (data.pId == null || data.pId == "") {
+      console.log(data.pId)
+      return "ID field Cannot be null"
+    }
+    else if (data.pType == null || data.pType == "") {
+      console.log(data.pType)
+      return "First Product Name Cannot be null"
+    }
+    else if(data.qty == 0 || data.qty < 0){
+      return "Quantity shold be a postive value"
+    }
+    else
+      return null
+  }
 
   const [state, setState] = React.useState({
     open: false,
@@ -152,19 +179,7 @@ function PurchasesRequest(props) {
         <Typography component="h1" variant="h5">
           Place Your Purchases Request Here...
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit((data) =>
-          new Promise((resolve, reject) => {
-            // const error = validateData(data);
-            // if (error != null) {
-            //   setState({ ...state, open: true, error: error });
-            //   reject();
-            // } else {
-              setTimeout(() => {
-                props.insertPurchasesRequest(data);
-                resolve();
-              }, 1000)
-            }
-          ))}>
+        <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -174,19 +189,22 @@ function PurchasesRequest(props) {
                 id="pId"
                 label="Product Id"
                 name="pId"
-                inputRef={register}
+                onChange={handleRequest}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
+              <FormControl varient="outlined" fullWidth>
               <Select
-
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                labelId="Product Name"
+                id="pType"
+                name="pType"
+                lable="Product Name"
                 value={pType}
                 onChange={handleProductType}
               >
                 {productTypeSelector}
               </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -198,7 +216,7 @@ function PurchasesRequest(props) {
                 name="qty"
                 type='number'
                 autoComplete="off"
-                inputRef={register}
+                onChange={handleRequest}
               />
             </Grid>
             <Grid item xs={12}>
@@ -222,7 +240,7 @@ function PurchasesRequest(props) {
                 id="date"
                 name="date"
                 type='date'
-                inputRef={register}
+                onChange={handleRequest}
               />
             </Grid>
             <Grid item xs={12}>
@@ -253,6 +271,7 @@ function PurchasesRequest(props) {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={handleSubmit}
           >
             Request Now
               </Button>

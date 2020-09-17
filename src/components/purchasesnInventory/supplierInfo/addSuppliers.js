@@ -73,14 +73,16 @@ function AddSuppliers(props) {
   const [department, setDepartment] = React.useState("frontoffice");
 
   const handleLocation = (event) => {
-    setLocation(event.target.value);
-  };
+    setLocation(event.target.value)
+}
   const handleDepartment = (event) => {
-   setDepartment(event.target.value);
-  }
+    setDepartment(event.target.value)
+}
 
   const handleSubmit = (e) =>{ 
+    e.preventDefault();
     new Promise((resolve, reject) => {
+      alert(JSON.stringify(supplier))
       const error = validateData___(supplier);
       if (error != null) {
         setState({ ...state, open: true, error: error });
@@ -94,7 +96,11 @@ function AddSuppliers(props) {
     })
   }
     const handleSupplier = (event) => {
-      setSupplier(event.target.value);
+      const { name, value } = event.target;
+    setSupplier(prevState => ({
+      ...prevState,
+      [name]: value
+  }));
     }
 
   //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
@@ -253,7 +259,7 @@ function AddSuppliers(props) {
                   <MenuItem key={22} value={22}>Monaragala</MenuItem>
                   <MenuItem key={23} value={23}>Hambantota</MenuItem>
                   <MenuItem key={24} value={24}>Matara</MenuItem>
-                  <MenuItem key={25} value={24}>Galle</MenuItem>
+                  <MenuItem key={25} value={25}>Galle</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -263,11 +269,11 @@ function AddSuppliers(props) {
                 <Select id="department"
                   value={department}
                   onChange={handleDepartment}>
-                  <MenuItem key={1} value={"frontoffice"}>Front Office</MenuItem>
-                  <MenuItem key={2} value={"foodnbeverages"}>Food and Beverages</MenuItem>
-                  <MenuItem key={3} value={"housekeeping"}>House Keeping</MenuItem>
-                  <MenuItem key={4} value={"finance"}>Finance</MenuItem>
-                  <MenuItem key={5} value={"hr"}>HR</MenuItem>
+                  <MenuItem key={26} value={"frontoffice"}>Front Office</MenuItem>
+                  <MenuItem key={27} value={"foodnbeverages"}>Food and Beverages</MenuItem>
+                  <MenuItem key={28} value={"housekeeping"}>House Keeping</MenuItem>
+                  <MenuItem key={29} value={"finance"}>Finance</MenuItem>
+                  <MenuItem key={30} value={"hr"}>HR</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -299,11 +305,11 @@ function AddSuppliers(props) {
           >
             Add Supplier
               </Button>
-          {feedBackToast}
+       
         </form>
 
       </div>
-
+      {feedBackToast}
     </Container>
 
   );

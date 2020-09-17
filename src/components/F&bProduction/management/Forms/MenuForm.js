@@ -145,7 +145,7 @@ function MenuForm(props) {
 
       <Alert variant="filled" severity="error" style={{display: "flex",alignItems: "center"}}>
       <h3>{error}</h3>
-      
+
       </Alert>
       </div>
     </Snackbar>)
