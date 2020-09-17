@@ -4,26 +4,31 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 
-import {updateServiceProvider} from '../../redux/actions/maintainanceActions/serviceProviderActions'
-import {insertServiceProvider} from '../../redux/actions/maintainanceActions/serviceProviderActions'
-import {deleteServiceProvider} from '../../redux/actions/maintainanceActions/serviceProviderActions'
+import {updatemovementActivity} from '../../redux/actions/maintainanceActions/movementActivityActions'
+import {insertmovementActivity} from '../../redux/actions/maintainanceActions/movementActivityActions'
+import {deletemovementActivity} from '../../redux/actions/maintainanceActions/movementActivityActions'
 
- function ServiceProvider(props) {
+ function MovementActivity(props) {
  
     const { useState } = React;
     const [columns, setColumns] = useState([
-      { title: 'Service Provider ID', field: 'Service_Pr_id' },
-      { title: 'Company Name', field: 'Company_name' },
+        { title: 'ID', field: 'Visit_id' },
+        { title: 'Name', field: 'Name'},
+        { title: 'National ID number', field: 'Nic_no'},
+        { title: 'Contact Number', field: 'Contact_no'},
+        { title: 'Guest Type', field: 'guest_type'},
+        { title: 'Number of Guests', field: 'no_of_guests'},
+        { title: 'Vehicle Number', field: 'vehicle_no'},
       {
         title: 'Description',
         field: 'descriptions',
       },
     ]); 
-    const serviceProvider = useSelector(state => state.firestore.ordered.serviceProvider)
-    const data = serviceProvider ? (serviceProvider.map(service => ({...service}))) : (null)
+    const movementActivity = useSelector(state => state.firestore.ordered.movementActivity)
+    const data = movementActivity ? (movementActivity.map(movementActivity => ({...movementActivity}))) : (null)
     const table = data ? (
         <MaterialTable
-        title="service Provider Preview"
+        title="Movement Activity Preview"
         columns={columns}
         data={data}
         editable={{
@@ -31,7 +36,7 @@ import {deleteServiceProvider} from '../../redux/actions/maintainanceActions/ser
             new Promise((resolve, reject) => {
               setTimeout(() => {
                 //setData([...data, newData]);
-                props.insertServiceProvider(newData);
+                props.insertmovementActivity(newData);
                 
                 resolve();
               }, 1000)
@@ -44,7 +49,7 @@ import {deleteServiceProvider} from '../../redux/actions/maintainanceActions/ser
                 dataUpdate[index] = newData;
                 //setData([...dataUpdate]);
                 console.log(newData,oldData)
-                props.updateServiceProvider(newData)
+                props.updatemovementActivity(newData)
                 resolve();
               }, 1000)
             }),
@@ -56,7 +61,7 @@ import {deleteServiceProvider} from '../../redux/actions/maintainanceActions/ser
                 dataDelete.splice(index, 1);
                 //setData([...dataDelete]);
                 console.log(oldData)
-                props.deleteServiceProvider(oldData.id)
+                props.deletemovementActivity(oldData.id)
                 resolve()
               }, 1000)
             }),
@@ -78,13 +83,13 @@ import {deleteServiceProvider} from '../../redux/actions/maintainanceActions/ser
  
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateServiceProvider: (payload) => dispatch(updateServiceProvider(payload)),
-        insertServiceProvider: (payload) => dispatch(insertServiceProvider(payload)),
-        deleteServiceProvider: (roomId) => dispatch(deleteServiceProvider(roomId))
+        updatemovementActivity: (payload) => dispatch(updatemovementActivity(payload)),
+        insertmovementActivity: (payload) => dispatch(insertmovementActivity(payload)),
+        deletemovementActivity: (roomId) => dispatch(deletemovementActivity(roomId))
 
 
     }
 }
   export default compose(connect(null,mapDispatchToProps),firestoreConnect([
-    {collection: 'serviceProvider'}
-  ])) (ServiceProvider)
+    {collection: 'movementActivity'}
+  ])) (MovementActivity)

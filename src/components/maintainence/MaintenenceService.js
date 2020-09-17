@@ -4,26 +4,33 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 
-import {updateServiceProvider} from '../../redux/actions/maintainanceActions/serviceProviderActions'
-import {insertServiceProvider} from '../../redux/actions/maintainanceActions/serviceProviderActions'
-import {deleteServiceProvider} from '../../redux/actions/maintainanceActions/serviceProviderActions'
+import {updatemaintenanceServices} from '../../redux/actions/maintainanceActions/maintainanceServicesActions'
+import {insertmaintenanceServices} from '../../redux/actions/maintainanceActions/maintainanceServicesActions'
+import {deletemaintenanceServices} from '../../redux/actions/maintainanceActions/maintainanceServicesActions'
 
- function ServiceProvider(props) {
+ function MaintenanceServices(props) {
  
     const { useState } = React;
     const [columns, setColumns] = useState([
-      { title: 'Service Provider ID', field: 'Service_Pr_id' },
-      { title: 'Company Name', field: 'Company_name' },
+      { title: 'Maintenance Service ID', field: 'M_Service_id' },
+      { title: 'Department', field: 'Department'},
+      { title: 'Type of Service', field: 'Service_type'},
+      { title: 'Machine ID Number', field: 'machine_ID'},
+      { title: 'Type of Machine', field: 'machine_Type'},
+      { title: 'Type of Payment made', field: 'payment_type'},
+      { title: 'Amount Paid', field: 'paymentMade'},
       {
         title: 'Description',
-        field: 'descriptions',
+        field: 'description',
       },
     ]); 
-    const serviceProvider = useSelector(state => state.firestore.ordered.serviceProvider)
-    const data = serviceProvider ? (serviceProvider.map(service => ({...service}))) : (null)
-    const table = data ? (
+    const maintainanceServices = useSelector(state => state.firestore.ordered)
+console.log(maintainanceServices)
+   // const data = maintainanceServices ? (maintainanceServices.map(maintainanceService => ({...maintainanceService   }))) : (null)
+   const data = null 
+   const table = data ? (
         <MaterialTable
-        title="service Provider Preview"
+        title="Maintenance Services Preview"
         columns={columns}
         data={data}
         editable={{
@@ -31,7 +38,7 @@ import {deleteServiceProvider} from '../../redux/actions/maintainanceActions/ser
             new Promise((resolve, reject) => {
               setTimeout(() => {
                 //setData([...data, newData]);
-                props.insertServiceProvider(newData);
+                props.insertmaintenanceServices(newData);
                 
                 resolve();
               }, 1000)
@@ -44,7 +51,8 @@ import {deleteServiceProvider} from '../../redux/actions/maintainanceActions/ser
                 dataUpdate[index] = newData;
                 //setData([...dataUpdate]);
                 console.log(newData,oldData)
-                props.updateServiceProvider(newData)
+                props.updatemaintenanceServices(newData);
+                props.update(newData)
                 resolve();
               }, 1000)
             }),
@@ -56,7 +64,7 @@ import {deleteServiceProvider} from '../../redux/actions/maintainanceActions/ser
                 dataDelete.splice(index, 1);
                 //setData([...dataDelete]);
                 console.log(oldData)
-                props.deleteServiceProvider(oldData.id)
+                props.deletemaintenanceServices(oldData);
                 resolve()
               }, 1000)
             }),
@@ -78,13 +86,13 @@ import {deleteServiceProvider} from '../../redux/actions/maintainanceActions/ser
  
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateServiceProvider: (payload) => dispatch(updateServiceProvider(payload)),
-        insertServiceProvider: (payload) => dispatch(insertServiceProvider(payload)),
-        deleteServiceProvider: (roomId) => dispatch(deleteServiceProvider(roomId))
+        updatemaintenanceServices: (payload) => dispatch(updatemaintenanceServices(payload)),
+        insertmaintenanceServices: (payload) => dispatch(insertmaintenanceServices(payload)),
+        deletemaintenanceServices: (roomId) => dispatch(deletemaintenanceServices(roomId))
 
 
     }
 }
   export default compose(connect(null,mapDispatchToProps),firestoreConnect([
-    {collection: 'serviceProvider'}
-  ])) (ServiceProvider)
+    {collection: 'maintenanceServices'}
+  ])) (MaintenanceServices)

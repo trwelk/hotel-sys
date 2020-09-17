@@ -10,6 +10,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
+import AddLocationIcon from '@material-ui/icons/AddLocation';
 import Typography from '@material-ui/core/Typography';
 import AddressForm from './NewReservation';
 import PaymentForm from './PaymentForm';
@@ -78,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ['Reservation Details'];
                                                         
-function NewReservationForm(props) {
+function ReservationDetails(props) {
     const [open, setOpen] = React.useState(false);
     const [state, setState] = useState({roomNo:props.roomNo,roomType:props.roomType,customer:"",additionalInfo:""});
     const month = useSelector(state => state.frontOffice.selectedMonth + 1 )
@@ -91,6 +92,8 @@ function NewReservationForm(props) {
     const [roomNo, setRoomNo] = useState(props.roomNo);
     const [roomType, RoomType] = useState(props.roomType);
     const [customer, setCustomer] = useState("");
+
+    const reservation = props.reservation
 
     const [stat, setStat] = React.useState({
       openn: false,
@@ -174,7 +177,7 @@ function NewReservationForm(props) {
 
   return (
 <React.Fragment>
-    <AddCircleIcon variant="outlined" color="secondary" onClick={handleClickOpen}/>
+    <AddLocationIcon variant="outlined" color="primary" onClick={handleClickOpen}/>
 
 <Dialog
 style={{background: "transparent",overflowY: "hidden"}}
@@ -189,25 +192,18 @@ onClose={handleClose}
           <Typography component="h1" variant="h4" align="center">
             Reservation Details
           </Typography>
-          <Stepper className={classes.stepper}>
-              <Step key="label">
-                <StepLabel>label</StepLabel>
-              </Step>
-          </Stepper>
+
           <React.Fragment>
             { (
               <React.Fragment>
               <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-              Reservation Details
-      </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6} style={{width:"300px"}}>
         <FormControl className={classes.formControl} style={{width:"500px"}}>
         <Select
          label="Customer"
           id="demo-simple-select"
-          value={state.customer}
+          value={reservation.customer}
           onChange={handleCustomerTypeSelector}
         >
          {customerSelector}
@@ -222,6 +218,7 @@ onClose={handleClose}
             name="additionalInfo"
             label="Additional detials"
             fullWidth
+            value={reservation.additionalInfo}
             autoComplete="shipping address-line1"
             onChange={handleChange}
           />
@@ -239,7 +236,7 @@ onClose={handleClose}
             name="Day"
             label="Day"
             fullWidth
-            defaultValue={startDay}
+            defaultValue={new Date(reservation.startDay)}
           InputProps={{
             readOnly: true,
           }}
@@ -253,7 +250,7 @@ onClose={handleClose}
             label="Room Type"
             fullWidth
             autoComplete="shipping country"
-            defaultValue={roomType}
+            defaultValue={reservation.roomType}
             InputProps={{
             readOnly: true,
           }}
@@ -267,11 +264,7 @@ onClose={handleClose}
         </Grid>
       </Grid>
 
-    </React.Fragment>                <div className={classes.buttons}>
-                  <Button variant="contained" color="primary" onClick={handleSubmit}  className={classes.button}>
-                    Submit
-                  </Button>
-                </div>
+    </React.Fragment> 
               </React.Fragment>
             )}
           </React.Fragment>
@@ -299,4 +292,4 @@ export default compose(connect(null,mapDispatchToProps),firestoreConnect([
   {collection: 'room'},
   {collection: 'roomtype'},
   {collection: 'customer'}
-]))(NewReservationForm) 
+]))(ReservationDetails) 

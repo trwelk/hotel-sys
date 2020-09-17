@@ -46,7 +46,7 @@ function RoomTypeTable(props) {
         return "Field ID Cannot be null"
 
       }
-      else if(data.id.length != 5 ){
+      else if(data.id.length < 5 ){
         return "Field ID sould contain 5 characters"
 
       }

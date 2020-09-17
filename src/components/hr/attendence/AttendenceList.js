@@ -32,9 +32,9 @@ function AttendenceList(props) {
       
     ]);
     const attendences = useSelector(state => state.firestore.ordered.attendence)
-    const data = attendences ? (attendences.map(attendence => ({...attendence,
-      date:moment().format("MM-DD-YYYY").toString(),
-      totalworkinghrs:parseFloat(attendence.departure) - parseFloat(attendence.arrival)}))) : (null)
+    const data = (null) //(attendences.map(attendence => ({...attendence,
+    //date:moment().format("MM-DD-YYYY").toString(),
+    //totalworkinghrs:parseFloat(attendence.departure) - parseFloat(attendence.arrival)}))) : 
     
     const [state, setState] = React.useState({
       open: false,
