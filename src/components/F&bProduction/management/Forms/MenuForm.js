@@ -44,7 +44,7 @@ function MenuForm(props) {
 
   const [menuType, setType] = React.useState(1);
   const [hide,hideField] = React.useState(false);
-  const [Menu, setMenu] = useState({id:'',menuName:'',menuType:1,price:''});
+  const [Menu, setMenu] = useState({id:'',menuName:'',menuType:1, price:''});
   const [WedItems,setItems] = useState({
     Wlitem1:'',
     Mditem1:'',Mditem2:'',Mditem3:'',
@@ -145,7 +145,7 @@ function MenuForm(props) {
 
       <Alert variant="filled" severity="error" style={{display: "flex",alignItems: "center"}}>
       <h3>{error}</h3>
-      
+
       </Alert>
       </div>
     </Snackbar>)

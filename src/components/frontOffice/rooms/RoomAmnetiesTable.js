@@ -10,6 +10,8 @@ import {deleteRoomAmenity} from '../../../redux/actions/frontOfficeActions/RoomT
 
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 function Alert(props) {  return <MuiAlert elevation={6} variant="filled" {...props} />}
 
  function RoomAmnetiesTable(props) {
@@ -35,7 +37,7 @@ function Alert(props) {  return <MuiAlert elevation={6} variant="filled" {...pro
    
     const amenetiesCopy = ameneties ? (ameneties.map(amenity => ({...amenity}))) : (null)
     let roomTypeFilter = props.id ? props.id : amenetiesCopy ? amenetiesCopy[0].roomType : null;
-    const data = roomTypeFilter ? (amenetiesCopy.filter(amenity =>  amenity.roomType == roomTypeFilter)) : (amenetiesCopy)
+    const data = amenetiesCopy ? (amenetiesCopy.filter(amenity =>  amenity.roomType == roomTypeFilter)) : (amenetiesCopy)
 
 //---------------------------------------INTERNAL METODS -----------------------------------------------------------------------
 
@@ -73,7 +75,7 @@ function Alert(props) {  return <MuiAlert elevation={6} variant="filled" {...pro
                 else{
                   setTimeout(() => {
                     console.log(data)
-                    props.insertRoomType(newData);
+                    props.insertRoomAmenity(roomTypeFilter,newData);
                     resolve();
                   }, 1000)
                 }
@@ -87,7 +89,7 @@ function Alert(props) {  return <MuiAlert elevation={6} variant="filled" {...pro
                 }
                 else{
                   setTimeout(() => {
-                    props.updateRoomType(newData)
+                    props.updateRoomAmenity(newData)
                     resolve();
                   }, 1000)
                 }
@@ -104,9 +106,20 @@ function Alert(props) {  return <MuiAlert elevation={6} variant="filled" {...pro
                 resolve()
               }, 1000)
             }),
+            
         }}
+        options={{
+        headerStyle: {
+          backgroundColor: '#01579b',
+          color: '#FFF',
+          borderBottom: '1px solid #333',
+        width: '100px',
+    /* height: 100px; */
+        boxShadow: "0 10px 5px -2px #888"
+        }
+      }}
       />
-    ) : (<div>Loading</div>)
+    ) : (<div><CircularProgress style={{marginTop:"200px"}}/></div>)
 
     
     const feedBackToast =  (<Snackbar 

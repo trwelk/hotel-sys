@@ -1,34 +1,30 @@
-export const updateSupplierInfo = (payload) => {
+export const updateProduct = (payload) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('supplier').doc(payload.sId).update({
-            firstName:payload.firstName,
-            lastName:payload.lastName,
-            email:payload.email,
-            phone:payload.phone,
-            itemtype:payload.itemtype,
-            location:payload.location,
+        firestore.collection("productMng").doc(payload.pId).update({
+            pId:payload.pId,
+            pType:payload.pType,
             department:payload.department,
+            priority:payload.priority,
+            qty:payload.qty,
             date:payload.date
+            //status:payload.status
         }); 
     }
 
 }
 
-export const insertSupplierInfo = (payload) => {
+export const insertProduct = (payload) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('supplier').doc(payload.sId).set({
-            sId:payload.sId,
-            firstName:payload.firstName,
-            lastName:payload.lastName,
-            email:payload.email,
-            itemtype:payload.itemtype,
-            phone:payload.phone,
-            location:payload.location,
+        firestore.collection('productMng').doc(payload.pId).set({
+            pId:payload.pId,
+            pType:payload.pType,
             department:payload.department,
+            priority:payload.priority,
+            qty:payload.qty,
             date:payload.date
         }).then((response) => {
             console.log(response)
@@ -39,11 +35,11 @@ export const insertSupplierInfo = (payload) => {
 
 }
 
-export const deleteSupplierInfo = (supplierId) => {
-    console.log(supplierId)
+export const deleteProduct = (productId) => {
+    console.log(productId)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('supplier').doc(supplierId).delete()
+        firestore.collection('productMng').doc(productId).delete()
             .then((response) => {
                 console.log(response)
             }).catch((error) => {

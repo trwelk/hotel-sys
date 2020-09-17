@@ -16,12 +16,40 @@ export const handleMonthPickReservation = (month) => {
     }
 }
 
+export const handleCustomerPick = (customer) => {
+    return (dispatch,getState,{getFirestore,getFirebase}) => {
+        console.log(getState())
+
+             dispatch({type:'CUSTOMER_SELECTED',
+                        customer:customer})
+    }
+}
+
 
 export const handleDayPick = (day) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
-        console.log(day)
+        console.log("in nav actions",day)
 
              dispatch({type:'DAY_SELECTED',
                         day:day})
+    }
+}
+
+
+export const changeFeedbackFormState = (state) => {
+    return (dispatch,getState,{getFirestore,getFirebase}) => {
+        console.log("in nav actions",state)
+
+             dispatch({type:'FEEDBACK_STATE_CHANGE',
+                        state:state})
+    }
+}
+
+export const changeFeedbackInitialFormState = (state) => {
+    return (dispatch,getState,{getFirestore,getFirebase}) => {
+        console.log("in nav actions",state)
+
+             dispatch({type:'FEEDBACK_INITIAL_STATE_CHANGE',
+                        state:state})
     }
 }

@@ -70,7 +70,6 @@ import { insertSupplierInfo, updateSupplierInfo, deleteSupplierInfo} from '../..
   
     return(
         <div>
-          {/* <headerPnI /> */}
              {table}
         </div>
        

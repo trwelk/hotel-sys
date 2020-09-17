@@ -14,14 +14,14 @@ export const updateReservation = (payload) => {
 export const insertReservation = (payload) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        const {name,customerEmail ,additional,roomType,startDay,endDay,phone,roomId,roomNo} = payload;
+        const {name,customer ,additional,roomType,startDay,endDay,phone,roomId,roomNo} = payload;
         const state = getState();
         console.log(state.frontOffice.selectedMonth,state.frontOffice.selectedDay)
 
         console.log( new Date(Date.parse(state.frontOffice.selectedMonth + ' ' + (state.frontOffice.selectedDay) +' 2020'))
         )
         firestore.collection('reservation').add({
-            customerEmail:customerEmail,
+            customer:customer,
             endDay:firebase.firestore.Timestamp.fromDate(  new Date(Date.parse((state.frontOffice.selectedMonth + 1)+ ' ' + (state.frontOffice.selectedDay ) +' 2020'))
             ),
             roomType:roomType,
@@ -49,4 +49,30 @@ export const deleteReservation = (ReservationId) => {
             })
     }
 
+}
+
+export const insertReservationItem = (roomType,roomNo) => {
+    return (dispatch,getState,{getFirestore,getFirebase}) => {
+        const firestore = getFirestore();
+        //const {name,customerEmail ,additional,roomType,startDay,endDay,phone,roomId,roomNo} = payload;
+        const state = getState();
+        console.log("actionn dayyy",state.frontOffice.selectedDay)
+
+        console.log( new Date(Date.parse(state.frontOffice.selectedMonth + ' ' + (state.frontOffice.selectedDay) +' 2020'))
+        )
+        firestore.collection('reservation').add({
+            customer:state.frontOffice.selectedCustomer,
+            endDay:firebase.firestore.Timestamp.fromDate(  new Date(Date.parse((state.frontOffice.selectedMonth + 1)+ ' ' + (state.frontOffice.selectedDay ) +' 2020'))
+            ),
+            roomType:roomType,
+            startDay:firebase.firestore.Timestamp.fromDate(  new Date(Date.parse((state.frontOffice.selectedMonth + 1)+ ' ' + (state.frontOffice.selectedDay ) +' 2020'))
+            ),
+            status:'Open',
+            roomNo:roomNo
+        }).then((doc) => {
+            console.log("Document written with ID: ", doc.id);
+        }).catch((error) => {
+            console.log("Error writing reservation ", error);
+        })
+    }
 }

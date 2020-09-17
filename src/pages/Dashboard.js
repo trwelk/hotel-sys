@@ -52,6 +52,7 @@ import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
 import EditOrderTable from '../components/fnbServices/EditOrderTable';
 import OrderForm from '../components/fnbServices/OrderForm';
 import ChooseModuleDialog from '../components/layout/ChoosefnbModuleDialog';
+import purchasesRequest from '../components/purchasesnInventory/purchasesManagment/purchasesRequest';
 
 function Copyright() {
   return (
@@ -272,6 +273,11 @@ function Dashboard(props) {
             <Route exact path="/req" component={purchasesRequestManagement}/>
             <Route exact path="/porder" component={purchasesOrder}/>
             <Route exact path="/Purchases & Inventory" component={addSuppliers}/>
+            <Route exact path="/pReq" component={purchasesRequest}/>
+            <Route exact path="/pOrd" component={purchasesOrder}/>
+
+
+
             </Switch>
 
           </main>
