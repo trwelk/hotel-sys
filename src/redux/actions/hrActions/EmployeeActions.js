@@ -3,9 +3,7 @@ export const updateEmployee = (payload) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
         firestore.collection("employee").doc(payload.id).update({
-            name:payload.name,
-            sallary:payload.Salary,
-            address:payload.address
+            ...payload
         });
     }
 
@@ -15,7 +13,7 @@ export const insertEmployee = (payload) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('employee').add({
+        firestore.collection('employee').doc(payload.id).set({
             ...payload
         }).then((response) => {
             console.log(response)
@@ -25,11 +23,11 @@ export const insertEmployee = (payload) => {
     }
 }
 
-export const deleteRoomType = (roomId) => {
-    console.log(roomId)
+export const deleteEmployee = (empId) => {
+    console.log(empId)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('roomtype').doc(roomId).delete()
+        firestore.collection('employee').doc(empId).delete()
             .then((response) => {
                 console.log(response)
             }).catch((error) => {

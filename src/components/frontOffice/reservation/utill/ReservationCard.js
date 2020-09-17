@@ -15,6 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import CancelIcon from '@material-ui/icons/Cancel';
 import {deleteReservation} from '../../../../redux/actions/frontOfficeActions/ReservationActions'
+import ReservationDetails from '../forms/ReservationDetails';
 const useStyles = makeStyles(({ palette }) => ({
   card: {
     borderRadius: 12,
@@ -71,9 +72,9 @@ export const ReservationCard = React.memo(function ProfileCard(props) {
     <Card className={cx(styles.card, shadowStyles.root)}>
       <Box display={'flex'} style={{padding: "8px 0"}}>
         <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
-        <IconButton color="primary" aria-label="add to shopping cart">
-            <MenuBookIcon/>
-            </IconButton>
+        <IconButton color="primary" aria-label="add to shopping cart" >
+        <ReservationDetails reservation={props.reservation}/>
+        </IconButton>
         </Box>
         <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
           <IconButton color="primary" aria-label="add to shopping cart" onClick={handleDelete}>

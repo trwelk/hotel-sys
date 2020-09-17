@@ -24,7 +24,7 @@ function CustomerTable(props) {
  
     const { useState } = React;
     const [columns, setColumns] = useState([
-        { title: 'ID',field: 'id',},
+        { title: 'ID',field: 'id', editable: 'onInsert'},
       { title: 'First Name', field: 'firstName' ,},
       { title: 'Last Name', field: 'lastName' },
       { title: 'Phone Number', field: 'phone', type: 'numeric' },
@@ -43,7 +43,7 @@ function CustomerTable(props) {
     const data = customers ? (customers.map(customer => ({...customer}))) : (null)
     const datacopy = data
     //--------------------------------------------INTERNAL METHODS--------------------------------------------------------------------------------
-    const validateData___  = (data) => {
+    const validateData___  = (data,type) => {
       if(data.id == null || data.id == ""){
         return "Field ID Cannot be null"
 
@@ -63,14 +63,14 @@ function CustomerTable(props) {
       else if(data.email == null || data.email == ""){
         return "Field Email Cannot be null"
       }
-      else if( !(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(data.email))){
+      else if( !(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(data.email)) && type == 'INSERT'){
         return "Field Email is invalid"
       }
-      else if(datacopy.filter(dat => dat.id == data.id).length > 0){
+      else if(datacopy.filter(dat => dat.id == data.id).length > 0 && type == 'INSERT'){
         console.log("some",datacopy.filter(dat => dat.id == data.id) )
         return "The User Id is already existing"
       }
-      else if(datacopy.filter(dat => dat.email == data.email).length > 0){
+      else if(datacopy.filter(dat => dat.email == data.email).length > 0 && type == 'INSERT'){
         console.log("some")
         return "The Email is already existing"
       }
@@ -97,7 +97,7 @@ const table = data ? (
         editable={{
           onRowAdd: newData =>
             new Promise((resolve, reject) => {
-              const error = validateData___(newData);
+              const error = validateData___(newData,"INSERT");
                 if (error != null){
                   setState({ ...state, open: true,error:error });
                   reject();
@@ -113,7 +113,7 @@ const table = data ? (
             }),
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
-              const error = validateData___(newData);
+              const error = validateData___(newData,"UPDATE");
                 if (error != null){
                   reject();
                   setState({ ...state, open: true,error:error });

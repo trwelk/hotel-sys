@@ -124,7 +124,6 @@ function PermanentDrawerLeft(props) {
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
           <Tab label="Room Management" {...a11yProps(0)} />
           <Tab label="Room amenities" {...a11yProps(1)} />
-          <Tab label="Add New Room" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
    <div style={{display: "flex",
