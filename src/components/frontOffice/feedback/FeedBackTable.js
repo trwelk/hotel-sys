@@ -19,6 +19,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import DirectionsIcon from '@material-ui/icons/Directions';
 import CustomerCard from './utill/CustomerCard';
+import DescriptionForm from './utill/DescriptionForm';
+import FeedbackActionsForm from './utill/FeedbackActionsForm';
+import NewReservationForm from '../reservation/forms/NewReservationForm';
+import NewFeedbackForm from './utill/NewFeedbackForm';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import {updateFeedback} from '../../../redux/actions/frontOfficeActions/FeedbackActions'
+import {deleteFeedback} from '../../../redux/actions/frontOfficeActions/FeedbackActions'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,9 +54,8 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-function FeedBackTable() {
+function FeedBackTable(props) {
 
-    const [descriptionButtonHidden,setDescriptionButtonHidden] = React.useState(true)
     const [state, setState] = React.useState({
         open: false,
         vertical: 'bottom',
@@ -58,58 +64,113 @@ function FeedBackTable() {
       const { vertical, horizontal, open ,error} = state;
       const classes = useStyles();
 
-  
-      const feedbacks = useSelector(state => state.firestore.ordered.foodOrder)    
+      const addButton = <div><NewFeedbackForm/></div>
+      const feedbacks = useSelector(state => state.firestore.ordered.feedback)    
       
       const data = feedbacks ? (feedbacks.map(feedback => ({...feedback}))) : (null)
-
-
-      const handleChangeOfDescription = (event) => {
-          if(descriptionButtonHidden == false){
-            setDescriptionButtonHidden(true)
-          }
-      }
-
       
       if(feedbacks){
     return (
         
       <MaterialTable
-        title="Multiple Detail Panels Preview"
+        title={addButton}
         columns={[
-          { title: 'Order', field: 'orderNo' },
-          { title: 'Room', field: 'room' },
-          { title: 'Status', field: 'status'},
+          { title: 'Title', field: 'title' },
+          { title: 'Customer', field: 'customer',editable: 'never' },
+          { title: 'Rating', field: 'rating'},
+          { title: 'Type', field: 'type'},
         ]}
+        options={{
+        headerStyle: {
+          backgroundColor: '#01579b',
+          color: '#FFF',
+          borderBottom: '1px solid #333',
+        width: '100px',
+        boxShadow: "0 10px 5px -2px #888"
+        }
+      }}
         data={data}
         detailPanel={[
           {
             tooltip: 'Show Description',
             render: rowData => {
+              console.log('asdasd',rowData)
               return (
                  <div> 
-                    <FormControl fullWidth>
-                        <TextField  id="outlined-basic" defaultValue={rowData.description} multiline  label="Description" variant="outlined" onChange={handleChangeOfDescription}/>
-                    </FormControl>
-                    <IconButton color="primary" aria-label="add to shopping cart" hidden='true'  >
-                        <MenuBookIcon hidden={descriptionButtonHidden}/>
-                    </IconButton>
+                    <DescriptionForm id={rowData.id} description={rowData.description}/>
                 </div>
 
                   
               )
             },
           },
-         
+          {
+            icon: 'account_circle',
+            tooltip: 'Show Surname',
+            render: rowData => {
+              return (
+                <CustomerCard customerId={rowData.customer}/>
+              )
+            },
+          },
+          {
+            icon: 'favorite_border',
+            openIcon: 'favorite',
+            tooltip: 'Show Both',
+            render: rowData => {
+              return (
+                <div>
+                    <FeedbackActionsForm id={rowData.id} action={rowData.action}/>
+                </div>
+              )
+            },
+          },
         ]}
+        editable={{
+          onRowUpdate: (newData, oldData) =>
+            new Promise((resolve, reject) => {
+              //const error = validateData___(newData);
+                if (error != null){
+                  reject();
+                  setState({ ...state, open: true,error:error });
+                }
+                else{
+                  setTimeout(() => {
+                  props.updateFeedback(newData)
+                    resolve();
+                  }, 1000)
+                }
+            }),
+          onRowDelete: oldData =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                const dataDelete = [...data];
+                const index = oldData.tableData.id;
+                dataDelete.splice(index, 1);
+                //setData([...dataDelete]);
+                console.log(oldData)
+                props.deleteFeedback(oldData.id)
+                resolve()
+              }, 1000)
+            }),
+        }}
+
       />
     )
   }
   else
-  return <div>loading</div>
+  return <div>      <CircularProgress style={{marginTop:"200px"}}/>
+  </div>
 }
-  export default compose(connect(null,null),firestoreConnect([
-    {collection: 'foodOrder'},
+
+const mapDispatchToProps = (dispatch) => {
+  return{
+    updateFeedback: (payload) => dispatch(updateFeedback(payload)),
+    deleteFeedback: (customerId) => dispatch(deleteFeedback(customerId))
+  }
+}
+  export default compose(connect(null,mapDispatchToProps),firestoreConnect([
+    {collection: 'feedback'},
     {collection: 'customer'}    
   ]))(FeedBackTable)
   

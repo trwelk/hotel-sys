@@ -55,7 +55,7 @@ function CustomerCard(props){
     const filteredCustomer = data.filter(customer => customer.id == customerId);
     console.log(filteredCustomer)
 
-    const customerCard = customers ? (
+    const customerCard = filteredCustomer ? (
                 <div style={{ display: "flex",justifyContent: "center"}}>
                 <Paper elevation={3} style={{width: "40%"}}>
                 <div className={classes.margin}>
@@ -64,7 +64,7 @@ function CustomerCard(props){
                         <AccountCircle />
                     </Grid>
                     <Grid item style={{width:"88%"}}>
-                        <TextField  label="Id" value={filteredCustomer.firstName} fullWidth/>
+                        <TextField  label="First Name" value={filteredCustomer[0].firstName} disabled fullWidth/>
                     </Grid>
                     </Grid>
                 </div>
@@ -74,7 +74,7 @@ function CustomerCard(props){
                         <AccountCircle />
                     </Grid>
                     <Grid item style={{width:"88%"}}>
-                        <TextField value={filteredCustomer.lastName} label="Last Name" fullWidth/>
+                        <TextField value={filteredCustomer[0].lastName} label="Last Name" disabled fullWidth/>
                     </Grid>
                     </Grid>
                 </div>
@@ -84,7 +84,7 @@ function CustomerCard(props){
                         <AccountCircle />
                     </Grid>
                     <Grid item style={{width:"88%"}}>
-                        <TextField value={filteredCustomer.email} label="Email" fullWidth/>
+                        <TextField value={filteredCustomer[0].email} label="Email" disabled fullWidth/>
                     </Grid>
                     </Grid>
                 </div>
@@ -94,7 +94,7 @@ function CustomerCard(props){
                         <AccountCircle />
                     </Grid>
                     <Grid item style={{width:"88%"}}>
-                        <TextField label="Phone" value={filteredCustomer.phone} fullWidth/>
+                        <TextField label="Phone" value={filteredCustomer[0].phone} disabled fullWidth/>
                     </Grid>
                     </Grid>
                 </div>
@@ -105,7 +105,7 @@ function CustomerCard(props){
     ) : (<div>loading</div>)
 
         return(
-            <div>          {customerCard}
+            <div style={{padding:"20px"}}>          {customerCard}
         </div>
   
         )

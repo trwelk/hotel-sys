@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import {updateRoomType} from '../../../redux/actions/frontOfficeActions/RoomTypeActions'
 import {insertRoomType} from '../../../redux/actions/frontOfficeActions/RoomTypeActions'
 import {deleteRoomType} from '../../../redux/actions/frontOfficeActions/RoomTypeActions'
@@ -129,7 +130,7 @@ function RoomTypeTable(props) {
         }
       }}
       />
-    ) : (<div>Loading</div>)
+    ) : (<div><CircularProgress style={{marginTop:"200px"}}/></div>)
 
     const feedBackToast =  (<Snackbar 
       autoHideDuration={200000}

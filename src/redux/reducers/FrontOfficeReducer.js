@@ -1,7 +1,9 @@
 const initState = {
     selectedRoom:null,
     selectedMonth:9,
-    selectedDay:2
+    selectedDay:2,
+    selectedCustomer:null
+
 }
 
 const FrontOfficeReducer = (state = initState, action) => {
@@ -18,10 +20,16 @@ const FrontOfficeReducer = (state = initState, action) => {
                     
                 });
         case 'DAY_SELECTED':
+            console.log("reducer day",state.selectedDay)
                     return ({
                         ...state,
                         selectedDay:action.day
                     });
+        case 'CUSTOMER_SELECTED':
+                     return ({
+                        ...state,
+                        selectedCustomer:action.customer
+                    });                                 
             default :
             return state;
     }

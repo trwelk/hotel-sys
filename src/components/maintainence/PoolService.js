@@ -4,9 +4,9 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 
-import {updateRoomType} from '../../redux/actions/frontOfficeActions/RoomTypeActions'
-import {insertRoomType} from '../../redux/actions/frontOfficeActions/RoomTypeActions'
-import {deleteRoomType} from '../../redux/actions/frontOfficeActions/RoomTypeActions'
+import {updatepoolService} from '../../redux/actions/maintainanceActions/PoolServiceActions'
+import {deletepoolService} from '../../redux/actions/maintainanceActions/PoolServiceActions'
+import {insertpoolService} from '../../redux/actions/maintainanceActions/PoolServiceActions'
 
  function PoolService(props) {
  
@@ -32,7 +32,7 @@ import {deleteRoomType} from '../../redux/actions/frontOfficeActions/RoomTypeAct
             new Promise((resolve, reject) => {
               setTimeout(() => {
                 //setData([...data, newData]);
-                props.insertRoomType(newData);
+                props.insertpoolService(newData);
                 
                 resolve();
               }, 1000)
@@ -45,7 +45,7 @@ import {deleteRoomType} from '../../redux/actions/frontOfficeActions/RoomTypeAct
                 dataUpdate[index] = newData;
                 //setData([...dataUpdate]);
                 console.log(newData,oldData)
-                props.updateRoomType(newData)
+                props.updatepoolService(newData)
                 resolve();
               }, 1000)
             }),
@@ -57,7 +57,7 @@ import {deleteRoomType} from '../../redux/actions/frontOfficeActions/RoomTypeAct
                 dataDelete.splice(index, 1);
                 //setData([...dataDelete]);
                 console.log(oldData)
-                props.deleteRoomType(oldData.id)
+                props.deletepoolService(oldData.id)
                 resolve()
               }, 1000)
             }),
@@ -79,9 +79,9 @@ import {deleteRoomType} from '../../redux/actions/frontOfficeActions/RoomTypeAct
  
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateRoomType: (payload) => dispatch(updateRoomType(payload)),
-        insertRoomType: (payload) => dispatch(insertRoomType(payload)),
-        deleteRoomType: (roomId) => dispatch(deleteRoomType(roomId))
+        updatepoolService: (payload) => dispatch(updatepoolService(payload)),
+        insertpoolService: (payload) => dispatch(insertpoolService(payload)),
+        deletepoolService: (roomId) => dispatch(deletepoolService(roomId))
 
 
     }
