@@ -44,7 +44,7 @@ function MenuForm(props) {
 
   const [menuType, setType] = React.useState(1);
   const [hide,hideField] = React.useState(false);
-  const [Menu, setMenu] = useState({id:'',menuName:'',menuType:1,price:''});
+  const [Menu, setMenu] = useState({id:'',menuName:'',menuType:1, price:''});
   const [WedItems,setItems] = useState({
     Wlitem1:'',
     Mditem1:'',Mditem2:'',Mditem3:'',
@@ -65,7 +65,7 @@ function MenuForm(props) {
     if (MenuType == 1) {
       return <WeddingTemplate handleChangeItem={handleChangeItem} WedItems={WedItems} />
     } else {
-      return "Byeeeee"
+      return ("Menu Type:" + MenuType)
     }
   }
 
@@ -128,7 +128,7 @@ function MenuForm(props) {
       else{
       setTimeout(() => {
           alert('Got Wedding Items' + JSON.stringify(WedItems));
-          // props.insertMenu(Menu)
+          props.insertMenu(Menu,WedItems)
           resolve();
       },1000)
     }
@@ -145,7 +145,7 @@ function MenuForm(props) {
 
       <Alert variant="filled" severity="error" style={{display: "flex",alignItems: "center"}}>
       <h3>{error}</h3>
-      
+
       </Alert>
       </div>
     </Snackbar>)
@@ -241,9 +241,10 @@ function MenuForm(props) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      insertMenu: (payload) => dispatch(insertMenu(payload)),
+      insertMenu: (payload,ItemsPayload) => dispatch(insertMenu(payload,ItemsPayload)),
     }
   }
+  
   export default compose(connect(null, mapDispatchToProps), firestoreConnect([
     { collection: 'Menu' }]))
     (MenuForm)

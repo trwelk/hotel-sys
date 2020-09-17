@@ -17,6 +17,27 @@ import purchasesOrder from '../components/purchasesnInventory/purchasesManagment
 import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import EmployeeList from '../components/hr/employee/EmployeeList';
+import AbsenceTypeList from '../components/hr/absence/AbsenceTypeList';
+import AbsenceList from '../components/hr/absence/AbsenceList';
+import AttendenceList from '../components/hr/attendence/AttendenceList';
+import PettyRequest from '../components/finance/petty/PettyRequest';
+import PettyCashManagement from '../components/finance/petty/PettyCashManagement';
+import PettyCashMain from '../components/finance/petty/PettyCashMain';
+import CashFlowMain from '../components/finance/cashflow/CashFlowMain';
+import CashInflow from '../components/finance/cashflow/CashInflow';
+import CashOutFlow from '../components/finance/cashflow/CashOutFlow';
+import AssetMain from '../components/finance/asset/AssetMain';
+import AssetRequest from '../components/finance/asset/AssetRequest';
+import AssetList from '../components/finance/asset/AssetList';
+import BarInvoice from '../components/finance/invoice/BarInvoice';
+import FrontInvoice from '../components/finance/invoice/FrontInvoice';
+import InvoiceMain from '../components/finance/invoice/InvoiceMain';
+import LoanMain from '../components/finance/loan/LoanMain';
+import Loan from '../components/finance/loan/Loan';
+import LoanIssue from '../components/finance/loan/LoanIssue';
+import SalaryMain from '../components/finance/salary/SalaryMain';
+import Attendance from '../components/finance/salary/Attendance';
+import SalaryMgmt from '../components/finance/salary/SalaryMgmt';
 import Navigator from '../components/layout/Navigator';
 import Content from '../components/layout/LayoutContent';
 import Header from '../components/layout/Header';
@@ -33,12 +54,7 @@ import RoomsAvailableOfRoomTypeChart from '../components/frontOffice/overview/Ro
 import serviceProvider from '../components/maintainence/serviceProvider';
 import MovementActivity from '../components/maintainence/MovementActivity';
 import MaintenenceService from '../components/maintainence/MaintenenceService';
-import SalaryMain from '../components/finance/salary/SalaryMain';
-import PettyCashMain from '../components/finance/petty/PettyCashMain';
-import LoanMain from '../components/finance/loan/LoanMain';
-import InvoiceMain from '../components/finance/invoice/InvoiceMain';
-import CashFlowMain from '../components/finance/cashflow/CashFlowMain';
-import AssetMain from '../components/finance/asset/AssetMain';
+
 
 /*import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
 import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
@@ -272,7 +288,7 @@ function Dashboard(props) {
             <Route exact path='/frontoffice/customers' component={CustomerTable}/>
             <Route exact path='/frontoffice/feedback' component={FeedBackTable}/>
             <Route exact path='/frontoffice/reservation' component={ReservatonBoxView}/>
-            <Route exact path='/frontoffice/roomtypes' component={Editable}/>
+            <Route exact path='/frontoffice/roomtypes' component={RoomTypeTable}/>
 
 
             <Route exact path='/finance/assetss' component={AssetMain}/>
@@ -281,6 +297,14 @@ function Dashboard(props) {
             <Route exact path='/finance/loan' component={LoanMain}/>
             <Route exact path='/finance/pettycash' component={PettyCashMain}/>
             <Route exact path='/finance/salary' component={SalaryMain}/>
+            {/*<Route exact path="/Purchases & Inventory" component={addSuppliers}/>
+            <Route exact path="/pReq" component={purchasesRequest}/>
+            <Route exact path="/hr/employee" component={EmployeeList}/>
+            <Route exact path="/hr/absence/abtype" component={AbsenceTypeList}/>
+            <Route exact path="/hr/absence/ablist" component={AbsenceList}/>
+            <Route exact path="/hr/attendence" component={AttendenceList}/>
+
+            <Route exact path="/pOrd" component={purchasesOrder}/>*/}
 
 
             <Route exact path="/maintenance/pool" component={PoolService}/>

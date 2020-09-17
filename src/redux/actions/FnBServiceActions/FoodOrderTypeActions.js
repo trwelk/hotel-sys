@@ -2,12 +2,20 @@ export const updateProductType = (payload) => {
     console.log(payload)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
-        firestore.collection("orderProducts").doc(payload.id).update({
+        payload.OPId = payload.id + payload.orderNo;
+        firestore.collection("orderProducts").doc(payload.OPId).update({
+            // const validateData {
+            //     if(payload.orderNo != null ){
+            //       const  pd = payload.orderNo+payload.id;
+            //       return "Field order No Cannot be null"
+            //     }
+            // }
+            OPId:payload.OPId,
             orderNo:payload.orderNo,
             id:payload.id,
             ProName:payload.ProName,
             quantity:payload.quantity,
-            amount:payload.amount
+            amount:payload.amount,
             // tableNO: payload.tableNO,
             // room: payload.room,
             // description: payload.description,
@@ -22,7 +30,8 @@ export const insertProductType = (payload) => {
     console.log(payload)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
-        firestore.collection('orderProducts').doc(payload.id).set({
+        payload.OPId = payload.id + payload.orderNo;
+        firestore.collection('orderProducts').doc(payload.OPId).set({
             ...payload
         }).then((response) => {
             console.log(response)
@@ -37,7 +46,7 @@ export const deleteProductType = (orderId) => {
     console.log(orderId)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
-        firestore.collection('orderProducts').doc(orderId).delete()
+        firestore.collection('orderProducts').doc(orderId.OPId).delete()
             .then((response) => {
                 console.log(response)
             }).catch((error) => {
@@ -104,7 +113,8 @@ export const updateOrderType = (payload) => {
             tableNO: payload.tableNO,
             room: payload.room,
             descriptions: payload.description,
-            status: payload.status
+            status: payload.status,
+            date:payload.date
             // DateAndTime:payload.dateAndTime,
             // ID:payload.Proid,
             // Name:payload.ProName,
@@ -124,7 +134,8 @@ export const insertOrderType = (payload) => {
             tableNO: payload.tableNO,
             room: payload.room,
             descriptions: payload.description,
-            status: payload.status
+            status: payload.status,
+            date:payload.date,
         }).then((response) => {
             console.log(response)
         }).catch((response) => {
