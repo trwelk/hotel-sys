@@ -16,14 +16,28 @@ import { deleteProductType } from '../../redux/actions/FnBServiceActions/FoodOrd
 function EditProductTable(props) {
 
   const { useState } = React;
+  const orderNo = props.orderNo
   const [columns, setColumns] = useState([
+
     { title: 'ProductID', field: 'id' }, 
-    { title: 'ID', field: 'orderNo' },
-    { title: 'ProductName', field: 'ProName' },
+    { title: 'ID', field: 'orderNo',initialEditValue:orderNo ,editable: 'never'},
+    { title: 'ProductName', field: 'ProName'},
     { title: 'Quantity', field: 'quantity', type :'numeric', filtering: false },
     { title: 'Amount', field: 'amount', type :'numeric', filtering: false },
+    { title: 'orderProductID', field: 'OPId',editable: 'never'
+    // initialEditValue: 'orderNo+id'
+  }, 
 
   ]);
+  // const [column, setColumn] = useState([
+
+    
+  //   { title: 'ProductName', field: 'ProName'},
+  //   { title: 'ProductID', field: 'id' }, 
+  //   { title: 'Price', field: 'price' },
+  //   // lookup: { 1: 'done', 2: 'in pogress' },
+
+  // ]);
   const [state, setState] = React.useState({
     open: false,
     vertical: 'bottom',
@@ -31,10 +45,15 @@ function EditProductTable(props) {
   });
   const { vertical, horizontal, open ,error} = state;
 
-  const orderNo = props.orderNo
+  
   const OrderPro = useSelector(state => state.firestore.ordered.orderProducts)
   const datacopy = OrderPro ? (OrderPro.map(OrderPro => ({ ...OrderPro }))) : (null)
   const data = datacopy ? (datacopy.filter(data => data.orderNo == orderNo)) : datacopy
+  // alert(JSON.stringify(data));
+  // const products = useSelector(state => state.firestore.ordered.product)
+  // const producteSelector = products ? (products.map(products => ({ ...products }))) : (null)
+  // alert(JSON.stringify(producteSelector));
+  
 //  const Products = product ?(): (null)
 // const Products = useSelector(state => state.firestore.ordered.product )
 // const ProductsSelector = Products ? (Products.map((C) => {
@@ -47,7 +66,7 @@ function EditProductTable(props) {
       return "Field ID Cannot be null"
 
     }
-    if(data.orderNo == null || data.orderNo == ""){
+    else if(data.orderNo == null || data.orderNo == ""){
       return "Field ID Cannot be null"
 
     }
@@ -77,21 +96,26 @@ function EditProductTable(props) {
     setState({ ...state, open: false });
   };
 
-
-
+  
+// const OrderPro = useSelector(state => state.firestore.ordered.orderProducts)
+//   const data = OrderPro ? (OrderPro.map(OrderPro => ({ ...OrderPro }))) : (null)
 
   // const orderNo = props.orderNo
   // const OrderPro = useSelector(state => state.firestore.ordered.orderProducts)
   // const datacopy = OrderPro ? (OrderPro.map(OrderPro => ({ ...OrderPro }))) : (null)
   // const data = datacopy ? (datacopy.filter(data => data.orderNo == orderNo)) : datacopy
   const table = data ? (
+    
     <MaterialTable style={{ padding: "0px" }}
       title="Editable Preview"
       columns={columns}
       data={data}
       editable={{
         onRowAdd: newData =>
+        
           new Promise((resolve, reject) => {
+            data.OPId = data.id + data.orderNo;
+            newData.OPId = newData.id + newData.orderNo;
             const error = validateData___(newData);
             if (error != null){
               setState({ ...state, open: true,error:error });
@@ -100,6 +124,7 @@ function EditProductTable(props) {
             else{
               setTimeout(() => {
                 console.log(data)
+                // alert(JSON.stringify(newData.OPId));
                 props.insertProductType(newData);
                 resolve();
               }, 1000)
@@ -112,6 +137,7 @@ function EditProductTable(props) {
           }),
         onRowUpdate: (newData, oldData) =>
           new Promise((resolve, reject) => {
+            newData.OPId = newData.id + newData.orderNo;
             const error = validateData___(newData);
             if (error != null){
               reject();
@@ -120,7 +146,7 @@ function EditProductTable(props) {
             else{
               setTimeout(() => {
                 const dataUpdate = [...data];
-              const index = oldData.tableData.id;
+              const index = oldData.tableData.OPId;
               dataUpdate[index] = newData;
               //setData([...dataUpdate]);
               console.log(newData, oldData)
@@ -144,11 +170,11 @@ function EditProductTable(props) {
           new Promise((resolve, reject) => {
             setTimeout(() => {
               const dataDelete = [...data];
-              const index = oldData.tableData.id;
+              const index = oldData.tableData.OPId;
               dataDelete.splice(index, 1);
               //setData([...dataDelete]);
               console.log(oldData)
-              props.deleteProductType(oldData.id)
+              props.deleteProductType(oldData)
               resolve()
             }, 1000)
           }),

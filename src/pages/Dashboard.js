@@ -48,6 +48,10 @@ import FeedBackTable from '../components/frontOffice/feedback/FeedBackTable';
 import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
 import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
 // import AssetRequest from '../components/frontOffice/reservation/'
+<<<<<<< HEAD
+
+=======
+>>>>>>> d6d51ecb75e8afc16fc57ad11ce2338b9e76cb30
 import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
 import EditOrderTable from '../components/fnbServices/EditOrderTable';
 import OrderForm from '../components/fnbServices/OrderForm';
