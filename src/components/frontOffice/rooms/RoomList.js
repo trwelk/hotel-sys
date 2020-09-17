@@ -11,6 +11,8 @@ import {deleteRoom} from '../../../redux/actions/frontOfficeActions/RoomActions'
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,15 +26,15 @@ const useStyles = makeStyles((theme) => ({
 
  function RoomList(props) {
  
-    var roomTypeFilter = null;
+    var roomTypeFilter = 'EXKINGSUITE';
 
     const classes = useStyles();
     const { useState } = React;
     const [columns, setColumns] = useState([
       { title: 'Room Type', field: 'roomType' ,editable: 'never' },
-      { title: 'Room Id', field: 'id' ,validate: rowData => rowData.id === null ? 'Room Id cannot be empty' : ''},
+      { title: 'Room Id', field: 'id' },
       { title: 'Room No', field: 'roomNo' ,type: 'numeric'},
-      { title: 'Location', field: 'location'},
+      { title: 'Location', field: 'location', lookup: { 'Left Wing': 'Left Wing', 'Right Wing': 'Right Wing', 'Mid Wing': 'Mid Wing'}},
       { title: 'Floor Number', field: 'floor' ,type: 'numeric'},
       {
         title: 'Maintainance needed',
@@ -55,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
 
 //--------------------------------------------INTERNAL METHODS--------------------------------------------------------------------------------
     const validateData___  = (data) => {
+      console.log(data)
       if(data.id == null || data.id == ""){
         return "Field ID Cannot be null"
 
@@ -68,8 +71,8 @@ const useStyles = makeStyles((theme) => ({
       else if(data.location == null || data.location == ""){
         return "Field Location Cannot be null"
       }
-      else if(data.roomNo == null || data.roomNo == ""){
-        return "Field Room No Cannot be null"
+      else if(data.floor > 5 || data.floor < 0){
+        return "Value for floor number should be within 0 and 5"
       }
       else
       return null;
@@ -100,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
                 else{
                   setTimeout(() => {
                     console.log(data)
-                    props.insertRoomType(newData);
+                    props.insertRoom(newData,roomTypeFilter);
                     resolve();
                   }, 1000)
                 }
@@ -114,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
                 }
                 else{
                   setTimeout(() => {
-                    props.updateRoomType(newData)
+                    props.updateRoom(newData)
                     resolve();
                   }, 1000)
                 }
@@ -132,11 +135,21 @@ const useStyles = makeStyles((theme) => ({
               }, 1000)
             }),
         }}
+        options={{
+        headerStyle: {
+          backgroundColor: '#01579b',
+          color: '#FFF',
+          borderBottom: '1px solid #333',
+        width: '100px',
+    /* height: 100px; */
+        boxShadow: "0 10px 5px -2px #888"
+        }
+      }}
 
       />
     ) 
     : 
-    (<div>Loading</div>)
+    (<div><CircularProgress style={{marginTop:"200px"}}/></div>)
 
 
     const feedBackToast =  (<Snackbar 
@@ -168,7 +181,7 @@ const useStyles = makeStyles((theme) => ({
 const mapDispatchToProps = (dispatch) => {
     return {
         updateRoom: (payload) => dispatch(updateRoom(payload)),
-        insertRoom: (payload) => dispatch(insertRoom(payload)),
+        insertRoom: (payload,roomType) => dispatch(insertRoom(payload,roomType)),
         deleteRoom: (roomId) => dispatch(deleteRoom(roomId))
 
     }

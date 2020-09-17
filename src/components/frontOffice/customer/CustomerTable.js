@@ -7,11 +7,13 @@ import { compose } from 'redux';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
-import {updateRoomType} from '../../../redux/actions/frontOfficeActions/RoomTypeActions'
-import {insertRoomType} from '../../../redux/actions/frontOfficeActions/RoomTypeActions'
-import {deleteRoomType} from '../../../redux/actions/frontOfficeActions/RoomTypeActions'
+
+import {updateCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
+import {insertCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
+import {deleteCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
 import NewReservationForm from '../reservation/forms/NewReservationForm';
 
 function Alert(props) {
@@ -22,10 +24,10 @@ function CustomerTable(props) {
  
     const { useState } = React;
     const [columns, setColumns] = useState([
-        { title: 'ID',field: 'id',},
+        { title: 'ID',field: 'id', editable: 'onInsert'},
       { title: 'First Name', field: 'firstName' ,},
       { title: 'Last Name', field: 'lastName' },
-      { title: 'Phone Number', field: 'phone' },
+      { title: 'Phone Number', field: 'phone', type: 'numeric' },
       { title: 'Email', field: 'email'},
     ]); 
 
@@ -39,10 +41,9 @@ function CustomerTable(props) {
 
     const customers = useSelector(state => state.firestore.ordered.customer)    
     const data = customers ? (customers.map(customer => ({...customer}))) : (null)
-    
-
+    const datacopy = data
     //--------------------------------------------INTERNAL METHODS--------------------------------------------------------------------------------
-    const validateData___  = (data) => {
+    const validateData___  = (data,type) => {
       if(data.id == null || data.id == ""){
         return "Field ID Cannot be null"
 
@@ -56,8 +57,22 @@ function CustomerTable(props) {
       else if(data.phone == null || data.phone == ""){
         return "Field Phone Cannot be null"
       }
+      else if(data.phone.toString().length != 10 ){
+        return "Please enter a valid phone number,Should contain 10 digits"
+      }
       else if(data.email == null || data.email == ""){
         return "Field Email Cannot be null"
+      }
+      else if( !(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(data.email)) && type == 'INSERT'){
+        return "Field Email is invalid"
+      }
+      else if(datacopy.filter(dat => dat.id == data.id).length > 0 && type == 'INSERT'){
+        console.log("some",datacopy.filter(dat => dat.id == data.id) )
+        return "The User Id is already existing"
+      }
+      else if(datacopy.filter(dat => dat.email == data.email).length > 0 && type == 'INSERT'){
+        console.log("some")
+        return "The Email is already existing"
       }
       else
       return null;
@@ -82,7 +97,7 @@ const table = data ? (
         editable={{
           onRowAdd: newData =>
             new Promise((resolve, reject) => {
-              const error = validateData___(newData);
+              const error = validateData___(newData,"INSERT");
                 if (error != null){
                   setState({ ...state, open: true,error:error });
                   reject();
@@ -90,7 +105,7 @@ const table = data ? (
                 else{
                   setTimeout(() => {
                     console.log(data)
-                    props.insertRoomType(newData);
+                    props.insertCustomer(newData);
                     resolve();
                   }, 1000)
                 }
@@ -98,14 +113,14 @@ const table = data ? (
             }),
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
-              const error = validateData___(newData);
+              const error = validateData___(newData,"UPDATE");
                 if (error != null){
                   reject();
                   setState({ ...state, open: true,error:error });
                 }
                 else{
                   setTimeout(() => {
-                    props.updateRoomType(newData)
+                    props.updateCustomer(newData)
                     resolve();
                   }, 1000)
                 }
@@ -118,7 +133,7 @@ const table = data ? (
                 dataDelete.splice(index, 1);
                 //setData([...dataDelete]);
                 console.log(oldData)
-                props.deleteRoomType(oldData.id)
+                props.deleteCustomer(oldData.id)
                 resolve()
               }, 1000)
             }),
@@ -134,7 +149,7 @@ const table = data ? (
         }
       }}
       />
-    ) : (<div>Loading</div>)
+    ) : (<div><CircularProgress style={{marginTop:"200px"}} /></div>)
 
 
   const feedBackToast =  (<Snackbar 
@@ -162,9 +177,9 @@ const table = data ? (
  
   const mapDispatchToProps = (dispatch) => {
     return {
-        updateRoomType: (payload) => dispatch(updateRoomType(payload)),
-        insertRoomType: (payload) => dispatch(insertRoomType(payload)),
-        deleteRoomType: (roomId) => dispatch(deleteRoomType(roomId))
+      updateCustomer: (payload) => dispatch(updateCustomer(payload)),
+      insertCustomer: (payload) => dispatch(insertCustomer(payload)),
+      deleteCustomer: (customerId) => dispatch(deleteCustomer(customerId))
 
 
     }

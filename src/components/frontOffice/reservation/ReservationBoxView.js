@@ -2,6 +2,7 @@ import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
@@ -14,7 +15,10 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Skeleton from '@material-ui/lab/Skeleton';
 import Backdrop from '@material-ui/core/Backdrop';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
+
 
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
@@ -24,7 +28,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import ReservationCard from './utill/ReservationCard'
 import EmptyReservationCard from './utill/EmptyReservationCard';
-import {handleMonthPickReservation} from '../../../redux/actions/frontOfficeActions/FrontOfficeNavActions'
+import {handleMonthPickReservation,handleCustomerPick} from '../../../redux/actions/frontOfficeActions/FrontOfficeNavActions'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,12 +65,16 @@ function  ReservatonBoxView (props)  {
  
   const { useState } = React;
   const [spacing, setSpacing] = React.useState(2);
-  const [month, setMonth] = useState(null);
+  const [radio, setRadio] = React.useState(false);
+  const [month, setMonth] = useState(8);
   const [roomType, setRoomType] = React.useState('EXKINGSUITE');
 
   const reservationsDb = useSelector(state => state.firestore.ordered.reservation )
   const roomsDb = useSelector(state => state.firestore.ordered.room )
   const roomTypeDb = useSelector(state => state.firestore.ordered.roomtype )
+  const state = useSelector(state => state.frontOffice )
+  const customersDb = useSelector(state => state.firestore.ordered.customer )
+  const customers = customersDb ? (customersDb.map(customer => ({...customer}))) : (null)
   
   let rooms = null;
   let reservations= null;
@@ -120,7 +128,7 @@ function  ReservatonBoxView (props)  {
         if(room == reservations[reservation].roomNo ){
           for(var dayOfBooking of reservedDays){
             //add a if condition here to check if dayOfBooking.getMonth is = to the above selected month
-            if(dayOfBooking.getMonth() == month)
+            if(dayOfBooking.getMonth() == month -1)
               box[dayOfBooking.getDate()][room]= reservations[reservation] 
 
           }
@@ -136,8 +144,8 @@ function  ReservatonBoxView (props)  {
       return(
         <Grid key={eIndex} item style={{padding:"12px 0px"}}>
           {element.id ? (
-            <ReservationCard/>
-          ) : (<EmptyReservationCard month={month} roomType={roomType} roomNo={eIndex} startDay={rIndex}/>)}
+            <ReservationCard reservation={element}/>
+          ) : (<EmptyReservationCard  month={month} roomType={roomType} roomNo={eIndex} startDay={rIndex}/>)}
         </Grid>      
       )})
 
@@ -163,10 +171,12 @@ function  ReservatonBoxView (props)  {
     const mo = new Date(e.target.value);
     const month = mo.getMonth();
     props.handleMonthPickReservation(month + 1)
-    console.log("tttttttttttttttttttt",month,e)
 
     setMonth(month + 1);
   };
+
+
+
 
   const roomTypeSelector = roomTypeDb ? (roomTypeDb.map((roomType,index) => {
     return  <MenuItem key={index} value={roomType.id}>{roomType.name}</MenuItem>
@@ -176,10 +186,26 @@ function  ReservatonBoxView (props)  {
     setRoomType(event.target.value);
   };
 
+  const customerSelector = customers ? (customers.map((customer,index) => {
+    return  <MenuItem key={index} value={customer.id}>{customer.firstName + ' ' + customer.lastName}</MenuItem>
+  })) :(null)
+
+  const handleCustomerTypeSelector = (event) => {
+    props.handleCustomerPick(event.target.value);
+  }
+
+  const handleRadioChange = (event) => {
+    console.log(event.target.value)
+    if(radio == false)
+    setRadio(true);
+    else
+    setRadio(false);
+
+  };
+
 
 
   if(isLoaded(roomTypeDb)){
-    console.log(month)
   return (
     <div style={{display: "flex",
                 height: "654px",
@@ -197,9 +223,8 @@ function  ReservatonBoxView (props)  {
           shrink: true,
         }}
       /> 
-      <FormControl className={classes.formControl}>
+      <FormControl className={classes.formControl} style={{    paddingLeft: "px"}}>
         <Select
-         
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={roomType}
@@ -207,21 +232,36 @@ function  ReservatonBoxView (props)  {
         >
          {roomTypeSelector}
         </Select>
-        {
-          roomTypeDb ? (
-        <Autocomplete
-      id="combo-box-demo"
-      onChange={handleRoomTypeSelector}
-      options={roomTypeDb}
-      getOptionLabel={(option) => option.id}
-      style={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
-    />) : (null)
+      </FormControl>
+      <FormControlLabel
+      
+        control={
+          <Checkbox
+            checked={radio}
+            onChange={handleRadioChange}
+            name="radio"
+            color="primary"
+            style={{paddingLeft:"20px"}}
+          />
         }
+        label="Bulk Insert"
+      />
+
+        <FormControl className={classes.formControl} style={{width:"300px"}}  >
+        <Select
+         disabled ={radio == false}
+         label="Customer"
+          id="Customer"
+          value={state.customerSelected}
+          onChange={handleCustomerTypeSelector}
+        >
+         {customerSelector}
+        </Select>
       </FormControl>
 </div>
       <Grid item xs={12} style={{ paddingTop: "51px"}}>
-        {month ? rows : <div>loading</div>}
+        {month ? rows : <div>      <LinearProgress />
+<CircularProgress style={{marginTop:"200px"}}/></div>}
       </Grid>
     </Grid>
     <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
@@ -233,7 +273,7 @@ function  ReservatonBoxView (props)  {
   );
       }
       else{
-return <div>Loading</div>            }
+return <div><CircularProgress style={{marginTop:"200px"}}/></div>            }
   
 
 }
@@ -242,6 +282,7 @@ return <div>Loading</div>            }
 const mapDispatchToProps = (dispatch) => {
   return {
     handleMonthPickReservation: (payload) => dispatch(handleMonthPickReservation(payload)),
+    handleCustomerPick: (payload) => dispatch(handleCustomerPick(payload)),
 
   }
 }
