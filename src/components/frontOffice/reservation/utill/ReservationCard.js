@@ -6,9 +6,15 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
+import { useSelector, connect } from 'react-redux';
 import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded';
 import { useGutterBorderedGridStyles } from '@mui-treasury/styles/grid/gutterBordered';
 
+import PersonIcon from '@material-ui/icons/Person';
+import IconButton from '@material-ui/core/IconButton';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import CancelIcon from '@material-ui/icons/Cancel';
+import {deleteReservation} from '../../../../redux/actions/frontOfficeActions/ReservationActions'
 const useStyles = makeStyles(({ palette }) => ({
   card: {
     borderRadius: 12,
@@ -48,34 +54,40 @@ const useStyles = makeStyles(({ palette }) => ({
   },
 }));
 
-export const ReservationCard = React.memo(function ProfileCard() {
+export const ReservationCard = React.memo(function ProfileCard(props) {
   const styles = useStyles();
   const shadowStyles = useFadedShadowStyles();
+  console.log(props.reservation)
   const borderedGridStyles = useGutterBorderedGridStyles({
     borderColor: 'rgba(0, 0, 0, 0.08)',
     height: '50%',
   });
   //        <Avatar className={styles.avatar} src={'https://i.pravatar.cc/300'} />
 
+  const handleDelete = () => {
+    props.deleteReservation(props.reservation.id)
+  }
   return (
     <Card className={cx(styles.card, shadowStyles.root)}>
-      <CardContent>
-        <h3 className={styles.heading}>Alan Podemski</h3>
-        <span className={styles.subheader}>Poland</span>
-      </CardContent>
-      <Divider light />
-      <Box display={'flex'}>
+      <Box display={'flex'} style={{padding: "8px 0"}}>
         <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
-          <p className={styles.statLabel}>Followers</p>
-          <p className={styles.statValue}>6941</p>
+        <IconButton color="primary" aria-label="add to shopping cart">
+            <MenuBookIcon/>
+            </IconButton>
         </Box>
         <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
-          <p className={styles.statLabel}>Following</p>
-          <p className={styles.statValue}>12</p>
+          <IconButton color="primary" aria-label="add to shopping cart" onClick={handleDelete}>
+            <CancelIcon />
+          </IconButton>
         </Box>
       </Box>
     </Card>
   );
 });
 
-export default ReservationCard
+const mapDispatchToProps = (dispatch) => {
+  return {
+      deleteReservation: (payload) => dispatch(deleteReservation(payload))
+  }
+}
+export default connect(null,mapDispatchToProps)( ReservationCard)
