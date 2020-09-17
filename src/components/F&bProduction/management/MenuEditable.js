@@ -7,6 +7,7 @@ import { insertMenu, updateMenu, deleteMenu } from '../../../redux/actions/fnbPr
 import { Button,Paper, GridList, Card, Icon, Container } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import MenuItems from '../../../components/F&bProduction/MenuItems';
 
 function MenuEditable(props) {
 
@@ -15,15 +16,8 @@ function MenuEditable(props) {
     { title: 'ID', field: 'id' },
     { title: 'Menu Name', field: 'menuName' },
     { title: 'Price (LKR)', field: 'price' },
-    { title: 'Last Modified', field: 'lastModified' },
+    { title: 'Last Modified', field: 'lastModified'},
     { title: 'Type', field: 'menutype', lookup: { 1: 'Wedding', 2: 'Breakfast', 3: 'Lunch', 4: 'Dinner',5: 'Beverage' } },
-  ]);
-  const [Itemcolumns, setItemColumns] = useState([
-    { title: 'ID', field: 'id' },
-    { title: 'Item Name', field: 'itemName' },
-    { title: 'Price (LKR)', field: 'price' },
-    { title: 'Last Modified', field: 'lastModified' },
-    { title: 'Type', field: 'type' },
   ]);
   const validateData___  = (data) => {
     if(data.id == null || data.id == ""){
@@ -43,7 +37,7 @@ function MenuEditable(props) {
     else if(data.lastModified == null || data.lastModified == ""){
       return "Field Last Modified Cannot be null"
     }
-    else if(data.type == null || data.type == ""){
+    else if(data.menutype == null || data.menutype == ""){
       return "Field type Cannot be null"
     }
     else
@@ -82,7 +76,7 @@ const product = useSelector(state => state.firestore.ordered.product )
 const productData = product ? (product.map(Product => ({ ...Product }))) : (null)
 const itemDetails = productData ? (
   <Container>
-      <h3>
+      return <h3>
       {productData[0].name}
       </h3>
   </Container>
@@ -98,41 +92,12 @@ const itemDetails = productData ? (
       detailPanel={[
         {                    
           tooltip: 'Show Menu',
-          render: rowData => {
-            if (rowData.type == 1) {
+          render: rowData => {           
               return (
-                <div>
-                    <GridList>
-                      <grid>
-                        <Card>
-                          <h1>Food</h1>
-                          <h3>test 1</h3>
-                          <h3>test 1</h3>
-                        </Card>
-                      </grid>
-                      <grid>
-                        <Card>
-                          <h1>Beverages</h1>
-                          <h3>test 1</h3>
-                          <h3>test 1</h3>
-                        </Card>
-                      </grid>
-                      <grid>
-                        <Card>
-                          <h1>Dessert</h1>
-                          <h3>test 1</h3>
-                          <h3>test 1</h3>
-                          </Card>
-                      </grid>
-                    </GridList>
-                </div>  
-              )
-            } else {
-              return (
-                {itemDetails}
-              )
-            }
-          },
+                                   <div> 
+                                      <MenuItems MenuNo={rowData.id} MenuType={rowData.menutype}/>
+                                  </div>            
+              )}
         }]}
       editable={{
         onRowUpdate: (newData, oldData) =>
