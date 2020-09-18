@@ -7,8 +7,8 @@ export const updateInvRec = (payload) => {
             itemName:payload.itemName,
             price:payload.price,
             qty:payload.qty,
-            expDate:payload.expDate,
-            lastModified:payload.lastModified,
+            expDate:payload.expDate.toDateString(),
+            lastModified:(new Date()).toDateString(),
             stkStatus:payload.stkStatus
         });
     }
@@ -17,6 +17,8 @@ export const updateInvRec = (payload) => {
 
 export const insertInvRec = (payload) => {
     console.log(payload)
+    payload.lastModified = (new Date()).toDateString();
+    payload.expDate = payload.expDate.toDateString();
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
         firestore.collection('fnbInventory').doc(payload.id).set({
