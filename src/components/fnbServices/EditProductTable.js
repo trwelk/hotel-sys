@@ -17,6 +17,9 @@ function EditProductTable(props) {
 
   const { useState } = React;
   const orderNo = props.orderNo
+  // const products = useSelector(state => state.firestore.ordered.products)
+  // const datacopy1 = products ? (products.map(products => ({ ...products }))) : (null)
+ 
   const [columns, setColumns] = useState([
 
     { title: 'ProductID', field: 'id' }, 
@@ -24,6 +27,7 @@ function EditProductTable(props) {
     { title: 'ProductName', field: 'ProName'},
     { title: 'Quantity', field: 'quantity', type :'numeric', filtering: false },
     { title: 'Amount', field: 'amount', type :'numeric', filtering: false },
+    { title: 'Volume', field: 'volume', filtering: false },
     { title: 'orderProductID', field: 'OPId',editable: 'never'
     // initialEditValue: 'orderNo+id'
   }, 
@@ -77,7 +81,7 @@ function EditProductTable(props) {
     else if(data.ProName == null || data.ProName == ""){
       return "Field Name Cannot be null"
     }
-    else if(data.quantity == null || data.quantity == ""){
+    else if((data.quantity == null || data.quantity == "") && (data.volume == null || data.volume == "") ){
       return "Field quantity Cannot be null"
     }
     else if(data.amount == null || data.amount == ""){

@@ -123,14 +123,14 @@ const { vertical, horizontal, open ,error} = states;
     else if(state.status == null || state.status == ""){
       return "Field status Cannot be null"
     }
-    // else if(data.menuType == null || data.menuType == ""){
-    //   return "Field Menu Type Cannot be null"
-    // }
+    else if(state.date == null || state.date == ""){
+      return "Field date  Cannot be null"
+    }
     else
     return null;
   }
   const feedBackToast =  (<Snackbar 
-    autoHideDuration={200}
+    autoHideDuration={200000}
     anchorOrigin={{ vertical, horizontal }}
     open={open}
     key={vertical + horizontal}
@@ -272,8 +272,8 @@ onClose={handleClose}
       </MenuItem>
           <MenuItem key={1} value={1}>done</MenuItem>
           <MenuItem key={2} value={2}>in pogress</MenuItem>
-          <MenuItem key={3} value={3}>Lunch</MenuItem>
-          <MenuItem key={4} value={4}>Dinner</MenuItem>
+          <MenuItem key={3} value={3}>type1</MenuItem>
+          <MenuItem key={4} value={4}>type2</MenuItem>
         </Select>
       </FormControl>
       </Grid>
