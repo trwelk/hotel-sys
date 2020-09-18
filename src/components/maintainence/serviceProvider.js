@@ -8,7 +8,7 @@ import {updateServiceProvider} from '../../redux/actions/maintainanceActions/ser
 import {insertServiceProvider} from '../../redux/actions/maintainanceActions/serviceProviderActions'
 import {deleteServiceProvider} from '../../redux/actions/maintainanceActions/serviceProviderActions'
 
- function serviceProvider(props) {
+ function ServiceProvider(props) {
  
     const { useState } = React;
     const [columns, setColumns] = useState([
@@ -20,7 +20,7 @@ import {deleteServiceProvider} from '../../redux/actions/maintainanceActions/ser
       },
     ]); 
     const serviceProvider = useSelector(state => state.firestore.ordered.serviceProvider)
-    const data = serviceProvider ? (serviceProvider.map(serviceProvider => ({...serviceProvider}))) : (null)
+    const data = serviceProvider ? (serviceProvider.map(service => ({...service}))) : (null)
     const table = data ? (
         <MaterialTable
         title="service Provider Preview"
@@ -79,7 +79,7 @@ import {deleteServiceProvider} from '../../redux/actions/maintainanceActions/ser
 const mapDispatchToProps = (dispatch) => {
     return {
         updateServiceProvider: (payload) => dispatch(updateServiceProvider(payload)),
-        insertServiceProvider: (payload) => dispatch(insertRoinsertServiceProvideromType(payload)),
+        insertServiceProvider: (payload) => dispatch(insertServiceProvider(payload)),
         deleteServiceProvider: (roomId) => dispatch(deleteServiceProvider(roomId))
 
 
@@ -87,4 +87,4 @@ const mapDispatchToProps = (dispatch) => {
 }
   export default compose(connect(null,mapDispatchToProps),firestoreConnect([
     {collection: 'serviceProvider'}
-  ])) (serviceProvider)
+  ])) (ServiceProvider)

@@ -12,12 +12,11 @@ import {insertPurchasesRequest, updatePurchasesRequest, deletePurchasesRequest} 
     const { useState } = React;
     const [columns, setColumns] = useState([
       { title: 'Product ID', field: 'pId'},
-      { title: 'Product Name', field: 'pName' },
+      { title: 'Product Name', field: 'pType' },
       { title: 'Department', field: 'department' },
       { title: 'Priority', field: 'priority' },
       { title: 'Quantity', field: 'qty'},
-      { title: 'Date', field: 'date'},
-      { title: 'Purchases Status', field: 'status', lookup: {1:'Requested', 2:'Accepted'}}
+      { title: 'Date', field: 'date'}
     ]); 
     const Req = useSelector(state => state.firestore.ordered.request)
     const data = Req ? (Req.map(req => ({...req}))) : (null)

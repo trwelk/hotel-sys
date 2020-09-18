@@ -17,7 +17,7 @@ import { insertSupplierInfo, updateSupplierInfo, deleteSupplierInfo} from '../..
       { title: 'Phone', field: 'phone' },
       { title: 'Supplier Item Type', field: 'itemtype'},
       { title: 'Location', field: 'location'},
-      { title: 'Department', field: 'department', lookup: { 1:'Front Office', 2: 'Finance', 3: 'Human Resources', 4: 'Food & Beverages', 5: 'Maintainance', 6: 'House Keeping'}},
+      { title: 'Department', field: 'department'},
       { title: 'Date', field: 'date'},
     ]); 
     const supplier = useSelector(state => state.firestore.ordered.supplier)

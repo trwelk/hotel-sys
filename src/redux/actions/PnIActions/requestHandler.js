@@ -4,12 +4,12 @@ export const updatePurchasesRequest = (payload) => {
         const firestore = getFirestore();
         firestore.collection("request").doc(payload.pId).update({
             pId:payload.pId,
-            pName:payload.pName,
+            pType:payload.pType,
             department:payload.department,
             priority:payload.priority,
             qty:payload.qty,
-            date:payload.date,
-            status:payload.status
+            date:payload.date
+            //status:payload.status
         }); 
     }
 
@@ -20,7 +20,12 @@ export const insertPurchasesRequest = (payload) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
         firestore.collection('request').doc(payload.pId).set({
-            ...payload
+            pId:payload.pId,
+            pType:payload.pType,
+            department:payload.department,
+            priority:payload.priority,
+            qty:payload.qty,
+            date:payload.date
         }).then((response) => {
             console.log(response)
         }).catch((response) => {
