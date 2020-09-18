@@ -60,10 +60,11 @@ import MenuForm from '../components/F&bProduction/management/Forms/MenuForm';
 /*import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
 import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
 import AssetRequest from '../components/frontOffice/reservation/'
+*/
 
 import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
-import EditOrderTable from '../components/fnbServices/EditOrderTable';
-import OrderForm from '../components/fnbServices/OrderForm';*/
+import OrderForm from '../components/fnbServices/OrderForm';
+import InventoryForm from '../components/fnbServices/InventoryForm';
 
 
 function Copyright() {
