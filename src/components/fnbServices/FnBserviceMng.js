@@ -6,10 +6,10 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import EditOrderTable from './EditOrderTable';
 import BarInventory from'../fnbServices/BarInventory';
 import FoodOrderTable from './FoodOrderTable';
 import OrderForm from './OrderForm';
+import InventoryForm from './InventoryForm';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -73,6 +73,7 @@ export default function SimpleTabs() {
         <FoodOrderTable/>
       </TabPanel>
       <TabPanel value={value} index={1}>
+        <InventoryForm/>
         <BarInventory/>
       </TabPanel>
     </div>
