@@ -127,7 +127,6 @@ function MenuForm(props) {
       }
       else{
       setTimeout(() => {
-          alert('Got Wedding Items' + JSON.stringify(WedItems));
           props.insertMenu(Menu,WedItems)
           resolve();
       },1000)

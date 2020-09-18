@@ -17,6 +17,10 @@ import StarBorder from '@material-ui/icons/StarBorder';
 import { Link } from 'react-router-dom';
 
 import PeopleIcon from '@material-ui/icons/People';
+import { StarHalfRounded } from '@material-ui/icons';
+import { StepIcon } from '@material-ui/core';
+import { SvgIcon } from 'material-ui';
+import { SpeedDialIcon } from '@material-ui/lab';
 
 
 const styles = (theme) => ({
@@ -70,6 +74,8 @@ function Navigator2(props) {
   const [frontOffice, setFrontOffice] = React.useState(false);
   const [finance, setFinance] = React.useState(false);
   const [maintenance, setMaintenance] = React.useState(false);
+  const [fnb,setFnb] = React.useState(false);
+  const [production,setProduction] = React.useState(false);
 
 
    const handleFinance = () => {
@@ -84,6 +90,13 @@ function Navigator2(props) {
     setMaintenance(!maintenance);
 };
 
+   const handleFnb = () => {
+     setFnb(!fnb);
+   };
+
+   const handleProduction = () => {
+    setProduction(!production);
+   };
 
 //----------------------------------------UI ELEMENTS -----------------------------------------------------------------------
 const maintenanceNav = (
@@ -306,6 +319,74 @@ const financeNav = (
     </Collapse>
     </div>
 )
+const fnbNav = (
+  <div>
+<ListItem button onClick={handleFnb} className={clsx(classes.item, classes.itemActiveItem)}>
+    <ListItemIcon className={classes.itemIcon}>
+      <SpeedDialIcon />
+    </ListItemIcon>
+    <ListItemText primary="Food and Beverage" 
+    classes={{
+              primary: classes.categoryHeaderPrimary,
+            }}/>
+    {fnb ? <ExpandLess /> : <ExpandMore />}
+  </ListItem>
+  <Collapse in={fnb} timeout="auto" unmountOnExit>
+  <List>
+    <List component="div" disablePadding>
+      <ListItem button onClick={handleProduction} className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <StarHalfRounded />
+        </ListItemIcon>
+    {/* <Link to="/fnb/production" > */}
+    <ListItemText primary="Production" 
+    classes={{
+              primary: classes.categoryHeaderPrimary,
+            }}/>
+    {production ? <ExpandLess /> : <ExpandMore />}
+  </ListItem>
+         <Collapse in={production} timeout="auto" unmountOnExit>
+    <List component="div" disablePadding>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <StarBorder />
+        </ListItemIcon>
+    <Link to="/fnb/production/management" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Management</ListItemText></Link>
+      </ListItem>
+      <ListItem button  onClick={handleProduction} className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <StarBorder />
+        </ListItemIcon>
+    <Link to="/fnb/production/reports" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Reports</ListItemText></Link>
+      </ListItem>
+    </List>
+  </Collapse>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <StarBorder />
+        </ListItemIcon>
+    <Link to="/fnb/services" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Services</ListItemText></Link>
+      </ListItem>
+    </List>
+    </List>
+  </Collapse>
+  </div>
+)
   return (
     <Drawer variant="permanent" {...other}>
       <List disablePadding>
@@ -337,6 +418,7 @@ const financeNav = (
       {frontOfficeNav}
       {financeNav}
       {maintenanceNav}
+      {fnbNav}
     </Drawer>
   );
 }

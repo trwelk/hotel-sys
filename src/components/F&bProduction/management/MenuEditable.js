@@ -8,6 +8,7 @@ import { Button,Paper, GridList, Card, Icon, Container } from '@material-ui/core
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import MenuItems from '../../../components/F&bProduction/MenuItems';
+import Moment from 'react-moment';
 
 function MenuEditable(props) {
 
@@ -16,7 +17,7 @@ function MenuEditable(props) {
     { title: 'ID', field: 'id' },
     { title: 'Menu Name', field: 'menuName' },
     { title: 'Price (LKR)', field: 'price' },
-    { title: 'Last Modified', field: 'lastModified'},
+    { title: 'Last Modified', field: 'lastModified', editable: 'never', type: 'date'},
     { title: 'Type', field: 'menutype', lookup: { 1: 'Wedding', 2: 'Breakfast', 3: 'Lunch', 4: 'Dinner',5: 'Beverage' } },
   ]);
   const validateData___  = (data) => {
@@ -33,9 +34,6 @@ function MenuEditable(props) {
     }
     else if(data.price == null || data.price == ""){
       return "Field price Cannot be null"
-    }
-    else if(data.lastModified == null || data.lastModified == ""){
-      return "Field Last Modified Cannot be null"
     }
     else if(data.menutype == null || data.menutype == ""){
       return "Field type Cannot be null"
@@ -83,7 +81,7 @@ const itemDetails = productData ? (
 ) : (<div>Loading</div>)
 
   const Menu = useSelector(state => state.firestore.ordered.Menu)
-  const data = Menu ? (Menu.map(menu => ({ ...menu }))) : (null)
+  const data = Menu ? (Menu.map(menu => ({ ...menu}))) : (null)
   const table = data ? (
     <MaterialTable
       title="Menu List"
@@ -136,7 +134,7 @@ const itemDetails = productData ? (
 
   return (
     <div>
-      <Button variant="contained" color="primary" href='/newMenu' fullWidth='true'>
+      <Button variant="contained" color="primary" href='/fnb/production/newMenu' fullWidth='true'>
         Add a Menu
       </Button>
       {table}

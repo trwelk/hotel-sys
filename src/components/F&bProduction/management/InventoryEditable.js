@@ -13,9 +13,9 @@ import { insertInvRec, deleteInvRec, updateInvRec } from '../../../redux/actions
           { title: 'Item Name', field: 'itemName' },
           { title: 'Price (LKR)', field: 'price'},
           { title: 'Quantity', field: 'qty'},
-          { title: 'Expiry Date', field: 'expDate'},
-          { title: 'Last Modified', field: 'lastModified' },
-          { title: 'Stock Status', field: 'stkStatus'},
+          { title: 'Expiry Date', field: 'expDate', type:'date'},
+          { title: 'Last Modified', field: 'lastModified' , type:'date', editable:'never'},
+          { title: 'Stock Status', field: 'stkStatus', lookup: { 1: 'Out of Stock', 2: 'Low', 3: 'Adequate', 4: 'High' }},
 
         ]); 
         const fnbInv = useSelector(state => state.firestore.ordered.fnbInventory)

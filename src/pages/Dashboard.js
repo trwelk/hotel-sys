@@ -43,7 +43,7 @@ import Content from '../components/layout/LayoutContent';
 import Header from '../components/layout/Header';
 import RoomHandling from './frontOfficePages/RoomHandling';
 import PermanentDrawerLeft from '../components/frontOffice/rooms/MasterDetail';
-import RoomList from '../components/frontOffice/rooms/RoomList';
+// import RoomList from '../components/frontOffice/rooms/RoomList';
 import InsertReservationForm from '../components/frontOffice/reservation/forms/InsertReservationForm';
 import CustomerTable from '../components/frontOffice/customer/CustomerTable';
 import FeedBackTable from '../components/frontOffice/feedback/FeedBackTable';
@@ -54,6 +54,8 @@ import RoomsAvailableOfRoomTypeChart from '../components/frontOffice/overview/Ro
 import serviceProvider from '../components/maintainence/serviceProvider';
 import MovementActivity from '../components/maintainence/MovementActivity';
 import MaintenenceService from '../components/maintainence/MaintenenceService';
+import ChooseModuleDialog from '../components/layout/ChoosefnbModuleDialog';
+import MenuForm from '../components/F&bProduction/management/Forms/MenuForm';
 
 
 /*import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
@@ -251,12 +253,11 @@ function Dashboard(props) {
     
 
 
-            <Route exact path='/' component={RoomList}/>
+            {/* <Route exact path='/' component={RoomList}/> */}
             <Route exact path="/room" component={RoomHandling}/>
             <Route exact path='/res' component={ReservatonBoxView}/>
             <Route exact path='/ed' component={RoomTypeTable}/>
             <Route exact path='/form' component={InsertReservationForm}/>
-            <Route exact path='/Food&Beverages' component={fnbProdMgmt}/>
             <Route exact path='/m' component={PermanentDrawerLeft}/>
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/cust" component={CustomerTable}/>
@@ -279,17 +280,15 @@ function Dashboard(props) {
             <Route exact path="/porder" component={purchasesOrder}/>
             */}
 
-
-
-
-
+            <Route exact path='/fnb/production/management' component={fnbProdMgmt}/>
+            <Route exact path='/fnb/production/newMenu' component={MenuForm}/>
+            <Route exact path='/fnb/production/reports' component={ChooseModuleDialog}/>
 
             <Route exact path='/frontoffice/rooms' component={PermanentDrawerLeft}/>
             <Route exact path='/frontoffice/customers' component={CustomerTable}/>
             <Route exact path='/frontoffice/feedback' component={FeedBackTable}/>
             <Route exact path='/frontoffice/reservation' component={ReservatonBoxView}/>
             <Route exact path='/frontoffice/roomtypes' component={RoomTypeTable}/>
-
 
             <Route exact path='/finance/assetss' component={AssetMain}/>
             <Route exact path='/finance/cashflow' component={CashFlowMain}/>
