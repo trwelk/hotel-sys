@@ -80,22 +80,27 @@ function Navigator2(props) {
 
    const handleFinance = () => {
         setFinance(!finance);
+        props.setModule("Finance")
     };
 
   const handleFrontOffice = () => {
     setFrontOffice(!frontOffice);
+    props.setModule("Front Office")
    };
 
    const handleMaintnance = () => {
     setMaintenance(!maintenance);
+    props.setModule("Maintenance")
 };
 
    const handleFnb = () => {
      setFnb(!fnb);
+     props.setModule("Food and Beverage")
    };
 
    const handleProduction = () => {
     setProduction(!production);
+    props.setModule("Food and Beverage - Production")
    };
 
 //----------------------------------------UI ELEMENTS -----------------------------------------------------------------------
