@@ -183,7 +183,7 @@ function PurchasesRequest(props) {
           <AddIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Place Your Purchases Request Here...
+          Place Your Purchases Order Here...
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>

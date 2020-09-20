@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -67,19 +67,18 @@ function AddSuppliers(props) {
 
 
   const classes = useStyles();
-  //const { register, handleSubmit } = useForm();
-  const [supplier, setSupplier] = useState({ sId: '', firstName:'', lastName:'',email:'', itemtype:'', phone:'', location:1 ,department: "frontoffice", date:''});
+  const [supplier, setSupplier] = useState({ sId: '', firstName: '', lastName: '', email: '', itemtype: '', phone: '', location: 1, department: "frontoffice", date: '' });
   const [location, setLocation] = React.useState(1);
   const [department, setDepartment] = React.useState("frontoffice");
 
   const handleLocation = (event) => {
     setLocation(event.target.value)
-}
+  }
   const handleDepartment = (event) => {
     setDepartment(event.target.value)
-}
+  }
 
-  const handleSubmit = (e) =>{ 
+  const handleSubmit = (e) => {
     e.preventDefault();
     new Promise((resolve, reject) => {
       const error = validateData___(supplier);
@@ -95,17 +94,17 @@ function AddSuppliers(props) {
       }
     })
   }
-    const handleSupplier = (event) => {
-      const { name, value } = event.target;
+  const handleSupplier = (event) => {
+    const { name, value } = event.target;
     setSupplier(prevState => ({
       ...prevState,
       [name]: value
-  }));
-    }
+    }));
+  }
 
   //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
   const validateData___ = (data) => {
-    
+
     if (data.sId.length != 5) {
       return "Field ID should contain 5 characters"
     }
@@ -309,7 +308,7 @@ function AddSuppliers(props) {
         </form>
 
       </div>
-      
+
     </Container>
   );
 }

@@ -54,6 +54,12 @@ import RoomsAvailableOfRoomTypeChart from '../components/frontOffice/overview/Ro
 import serviceProvider from '../components/maintainence/serviceProvider';
 import MovementActivity from '../components/maintainence/MovementActivity';
 import MaintenenceService from '../components/maintainence/MaintenenceService';
+import purchasesnInventory from '../components/purchasesnInventory/supplierInfo/addSuppliers';
+import currentSupplers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
+import purchasesRequest from '../components/purchasesnInventory/purchasesManagment/purchasesRequest';
+import purchasesRequestManagment from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment';
+
+
 
 
 /*import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
@@ -261,6 +267,11 @@ function Dashboard(props) {
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/cust" component={CustomerTable}/>
             <Route exact path="/feed" component={FeedBackTable}/>
+            <Route exact path="/PnI" component={purchasesnInventory}/>
+            <Route exact path="/sup" component={currentSuppliers}/>
+            <Route exact path="/pReq" component={purchasesRequest}/>
+            <Route exact path="/pOrd" component={purchasesOrder}/>
+            <Route exact path="/pReqMng" component={purchasesRequestManagement}/>
 
 
      
