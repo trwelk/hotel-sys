@@ -1,3 +1,185 @@
+
+// import React from 'react'
+// import MaterialTable from 'material-table'
+// import { firestoreConnect, isLoaded } from 'react-redux-firebase';
+// import { useSelector, connect } from 'react-redux';
+// import { compose } from 'redux';
+// import { makeStyles } from '@material-ui/core/styles';
+// import EditProductTable from './EditProductTable';
+// import { deleteProductType, updateProductType } from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions';
+// import { render } from 'react-dom';
+
+
+
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     padding: '2px 4px',
+//     display: 'flex',
+//     alignItems: 'center',
+//     width: 400,
+//   },
+//   input: {
+//     marginLeft: theme.spacing(1),
+//     flex: 1,
+//   },
+//   iconButton: {
+//     padding: 10,
+//   },
+//   divider: {
+//     height: 28,
+//     margin: 4,
+//   },
+//   outerDiv: {
+//     display: "flex",
+//     justifyContent: "space-around"
+//   }, margin: {
+//     margin: theme.spacing(1),
+//   },
+// }));
+
+
+
+// function FeedBackTable(props) {
+  
+//   const { useState } = React;
+//   const [columns, setColumns] = useState([
+
+//     { title: 'ID', field: 'orderNo' },
+//     { title: 'TableNO', field: 'tableNO'/*, filtering: false*/ },
+//     {
+//       title: 'RoomNO',
+//       field: 'room',
+//     },
+//     {
+//       title: 'Description',
+//       field: 'descriptions'
+//       /* ,filtering: false*/
+//     },
+//     {
+//       title: 'Status',
+//       field: 'status',
+//       lookup: { 1: 'done', 2: 'in pogress' },
+      
+//     },
+//     {
+//       title: 'Date',
+//       field: 'date'           
+      
+//     } 
+
+//   ]);
+//   const [descriptionButtonHidden, setDescriptionButtonHidden] = React.useState(true)
+//   const [state, setState] = React.useState({
+//     open: false,
+//     vertical: 'bottom',
+//     horizontal: 'right',
+//   });
+//   const { vertical, horizontal, open, error } = state;
+//   const classes = useStyles();
+
+
+
+//   const feedbacks = useSelector(state => state.firestore.ordered.foodOrder)
+
+//   const data = feedbacks ? (feedbacks.map(feedback => ({ ...feedback }))) : (null)
+//   // const data = datacopy ? (datacopy.filter(data => data.status != 1)) : datacopy
+
+
+
+//   // const handleChangeOfDescription = (event) => {
+//   //   if (descriptionButtonHidden == false) {
+//   //     setDescriptionButtonHidden(true)
+//   //   }
+//   // }
+//   // const { useState } = React;
+//   // const [columns, setColumns] = useState([
+
+//   //   { title: 'ID', field: 'orderNo' },
+//   //   { title: 'TableNO', field: 'tableNO'/*, filtering: false*/ },
+//   //   {
+//   //     title: 'RoomNO',
+//   //     field: 'room',
+//   //   },
+//   //   {
+//   //     title: 'Description',
+//   //     field: 'descriptions'
+//   //     /* ,filtering: false*/
+//   //   },
+//   //   {
+//   //     title: 'Status',
+//   //     field: 'status',
+//   //     lookup: { 1: 'done', 2: 'in pogress' },
+      
+//   //   },
+//   //   {
+//   //     title: 'Date',
+//   //     field: 'date'           
+      
+//   //   } 
+
+//   // ]);
+//   const table = data ? (
+    
+//     <MaterialTable style={{ padding: "0px" }}
+//       title="Editable Preview"
+//       columns={columns}
+//       data={data}
+//       editable={{
+//           onRowUpdate: (newData, oldData) =>
+//               new Promise((resolve, reject) => {
+//                 setTimeout(() => {
+//                   const dataUpdate = [...data];
+//                   const index = oldData.tableData.id;
+//                   dataUpdate[index] = newData;
+//                   //setData([...dataUpdate]);
+//                   console.log(newData, oldData)
+//                   props.updateProductType(newData)
+//                   resolve();
+//                 }, 1000)
+//               }),
+//             onRowDelete: oldData =>
+//               new Promise((resolve, reject) => {
+//                 setTimeout(() => {
+//                   const dataDelete = [...data];
+//                   const index = oldData.tableData.id;
+//                   dataDelete.splice(index, 1);
+//                   //setData([...dataDelete]);
+//                   console.log(oldData)
+//                   props.deleteProductType(oldData.id)
+//                   resolve()
+//                 }, 1000)
+//               }),
+              
+//       }}
+//       options={{
+//           filtering: true
+//           }}
+//     />
+//   ) : (<div>Loading</div>)
+
+//   // -------------
+
+//             render: rowData => {
+//               return (
+//                 <div>
+//                   <EditProductTable orderNo={rowData.orderNo} />
+//                 </div>
+//               )
+// }
+
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     updateProductType: (payload) => dispatch(updateProductType(payload)),
+//     deleteProductType: (orderId) => dispatch(deleteProductType(orderId))
+//   }
+// }
+
+// export default compose(connect(null, mapDispatchToProps), firestoreConnect([
+//   { collection: 'foodOrder' }
+//   // { collection: 'customer' }
+// ]))(FeedBackTable)
+
+//-----------------------------jkadslfd----
 import React from 'react'
 import MaterialTable from 'material-table'
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
@@ -22,6 +204,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import DirectionsIcon from '@material-ui/icons/Directions';
 import EditProductTable from './EditProductTable';
 import OrderForm from './OrderForm';
+import { deleteOrderType, updateOrderType } from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -52,7 +235,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function FeedBackTable() {
+function FeedBackTable(props) {
 
 
   const [descriptionButtonHidden, setDescriptionButtonHidden] = React.useState(true)
@@ -69,6 +252,7 @@ function FeedBackTable() {
   const feedbacks = useSelector(state => state.firestore.ordered.foodOrder)
 
   const data = feedbacks ? (feedbacks.map(feedback => ({ ...feedback }))) : (null)
+  // const data = datacopy ? (datacopy.filter(data => data.status != 1)) : datacopy
 
 
 
@@ -86,8 +270,8 @@ function FeedBackTable() {
       <MaterialTable
         title="Multiple Detail Panels Preview"
         columns={[
-          { title: 'ID', field: 'orderNo' },
-          { title: 'TableNO', field: 'tableNO'/*, filtering: false*/ },
+          { title: 'ID', field: 'orderNo',editable: 'never' },
+          { title: 'TableNO', field: 'tableNO'/*, filtering: false*/, },
           {
             title: 'RoomNO',
             field: 'room',
@@ -108,7 +292,80 @@ function FeedBackTable() {
             field: 'date'           
             
           }
+          
         ]}
+        editable={{
+           onRowUpdate: (newData, oldData) =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const dataUpdate = [...data];
+              const index = oldData.tableData.orderNo;
+              dataUpdate[index] = newData;
+              //setData([...dataUpdate]);
+              console.log(newData, oldData)
+              props.updateOrderType(newData)
+              resolve();
+            }, 1000)
+          }),
+        onRowDelete: oldData =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const dataDelete = [...data];
+              const index = oldData.tableData.orderNo;
+              dataDelete.splice(index, 1);
+              //setData([...dataDelete]);
+              console.log(oldData)
+              props.deleteOrderType(oldData)
+              resolve()
+            }, 1000)
+          }),
+        }}
+        // actions={[
+        //   {
+        //     icon: 'save',
+        //     tooltip: 'Save User',
+        //     onClick: (event, rowData) => alert("You saved " + rowData.name)
+        //   }
+        // ]}
+        // components={{
+        //   Action: props => (
+        //     <Button
+        //       onClick={(event) => props.action.onClick(event, props.data)}
+        //       color="primary"
+        //       variant="contained"
+        //       style={{textTransform: 'none'}}
+        //       size="small"
+        //     >
+        //       My Button
+        //     </Button>
+        //   ),
+        // }}
+        
+      //  onRowUpdate: (newData, oldData) =>
+      //     new Promise((resolve, reject) => {
+      //       setTimeout(() => {
+      //         const dataUpdate = [...data];
+      //         const index = oldData.tableData.id;
+      //         dataUpdate[index] = newData;
+      //         //setData([...dataUpdate]);
+      //         console.log(newData, oldData)
+      //         props.updateProductType(newData)
+      //         resolve();
+      //       }, 1000)
+      //     }),
+      //   onRowDelete: oldData =>
+      //     new Promise((resolve, reject) => {
+      //       setTimeout(() => {
+      //         const dataDelete = [...data];
+      //         const index = oldData.tableData.id;
+      //         dataDelete.splice(index, 1);
+      //         //setData([...dataDelete]);
+      //         console.log(oldData)
+      //         props.deleteProductType(oldData.id)
+      //         resolve()
+      //       }, 1000)
+      //     }),
+      // }}
         options={{
           filtering: true
         }}
@@ -135,10 +392,19 @@ function FeedBackTable() {
   else
     return <div>loading</div>
 }
-export default compose(connect(null, null), firestoreConnect([
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateOrderType: (payload) => dispatch(updateOrderType(payload)),
+    deleteOrderType: (orderId) => dispatch(deleteOrderType(orderId))
+
+
+  }
+}
+export default compose(connect(null, mapDispatchToProps), firestoreConnect([
   { collection: 'foodOrder' },
   { collection: 'customer' }
 ]))(FeedBackTable)
+//-----------------------------------------------------new from----------
 // import React from 'react';
 // import MaterialTable from 'material-table'
 // import { firestoreConnect } from 'react-redux-firebase';

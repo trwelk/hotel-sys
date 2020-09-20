@@ -16,6 +16,7 @@ export const updateProductType = (payload) => {
             ProName:payload.ProName,
             quantity:payload.quantity,
             amount:payload.amount,
+            Volume:payload.volume,
             // tableNO: payload.tableNO,
             // room: payload.room,
             // description: payload.description,
@@ -73,20 +74,7 @@ export const updateBarInvRec = (payload) => {
 
 }
 
-export const insertBarInvRec = (payload) => {
-    console.log(payload)
-    return (dispatch,getState,{getFirestore,getFirebase}) => {
-        const firestore = getFirestore();
-        firestore.collection('barInventory').doc(payload.id).set({
-            ...payload
-        }).then((response) => {
-            console.log(response)
-        }).catch((response) => {
-            console.log(response)
-        })
-    }
 
-}
 
 export const deleteBarInvRec = (InventoryId) => {
     console.log(InventoryId)
@@ -158,6 +146,10 @@ export const deleteOrderType = (orderId) => {
     }
 
 }
+
+
+
+
 // export const updateOrderType1 = (payload1) => {
 //     console.log(payload1)
 //     return (dispatch, getState, { getFirestore, getFirebase }) => {

@@ -14,7 +14,6 @@ import PoolService from '../components/maintainence/PoolService';
 import currentSuppliers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
 import purchasesRequestManagement from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment'
 import purchasesOrder from '../components/purchasesnInventory/purchasesManagment/purchasesOrder'
-import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import EmployeeList from '../components/hr/employee/EmployeeList';
 import AbsenceTypeList from '../components/hr/absence/AbsenceTypeList';
@@ -61,10 +60,11 @@ import MenuForm from '../components/F&bProduction/management/Forms/MenuForm';
 /*import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
 import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
 import AssetRequest from '../components/frontOffice/reservation/'
+*/
 
 import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
-import EditOrderTable from '../components/fnbServices/EditOrderTable';
-import OrderForm from '../components/fnbServices/OrderForm';*/
+import OrderForm from '../components/fnbServices/OrderForm';
+import InventoryForm from '../components/fnbServices/InventoryForm';
 
 
 function Copyright() {
@@ -262,6 +262,11 @@ function Dashboard(props) {
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/cust" component={CustomerTable}/>
             <Route exact path="/feed" component={FeedBackTable}/>
+            <Route exact path="/poolservice" component={PoolService}/>
+            <Route exact path="/newMenu" component={MenuForm} />
+            <Route exact path='/newOrder' component={OrderForm}/>
+            <Route exact path='/newBarOrder' component={InventoryForm}/>
+            <Route exact path="/foodOrder" component={FnBserviceMng} />
 
 
      
