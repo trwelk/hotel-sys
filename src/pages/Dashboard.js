@@ -63,6 +63,7 @@ import AssetRequest from '../components/frontOffice/reservation/'
 */
 
 import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
+import FnBServiceBarMng from '../components/fnbServices/FnBServiceBarMng';
 import OrderForm from '../components/fnbServices/OrderForm';
 import InventoryForm from '../components/fnbServices/InventoryForm';
 
@@ -264,9 +265,7 @@ function Dashboard(props) {
             <Route exact path="/feed" component={FeedBackTable}/>
             <Route exact path="/poolservice" component={PoolService}/>
             <Route exact path="/newMenu" component={MenuForm} />
-            <Route exact path='/newOrder' component={OrderForm}/>
-            <Route exact path='/newBarOrder' component={InventoryForm}/>
-            <Route exact path="/foodOrder" component={FnBserviceMng} />
+            {/* <Route exact path='/newOrder' component={OrderForm}/> */}
 
 
      
@@ -288,6 +287,9 @@ function Dashboard(props) {
             <Route exact path='/fnb/production/management' component={fnbProdMgmt}/>
             <Route exact path='/fnb/production/newMenu' component={MenuForm}/>
             <Route exact path='/fnb/production/reports' component={ChooseModuleDialog}/>
+
+            <Route exact path='/fnb/services/barInvMng' component={FnBServiceBarMng}/>
+            <Route exact path="/fnb/services/orderMng" component={FnBserviceMng} />
 
             <Route exact path='/frontoffice/rooms' component={PermanentDrawerLeft}/>
             <Route exact path='/frontoffice/customers' component={CustomerTable}/>

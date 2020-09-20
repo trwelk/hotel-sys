@@ -76,6 +76,7 @@ function Navigator2(props) {
   const [maintenance, setMaintenance] = React.useState(false);
   const [fnb,setFnb] = React.useState(false);
   const [production,setProduction] = React.useState(false);
+  const [services,setServices] = React.useState(false);
 
 
    const handleFinance = () => {
@@ -96,6 +97,9 @@ function Navigator2(props) {
 
    const handleProduction = () => {
     setProduction(!production);
+   };
+   const handleServices = () => {
+    setServices(!services);
    };
 
 //----------------------------------------UI ELEMENTS -----------------------------------------------------------------------
@@ -371,7 +375,7 @@ const fnbNav = (
       </ListItem>
     </List>
   </Collapse>
-      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+      {/* <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
         <ListItemIcon className={classes.itemIcon}>
           <StarBorder />
         </ListItemIcon>
@@ -381,7 +385,45 @@ const fnbNav = (
           primary: classes.itemPrimary,
         }}
         >Services</ListItemText></Link>
+      </ListItem> */}
+      <ListItem button onClick={handleServices} className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <StarHalfRounded />
+        </ListItemIcon>
+    {/* <Link to="/fnb/production" > */}
+    <ListItemText primary="Services" 
+    classes={{
+              primary: classes.categoryHeaderPrimary,
+            }}/>
+    {services ? <ExpandLess /> : <ExpandMore />}
+  </ListItem>
+         <Collapse in={services} timeout="auto" unmountOnExit>
+    <List component="div" disablePadding>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <StarBorder />
+        </ListItemIcon>
+    <Link to="/fnb/services/orderMng" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Order management</ListItemText></Link>
       </ListItem>
+      <ListItem button  onClick={handleServices} className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <StarBorder />
+        </ListItemIcon>
+    <Link to="/fnb/services/barInvMng" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Bar Inventory</ListItemText></Link>
+      </ListItem>
+    </List>
+  </Collapse>
+
     </List>
     </List>
   </Collapse>

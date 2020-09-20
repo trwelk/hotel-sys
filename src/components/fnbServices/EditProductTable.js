@@ -22,15 +22,17 @@ function EditProductTable(props) {
  
   const [columns, setColumns] = useState([
 
-    { title: 'ProductID', field: 'id' }, 
-    { title: 'ID', field: 'orderNo',initialEditValue:orderNo ,editable: 'never'},
-    { title: 'ProductName', field: 'ProName'},
-    { title: 'Quantity', field: 'quantity', type :'numeric', filtering: false },
-    { title: 'Amount', field: 'amount', type :'numeric', filtering: false },
-    { title: 'Volume', field: 'volume', filtering: false },
     { title: 'orderProductID', field: 'OPId',editable: 'never'
     // initialEditValue: 'orderNo+id'
-  }, 
+  },
+    
+    { title: 'ProductName', field: 'ProName'},
+    { title: 'Amount', field: 'amount', type :'numeric', filtering: false },
+    { title: 'ProductID', field: 'id' }, 
+    { title: 'ID', field: 'orderNo',initialEditValue:orderNo ,editable: 'never'},
+    { title: 'Quantity', field: 'quantity', type :'numeric', filtering: false },
+    { title: 'Volume', field: 'volume', filtering: false },
+     
 
   ]);
   // const [column, setColumn] = useState([
@@ -141,7 +143,7 @@ function EditProductTable(props) {
           }),
         onRowUpdate: (newData, oldData) =>
           new Promise((resolve, reject) => {
-            newData.OPId = newData.id + newData.orderNo;
+            // newData.OPId = newData.id + newData.orderNo;
             const error = validateData___(newData);
             if (error != null){
               reject();
@@ -184,7 +186,14 @@ function EditProductTable(props) {
           }),
       }}
       options={{
-          filtering: true
+          filtering: true,
+          headerStyle: {
+            backgroundColor: '#01579b',
+            color: '#FFF',
+            borderBottom: '1px solid #333',
+          width: '100px',
+          boxShadow: "0 10px 5px -2px #888"
+          }
           }}
     />
   ) : (<div>Loading</div>)

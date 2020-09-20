@@ -190,7 +190,7 @@ import { compose } from 'redux';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import CancelIcon from '@material-ui/icons/Cancel';
 import TextField from '@material-ui/core/TextField';
-import { FormControl } from '@material-ui/core';
+import { Button, FormControl } from '@material-ui/core';
 
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -324,7 +324,7 @@ function FeedBackTable(props) {
         //   {
         //     icon: 'save',
         //     tooltip: 'Save User',
-        //     onClick: (event, rowData) => alert("You saved " + rowData.name)
+        //     onClick: (event, rowData) => alert("You saved " + rowData.orderNo)
         //   }
         // ]}
         // components={{
@@ -367,7 +367,14 @@ function FeedBackTable(props) {
       //     }),
       // }}
         options={{
-          filtering: true
+          filtering: true,
+          headerStyle: {
+            backgroundColor: '#01579b',
+            color: '#FFF',
+            borderBottom: '1px solid #333',
+          width: '100px',
+          boxShadow: "0 10px 5px -2px #888"
+          }
         }}
         data={data}
         detailPanel={[
@@ -376,6 +383,7 @@ function FeedBackTable(props) {
             render: rowData => {
               return (
                 <div>
+                  
                   <EditProductTable orderNo={rowData.orderNo} />
                 </div>
 
