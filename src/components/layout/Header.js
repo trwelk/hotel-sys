@@ -43,6 +43,7 @@ const styles = (theme) => ({
 
 function Header(props) {
   const { classes, onDrawerToggle } = props;
+  const activeModule = props.module;
   console.log(props)
   return (
     <React.Fragment>
@@ -93,7 +94,7 @@ function Header(props) {
           <Grid container alignItems="center" spacing={1}>
             <Grid item xs>
               <Typography color="inherit" variant="h5" component="h1">
-                Purchases and Inventory
+                {activeModule}
               </Typography>
             </Grid>
             <Grid item>
