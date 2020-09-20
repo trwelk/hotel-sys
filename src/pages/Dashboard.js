@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -66,6 +66,7 @@ import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
 import FnBServiceBarMng from '../components/fnbServices/FnBServiceBarMng';
 import OrderForm from '../components/fnbServices/OrderForm';
 import InventoryForm from '../components/fnbServices/InventoryForm';
+import { ModuleNames } from 'ag-grid-community';
 
 
 function Copyright() {
@@ -228,6 +229,8 @@ function Dashboard(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const [module,setModule] = useState("Front Office");
+  
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
@@ -236,6 +239,7 @@ function Dashboard(props) {
           <nav className={classes.drawer}>
             <Hidden smUp implementation="js">
               <Navigator2
+                setModule={setModule}
                 PaperProps={{ style: { width: drawerWidth } }}
                 variant="temporary"
                 open={mobileOpen}
@@ -243,11 +247,11 @@ function Dashboard(props) {
               />
             </Hidden>
             <Hidden xsDown implementation="css">
-              <Navigator2 PaperProps={{ style: { width: drawerWidth } }} />
+              <Navigator2 setModule={setModule} PaperProps={{ style: { width: drawerWidth } }} />
             </Hidden>
           </nav>
           <div className={classes.app}>
-            <Header onDrawerToggle={handleDrawerToggle} />
+            <Header module={module} onDrawerToggle={handleDrawerToggle} />
             <main className={classes.main}>
 
             <Switch>    
