@@ -7,15 +7,14 @@ import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {useForm, Controller} from 'react-hook-form';
 import { insertMenu } from '../../../../redux/actions/fnbProductionActions/MenuActions'
 import { firestoreConnect } from 'react-redux-firebase';
-import { useSelector, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { FormControl, Grid, InputLabel, ListItemIcon, MenuItem, Select } from '@material-ui/core';
+import { FormControl, Grid, InputLabel, MenuItem, Select } from '@material-ui/core';
 import WeddingTemplate from '../Templates/WeddingMenuTemplate';
 import Snackbar from '@material-ui/core/Snackbar';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert } from '@material-ui/lab';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -75,6 +74,8 @@ function MenuForm(props) {
       if(e.target.value != 1){
         hideField(true);
       }
+      else
+      hideField(false);
     }
     const { name, value } = e.target;
     setMenu(prevState => ({
@@ -96,7 +97,7 @@ function MenuForm(props) {
       return "Field Menu Name Cannot be null"
     }
     else if(data.menuType == 1 && data.price == null || data.price == ""){
-      return "Field price Cannot be null"
+      return "Field price Cannot be null for wedding Menus"
     }
     else if(data.menuType == null || data.menuType == ""){
       return "Field Menu Type Cannot be null"
@@ -159,7 +160,26 @@ function MenuForm(props) {
         <Typography component="h1" variant="h5">
           Add Menu
         </Typography>
+        <h4>* Required Fields</h4>        
         <form className={classes.form} noValidate>
+        <FormControl className={classes.formControl} margin="normal">
+        <InputLabel id="MenuType">Menu Type</InputLabel>
+        <Select
+          labelId="MenuType"
+          id="menuType"
+          name="menuType"
+          value={menuType}
+          onChange={handleChange}
+        >      <MenuItem value="" disabled>
+        <em>select the value</em>
+      </MenuItem>
+          <MenuItem key={1} value={1}>Wedding</MenuItem>
+          <MenuItem key={2} value={2}>Breakfast</MenuItem>
+          <MenuItem key={3} value={3}>Lunch</MenuItem>
+          <MenuItem key={4} value={4}>Dinner</MenuItem>
+          <MenuItem key={5} value={5}>Beverage</MenuItem>
+        </Select>
+      </FormControl>
               <Grid container spacing={1}>
               <Grid item xs={4}>
         <TextField
@@ -192,34 +212,16 @@ function MenuForm(props) {
           <TextField
             variant="outlined"
             margin="dense"
-            required
+            required={!hide}
             fullWidth
             name="price"
             label="Price (LKR)"
             type="currency"
             id="price"
             onChange={handleChange}
-            hidden={hide}
+            disabled={hide}
           /></Grid> 
-    <FormControl className={classes.formControl} margin="normal">
-        <InputLabel id="MenuType">Menu Type</InputLabel>
-        <Select
-          labelId="MenuType"
-          id="menuType"
-          name="menuType"
-          value={menuType}
-          onChange={handleChange}
-        >      <MenuItem value="" disabled>
-        <em>select the value</em>
-      </MenuItem>
-          <MenuItem key={1} value={1}>Wedding</MenuItem>
-          <MenuItem key={2} value={2}>Breakfast</MenuItem>
-          <MenuItem key={3} value={3}>Lunch</MenuItem>
-          <MenuItem key={4} value={4}>Dinner</MenuItem>
-          <MenuItem key={5} value={5}>Beverage</MenuItem>
-        </Select>
-      </FormControl>
-          <div id="selected">{SetMenuType(menuType)}</div>
+                    <div id="selected">{SetMenuType(menuType)}</div>
           <Button
             id="submit"
             type="submit"
