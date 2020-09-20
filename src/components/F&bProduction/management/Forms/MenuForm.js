@@ -96,7 +96,7 @@ function MenuForm(props) {
     else if(data.menuName == null || data.menuName == ""){
       return "Field Menu Name Cannot be null"
     }
-    else if(data.menuType == 1 && data.price == null || data.price == ""){
+    else if(data.menuType == 1 && (data.price == null || data.price == "")){
       return "Field price Cannot be null for wedding Menus"
     }
     else if(data.menuType == null || data.menuType == ""){

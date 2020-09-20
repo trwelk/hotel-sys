@@ -53,7 +53,6 @@ import RoomsAvailableOfRoomTypeChart from '../components/frontOffice/overview/Ro
 import serviceProvider from '../components/maintainence/serviceProvider';
 import MovementActivity from '../components/maintainence/MovementActivity';
 import MaintenenceService from '../components/maintainence/MaintenenceService';
-import ChooseModuleDialog from '../components/layout/ChoosefnbModuleDialog';
 import MenuForm from '../components/F&bProduction/management/Forms/MenuForm';
 
 
@@ -290,7 +289,7 @@ function Dashboard(props) {
 
             <Route exact path='/fnb/production/management' component={fnbProdMgmt}/>
             <Route exact path='/fnb/production/newMenu' component={MenuForm}/>
-            <Route exact path='/fnb/production/reports' component={ChooseModuleDialog}/>
+            {/* <Route exact path='/fnb/production/reports' component={}/> */}
 
             <Route exact path='/fnb/services/barInvMng' component={FnBServiceBarMng}/>
             <Route exact path="/fnb/services/orderMng" component={FnBserviceMng} />
