@@ -31,8 +31,8 @@ function MenuEditable(props) {
     else if(data.menuName == null || data.menuName == ""){
       return "Field Menu Name Cannot be null"
     }
-    else if(data.price == null || data.price == ""){
-      return "Field price Cannot be null"
+    else if(data.menutype == 1 && (data.price == null || data.price == "")){
+      return "Field price Cannot be null for wedding menus"
     }
     else if(data.menutype == null || data.menutype == ""){
       return "Field type Cannot be null"
