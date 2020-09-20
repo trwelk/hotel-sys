@@ -4,19 +4,18 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 import { insertMenu, updateMenu, deleteMenu } from '../../../redux/actions/fnbProductionActions/MenuActions';
-import { Button,Paper, GridList, Card, Icon, Container } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
-import { Alert, AlertTitle } from '@material-ui/lab';
-import MenuItems from '../../../components/F&bProduction/MenuItems';
-import Moment from 'react-moment';
+import { Alert } from '@material-ui/lab';
+import MenuItems from './MenuItems';
 
 function MenuEditable(props) {
 
   const { useState } = React;
   const [columns, setColumns] = useState([
-    { title: 'ID', field: 'id' },
+    { title: 'ID', field: 'id',editable:'onAdd' },
     { title: 'Menu Name', field: 'menuName' },
-    { title: 'Price (LKR)', field: 'price' },
+    { title: 'Price (LKR)', field: 'price' ,type: 'numeric'},
     { title: 'Last Modified', field: 'lastModified', editable: 'never', type: 'date'},
     { title: 'Type', field: 'menutype', lookup: { 1: 'Wedding', 2: 'Breakfast', 3: 'Lunch', 4: 'Dinner',5: 'Beverage' } },
   ]);
@@ -70,15 +69,6 @@ function MenuEditable(props) {
       </div>
     </Snackbar>)
 
-const product = useSelector(state => state.firestore.ordered.product )
-const productData = product ? (product.map(Product => ({ ...Product }))) : (null)
-const itemDetails = productData ? (
-  <Container>
-      return <h3>
-      {productData[0].name}
-      </h3>
-  </Container>
-) : (<div>Loading</div>)
 
   const Menu = useSelector(state => state.firestore.ordered.Menu)
   const data = Menu ? (Menu.map(menu => ({ ...menu}))) : (null)
@@ -90,12 +80,20 @@ const itemDetails = productData ? (
       detailPanel={[
         {                    
           tooltip: 'Show Menu',
-          render: rowData => {           
+          render: rowData => {    
+            if(rowData.menutype == 1){       
               return (
                                    <div> 
                                       <MenuItems MenuNo={rowData.id} MenuType={rowData.menutype}/>
                                   </div>            
               )}
+              else{
+                return (
+                  <div>General MenuItems</div>
+                )
+              }
+          }
+
         }]}
       editable={{
         onRowUpdate: (newData, oldData) =>
@@ -152,6 +150,5 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 export default compose(connect(null, mapDispatchToProps), firestoreConnect([
-  { collection: 'Menu' },
-  { collection: 'product'}
+  { collection: 'Menu' }
 ]))(MenuEditable)
