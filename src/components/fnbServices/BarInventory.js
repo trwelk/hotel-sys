@@ -99,7 +99,14 @@ function BarInventory() {
           }
         ]}
         options={{
-          filtering: true
+          filtering: true,
+          headerStyle: {
+            backgroundColor: '#01579b',
+            color: '#FFF',
+            borderBottom: '1px solid #333',
+          width: '100px',
+          boxShadow: "0 10px 5px -2px #888"
+          }
         }}
         data={data}
         detailPanel={[
