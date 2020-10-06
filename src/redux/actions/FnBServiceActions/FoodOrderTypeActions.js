@@ -2,20 +2,15 @@ export const updateProductType = (payload) => {
     console.log(payload)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
-        payload.OPId = payload.id + payload.orderNo;
+        // payload.OPId = payload.id + payload.orderNo;
         firestore.collection("orderProducts").doc(payload.OPId).update({
-            // const validateData {
-            //     if(payload.orderNo != null ){
-            //       const  pd = payload.orderNo+payload.id;
-            //       return "Field order No Cannot be null"
-            //     }
-            // }
             OPId:payload.OPId,
-            orderNo:payload.orderNo,
-            id:payload.id,
             ProName:payload.ProName,
-            quantity:payload.quantity,
             amount:payload.amount,
+            id:payload.id,
+            orderNo:payload.orderNo,
+            quantity:payload.quantity,
+            Volume:payload.volume,
             // tableNO: payload.tableNO,
             // room: payload.room,
             // description: payload.description,
@@ -73,20 +68,7 @@ export const updateBarInvRec = (payload) => {
 
 }
 
-export const insertBarInvRec = (payload) => {
-    console.log(payload)
-    return (dispatch,getState,{getFirestore,getFirebase}) => {
-        const firestore = getFirestore();
-        firestore.collection('barInventory').doc(payload.id).set({
-            ...payload
-        }).then((response) => {
-            console.log(response)
-        }).catch((response) => {
-            console.log(response)
-        })
-    }
 
-}
 
 export const deleteBarInvRec = (InventoryId) => {
     console.log(InventoryId)
@@ -112,7 +94,7 @@ export const updateOrderType = (payload) => {
             orderNo:payload.orderNo,
             tableNO: payload.tableNO,
             room: payload.room,
-            descriptions: payload.description,
+            descriptions: payload.descriptions,
             status: payload.status,
             date:payload.date
             // DateAndTime:payload.dateAndTime,
@@ -149,7 +131,7 @@ export const deleteOrderType = (orderId) => {
     console.log(orderId)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
-        firestore.collection('foodOrder').doc(orderId).delete()
+        firestore.collection('foodOrder').doc(orderId.orderNo).delete()
             .then((response) => {
                 console.log(response)
             }).catch((error) => {
@@ -158,6 +140,10 @@ export const deleteOrderType = (orderId) => {
     }
 
 }
+
+
+
+
 // export const updateOrderType1 = (payload1) => {
 //     console.log(payload1)
 //     return (dispatch, getState, { getFirestore, getFirebase }) => {
