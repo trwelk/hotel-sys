@@ -63,18 +63,18 @@ function EmptyReservationCard (props) {
     borderColor: 'rgba(0, 0, 0, 0.08)',
     height: '50%',
   });
-  //        <Avatar className={styles.avatar} src={'https://i.pravatar.cc/300'} />
-  const state = useSelector(state => state.frontOffice )
 
+  const state = useSelector(state => state.frontOffice )
   const handleClick = (e) => {
     console.log("clicked dayy " , props.startDay)
     props.handleDayPick(props.startDay)
   }
-
   const handleNewReservation = (e) => {
     props.handleDayPick(props.startDay)
     props.insertReservationItem(props.roomType,props.roomNo)
   }
+
+  //------------------------------------------ui elements---------------------------------------------------------
   const showButton = state.selectedCustomer ?     <AddCircleIcon variant="outlined" color="secondary" onClick={handleNewReservation}/> : (
     <NewReservationForm  roomType={props.roomType}  startDay={props.startDay} roomNo={props.roomNo} />
 

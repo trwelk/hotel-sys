@@ -167,6 +167,17 @@ const frontOfficeNav = (
           <ListItemIcon className={classes.itemIcon}>
             <PeopleIcon />
           </ListItemIcon>
+          <Link to="/frontoffice/overview" >
+          <ListItemText  
+              classes={{
+            primary: classes.itemPrimary,
+          }}
+          >Front Office Overview</ListItemText></Link>
+        </ListItem>
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+          <ListItemIcon className={classes.itemIcon}>
+            <PeopleIcon />
+          </ListItemIcon>
           <Link to="/frontoffice/rooms" >
           <ListItemText  
               classes={{
@@ -278,7 +289,7 @@ const financeNav = (
               classes={{
             primary: classes.itemPrimary,
           }}
-          >finance 3</ListItemText></Link>
+          >Invoice</ListItemText></Link>
         </ListItem>
 		        <ListItem button className={clsx(classes.item, classes.nested,classes.itemActiveItem)}>
           <ListItemIcon className={classes.itemIcon}>

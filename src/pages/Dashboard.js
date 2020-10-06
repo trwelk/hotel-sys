@@ -40,6 +40,7 @@ import Attendance from '../components/finance/salary/Attendance';
 import SalaryMgmt from '../components/finance/salary/SalaryMgmt';
 import Navigator from '../components/layout/Navigator';
 import Content from '../components/layout/LayoutContent';
+import { Redirect } from 'react-router-dom';
 import Header from '../components/layout/Header';
 import RoomHandling from './frontOfficePages/RoomHandling';
 import PermanentDrawerLeft from '../components/frontOffice/rooms/MasterDetail';
@@ -54,6 +55,11 @@ import RoomsAvailableOfRoomTypeChart from '../components/frontOffice/overview/Ro
 import serviceProvider from '../components/maintainence/serviceProvider';
 import MovementActivity from '../components/maintainence/MovementActivity';
 import MaintenenceService from '../components/maintainence/MaintenenceService';
+import FrontOfficeOverview from '../components/frontOffice/FrontOfficeOverview';
+import SignIn from '../components/auth/Signin';
+import { useSelector, connect } from 'react-redux';
+import Signin from '../components/auth/Signin';
+import RequireAuth from '../components/auth/RequireAuth';
 
 
 /*import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
@@ -224,7 +230,21 @@ function Dashboard(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const auth = useSelector(state => state.firebase.auth)  
+console.log(auth)
+if(!auth.isLoaded){
+  return (<div>Loading</div>)
+}else{
 
+if (!auth.uid){
+
+  return (
+    <BrowserRouter>
+      <SignIn></SignIn>
+    </BrowserRouter>
+  )
+}
+else{
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
@@ -246,13 +266,8 @@ function Dashboard(props) {
           <div className={classes.app}>
             <Header onDrawerToggle={handleDrawerToggle} />
             <main className={classes.main}>
-
             <Switch>    
-    
-
-
-            <Route exact path='/' component={RoomList}/>
-            <Route exact path="/room" component={RoomHandling}/>
+                <Route exact path="/" component={RoomHandling}/>
             <Route exact path='/res' component={ReservatonBoxView}/>
             <Route exact path='/ed' component={RoomTypeTable}/>
             <Route exact path='/form' component={InsertReservationForm}/>
@@ -289,6 +304,7 @@ function Dashboard(props) {
             <Route exact path='/frontoffice/feedback' component={FeedBackTable}/>
             <Route exact path='/frontoffice/reservation' component={ReservatonBoxView}/>
             <Route exact path='/frontoffice/roomtypes' component={RoomTypeTable}/>
+            <Route exact path='/frontoffice/overview' component={FrontOfficeOverview}/>
 
 
             <Route exact path='/finance/assetss' component={AssetMain}/>
@@ -312,7 +328,6 @@ function Dashboard(props) {
             <Route exact path="/maintenance/movement" component={MovementActivity}/>
             <Route exact path="/maintenance/service" component={MaintenenceService}/>
             </Switch>
-
           </main>
           <footer className={classes.footer}>
             <Copyright />
@@ -323,8 +338,9 @@ function Dashboard(props) {
       </ThemeProvider>
     </BrowserRouter>
   );
+          }     
 }
-
+}
 Dashboard.propTypes = {
   classes: PropTypes.object.isRequired,
 };

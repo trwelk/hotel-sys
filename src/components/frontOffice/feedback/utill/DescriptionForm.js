@@ -28,14 +28,14 @@ const DescriptionForm = (props) => {
       }
     const {id,description} = props
     return(
-        <div>    <FormControl fullWidth>
-    <TextField  id="outlined-basic" defaultValue={description} multiline  label="Description" variant="outlined" onChange={handleChangeOfDescription}/>
-</FormControl>
-<IconButton color="primary" aria-label="add to shopping cart" disabled={descriptionChanged != true}  onClick={handleDescriptionSubmit}>
-    <MenuBookIcon />
-</IconButton>
-</div>
-
+            <div>  
+              <FormControl fullWidth>
+                <TextField  id="outlined-basic" defaultValue={description} multiline  label="Description" variant="outlined" onChange={handleChangeOfDescription}/>
+              </FormControl>
+              <IconButton color="primary" aria-label="add to shopping cart" disabled={descriptionChanged != true}  onClick={handleDescriptionSubmit}>
+                <MenuBookIcon />
+              </IconButton>
+            </div>
     )
 }
 
@@ -44,7 +44,6 @@ const mapDispatchToProps = (dispatch) => {
         updateFeedbackDescription: (id,payload) => dispatch(updateFeedbackDescription(id,payload)),
       //insertCustomer: (payload) => dispatch(insertCustomer(payload)),
       //deleteCustomer: (customerId) => dispatch(deleteCustomer(customerId))
-
 
     }
 }
