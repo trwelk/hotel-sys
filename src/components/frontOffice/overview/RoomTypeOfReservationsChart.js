@@ -29,7 +29,7 @@ class RoomTypeOfReservationsChart extends PureComponent {
           name: 'FAMSTUD', noOfReservations: 3000, pv: 1398, amt: 2210,
         },
         {
-          name: 'PRESSUITE', noOfReservations: 2000, pv: 9800, amt: 2290,
+          name: 'PRESUITE', noOfReservations: 2000, pv: 9800, amt: 2290,
         },
         {
           name: 'SEAKING', noOfReservations: 2780, pv: 3908, amt: 2000,
@@ -38,7 +38,7 @@ class RoomTypeOfReservationsChart extends PureComponent {
           name: 'CMASTER', noOfReservations: 1890, pv: 4800, amt: 2181,
         },
         {
-          name: 'SEASINGLE', noOfReservations: 2390, pv: 3800, amt: 2500,
+          name: 'CSINGLE', noOfReservations: 2390, pv: 3800, amt: 2500,
         },
       ] 
       const data = datac ? (datac.map((dat,index) => ({...dat,noOfReservations:exking[index]}))) : (null)

@@ -80,7 +80,7 @@ const steps = ['Reservation Details'];
                                                         
 function NewReservationForm(props) {
     const [open, setOpen] = React.useState(false);
-    const [state, setState] = useState({roomNo:props.roomNo,roomType:props.roomType,customer:"",additionalInfo:""});
+    const [state, setState] = useState({roomNo:props.roomNo,roomType:props.roomType,phone:"",customer:"",additionalInfo:""});
     const month = useSelector(state => state.frontOffice.selectedMonth + 1 )
     const startDay = new Date(Date.parse(month + ' ' + (props.startDay ) +' 2020'))
 
@@ -132,13 +132,21 @@ function NewReservationForm(props) {
         const validateData___  = (data) => {
         console.log(data)
         if(data.roomNo == null || data.roomNo == ""){
-          return "Field Room No Cannot be null"
+          return "Field title Cannot be null"
   
         }
         else if(data.customer == null || data.customer == ""){
           return "Please provide a value to the  field customer"
         }
-
+        else if(data.date == null || data.date == ""){
+          return "Field Date Cannot be null"
+        }
+        else if(data.type == null || data.type == ""){
+          return "Field type Cannot be null"
+        }
+        else if(data.platform == null || data.platform == ""){
+          return "Field platform Cannot be null"
+        }
         else
         return null;
       }
