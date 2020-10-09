@@ -14,7 +14,7 @@ export default class GeneralMenuTemplate extends Component {
         fullWidth
         id="Gitem1"
         label="Item Name"
-        name="Item1"
+        name="Gitem1"
         autoComplete="name"
         onChange={this.props.handleChangeItem}
         autoFocus
@@ -27,7 +27,7 @@ export default class GeneralMenuTemplate extends Component {
         fullWidth
         id="Gitem2"
         label="Item Name"
-        name="Item2"
+        name="Gitem2"
         autoComplete="name"
         onChange={this.props.handleChangeItem}
         autoFocus
@@ -40,7 +40,7 @@ export default class GeneralMenuTemplate extends Component {
         fullWidth
         id="Gitem3"
         label="Item Name"
-        name="Item3"
+        name="Gitem3"
         autoComplete="name"
         onChange={this.props.handleChangeItem}
         autoFocus

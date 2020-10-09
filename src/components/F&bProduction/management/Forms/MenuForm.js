@@ -142,7 +142,10 @@ function MenuForm(props) {
       }
       else{
       setTimeout(() => {
-          props.insertMenu(Menu,WedItems)
+        if(menuType == 1)
+          props.insertMenu(Menu,WedItems);
+          else
+          props.insertMenu(Menu,GItems);
           resolve();
       },1000)
     }

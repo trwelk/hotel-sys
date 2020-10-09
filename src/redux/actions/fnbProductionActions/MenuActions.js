@@ -56,6 +56,21 @@ export const insertMenu = (payload, ItemsPayload) => {
                 Dsitem1: ItemsPayload.Dsitem1, Dsitem2: ItemsPayload.Dsitem2, Dsitem3: ItemsPayload.Sditem3
             })
         }
+        else {
+            firestore = firestore.collection('Menu').doc(payload.id).collection("GenMenuItems");
+            firestore.doc("Item1").set({
+                name: ItemsPayload.Gitem1,
+                price: ItemsPayload.Price1
+            })
+            firestore.doc("Item2").set({
+                name: ItemsPayload.Gitem2,
+                price: ItemsPayload.Price2
+            })
+            firestore.doc("Item3").set({
+                name: ItemsPayload.Gitem3,
+                price: ItemsPayload.Price3
+            })
+        }
     }
 
 }
