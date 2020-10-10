@@ -14,6 +14,7 @@ import PoolService from '../components/maintainence/PoolService';
 import currentSuppliers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
 import purchasesRequestManagement from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment'
 import purchasesOrder from '../components/purchasesnInventory/purchasesManagment/purchasesOrder'
+// import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import EmployeeList from '../components/hr/employee/EmployeeList';
 import AbsenceTypeList from '../components/hr/absence/AbsenceTypeList';
@@ -43,7 +44,7 @@ import { Redirect } from 'react-router-dom';
 import Header from '../components/layout/Header';
 import RoomHandling from './frontOfficePages/RoomHandling';
 import PermanentDrawerLeft from '../components/frontOffice/rooms/MasterDetail';
-// import RoomList from '../components/frontOffice/rooms/RoomList';
+import RoomList from '../components/frontOffice/rooms/RoomList';
 import InsertReservationForm from '../components/frontOffice/reservation/forms/InsertReservationForm';
 import CustomerTable from '../components/frontOffice/customer/CustomerTable';
 import FeedBackTable from '../components/frontOffice/feedback/FeedBackTable';
@@ -58,22 +59,19 @@ import FrontOfficeOverview from '../components/frontOffice/FrontOfficeOverview';
 import SignIn from '../components/auth/Signin';
 import { useSelector, connect } from 'react-redux';
 import Signin from '../components/auth/Signin';
-import RequireAuth from '../components/auth/RequireAuth';
-import Voice from '../components/frontOffice/experiment/Voice';
-import FrontOfficeDashboard from '../components/frontOffice/FrontOfficeDashBoard';
-import MenuForm from '../components/F&bProduction/management/Forms/MenuForm';
+
+// import RequireAuth from '../components/auth/RequireAuth';
+// import Voice from '../components/frontOffice/experiment/Voice';
 
 
-/*import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
-import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
+import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
+/*import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
 import AssetRequest from '../components/frontOffice/reservation/'
 */
-
 import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
 import FnBServiceBarMng from '../components/fnbServices/FnBServiceBarMng';
-import OrderForm from '../components/fnbServices/OrderForm';
-import InventoryForm from '../components/fnbServices/InventoryForm';
-import { ModuleNames } from 'ag-grid-community';
+// import EditOrderTable from '../components/fnbServices/EditOrderTable';
+// import OrderForm from '../components/fnbServices/OrderForm';
 
 
 function Copyright() {
@@ -231,7 +229,6 @@ const styles = {
 function Dashboard(props) {
   const { classes } = props;
   const [mobileOpen, setMobileOpen] = React.useState(true);
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -252,7 +249,7 @@ if (!auth.uid){
   )
 }
 else{
-  
+
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
@@ -261,36 +258,31 @@ else{
           <nav className={classes.drawer}>
             <Hidden smUp implementation="js">
               <Navigator2
-                setModule={setModule}
                 PaperProps={{ style: { width: drawerWidth } }}
                 variant="temporary"
                 open={mobileOpen}
                 onClose={handleDrawerToggle}
+                setModule={setModule}
               />
             </Hidden>
             <Hidden xsDown implementation="css">
-              <Navigator2 setModule={setModule} PaperProps={{ style: { width: drawerWidth } }} />
+              <Navigator2 PaperProps={{ style: { width: drawerWidth } }} setModule={setModule} />
             </Hidden>
           </nav>
           <div className={classes.app}>
-            <Header module={module} onDrawerToggle={handleDrawerToggle} />
+            <Header onDrawerToggle={handleDrawerToggle} module={module}/>
             <main className={classes.main}>
             <Switch>    
                 <Route exact path="/" component={RoomHandling}/>
             <Route exact path='/res' component={ReservatonBoxView}/>
             <Route exact path='/ed' component={RoomTypeTable}/>
             <Route exact path='/form' component={InsertReservationForm}/>
+            {/* <Route exact path='/Food&Beverages' component={fnbProdMgmt}/> */}
             <Route exact path='/m' component={PermanentDrawerLeft}/>
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/cust" component={CustomerTable}/>
             <Route exact path="/feed" component={FeedBackTable}/>
-            <Route exact path="/poolservice" component={PoolService}/>
-            <Route exact path="/newMenu" component={MenuForm} />
-            {/* <Route exact path='/newOrder' component={OrderForm}/> */}
-
-            <Route exact path="/voice" component={Voice}/>
-
-     
+            {/* <Route exact path="/voice" component={Voice}/> */}
             <Route exact path="/chart" component={RoomsAvailableOfRoomTypeChart}/>
 
             {/*                  <Route exact path="/foodOrder" component={FnBserviceMng} />
@@ -306,6 +298,7 @@ else{
             <Route exact path="/porder" component={purchasesOrder}/>
             */}
 
+
             <Route exact path='/fnb/production/management' component={fnbProdMgmt}/>
             <Route exact path='/fnb/production/newMenu' component={MenuForm}/>
             {/* <Route exact path='/fnb/production/reports' component={}/> */}
@@ -313,13 +306,16 @@ else{
             <Route exact path='/fnb/services/barInvMng' component={FnBServiceBarMng}/>
             <Route exact path="/fnb/services/orderMng" component={FnBserviceMng} />
 
+
+
             <Route exact path='/frontoffice/rooms' component={PermanentDrawerLeft}/>
             <Route exact path='/frontoffice/customers' component={CustomerTable}/>
             <Route exact path='/frontoffice/feedback' component={FeedBackTable}/>
             <Route exact path='/frontoffice/reservation' component={ReservatonBoxView}/>
             <Route exact path='/frontoffice/roomtypes' component={RoomTypeTable}/>
             <Route exact path='/frontoffice/overview' component={FrontOfficeOverview}/>
-            <Route exact path='/trewon' component={FrontOfficeDashboard}/>
+            //<Route exact path='/trewon' component={FrontOfficeDashboard}/>
+
 
             <Route exact path='/finance/assetss' component={AssetMain}/>
             <Route exact path='/finance/cashflow' component={CashFlowMain}/>
