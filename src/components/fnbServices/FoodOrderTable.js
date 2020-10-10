@@ -319,6 +319,17 @@ function FeedBackTable(props) {
               resolve()
             }, 1000)
           }),
+          Action: props => (
+            <Button
+              onClick={(event) => props.action.onClick(event, props.data)}
+              color="primary"
+              variant="contained"
+              style={{textTransform: 'none'}}
+              size="small"
+            >
+              My Button
+            </Button>
+          ),
         }}
         // actions={[
         //   {
@@ -327,19 +338,7 @@ function FeedBackTable(props) {
         //     onClick: (event, rowData) => alert("You saved " + rowData.orderNo)
         //   }
         // ]}
-        // components={{
-        //   Action: props => (
-        //     <Button
-        //       onClick={(event) => props.action.onClick(event, props.data)}
-        //       color="primary"
-        //       variant="contained"
-        //       style={{textTransform: 'none'}}
-        //       size="small"
-        //     >
-        //       My Button
-        //     </Button>
-        //   ),
-        // }}
+        
         
       //  onRowUpdate: (newData, oldData) =>
       //     new Promise((resolve, reject) => {
@@ -386,14 +385,18 @@ function FeedBackTable(props) {
                   
                   <EditProductTable orderNo={rowData.orderNo} />
                 </div>
-
-
-
               )
             },
           },
-
         ]}
+        actions={[
+          {
+            icon: 'save',
+            tooltip: 'Save User',
+            onClick: (event, rowData) => alert("You saved " + rowData.orderNo)
+          }
+        ]}
+        
       />
     )
   }
