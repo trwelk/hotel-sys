@@ -60,6 +60,8 @@ import SignIn from '../components/auth/Signin';
 import { useSelector, connect } from 'react-redux';
 import Signin from '../components/auth/Signin';
 import RequireAuth from '../components/auth/RequireAuth';
+import Voice from '../components/frontOffice/experiment/Voice';
+import FrontOfficeDashboard from '../components/frontOffice/FrontOfficeDashBoard';
 
 
 /*import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
@@ -88,7 +90,7 @@ let theme = createMuiTheme({
   palette: {
     primary: {
       light: '#63ccff',
-      main: '#009be5',
+      main: '#232f3e',
       dark: '#006db3',
     },
   },
@@ -225,7 +227,7 @@ const styles = {
 
 function Dashboard(props) {
   const { classes } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [mobileOpen, setMobileOpen] = React.useState(true);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -277,6 +279,7 @@ else{
             <Route exact path="/cust" component={CustomerTable}/>
             <Route exact path="/feed" component={FeedBackTable}/>
 
+            <Route exact path="/voice" component={Voice}/>
 
      
             <Route exact path="/chart" component={RoomsAvailableOfRoomTypeChart}/>
@@ -305,6 +308,7 @@ else{
             <Route exact path='/frontoffice/reservation' component={ReservatonBoxView}/>
             <Route exact path='/frontoffice/roomtypes' component={RoomTypeTable}/>
             <Route exact path='/frontoffice/overview' component={FrontOfficeOverview}/>
+            <Route exact path='/trewon' component={FrontOfficeDashboard}/>
 
 
             <Route exact path='/finance/assetss' component={AssetMain}/>
