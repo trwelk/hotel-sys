@@ -180,6 +180,12 @@ const handleSubmit = (evt) => {
         else if(data.platform == null || data.platform == ""){
           return "Field platform Cannot be null"
         }
+        else if(data.platform != "ONSITE" || data.platform != "SOCIALMEDIA"){
+            return "Field type Should be either ONSITE or SOCIALMEDIA"
+          }
+        else if(data.type != "COMPLAINT" || data.type == "COMPLIMENT"){
+            return "Field type Should be either COMPLAINT or COMPLIMENT"
+          }
         else
         return null;
       }

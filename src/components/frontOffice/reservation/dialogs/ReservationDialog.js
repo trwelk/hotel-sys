@@ -15,7 +15,7 @@ import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import Checkout from '../forms/Checkout';
+import Checkout from '../forms/NewReservationForm';
 
 const useStyles = makeStyles((theme) => ({
   form: {

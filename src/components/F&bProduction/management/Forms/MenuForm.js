@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { FormControl, Grid, InputLabel, MenuItem, Select } from '@material-ui/core';
 import WeddingTemplate from '../Templates/WeddingMenuTemplate';
+import GeneralMenuTemplate from '../Templates/GeneralMenuTemplate';
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab';
 
@@ -50,10 +51,23 @@ function MenuForm(props) {
     Sditem1:'',Sditem2:'',Sditem3:'',
     Dsitem1:'',Dsitem2:'',Dsitem3:''
   })
+  const [GItems,setGItems] = useState({
+    GItem1:'',Price1:'',
+    GItem2:'',Price2:'',
+    GItem3:'',Price3:''
+  })
 
   const handleChangeItem = (e) => {
     const { name, value } = e.target;
     setItems(prevState => ({
+      ...prevState,
+      [name]: value
+  }));
+  }
+
+  const handleChangeGItem = (e) => {
+    const { name, value } = e.target;
+    setGItems(prevState => ({
       ...prevState,
       [name]: value
   }));
@@ -64,7 +78,7 @@ function MenuForm(props) {
     if (MenuType == 1) {
       return <WeddingTemplate handleChangeItem={handleChangeItem} WedItems={WedItems} />
     } else {
-      return ("Menu Type:" + MenuType)
+      return <GeneralMenuTemplate handleChangeItem={handleChangeGItem} GItems={GItems} /> 
     }
   }
 
@@ -96,7 +110,7 @@ function MenuForm(props) {
     else if(data.menuName == null || data.menuName == ""){
       return "Field Menu Name Cannot be null"
     }
-    else if(data.menuType == 1 && data.price == null || data.price == ""){
+    else if(data.menuType == 1 && (data.price == null || data.price == "")){
       return "Field price Cannot be null for wedding Menus"
     }
     else if(data.menuType == null || data.menuType == ""){
