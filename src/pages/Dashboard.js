@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { createMuiTheme, ThemeProvider, withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,7 +14,6 @@ import PoolService from '../components/maintainence/PoolService';
 import currentSuppliers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
 import purchasesRequestManagement from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment'
 import purchasesOrder from '../components/purchasesnInventory/purchasesManagment/purchasesOrder'
-import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import EmployeeList from '../components/hr/employee/EmployeeList';
 import AbsenceTypeList from '../components/hr/absence/AbsenceTypeList';
@@ -44,7 +43,7 @@ import { Redirect } from 'react-router-dom';
 import Header from '../components/layout/Header';
 import RoomHandling from './frontOfficePages/RoomHandling';
 import PermanentDrawerLeft from '../components/frontOffice/rooms/MasterDetail';
-import RoomList from '../components/frontOffice/rooms/RoomList';
+// import RoomList from '../components/frontOffice/rooms/RoomList';
 import InsertReservationForm from '../components/frontOffice/reservation/forms/InsertReservationForm';
 import CustomerTable from '../components/frontOffice/customer/CustomerTable';
 import FeedBackTable from '../components/frontOffice/feedback/FeedBackTable';
@@ -62,15 +61,19 @@ import Signin from '../components/auth/Signin';
 import RequireAuth from '../components/auth/RequireAuth';
 import Voice from '../components/frontOffice/experiment/Voice';
 import FrontOfficeDashboard from '../components/frontOffice/FrontOfficeDashBoard';
+import MenuForm from '../components/F&bProduction/management/Forms/MenuForm';
 
 
 /*import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
 import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
 import AssetRequest from '../components/frontOffice/reservation/'
+*/
 
 import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
-import EditOrderTable from '../components/fnbServices/EditOrderTable';
-import OrderForm from '../components/fnbServices/OrderForm';*/
+import FnBServiceBarMng from '../components/fnbServices/FnBServiceBarMng';
+import OrderForm from '../components/fnbServices/OrderForm';
+import InventoryForm from '../components/fnbServices/InventoryForm';
+import { ModuleNames } from 'ag-grid-community';
 
 
 function Copyright() {
@@ -232,6 +235,8 @@ function Dashboard(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const [module,setModule] = useState("Front Office");
+
   const auth = useSelector(state => state.firebase.auth)  
 console.log(auth)
 if(!auth.isLoaded){
@@ -247,6 +252,7 @@ if (!auth.uid){
   )
 }
 else{
+  
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
@@ -255,6 +261,7 @@ else{
           <nav className={classes.drawer}>
             <Hidden smUp implementation="js">
               <Navigator2
+                setModule={setModule}
                 PaperProps={{ style: { width: drawerWidth } }}
                 variant="temporary"
                 open={mobileOpen}
@@ -262,22 +269,24 @@ else{
               />
             </Hidden>
             <Hidden xsDown implementation="css">
-              <Navigator2 PaperProps={{ style: { width: drawerWidth } }} />
+              <Navigator2 setModule={setModule} PaperProps={{ style: { width: drawerWidth } }} />
             </Hidden>
           </nav>
           <div className={classes.app}>
-            <Header onDrawerToggle={handleDrawerToggle} />
+            <Header module={module} onDrawerToggle={handleDrawerToggle} />
             <main className={classes.main}>
             <Switch>    
                 <Route exact path="/" component={RoomHandling}/>
             <Route exact path='/res' component={ReservatonBoxView}/>
             <Route exact path='/ed' component={RoomTypeTable}/>
             <Route exact path='/form' component={InsertReservationForm}/>
-            <Route exact path='/Food&Beverages' component={fnbProdMgmt}/>
             <Route exact path='/m' component={PermanentDrawerLeft}/>
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/cust" component={CustomerTable}/>
             <Route exact path="/feed" component={FeedBackTable}/>
+            <Route exact path="/poolservice" component={PoolService}/>
+            <Route exact path="/newMenu" component={MenuForm} />
+            {/* <Route exact path='/newOrder' component={OrderForm}/> */}
 
             <Route exact path="/voice" component={Voice}/>
 
@@ -297,10 +306,12 @@ else{
             <Route exact path="/porder" component={purchasesOrder}/>
             */}
 
+            <Route exact path='/fnb/production/management' component={fnbProdMgmt}/>
+            <Route exact path='/fnb/production/newMenu' component={MenuForm}/>
+            {/* <Route exact path='/fnb/production/reports' component={}/> */}
 
-
-
-
+            <Route exact path='/fnb/services/barInvMng' component={FnBServiceBarMng}/>
+            <Route exact path="/fnb/services/orderMng" component={FnBserviceMng} />
 
             <Route exact path='/frontoffice/rooms' component={PermanentDrawerLeft}/>
             <Route exact path='/frontoffice/customers' component={CustomerTable}/>
@@ -309,7 +320,6 @@ else{
             <Route exact path='/frontoffice/roomtypes' component={RoomTypeTable}/>
             <Route exact path='/frontoffice/overview' component={FrontOfficeOverview}/>
             <Route exact path='/trewon' component={FrontOfficeDashboard}/>
-
 
             <Route exact path='/finance/assetss' component={AssetMain}/>
             <Route exact path='/finance/cashflow' component={CashFlowMain}/>

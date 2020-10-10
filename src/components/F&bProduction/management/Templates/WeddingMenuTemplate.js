@@ -10,7 +10,6 @@ export default class WeddingMenuTemplate extends Component {
         <TextField
         variant="outlined"
         margin="dense"
-        required
         fullWidth
         id="Wlitem1"
         label="Welcome Drink"
@@ -24,7 +23,6 @@ export default class WeddingMenuTemplate extends Component {
       <TextField
         variant="outlined"
         margin="dense"
-        required
         fullWidth
         id="Mditem1"
         label="Main dish 1"
@@ -38,7 +36,6 @@ export default class WeddingMenuTemplate extends Component {
       <TextField
         variant="outlined"
         margin="dense"
-        required
         fullWidth
         id="Mditem2"
         label="Main dish 2"
@@ -52,7 +49,6 @@ export default class WeddingMenuTemplate extends Component {
       <TextField
         variant="outlined"
         margin="dense"
-        required
         fullWidth
         id="Mditem3"
         label="Main dish 3"
@@ -69,7 +65,6 @@ export default class WeddingMenuTemplate extends Component {
       <TextField
         variant="outlined"
         margin="dense"
-        required
         fullWidth
         id="Sditem1"
         label="Dish 1"
@@ -81,7 +76,6 @@ export default class WeddingMenuTemplate extends Component {
       <TextField
         variant="outlined"
         margin="dense"
-        required
         fullWidth
         id="Sditem2"
         label="Dish 2"
@@ -93,7 +87,6 @@ export default class WeddingMenuTemplate extends Component {
       <TextField
         variant="outlined"
         margin="dense"
-        required
         fullWidth
         id="Sditem3"
         label="Dish 3"
@@ -107,7 +100,6 @@ export default class WeddingMenuTemplate extends Component {
       <TextField
         variant="outlined"
         margin="dense"
-        required
         fullWidth
         id="Dsitem1"
         label="Dessert 1"
@@ -117,7 +109,6 @@ export default class WeddingMenuTemplate extends Component {
             <TextField
         variant="outlined"
         margin="dense"
-        required
         fullWidth
         id="Dsitem2"
         label="Dessert 2"
@@ -127,7 +118,6 @@ export default class WeddingMenuTemplate extends Component {
             <TextField
         variant="outlined"
         margin="dense"
-        required
         fullWidth
         id="Dsitem3"
         label="Dessert 3"
