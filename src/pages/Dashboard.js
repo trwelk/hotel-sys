@@ -59,6 +59,7 @@ import FrontOfficeOverview from '../components/frontOffice/FrontOfficeOverview';
 import SignIn from '../components/auth/Signin';
 import { useSelector, connect } from 'react-redux';
 import Signin from '../components/auth/Signin';
+
 // import RequireAuth from '../components/auth/RequireAuth';
 // import Voice from '../components/frontOffice/experiment/Voice';
 
@@ -91,7 +92,7 @@ let theme = createMuiTheme({
   palette: {
     primary: {
       light: '#63ccff',
-      main: '#009be5',
+      main: '#232f3e',
       dark: '#006db3',
     },
   },
@@ -229,12 +230,11 @@ const styles = {
 function Dashboard(props) {
   const { classes } = props;
   const [mobileOpen, setMobileOpen] = React.useState(true);
-
-  const [module,setModule] = useState("Front Office");
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const [module,setModule] = useState("Front Office");
+
   const auth = useSelector(state => state.firebase.auth)  
 console.log(auth)
 if(!auth.isLoaded){
@@ -250,6 +250,7 @@ if (!auth.uid){
   )
 }
 else{
+
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
@@ -282,10 +283,7 @@ else{
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/cust" component={CustomerTable}/>
             <Route exact path="/feed" component={FeedBackTable}/>
-
             {/* <Route exact path="/voice" component={Voice}/> */}
-
-     
             <Route exact path="/chart" component={RoomsAvailableOfRoomTypeChart}/>
 
             {/*                  <Route exact path="/foodOrder" component={FnBserviceMng} />
@@ -317,6 +315,7 @@ else{
             <Route exact path='/frontoffice/reservation' component={ReservatonBoxView}/>
             <Route exact path='/frontoffice/roomtypes' component={RoomTypeTable}/>
             <Route exact path='/frontoffice/overview' component={FrontOfficeOverview}/>
+            //<Route exact path='/trewon' component={FrontOfficeDashboard}/>
 
 
             <Route exact path='/finance/assetss' component={AssetMain}/>
