@@ -16,16 +16,24 @@ export const updateMenu = (payload) => {
 
 }
 
-export const updateMenuItems = (payload) => {
+export const updateMenuItems = (payload,MenuType) => {
     console.log(payload)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
+        if(MenuType == 1){
         firestore.collection('Menu').doc(payload.id).collection('MenuItems').doc(payload.id).update({
             Wlitem1: payload.Wlitem1,
             Mditem1: payload.Mditem1, Mditem2: payload.Mditem2, Mditem3: payload.Mditem3,
             Sditem1: payload.Sditem1, Sditem2: payload.Sditem2, Sditem3: payload.Sditem3,
             Dsitem1: payload.Dsitem1, Dsitem2: payload.Dsitem2, Dsitem3: payload.Sditem3
         });
+    }
+        else{
+            firestore.collection('Menu').doc(payload.id).collection('MenuItems').doc(payload.id).update({
+                name:payload.name,
+                price:payload.price
+            }); 
+        }
     }
 
 }
@@ -57,19 +65,9 @@ export const insertMenu = (payload, ItemsPayload) => {
             })
         }
         else {
-            firestore = firestore.collection('Menu').doc(payload.id).collection("GenMenuItems");
-            firestore.doc("Item1").set({
-                name: ItemsPayload.Gitem1,
-                price: ItemsPayload.Price1
-            })
-            firestore.doc("Item2").set({
-                name: ItemsPayload.Gitem2,
-                price: ItemsPayload.Price2
-            })
-            firestore.doc("Item3").set({
-                name: ItemsPayload.Gitem3,
-                price: ItemsPayload.Price3
-            })
+            for (let index = 0; index < ItemsPayload.length; index++) {
+                firestore.collection('Menu').doc(payload.id).collection("MenuItems").doc("item".concat([index+1].toString())).set(ItemsPayload[index]);
+            }
         }
     }
 

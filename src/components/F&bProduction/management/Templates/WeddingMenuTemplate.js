@@ -130,14 +130,3 @@ export default class WeddingMenuTemplate extends Component {
     )
   }
 }
-
-
-
-// import React, { useState } from 'react';
-
-// export default function WeddingTemplate() {
-  
-//     return (
-        
-//     );
-//   }

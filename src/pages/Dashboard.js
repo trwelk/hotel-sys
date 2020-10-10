@@ -69,6 +69,7 @@ import AssetRequest from '../components/frontOffice/reservation/'
 */
 import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
 import FnBServiceBarMng from '../components/fnbServices/FnBServiceBarMng';
+import tableChart from '../components/F&bProduction/Charts/Chart';
 // import EditOrderTable from '../components/fnbServices/EditOrderTable';
 // import OrderForm from '../components/fnbServices/OrderForm';
 
@@ -303,7 +304,7 @@ else{
 
             <Route exact path='/fnb/production/management' component={fnbProdMgmt}/>
             <Route exact path='/fnb/production/newMenu' component={MenuForm}/>
-            {/* <Route exact path='/fnb/production/reports' component={}/> */}
+            <Route exact path='/fnb/production/reports' component={tableChart} />
 
             <Route exact path='/fnb/services/barInvMng' component={FnBServiceBarMng}/>
             <Route exact path="/fnb/services/orderMng" component={FnBserviceMng} />

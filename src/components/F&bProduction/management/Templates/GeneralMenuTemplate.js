@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
-import { Grid, TextField } from '@material-ui/core';
+// import React, { Component } from 'react'
+// import { Grid, TextField } from '@material-ui/core';
 
-export default class GeneralMenuTemplate extends Component {
-  render() {
-    return (
-<div id="General-section">
- <Grid container spacing={1}>
+// export default class GeneralMenuTemplate extends Component {
+//   render() {
+//     return (
+// <div id="General-section">
+ {/* <Grid container spacing={1}>
    <Grid item xs={5}>
      <Grid item>
       <TextField
@@ -82,19 +82,8 @@ export default class GeneralMenuTemplate extends Component {
       />
       </Grid>
       </Grid>
-      </Grid>
-      </div>
+      </Grid> */}
+      {/* </div>
     )
   }
-}
-
-
-
-// import React, { useState } from 'react';
-
-// export default function WeddingTemplate() {
-  
-//     return (
-        
-//     );
-//   }
+} */}

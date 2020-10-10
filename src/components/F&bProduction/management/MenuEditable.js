@@ -69,7 +69,6 @@ function MenuEditable(props) {
       </div>
     </Snackbar>)
 
-
   const Menu = useSelector(state => state.firestore.ordered.Menu)
   const data = Menu ? (Menu.map(menu => ({ ...menu}))) : (null)
   const table = data ? (
@@ -80,18 +79,12 @@ function MenuEditable(props) {
       detailPanel={[
         {                    
           tooltip: 'Show Menu',
-          render: rowData => {    
-            if(rowData.menutype == 1){       
+          render: rowData => {           
               return (
                                    <div> 
                                       <MenuItems MenuNo={rowData.id} MenuType={rowData.menutype}/>
                                   </div>            
-              )}
-              else{
-                return (
-                  <div>General MenuItems</div>
-                )
-              }
+              )
           }
 
         }]}
