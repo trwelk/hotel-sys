@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
-import { Grid, TextField } from '@material-ui/core';
+// import React, { Component } from 'react'
+// import { Grid, TextField } from '@material-ui/core';
 
-export default class GeneralMenuTemplate extends Component {
-  render() {
-    return (
-<div id="General-section">
- <Grid container spacing={1}>
+// export default class GeneralMenuTemplate extends Component {
+//   render() {
+//     return (
+// <div id="General-section">
+ {/* <Grid container spacing={1}>
    <Grid item xs={5}>
      <Grid item>
       <TextField
@@ -14,7 +14,7 @@ export default class GeneralMenuTemplate extends Component {
         fullWidth
         id="Gitem1"
         label="Item Name"
-        name="Item1"
+        name="Gitem1"
         autoComplete="name"
         onChange={this.props.handleChangeItem}
         autoFocus
@@ -27,7 +27,7 @@ export default class GeneralMenuTemplate extends Component {
         fullWidth
         id="Gitem2"
         label="Item Name"
-        name="Item2"
+        name="Gitem2"
         autoComplete="name"
         onChange={this.props.handleChangeItem}
         autoFocus
@@ -40,7 +40,7 @@ export default class GeneralMenuTemplate extends Component {
         fullWidth
         id="Gitem3"
         label="Item Name"
-        name="Item3"
+        name="Gitem3"
         autoComplete="name"
         onChange={this.props.handleChangeItem}
         autoFocus
@@ -82,19 +82,8 @@ export default class GeneralMenuTemplate extends Component {
       />
       </Grid>
       </Grid>
-      </Grid>
-      </div>
+      </Grid> */}
+      {/* </div>
     )
   }
-}
-
-
-
-// import React, { useState } from 'react';
-
-// export default function WeddingTemplate() {
-  
-//     return (
-        
-//     );
-//   }
+} */}
