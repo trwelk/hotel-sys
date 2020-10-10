@@ -25,6 +25,21 @@ export const handleCustomerPick = (customer) => {
     }
 }
 
+export const handleReservationTypePick = (reservationType) => {
+    return (dispatch,getState,{getFirestore,getFirebase}) => {
+        console.log(getState())
+
+             dispatch({type:'RESERVATION_TYPE_SELECTED',
+                reservationType:reservationType})
+    }
+}
+
+export const handleNumberOfPacks = (numberOfPacks) => {
+    return (dispatch,getState,{getFirestore,getFirebase}) => {
+             dispatch({type:'NUMBER_OF_PACKS_SELECTED',
+             numberOfPacks:numberOfPacks})
+    }
+}
 
 export const handleDayPick = (day) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
