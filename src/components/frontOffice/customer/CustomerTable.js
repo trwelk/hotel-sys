@@ -24,7 +24,7 @@ function CustomerTable(props) {
  
     const { useState } = React;
     const [columns, setColumns] = useState([
-        { title: 'ID',field: 'id', editable: 'onInsert'},
+        { title: 'ID',field: 'id', },
       { title: 'First Name', field: 'firstName' ,},
       { title: 'Last Name', field: 'lastName' },
       { title: 'Phone Number', field: 'phone', type: 'numeric' },
@@ -162,10 +162,6 @@ const table = data ? (
                               <Alert severity="error">{error}</Alert>
                             </Snackbar>)
   
-  
-  
-
-  
     return(
         <div style={{padding_left: "5px"}}>
              {table}
@@ -180,7 +176,6 @@ const table = data ? (
       updateCustomer: (payload) => dispatch(updateCustomer(payload)),
       insertCustomer: (payload) => dispatch(insertCustomer(payload)),
       deleteCustomer: (customerId) => dispatch(deleteCustomer(customerId))
-
 
     }
 }

@@ -47,13 +47,12 @@ const useStyles = makeStyles((theme) => ({
 
 
 function CustomerCard(props){
+
     const customers = useSelector(state => state.firestore.ordered.customer)  
     const data = customers ? (customers.map(customer => ({...customer}))) : (null)
     const {customerId} = props 
     const classes = useStyles();
-
     const filteredCustomer = data.filter(customer => customer.id == customerId);
-    console.log(filteredCustomer)
 
     const customerCard = filteredCustomer ? (
                 <div style={{ display: "flex",justifyContent: "center"}}>

@@ -66,7 +66,6 @@ import {insertpoolService} from '../../redux/actions/maintainanceActions/PoolSer
     ) : (<div>Loading</div>)
 
 
-  
 
   
     return(

@@ -224,7 +224,7 @@ onClose={handleClose}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField id="roomId" name="roomId" label="Room Id" fullWidth defaultValue={roomNo}
+          <TextField id="roomId" name="roomId" label="Room Id" fullWidth defaultValue={reservation.roomNo}
           InputProps={{
             readOnly: true,
           }}/>
@@ -236,7 +236,7 @@ onClose={handleClose}
             name="Day"
             label="Day"
             fullWidth
-            defaultValue={new Date(reservation.startDay)}
+            defaultValue={new Date(reservation.startDay.toDate())}
           InputProps={{
             readOnly: true,
           }}

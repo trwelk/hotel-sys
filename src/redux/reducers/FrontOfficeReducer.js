@@ -2,7 +2,9 @@ const initState = {
     selectedRoom:null,
     selectedMonth:9,
     selectedDay:2,
-    selectedCustomer:null
+    selectedCustomer:null,
+    reservationType:"WEBSITE",
+    numberOfPacks:0
 
 }
 
@@ -29,7 +31,17 @@ const FrontOfficeReducer = (state = initState, action) => {
                      return ({
                         ...state,
                         selectedCustomer:action.customer
-                    });                                 
+                    });   
+        case 'RESERVATION_TYPE_SELECTED':
+                    return ({
+                       ...state,
+                       reservationType:action.reservationType
+                       });       
+        case 'NUMBER_OF_PACKS_SELECTED':
+                    return ({
+                       ...state,
+                       numberOfPacks:action.numberOfPacks
+                       });                                                        
             default :
             return state;
     }

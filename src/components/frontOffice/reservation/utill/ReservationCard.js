@@ -63,7 +63,6 @@ export const ReservationCard = React.memo(function ProfileCard(props) {
     borderColor: 'rgba(0, 0, 0, 0.08)',
     height: '50%',
   });
-  //        <Avatar className={styles.avatar} src={'https://i.pravatar.cc/300'} />
 
   const handleDelete = () => {
     props.deleteReservation(props.reservation.id)

@@ -60,7 +60,7 @@ export default class WeddingMenuTemplate extends Component {
       </Grid>
       </Grid>
       <Grid item xs={5}>
-      <label id='Dessert'>Dishes</label> 
+      <label id='Dishes'>Dishes</label> 
       <Grid item>
       <TextField
         variant="outlined"
@@ -130,14 +130,3 @@ export default class WeddingMenuTemplate extends Component {
     )
   }
 }
-
-
-
-// import React, { useState } from 'react';
-
-// export default function WeddingTemplate() {
-  
-//     return (
-        
-//     );
-//   }

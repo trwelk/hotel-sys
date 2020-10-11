@@ -14,18 +14,6 @@ import { updateMenuItems, deleteMenuItems } from '../../../redux/actions/fnbProd
 function MenuItem(props) {
 
   const { useState } = React;
-  const [columns, setColumns] = useState([
-    { title: 'Welcome Drink', field: 'Wlitem1' }, 
-    { title: 'Main Dish 1', field: 'Mditem1' },
-    { title: 'Main Dish 2', field: 'Mditem2' },
-    { title: 'Main Dish 3', field: 'Mditem3' },
-    { title: 'Side Dish 1', field: 'Sditem1' },
-    { title: 'Side Dish 2', field: 'Sditem2' },
-    { title: 'Side Dish 3', field: 'Sditem3' },
-    { title: 'Dessert 1', field: 'Dsitem1' },
-    { title: 'Dessert 2', field: 'Dsitem2' },
-    { title: 'Dessert 3', field: 'Dsitem3' },
-  ]);
   const [state, setState] = React.useState({
     open: false,
     vertical: 'bottom',
@@ -35,7 +23,8 @@ function MenuItem(props) {
 
   const MenuNo = props.MenuNo
   const items = useSelector(state => state.firestore.ordered.MenuItems)
-  const data = items ? (items.map(item => ({ ...item }))) : (null)
+
+  let data = items ? (items.map(item => ({ ...item }))) : (null)
 
   const handleClick = (newState) => () => {
     setState({ open: true, ...newState });
@@ -45,18 +34,33 @@ function MenuItem(props) {
     setState({ ...state, open: false });
   };
 
+  let cols = props.MenuType == 1 ? (
+    [
+      { title: 'Welcome Drink', field: 'Wlitem1' }, 
+      { title: 'Main Dish 1', field: 'Mditem1' },
+      { title: 'Main Dish 2', field: 'Mditem2' },
+      { title: 'Main Dish 3', field: 'Mditem3' },
+      { title: 'Side Dish 1', field: 'Sditem1' },
+      { title: 'Side Dish 2', field: 'Sditem2' },
+      { title: 'Side Dish 3', field: 'Sditem3' },
+      { title: 'Dessert 1', field: 'Dsitem1' },
+      { title: 'Dessert 2', field: 'Dsitem2' },
+      { title: 'Dessert 3', field: 'Dsitem3' },
+    ]
+  ):([{ title: 'Name', field: 'name'},{ title: 'Price (LKR)', field: 'price', type: 'numeric'}])
+  
   const tableTitle = "Menu Items - " + MenuNo
 
   const table = data ? (
     <MaterialTable style={{ padding: "0px" }}    
       title={tableTitle}
-      columns={columns}
+      columns={cols}
       data={data}
       editable={{
          onRowUpdate: (newData, oldData) =>
           new Promise((resolve, reject) => {
               console.log(newData, oldData)
-              props.updateMenuItems(newData)
+              props.updateMenuItems(newData,props.MenuType)
               resolve();
               }, 1000),
 
@@ -86,7 +90,7 @@ function MenuItem(props) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      updateMenuItems: (payload) => dispatch(updateMenuItems(payload)),
+      updateMenuItems: (payload,MenuType) => dispatch(updateMenuItems(payload,MenuType)),
       deleteMenuItems: (MenuId) => dispatch(deleteMenuItems(MenuId))
     }
   }

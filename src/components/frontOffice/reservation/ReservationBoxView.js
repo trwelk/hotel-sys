@@ -28,7 +28,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import ReservationCard from './utill/ReservationCard'
 import EmptyReservationCard from './utill/EmptyReservationCard';
-import {handleMonthPickReservation,handleCustomerPick} from '../../../redux/actions/frontOfficeActions/FrontOfficeNavActions'
+import {handleMonthPickReservation,handleCustomerPick,handleReservationTypePick,handleNumberOfPacks} from '../../../redux/actions/frontOfficeActions/FrontOfficeNavActions'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,6 +68,8 @@ function  ReservatonBoxView (props)  {
   const [radio, setRadio] = React.useState(false);
   const [month, setMonth] = useState(8);
   const [roomType, setRoomType] = React.useState('EXKINGSUITE');
+  const [open, setOpen] = React.useState(false);
+
 
   const reservationsDb = useSelector(state => state.firestore.ordered.reservation )
   const roomsDb = useSelector(state => state.firestore.ordered.room )
@@ -94,7 +96,6 @@ function  ReservatonBoxView (props)  {
     setSpacing(Number(event.target.value));
   };
 
-  const [open, setOpen] = React.useState(false);
   const handleClose = () => {
     setOpen(false);
   };
@@ -102,7 +103,39 @@ function  ReservatonBoxView (props)  {
     setOpen(!open);
   };
 
+  const handleMonthPick = (e) => {
+    const mo = new Date(e.target.value);
+    const month = mo.getMonth();
+    props.handleMonthPickReservation(month + 1)
 
+    setMonth(month + 1);
+  };
+
+  const handleRadioChange = (event) => {
+    console.log(event.target.value)
+    if(radio == false)
+    setRadio(true);
+    else
+    setRadio(false);
+
+  };
+
+  const handleCustomerTypeSelector = (event) => {
+    props.handleCustomerPick(event.target.value);
+  }
+
+  const handleReservationTypeSelector = (event) => {
+      props.handleReservationTypePick(event.target.value);
+
+  }
+
+  const handleNumberOfPacks = (event) => {
+    props.handleNumberOfPacks(event.target.value);
+    console.log(event.target.value)
+
+}
+
+//--------------------------------Logic behind populating view---------------------------------------------------------------------
   var box = [ ];
   for(var i = 1; i < 32; ++i) {
     box[i] = [ ];
@@ -138,6 +171,8 @@ function  ReservatonBoxView (props)  {
 
 
   }
+
+  //----------------------------------------------------------Ui ELEMSNTS--------------------------------------------------------
   
   const rows = box.map((row,rIndex) => {
     const paper = row.map((element,eIndex) => {
@@ -165,19 +200,7 @@ function  ReservatonBoxView (props)  {
     )
 
   })
-
- 
-  const handleMonthPick = (e) => {
-    const mo = new Date(e.target.value);
-    const month = mo.getMonth();
-    props.handleMonthPickReservation(month + 1)
-
-    setMonth(month + 1);
-  };
-
-
-
-
+//-----------------------------------Selectors---------------------------------------------------------------------------
   const roomTypeSelector = roomTypeDb ? (roomTypeDb.map((roomType,index) => {
     return  <MenuItem key={index} value={roomType.id}>{roomType.name}</MenuItem>
   })) :(null)
@@ -189,22 +212,7 @@ function  ReservatonBoxView (props)  {
   const customerSelector = customers ? (customers.map((customer,index) => {
     return  <MenuItem key={index} value={customer.id}>{customer.firstName + ' ' + customer.lastName}</MenuItem>
   })) :(null)
-
-  const handleCustomerTypeSelector = (event) => {
-    props.handleCustomerPick(event.target.value);
-  }
-
-  const handleRadioChange = (event) => {
-    console.log(event.target.value)
-    if(radio == false)
-    setRadio(true);
-    else
-    setRadio(false);
-
-  };
-
-
-
+//---------------------------------------------------rendering element-------------------------------------------------------
   if(isLoaded(roomTypeDb)){
   return (
     <div style={{display: "flex",
@@ -213,61 +221,42 @@ function  ReservatonBoxView (props)  {
                 width: "calc(85% - 4px )"}}>   
     <Grid container className={classes.root} spacing={1}>
       <div style={{width:"100%",display:"flex",    alignItems: "center",background:"white",position:"fixed",zIndex:10}}>     
-      <TextField
-        style={{color:"white"}}
-        id="month"
-        type="month"
-        onChange={handleMonthPick}
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      /> 
+      <TextField style={{color:"white"}} id="month" type="month" onChange={handleMonthPick} className={classes.textField} InputLabelProps={{
+          shrink: true,}}/> 
       <FormControl className={classes.formControl} style={{    paddingLeft: "px"}}>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={roomType}
-          onChange={handleRoomTypeSelector}
-        >
+        <Select labelId="demo-simple-select-label" id="demo-simple-select" value={roomType} onChange={handleRoomTypeSelector}>
          {roomTypeSelector}
         </Select>
       </FormControl>
-      <FormControlLabel
-      
-        control={
-          <Checkbox
-            checked={radio}
-            onChange={handleRadioChange}
-            name="radio"
-            color="primary"
-            style={{paddingLeft:"20px"}}
-          />
-        }
-        label="Bulk Insert"
-      />
+      <FormControlLabel      
+        control={<Checkbox checked={radio} onChange={handleRadioChange} name="radio" color="primary" style={{paddingLeft:"20px"}}/>}
+        label="Bulk Insert" />
 
         <FormControl className={classes.formControl} style={{width:"300px"}}  >
-        <Select
-         disabled ={radio == false}
-         label="Customer"
-          id="Customer"
-          value={state.customerSelected}
-          onChange={handleCustomerTypeSelector}
-        >
+        <Select disabled ={radio == false} label="Customer" id="Customer"  value={state.customerSelected} onChange={handleCustomerTypeSelector}>
          {customerSelector}
         </Select>
       </FormControl>
-</div>
+      <FormControl className={classes.formControl} style={{width:"300px"}}  >
+        <Select disabled ={radio == false} label="Customer" id="Customer"  value={state.reservationType} onChange={handleReservationTypeSelector}>
+          <MenuItem  value="WEBSITE">WEBSITE</MenuItem>
+          <MenuItem  value="INSTAGRAM">INSTAGRAM</MenuItem>
+          <MenuItem  value="BOOKING.COM">BOOKING.COM</MenuItem>    
+        </Select>
+      </FormControl>
+      <FormControl className={classes.formControl} onChange={handleNumberOfPacks} style={{width:"300px",display:"flex",marginBottom: "23px"}}  >
+        <TextField id="numberOfPacks" label="Number of Packs" />
+      </FormControl>
+    </div>
       <Grid item xs={12} style={{ paddingTop: "51px"}}>
         {month ? rows : <div>      <LinearProgress />
-<CircularProgress style={{marginTop:"200px"}}/></div>}
+        <CircularProgress style={{marginTop:"200px"}}/></div>}
       </Grid>
     </Grid>
     <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
         <CircularProgress color="inherit" />
       </Backdrop>
-</div>
+  </div>
  
   
   );
@@ -283,6 +272,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     handleMonthPickReservation: (payload) => dispatch(handleMonthPickReservation(payload)),
     handleCustomerPick: (payload) => dispatch(handleCustomerPick(payload)),
+    handleReservationTypePick: (payload) => dispatch(handleReservationTypePick(payload)),
+    handleNumberOfPacks: (payload) => dispatch(handleNumberOfPacks(payload))
 
   }
 }
