@@ -16,6 +16,7 @@ import { insertSupplierInfo, updateSupplierInfo, deleteSupplierInfo} from '../..
       { title: 'Email', field: 'email' },
       { title: 'Phone', field: 'phone' },
       { title: 'Supplier Item Type', field: 'itemtype'},
+      {title: 'Unit Price', field: 'unitprice'},
       { title: 'Location', field: 'location'},
       { title: 'Department', field: 'department'},
       { title: 'Date', field: 'date'},

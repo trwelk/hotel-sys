@@ -24,6 +24,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab';
 import { insertSupplierInfo } from '../../../redux/actions/PnIActions/SupplierList';
 import { useSelector } from 'react-redux';
+import { Feedback } from '@material-ui/icons';
 
 
 
@@ -91,7 +92,6 @@ function PurchasesRequest(props) {
     new Promise((resolve, reject) => {
       const error = validateData___(request);
       if (error != null) {
-        alert(JSON.stringify(request))
         setState({ ...state, open: true, error: error });
         reject();
       } else {
@@ -120,6 +120,7 @@ function PurchasesRequest(props) {
 
   //  console.log(productTypeDB)
 
+
    const productTypeSelector = data ? (data.map((pType,index) => {
     return  <MenuItem key={index} value={pType.id}>{pType.pType}</MenuItem>
   })) :(null)
@@ -145,7 +146,9 @@ function PurchasesRequest(props) {
     else if(data.qty == 0 || data.qty < 0){
       return "Quantity shold be a postive value"
     }
-    else
+    else if(data.Checkbox.check == true){
+      return "Please Accept Terms and Conditions"
+    }
       return null
   }
 
@@ -162,7 +165,7 @@ function PurchasesRequest(props) {
   }
  
   const feedBackToast = (<Snackbar
-    autoHideDuration={200000}
+    autoHideDuration={20000}
     anchorOrigin={{ vertical, horizontal }}
     open={open}
     onClose={handleClose}
@@ -183,7 +186,7 @@ function PurchasesRequest(props) {
           <AddIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Place Your Purchases Request Here...
+          Place Your Purchases Order Here...
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
@@ -265,11 +268,12 @@ function PurchasesRequest(props) {
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                control={<Checkbox value="check" name="check" color="primary" />}
                 label="I accept the Terms and Conditions"
               />
             </Grid>
           </Grid>
+          {feedBackToast}
           <Button
             type="submit"
             id="submit"
@@ -283,9 +287,7 @@ function PurchasesRequest(props) {
               </Button>
         </form>
       </div>
-      {feedBackToast}
     </Container>
-
   );
 }
 
