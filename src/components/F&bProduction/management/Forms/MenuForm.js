@@ -43,7 +43,7 @@ function MenuForm(props) {
 
   const [menuType, setType] = React.useState(1);
   const [hide,hideField] = React.useState(false);
-  const [Menu, setMenu] = useState({id:'',menuName:'',menuType:1, price:''});
+  const [Menu, setMenu] = useState({id:'', menuName:'', menuType:1, price:''});
   const [WedItems,setItems] = useState({
     Wlitem1:'',
     Mditem1:'',Mditem2:'',Mditem3:'',

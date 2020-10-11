@@ -8,6 +8,7 @@ export const updateSupplierInfo = (payload) => {
             email:payload.email,
             phone:payload.phone,
             itemtype:payload.itemtype,
+            unitprice:payload.unitprice,
             location:payload.location,
             department:payload.department,
             date:payload.date
@@ -16,7 +17,7 @@ export const updateSupplierInfo = (payload) => {
 
 }
 
-export const insertSupplierInfo = (payload) => {
+export const insertSupplierInfo = (payload,location,department) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
@@ -26,9 +27,10 @@ export const insertSupplierInfo = (payload) => {
             lastName:payload.lastName,
             email:payload.email,
             itemtype:payload.itemtype,
+            unitprice:payload.unitprice,
             phone:payload.phone,
-            location:payload.location,
-            department:payload.department,
+            location:location,
+            department:department,
             date:payload.date
         }).then((response) => {
             console.log(response)

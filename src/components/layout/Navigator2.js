@@ -95,8 +95,9 @@ function Navigator2(props) {
     setMaintenance(!maintenance);
     props.setModule("Maintenance")
 };
-const handlePurchasesnInventory = () => {
-  setpurchasesnInventory(!purchasesnInventory);
+   const handlePurchasesnInventory = () => {
+    setpurchasesnInventory(!purchasesnInventory);
+    props.setModule("Purchases and Inventory")
 };
 
    const handleFnb = () => {

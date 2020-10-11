@@ -139,7 +139,10 @@ function PurchasesRequest(props) {
     else if(data.qty == 0 || data.qty < 0){
       return "Quantity shold be a postive value"
     }
-    else
+    else if(data.chkBox != true){
+      return "Please Agree Terms and Conditions"
+    }
+    else 
       return null
   }
 
@@ -259,7 +262,7 @@ function PurchasesRequest(props) {
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                control={<Checkbox value="allowExtraEmails" color="primary" id = "chkBox"/>}
                 label="I accept the Terms and Conditions"
               />
             </Grid>
