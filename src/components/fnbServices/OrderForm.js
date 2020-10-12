@@ -177,7 +177,16 @@ const { vertical, horizontal, open ,error} = states;
   const [activeStep, setActiveStep] = React.useState(0);
   return (
 <React.Fragment>
-    <AddCircleIcon variant="outlined" color="secondary" onClick={handleClickOpen}/>
+    {/* <AddCircleIcon variant="outlined" color="secondary" onClick={handleClickOpen}/> */}
+    <Button
+        variant="contained"
+        color="default"
+        className={classes.button}
+        onClick={handleClickOpen}
+        // startIcon={<AddIco />}
+      >
+        Add order
+      </Button>
 
 <Dialog
 style={{background: "transparent",overflowY: "hidden"}}

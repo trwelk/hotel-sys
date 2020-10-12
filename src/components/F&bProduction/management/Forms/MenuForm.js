@@ -13,8 +13,10 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { FormControl, Grid, InputLabel, MenuItem, Select } from '@material-ui/core';
 import WeddingTemplate from '../Templates/WeddingMenuTemplate';
+import GeneralMenuTemplate from '../Templates/GeneralMenuTemplate';
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab';
+import AddMenuItem from '../Templates/AddMenuItem';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -50,6 +52,11 @@ function MenuForm(props) {
     Sditem1:'',Sditem2:'',Sditem3:'',
     Dsitem1:'',Dsitem2:'',Dsitem3:''
   })
+  // const [GItems,setGItems] = useState({
+  //   GItem1:'',Price1:'',
+  //   GItem2:'',Price2:'',
+  //   GItem3:'',Price3:''
+  // })
 
   const handleChangeItem = (e) => {
     const { name, value } = e.target;
@@ -59,14 +66,29 @@ function MenuForm(props) {
   }));
   }
 
+  // const handleChangeGItem = (e) => {
+  //   const { name, value } = e.target;
+  //   setGItems(prevState => ({
+  //     ...prevState,
+  //     [name]: value
+  // }));
+  // }
+  const [finalData,setFinalData] = useState([])
+
 
   function SetMenuType(MenuType){
     if (MenuType == 1) {
       return <WeddingTemplate handleChangeItem={handleChangeItem} WedItems={WedItems} />
     } else {
-      return ("Menu Type:" + MenuType)
+      return <AddMenuItem setFinalData={setFinalData} /> 
     }
   }
+
+  // const[error,setError] = useState({
+  //   error : error,
+  //   hint : ''
+  // }
+  // );
 
   const handleChange = (e) => {
     if(e.target.name == 'menuType'){
@@ -77,6 +99,10 @@ function MenuForm(props) {
       else
       hideField(false);
     }
+    // if(e.target.name == 'id' && e.target.value.length < 5 ){
+    //   setError();
+    // }
+
     const { name, value } = e.target;
     setMenu(prevState => ({
       ...prevState,
@@ -128,7 +154,10 @@ function MenuForm(props) {
       }
       else{
       setTimeout(() => {
-          props.insertMenu(Menu,WedItems)
+        if(menuType == 1)
+          props.insertMenu(Menu,WedItems);
+          else
+          props.insertMenu(Menu,finalData);
           resolve();
       },1000)
     }
@@ -216,7 +245,7 @@ function MenuForm(props) {
             fullWidth
             name="price"
             label="Price (LKR)"
-            type="currency"
+            type='number'
             id="price"
             onChange={handleChange}
             disabled={hide}

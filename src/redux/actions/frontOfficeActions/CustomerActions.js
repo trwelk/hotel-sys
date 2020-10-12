@@ -1,3 +1,8 @@
+import MyEmail from './Email'
+import { renderEmail } from 'react-html-email'
+import React from 'react'
+import axios from 'axios';
+
 export const updateCustomer = (payload) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
@@ -34,4 +39,29 @@ export const deleteCustomer = (roomId) => {
             })
     }
 
+}
+
+export const sendMail = (payload) => {
+    return (dispatch,getState,{getFirestore,getFirebase}) => {
+    
+        const messageHtml =  renderEmail(<MyEmail name="Trewon"> This is my message</MyEmail>);
+        const firestore = getFirestore();
+   
+        axios({
+            method: "POST", 
+            url:"http://localhost:9000/send", 
+            data: {
+      	name: payload.name,
+      	email: payload.email,
+      	messageHtml: messageHtml
+            }
+        }).then((response)=>{
+            if (response.data.msg === 'success'){
+                alert("Email sent, awesome!"); 
+                this.resetForm()
+            }else if(response.data.msg === 'fail'){
+                alert("Oops, something went wrong. Try again")
+            }
+        })
+    }
 }

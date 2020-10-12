@@ -28,7 +28,8 @@ export const insertReservation = (payload) => {
             startDay:firebase.firestore.Timestamp.fromDate(  new Date(Date.parse((state.frontOffice.selectedMonth + 1)+ ' ' + (state.frontOffice.selectedDay ) +' 2020'))
             ),
             status:'Open',
-            roomNo:roomNo
+            roomNo:roomNo,
+            ReservationType:state.frontOffice.reservationType
         }).then((doc) => {
             console.log("Document written with ID: ", doc.id);
         }).catch((error) => {
@@ -68,7 +69,10 @@ export const insertReservationItem = (roomType,roomNo) => {
             startDay:firebase.firestore.Timestamp.fromDate(  new Date(Date.parse((state.frontOffice.selectedMonth + 1)+ ' ' + (state.frontOffice.selectedDay ) +' 2020'))
             ),
             status:'Open',
-            roomNo:roomNo
+            roomNo:roomNo,
+            reservationType:state.frontOffice.reservationType,
+            numberOfPacks:state.frontOffice.numberOfPacks
+
         }).then((doc) => {
             console.log("Document written with ID: ", doc.id);
         }).catch((error) => {

@@ -4,13 +4,15 @@ import { firebaseReducer } from 'react-redux-firebase';
 import AttendenceReducer from './AttendenceReducer';
 import FrontOfficeReducer from './FrontOfficeReducer';
 import FeedbackFormReducer from './FeedbackFormReducer';
+import AuthReducer from './AuthReducer';
 
 const RootReducer = combineReducers({
     firestore:firestoreReducer,
     firebase:firebaseReducer,
     attendence:AttendenceReducer,
     frontOffice:FrontOfficeReducer,
-    feedbackForm:FeedbackFormReducer
+    feedbackForm:FeedbackFormReducer,
+    auth:AuthReducer
 
 })
 
