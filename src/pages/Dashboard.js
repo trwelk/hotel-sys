@@ -65,7 +65,7 @@ import MenuForm from '../components/F&bProduction/management/Forms/MenuForm';
 import FrontOfficeOverview from '../components/frontOffice/FrontOfficeOverview';
 import SignIn from '../components/auth/Signin';
 import { useSelector, connect } from 'react-redux';
-import Signin from '../components/auth/Signin';
+
 
 // import RequireAuth from '../components/auth/RequireAuth';
 // import Voice from '../components/frontOffice/experiment/Voice';
