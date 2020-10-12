@@ -59,17 +59,19 @@ import purchasesnInventory from '../components/purchasesnInventory/supplierInfo/
 import currentSupplers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
 import purchasesRequest from '../components/purchasesnInventory/purchasesManagment/purchasesRequest';
 import purchasesRequestManagment from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment';
+
+
+import MenuForm from '../components/F&bProduction/management/Forms/MenuForm';
 import FrontOfficeOverview from '../components/frontOffice/FrontOfficeOverview';
 import SignIn from '../components/auth/Signin';
 import { useSelector, connect } from 'react-redux';
-import Signin from '../components/auth/Signin';
 
 
 // import RequireAuth from '../components/auth/RequireAuth';
 // import Voice from '../components/frontOffice/experiment/Voice';
 
 
-import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
+// import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
 /*import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
 import AssetRequest from '../components/frontOffice/reservation/'
 */
@@ -79,7 +81,7 @@ import OrderForm from '../components/fnbServices/OrderForm';
 import InventoryForm from '../components/fnbServices/InventoryForm';
 import tableChart from '../components/F&bProduction/Charts/Chart';
 // import EditOrderTable from '../components/fnbServices/EditOrderTable';
-
+// import OrderForm from '../components/fnbServices/OrderForm';
 
 
 function Copyright() {
@@ -290,7 +292,6 @@ else{
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/cust" component={CustomerTable}/>
             <Route exact path="/feed" component={FeedBackTable}/>
-
             <Route exact path="/PnI" component={purchasesnInventory}/>
             <Route exact path="/sup" component={currentSuppliers}/>
             <Route exact path="/pReq" component={purchasesRequest}/>
@@ -300,8 +301,9 @@ else{
             <Route exact path="/newMenu" component={MenuForm} />
             {/* <Route exact path='/newOrder' component={OrderForm}/> */}
 
-            {/* <Route exact path="/voice" component={Voice}/> */}
 
+     
+            {/* <Route exact path="/voice" component={Voice}/> */}
             <Route exact path="/chart" component={RoomsAvailableOfRoomTypeChart}/>
 
             {/*                  <Route exact path="/foodOrder" component={FnBserviceMng} />
@@ -333,7 +335,7 @@ else{
             <Route exact path='/frontoffice/reservation' component={ReservatonBoxView}/>
             <Route exact path='/frontoffice/roomtypes' component={RoomTypeTable}/>
             <Route exact path='/frontoffice/overview' component={FrontOfficeOverview}/>
-            //<Route exact path='/trewon' component={FrontOfficeDashboard}/>
+            {/* //<Route exact path='/trewon' component={FrontOfficeDashboard}/> */}
 
 
             <Route exact path='/finance/assetss' component={AssetMain}/>
