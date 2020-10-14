@@ -13,14 +13,9 @@ import {deleteRoomType} from '../../../redux/actions/frontOfficeActions/RoomType
     const { useState } = React;
     const [columns, setColumns] = useState([
       { title: 'ID', field: 'id' },
-      { title: 'Name', field: 'name' },
-      { title: 'Brief', field: 'brief'},
-      {
-        title: 'Description',
-        field: 'descriptions',
-      },
+      { title: 'Name', field: 'numberOfPacks' }
     ]); 
-    const room = useSelector(state => state.firestore.ordered.roomtype)
+    const room = useSelector(state => state.firestore.ordered.reservation)
     const data = room ? (room.map(room => ({...room}))) : (null)
     const table = data ? (
         <MaterialTable
@@ -86,5 +81,5 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
   export default compose(connect(null,mapDispatchToProps),firestoreConnect([
-    {collection: 'roomtype'}
+    {collection: 'reservation'}
   ])) (Editable)

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import {
-  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
+  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,ResponsiveContainer,
 } from 'recharts';
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
@@ -44,15 +44,15 @@ class RoomTypeOfReservationsChart extends PureComponent {
       const data = datac ? (datac.map((dat,index) => ({...dat,noOfReservations:exking[index]}))) : (null)
 
     return (
+      
       <AreaChart
-        width={500}
-        height={400}
+        width={400}
+        height={300}
         data={data}
         margin={{
-          top: 10, right: 30, left: 0, bottom: 0,
+          top: 20, right: 50, left: 0, bottom: 0,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
