@@ -55,21 +55,30 @@ import RoomsAvailableOfRoomTypeChart from '../components/frontOffice/overview/Ro
 import serviceProvider from '../components/maintainence/serviceProvider';
 import MovementActivity from '../components/maintainence/MovementActivity';
 import MaintenenceService from '../components/maintainence/MaintenenceService';
+import purchasesnInventory from '../components/purchasesnInventory/supplierInfo/addSuppliers';
+import currentSupplers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
+import purchasesRequest from '../components/purchasesnInventory/purchasesManagment/purchasesRequest';
+import purchasesRequestManagment from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment';
+
+
+import MenuForm from '../components/F&bProduction/management/Forms/MenuForm';
 import FrontOfficeOverview from '../components/frontOffice/FrontOfficeOverview';
 import SignIn from '../components/auth/Signin';
 import { useSelector, connect } from 'react-redux';
-import Signin from '../components/auth/Signin';
+
 
 // import RequireAuth from '../components/auth/RequireAuth';
 // import Voice from '../components/frontOffice/experiment/Voice';
 
 
-import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
+// import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
 /*import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
 import AssetRequest from '../components/frontOffice/reservation/'
 */
 import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
 import FnBServiceBarMng from '../components/fnbServices/FnBServiceBarMng';
+import OrderForm from '../components/fnbServices/OrderForm';
+import InventoryForm from '../components/fnbServices/InventoryForm';
 import tableChart from '../components/F&bProduction/Charts/Chart';
 // import EditOrderTable from '../components/fnbServices/EditOrderTable';
 // import OrderForm from '../components/fnbServices/OrderForm';
@@ -277,12 +286,23 @@ else{
                 <Route exact path="/" component={RoomHandling}/>
             <Route exact path='/res' component={ReservatonBoxView}/>
             <Route exact path='/ed' component={RoomTypeTable}/>
-            <Route exact path='/form' component={InsertReservationForm}/>
+            {/*<Route exact path='/form' component={InsertReservationForm}/>*/}
             {/* <Route exact path='/Food&Beverages' component={fnbProdMgmt}/> */}
             <Route exact path='/m' component={PermanentDrawerLeft}/>
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/cust" component={CustomerTable}/>
             <Route exact path="/feed" component={FeedBackTable}/>
+            <Route exact path="/PnI" component={purchasesnInventory}/>
+            <Route exact path="/sup" component={currentSuppliers}/>
+            <Route exact path="/pReq" component={purchasesRequest}/>
+            <Route exact path="/pOrd" component={purchasesOrder}/>
+            <Route exact path="/pReqMng" component={purchasesRequestManagement}/>
+            <Route exact path="/poolservice" component={PoolService}/>
+            <Route exact path="/newMenu" component={MenuForm} />
+            {/* <Route exact path='/newOrder' component={OrderForm}/> */}
+
+
+     
             {/* <Route exact path="/voice" component={Voice}/> */}
             <Route exact path="/chart" component={RoomsAvailableOfRoomTypeChart}/>
 
@@ -325,13 +345,13 @@ else{
             <Route exact path='/finance/pettycash' component={PettyCashMain}/>
             <Route exact path='/finance/salary' component={SalaryMain}/>
             {/*<Route exact path="/Purchases & Inventory" component={addSuppliers}/>
-            <Route exact path="/pReq" component={purchasesRequest}/>
+            <Route exact path="/pReq" component={purchasesRequest}/>*/}
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/hr/absence/abtype" component={AbsenceTypeList}/>
             <Route exact path="/hr/absence/ablist" component={AbsenceList}/>
             <Route exact path="/hr/attendence" component={AttendenceList}/>
 
-            <Route exact path="/pOrd" component={purchasesOrder}/>*/}
+            {/*<Route exact path="/pOrd" component={purchasesOrder}/>*/}
 
 
             <Route exact path="/maintenance/pool" component={PoolService}/>
