@@ -55,20 +55,31 @@ import RoomsAvailableOfRoomTypeChart from '../components/frontOffice/overview/Ro
 import serviceProvider from '../components/maintainence/serviceProvider';
 import MovementActivity from '../components/maintainence/MovementActivity';
 import MaintenenceService from '../components/maintainence/MaintenenceService';
+import purchasesnInventory from '../components/purchasesnInventory/supplierInfo/addSuppliers';
+import currentSupplers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
+import purchasesRequest from '../components/purchasesnInventory/purchasesManagment/purchasesRequest';
+import purchasesRequestManagment from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment';
+
+
+import MenuForm from '../components/F&bProduction/management/Forms/MenuForm';
 import FrontOfficeOverview from '../components/frontOffice/FrontOfficeOverview';
 import SignIn from '../components/auth/Signin';
 import { useSelector, connect } from 'react-redux';
-import Signin from '../components/auth/Signin';
+
+
 // import RequireAuth from '../components/auth/RequireAuth';
 // import Voice from '../components/frontOffice/experiment/Voice';
 
 
-import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
+// import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
 /*import addSuppliers from '../components/purchasesnInventory/supplierInfo/addSuppliers'
 import AssetRequest from '../components/frontOffice/reservation/'
 */
 import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
 import FnBServiceBarMng from '../components/fnbServices/FnBServiceBarMng';
+import OrderForm from '../components/fnbServices/OrderForm';
+import InventoryForm from '../components/fnbServices/InventoryForm';
+import tableChart from '../components/F&bProduction/Charts/Chart';
 // import EditOrderTable from '../components/fnbServices/EditOrderTable';
 // import OrderForm from '../components/fnbServices/OrderForm';
 
@@ -90,7 +101,7 @@ let theme = createMuiTheme({
   palette: {
     primary: {
       light: '#63ccff',
-      main: '#009be5',
+      main: '#232f3e',
       dark: '#006db3',
     },
   },
@@ -228,12 +239,11 @@ const styles = {
 function Dashboard(props) {
   const { classes } = props;
   const [mobileOpen, setMobileOpen] = React.useState(true);
-
-  const [module,setModule] = useState("Front Office");
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const [module,setModule] = useState("Front Office");
+
   const auth = useSelector(state => state.firebase.auth)  
 console.log(auth)
 if(!auth.isLoaded){
@@ -249,6 +259,7 @@ if (!auth.uid){
   )
 }
 else{
+
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
@@ -281,10 +292,18 @@ else{
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/cust" component={CustomerTable}/>
             <Route exact path="/feed" component={FeedBackTable}/>
+            <Route exact path="/PnI" component={purchasesnInventory}/>
+            <Route exact path="/sup" component={currentSuppliers}/>
+            <Route exact path="/pReq" component={purchasesRequest}/>
+            <Route exact path="/pOrd" component={purchasesOrder}/>
+            <Route exact path="/pReqMng" component={purchasesRequestManagement}/>
+            <Route exact path="/poolservice" component={PoolService}/>
+            <Route exact path="/newMenu" component={MenuForm} />
+            {/* <Route exact path='/newOrder' component={OrderForm}/> */}
 
-            {/* <Route exact path="/voice" component={Voice}/> */}
 
      
+            {/* <Route exact path="/voice" component={Voice}/> */}
             <Route exact path="/chart" component={RoomsAvailableOfRoomTypeChart}/>
 
             {/*                  <Route exact path="/foodOrder" component={FnBserviceMng} />
@@ -303,7 +322,7 @@ else{
 
             <Route exact path='/fnb/production/management' component={fnbProdMgmt}/>
             <Route exact path='/fnb/production/newMenu' component={MenuForm}/>
-            {/* <Route exact path='/fnb/production/reports' component={}/> */}
+            <Route exact path='/fnb/production/reports' component={tableChart} />
 
             <Route exact path='/fnb/services/barInvMng' component={FnBServiceBarMng}/>
             <Route exact path="/fnb/services/orderMng" component={FnBserviceMng} />
@@ -316,6 +335,7 @@ else{
             <Route exact path='/frontoffice/reservation' component={ReservatonBoxView}/>
             <Route exact path='/frontoffice/roomtypes' component={RoomTypeTable}/>
             <Route exact path='/frontoffice/overview' component={FrontOfficeOverview}/>
+            {/* //<Route exact path='/trewon' component={FrontOfficeDashboard}/> */}
 
 
             <Route exact path='/finance/assetss' component={AssetMain}/>

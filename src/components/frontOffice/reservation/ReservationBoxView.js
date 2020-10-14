@@ -28,7 +28,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import ReservationCard from './utill/ReservationCard'
 import EmptyReservationCard from './utill/EmptyReservationCard';
-import {handleMonthPickReservation,handleCustomerPick} from '../../../redux/actions/frontOfficeActions/FrontOfficeNavActions'
+import {handleMonthPickReservation,handleCustomerPick,handleReservationTypePick,handleNumberOfPacks} from '../../../redux/actions/frontOfficeActions/FrontOfficeNavActions'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -120,6 +120,20 @@ function  ReservatonBoxView (props)  {
 
   };
 
+  const handleCustomerTypeSelector = (event) => {
+    props.handleCustomerPick(event.target.value);
+  }
+
+  const handleReservationTypeSelector = (event) => {
+      props.handleReservationTypePick(event.target.value);
+
+  }
+
+  const handleNumberOfPacks = (event) => {
+    props.handleNumberOfPacks(event.target.value);
+    console.log(event.target.value)
+
+}
 
 //--------------------------------Logic behind populating view---------------------------------------------------------------------
   var box = [ ];
@@ -198,12 +212,6 @@ function  ReservatonBoxView (props)  {
   const customerSelector = customers ? (customers.map((customer,index) => {
     return  <MenuItem key={index} value={customer.id}>{customer.firstName + ' ' + customer.lastName}</MenuItem>
   })) :(null)
-
-  const handleCustomerTypeSelector = (event) => {
-    props.handleCustomerPick(event.target.value);
-  }
-
-
 //---------------------------------------------------rendering element-------------------------------------------------------
   if(isLoaded(roomTypeDb)){
   return (
@@ -228,6 +236,16 @@ function  ReservatonBoxView (props)  {
         <Select disabled ={radio == false} label="Customer" id="Customer"  value={state.customerSelected} onChange={handleCustomerTypeSelector}>
          {customerSelector}
         </Select>
+      </FormControl>
+      <FormControl className={classes.formControl} style={{width:"300px"}}  >
+        <Select disabled ={radio == false} label="Customer" id="Customer"  value={state.reservationType} onChange={handleReservationTypeSelector}>
+          <MenuItem  value="WEBSITE">WEBSITE</MenuItem>
+          <MenuItem  value="INSTAGRAM">INSTAGRAM</MenuItem>
+          <MenuItem  value="BOOKING.COM">BOOKING.COM</MenuItem>    
+        </Select>
+      </FormControl>
+      <FormControl className={classes.formControl} onChange={handleNumberOfPacks} style={{width:"300px",display:"flex",marginBottom: "23px"}}  >
+        <TextField id="numberOfPacks" label="Number of Packs" />
       </FormControl>
     </div>
       <Grid item xs={12} style={{ paddingTop: "51px"}}>
@@ -254,6 +272,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     handleMonthPickReservation: (payload) => dispatch(handleMonthPickReservation(payload)),
     handleCustomerPick: (payload) => dispatch(handleCustomerPick(payload)),
+    handleReservationTypePick: (payload) => dispatch(handleReservationTypePick(payload)),
+    handleNumberOfPacks: (payload) => dispatch(handleNumberOfPacks(payload))
 
   }
 }

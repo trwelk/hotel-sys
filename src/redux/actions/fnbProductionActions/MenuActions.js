@@ -16,16 +16,24 @@ export const updateMenu = (payload) => {
 
 }
 
-export const updateMenuItems = (payload) => {
+export const updateMenuItems = (payload,MenuType) => {
     console.log(payload)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
+        if(MenuType == 1){
         firestore.collection('Menu').doc(payload.id).collection('MenuItems').doc(payload.id).update({
             Wlitem1: payload.Wlitem1,
             Mditem1: payload.Mditem1, Mditem2: payload.Mditem2, Mditem3: payload.Mditem3,
             Sditem1: payload.Sditem1, Sditem2: payload.Sditem2, Sditem3: payload.Sditem3,
             Dsitem1: payload.Dsitem1, Dsitem2: payload.Dsitem2, Dsitem3: payload.Sditem3
         });
+    }
+        else{
+            firestore.collection('Menu').doc(payload.id).collection('MenuItems').doc(payload.id).update({
+                name:payload.name,
+                price:payload.price
+            }); 
+        }
     }
 
 }
@@ -55,6 +63,11 @@ export const insertMenu = (payload, ItemsPayload) => {
                 Sditem1: ItemsPayload.Sditem1, Sditem2: ItemsPayload.Sditem2, Sditem3: ItemsPayload.Sditem3,
                 Dsitem1: ItemsPayload.Dsitem1, Dsitem2: ItemsPayload.Dsitem2, Dsitem3: ItemsPayload.Sditem3
             })
+        }
+        else {
+            for (let index = 0; index < ItemsPayload.length; index++) {
+                firestore.collection('Menu').doc(payload.id).collection("MenuItems").doc("item".concat([index+1].toString())).set(ItemsPayload[index]);
+            }
         }
     }
 

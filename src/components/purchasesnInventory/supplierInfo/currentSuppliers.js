@@ -16,6 +16,7 @@ import { insertSupplierInfo, updateSupplierInfo, deleteSupplierInfo} from '../..
       { title: 'Email', field: 'email' },
       { title: 'Phone', field: 'phone' },
       { title: 'Supplier Item Type', field: 'itemtype'},
+      {title: 'Unit Price', field: 'unitprice'},
       { title: 'Location', field: 'location'},
       { title: 'Department', field: 'department'},
       { title: 'Date', field: 'date'},
@@ -31,7 +32,6 @@ import { insertSupplierInfo, updateSupplierInfo, deleteSupplierInfo} from '../..
           // onRowAdd: newData =>
           //   new Promise((resolve, reject) => {
           //     setTimeout(() => {
-          //       //setData([...data, newData]);
           //       props.insertSupplierInfo(newData)  
           //       resolve();
           //     }, 1000)
@@ -42,7 +42,6 @@ import { insertSupplierInfo, updateSupplierInfo, deleteSupplierInfo} from '../..
                 const dataUpdate = [...data];
                 const index = oldData.tableData.sId;
                 dataUpdate[index] = newData;
-                //setData([...dataUpdate]);
                 console.log(newData,oldData)
                 props.updateSupplierInfo(newData)
                 resolve();
@@ -54,7 +53,6 @@ import { insertSupplierInfo, updateSupplierInfo, deleteSupplierInfo} from '../..
                 const dataDelete = [...data];
                 const index = oldData.tableData.sId;
                 dataDelete.splice(index, 1);
-                //setData([...dataDelete]);
                 console.log(oldData)
                 props.deleteSupplierInfo(oldData.sId)
                 resolve()

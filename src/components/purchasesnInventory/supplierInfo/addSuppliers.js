@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,6 +23,7 @@ import { insertSupplierInfo } from "../../../redux/actions/PnIActions/SupplierLi
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab';
 import { SettingsRemoteSharp } from '@material-ui/icons';
+import { keys } from '@material-ui/core/styles/createBreakpoints';
 
 
 
@@ -30,7 +31,7 @@ import { SettingsRemoteSharp } from '@material-ui/icons';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {'Copyright ©'}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
       </Link>{' '}
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(2),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -67,50 +68,62 @@ function AddSuppliers(props) {
 
 
   const classes = useStyles();
-  //const { register, handleSubmit } = useForm();
-  const [supplier, setSupplier] = useState({ sId: '', firstName:'', lastName:'',email:'', itemtype:'', phone:'', location:1 ,department: "frontoffice", date:''});
-  const [location, setLocation] = React.useState(1);
+
+  const [supplier, setSupplier] = useState({sId: '', firstName: '', lastName: '', email: '', itemtype: '', unitprice: '', phone: '', location: '' , department: '', date:''});
+  const [location, setLocation] = React.useState("Kilinochchi");
   const [department, setDepartment] = React.useState("frontoffice");
 
   const handleLocation = (event) => {
-    setLocation(event.target.value)
-}
+    setLocation(event.target.value);
+  }
   const handleDepartment = (event) => {
-    setDepartment(event.target.value)
-}
+    setDepartment(event.target.value);
+  }
 
-  const handleSubmit = (e) =>{ 
+//   const handleLocation = (event) => {
+//     setState(prevState => ({
+//       ...prevState,
+//       location:event.target.value
+//   }));
+// }
+//   const handleDepartment = (event) => {
+//     setState(prevState => ({
+//       ...prevState,
+//       department:event.target.value
+//   }));
+// }
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     new Promise((resolve, reject) => {
       const error = validateData___(supplier);
       if (error != null) {
-        alert(JSON.stringify(supplier))
         setState({ ...state, open: true, error: error });
         reject();
       } else {
+        // alert(JSON.stringify(supplier))
         setTimeout(() => {
-          props.insertSupplierInfo(supplier);
+          props.insertSupplierInfo(supplier,location,department);
           resolve();
         }, 1000)
-      }
+      } 
     })
   }
-    const handleSupplier = (event) => {
-      const { name, value } = event.target;
+  const handleSupplier = (event) => {
+    const { name, value } = event.target;
     setSupplier(prevState => ({
       ...prevState,
       [name]: value
-  }));
-    }
+    }));
+  }
 
   //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
   const validateData___ = (data) => {
-    
-    if (data.sId.length != 5) {
-      return "Field ID should contain 5 characters"
-    }
-    else if (data.sId == null || data.sId == "") {
+    if (data.sId == null || data.sId == "") {
       return "ID field Cannot be null"
+    }
+    else if (data.sId.length != 5) {
+      return "Field ID should contain 5 characters"
     }
     else if (data.firstName == null || data.firstName == "") {
       return "First Name Cannot be null"
@@ -121,6 +134,9 @@ function AddSuppliers(props) {
     else if (data.email == null || data.email == "") {
       return "Email field cannot be null"
     }
+    else if(data.chkBox == false){
+      return "Please accept tearms and conditions"
+    }
     else
       return null
   }
@@ -128,7 +144,7 @@ function AddSuppliers(props) {
   const [state, setState] = React.useState({
     open: false,
     vertical: ' bottom',
-    horizontal: 'right'
+    horizontal: 'right',
   });
 
   const { vertical, horizontal, open, error } = state;
@@ -150,10 +166,10 @@ function AddSuppliers(props) {
       </Alert>
     </div>
   </Snackbar>)
-
+  
+  
   return (
     <Container component="main" maxWidth="xs">
-      {feedBackToast}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -172,6 +188,7 @@ function AddSuppliers(props) {
                 id="sId"
                 label="Supplier Id"
                 name="sId"
+                autoComplete="off"
                 onChange={handleSupplier}
               />
             </Grid>
@@ -206,7 +223,7 @@ function AddSuppliers(props) {
                 id="email"
                 label="Email Address"
                 name="email"
-                autoComplete="email"
+                autoComplete="off"
                 onChange={handleSupplier} />
             </Grid>
             <Grid item xs={12}>
@@ -214,6 +231,7 @@ function AddSuppliers(props) {
                 variant="outlined"
                 required
                 fullWidth
+                autoComplete="off"
                 id="itemtype"
                 label="Item Type"
                 name="itemtype"
@@ -222,9 +240,22 @@ function AddSuppliers(props) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="unitprice"
+                autoComplete="off"
+                label="Unit Price"
+                name="unitprice"
+                validators={['reqired']}
+                onChange={handleSupplier} />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
                 name="phone"
                 id="phone"
                 varient="outlined"
+                autoComplete="off"
                 required
                 fullWidth
                 label="Phone Number"
@@ -234,33 +265,36 @@ function AddSuppliers(props) {
               <FormControl varient="outlined" required fullWidth>
                 <InputLabel>Location</InputLabel>
                 <Select id="location"
+                  labelId="location"
                   value={location}
+                  name= "location"
                   onChange={handleLocation}>
-                  <MenuItem key={1} value={1}>Kilinochchi</MenuItem>
-                  <MenuItem key={2} value={2}>Jaffna</MenuItem>
-                  <MenuItem key={3} value={3}>Mannar</MenuItem>
-                  <MenuItem key={4} value={4}>Mullaitivu</MenuItem>
-                  <MenuItem key={5} value={5}>Vavuniya</MenuItem>
-                  <MenuItem key={6} value={6}>Puttalam</MenuItem>
-                  <MenuItem key={7} value={7}>Kurunegala</MenuItem>
-                  <MenuItem key={8} value={8}>Gampaha</MenuItem>
-                  <MenuItem key={9} value={9}>Colombo</MenuItem>
-                  <MenuItem key={10} value={10}>Kalutara</MenuItem>
-                  <MenuItem key={11} value={11}>Anuradhapura</MenuItem>
-                  <MenuItem key={12} value={12}>Polonnaruwa</MenuItem>
-                  <MenuItem key={13} value={13}>Matale</MenuItem>
-                  <MenuItem key={14} value={14}>Kandy</MenuItem>
-                  <MenuItem key={15} value={15}>Nuwara Eliya</MenuItem>
-                  <MenuItem key={16} value={16}>Kegalle</MenuItem>
-                  <MenuItem key={17} value={17}>Ratnapura</MenuItem>
-                  <MenuItem key={18} value={18}>Trincomalee</MenuItem>
-                  <MenuItem key={19} value={19}>Batticaloa</MenuItem>
-                  <MenuItem key={20} value={20}>Ampara</MenuItem>
-                  <MenuItem key={21} value={21}>Badulla</MenuItem>
-                  <MenuItem key={22} value={22}>Monaragala</MenuItem>
-                  <MenuItem key={23} value={23}>Hambantota</MenuItem>
-                  <MenuItem key={24} value={24}>Matara</MenuItem>
-                  <MenuItem key={25} value={25}>Galle</MenuItem>
+                  <MenuItem value = "" disabled></MenuItem>
+                  <MenuItem key={1} value={"Kilinochchi"}>Kilinochchi</MenuItem>
+                  <MenuItem key={2} value={"Jaffna"}>Jaffna</MenuItem>
+                  <MenuItem key={3} value={"Mannar"}>Mannar</MenuItem>
+                  <MenuItem key={4} value={"Mullaitivu"}>Mullaitivu</MenuItem>
+                  <MenuItem key={5} value={"Vavuniya"}>Vavuniya</MenuItem>
+                  <MenuItem key={6} value={"Puttalam"}>Puttalam</MenuItem>
+                  <MenuItem key={7} value={"Kurunegala"}>Kurunegala</MenuItem>
+                  <MenuItem key={8} value={"Gampaha"}>Gampaha</MenuItem>
+                  <MenuItem key={9} value={"Colombo"}>Colombo</MenuItem>
+                  <MenuItem key={10} value={"Kalutara"}>Kalutara</MenuItem>
+                  <MenuItem key={11} value={"Anuradhapura"}>Anuradhapura</MenuItem>
+                  <MenuItem key={12} value={"Polonnaruwa"}>Polonnaruwa</MenuItem>
+                  <MenuItem key={13} value={"Matale"}>Matale</MenuItem>
+                  <MenuItem key={14} value={"Kandy"}>Kandy</MenuItem>
+                  <MenuItem key={15} value={"NuwaraEliya"}>Nuwara Eliya</MenuItem>
+                  <MenuItem key={16} value={"Kegalle"}>Kegalle</MenuItem>
+                  <MenuItem key={17} value={"Ratnapura"}>Ratnapura</MenuItem>
+                  <MenuItem key={18} value={"Trincomalee"}>Trincomalee</MenuItem>
+                  <MenuItem key={19} value={"Batticaloa"}>Batticaloa</MenuItem>
+                  <MenuItem key={20} value={"Ampara"}>Ampara</MenuItem>
+                  <MenuItem key={21} value={"Badulla"}>Badulla</MenuItem>
+                  <MenuItem key={22} value={"Monaragala"}>Monaragala</MenuItem>
+                  <MenuItem key={23} value={'Hambantota'}>Hambantota</MenuItem>
+                  <MenuItem key={24} value={"Matara"}>Matara</MenuItem>
+                  <MenuItem key={25} value={"Galle"}>Galle</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -290,7 +324,7 @@ function AddSuppliers(props) {
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                control={<Checkbox value="allowExtraEmails" color="primary" id = "chkBox" />}
                 label="I accept the Terms and Conditions"
               />
             </Grid>
@@ -306,19 +340,21 @@ function AddSuppliers(props) {
           >
             Add Supplier
               </Button>
+              
         </form>
-
+        {feedBackToast}
       </div>
-      
+
     </Container>
   );
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    insertSupplierInfo: (payload) => dispatch(insertSupplierInfo(payload)),
+    insertSupplierInfo: (payload,location,department) => dispatch(insertSupplierInfo(payload,location,department)),
   }
 }
 export default compose(connect(null, mapDispatchToProps), firestoreConnect([
   { collection: 'supplier' }
 ]))(AddSuppliers)
+
