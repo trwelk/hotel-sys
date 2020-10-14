@@ -11,10 +11,10 @@ import { Alert } from '@material-ui/lab';
 
         const { useState } = React;
         const [columns, setColumns] = useState([
-          { title: 'ID', field: 'id' },
+          { title: 'ID', field: 'id', editable: 'onAdd' },
           { title: 'Item Name', field: 'itemName' },
-          { title: 'Unit Price (LKR)', field: 'unitPrice'},
-          { title: 'Quantity', field: 'qty'},
+          { title: 'Unit Price (LKR)', field: 'unitPrice', type: 'numeric'},
+          { title: 'Quantity', field: 'qty', type: 'numeric'},
           { title: 'Stock Value', field: 'total', editable:'never'},
           { title: 'Expiry Date', field: 'expDate', type:'date'},
           { title: 'Last Modified', field: 'lastModified' , type:'date', editable:'never', default:new Date() },

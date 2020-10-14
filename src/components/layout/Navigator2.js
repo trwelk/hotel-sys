@@ -15,6 +15,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 import { Link } from 'react-router-dom';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 import PeopleIcon from '@material-ui/icons/People';
 import { StarHalfRounded } from '@material-ui/icons';
@@ -76,9 +77,11 @@ function Navigator2(props) {
   const [frontOfficeChart, setFrontOfficeChart] = React.useState(false);
 
   const [maintenance, setMaintenance] = React.useState(false);
+  const [purchasesnInventory, setpurchasesnInventory] = React.useState(false);
   const [fnb,setFnb] = React.useState(false);
   const [production,setProduction] = React.useState(false);
   const [services,setServices] = React.useState(false);
+  const [humanResource, setHumanResource] = React.useState(false);
 
 
    const handleFinance = () => {
@@ -100,6 +103,10 @@ function Navigator2(props) {
     setMaintenance(!maintenance);
     props.setModule("Maintenance")
 };
+   const handlePurchasesnInventory = () => {
+    setpurchasesnInventory(!purchasesnInventory);
+    props.setModule("Purchases and Inventory")
+};
 
    const handleFnb = () => {
      setFnb(!fnb);
@@ -113,8 +120,85 @@ function Navigator2(props) {
    const handleServices = () => {
     setServices(!services);
    };
+   const handleHumanResource = () => {
+    setHumanResource(!humanResource);
+    props.setModule("Human Resources")
+  };
 
 //----------------------------------------UI ELEMENTS -----------------------------------------------------------------------
+const purchasesnInventoryNav  = (
+  <div>
+<ListItem button onClick={handlePurchasesnInventory} className={clsx(classes.item,classes.itemActiveItem)}>
+    <ListItemIcon className={classes.itemIcon}>
+      <ShoppingCartIcon />
+    </ListItemIcon>
+    <ListItemText primary="Purchases and Inventory" 
+    classes={{
+              primary: classes.categoryHeaderPrimary,
+            }}/>
+    {purchasesnInventory ? <ExpandLess /> : <ExpandMore />}
+  </ListItem>
+  <Collapse in={purchasesnInventory} timeout="auto" unmountOnExit>
+    <List component="div" disablePadding>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+    <Link to="/PnI" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Add Suppliers</ListItemText></Link>
+      </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+    <Link to="/sup" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Current Suppliers</ListItemText></Link>
+      </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+    <Link to="/pReq" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Purchases Request</ListItemText></Link>
+      </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+    <Link to="/pReqMng" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Purchases Request Managment</ListItemText></Link>
+      </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+    <Link to="/pOrd" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Purchases Order</ListItemText></Link>
+      </ListItem>
+    </List>
+  </Collapse>
+  </div>
+)
 const maintenanceNav = (
     <div>
   <ListItem button onClick={handleMaintnance} className={clsx(classes.item,classes.itemActiveItem)}>
@@ -382,6 +466,68 @@ const financeNav = (
     </Collapse>
     </div>
 )
+const humanResourceNav = (
+  <div>
+<ListItem button onClick={handleHumanResource} className={clsx(classes.item,classes.itemActiveItem)}>
+    <ListItemIcon className={classes.itemIcon}>
+      <PeopleIcon />
+    </ListItemIcon>
+    <ListItemText primary="Human Resource" 
+    classes={{
+              primary: classes.categoryHeaderPrimary,
+            }}/>
+    {humanResource ? <ExpandLess /> : <ExpandMore />}
+  </ListItem>
+  <Collapse in={humanResource} timeout="auto" unmountOnExit>
+    <List component="div" disablePadding>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <PeopleIcon />
+          </ListItemIcon>
+          <Link to="/hr/employee" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Employee Management</ListItemText></Link>
+      </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <PeopleIcon />
+        </ListItemIcon>
+          <Link to="/hr/attendence" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Attendence Management</ListItemText></Link>
+      </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <PeopleIcon />
+        </ListItemIcon>
+          <Link to="/hr/absence/abtype" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Absence Type</ListItemText></Link>
+      </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <PeopleIcon />
+        </ListItemIcon>
+          <Link to="/hr/absence/ablist" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Absence List</ListItemText></Link>
+      </ListItem>
+    </List>
+  </Collapse>
+  </div>
+)
 const fnbNav = (
   <div>
 <ListItem button onClick={handleFnb} className={clsx(classes.item, classes.itemActiveItem)}>
@@ -519,7 +665,9 @@ const fnbNav = (
       {frontOfficeNav}
       {financeNav}
       {maintenanceNav}
+      {purchasesnInventoryNav}
       {fnbNav}
+      {humanResourceNav}
     </Drawer>
   );
 }
