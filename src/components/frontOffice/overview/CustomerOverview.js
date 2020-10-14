@@ -81,7 +81,6 @@ let monthlyCustomers = [0,0,0,0,0,0,0,0,0,0,0,0];
         })
     }
 
-
     const chartForRatingsOnDepartments = canvas => {
         let ctx = canvas.getContext("2d");
     
