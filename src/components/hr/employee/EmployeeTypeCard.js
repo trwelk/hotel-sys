@@ -14,7 +14,7 @@ import { useGutterBorderedGridStyles } from '@mui-treasury/styles/grid/gutterBor
 const useStyles = makeStyles(({ palette }) => ({
   card: {
     borderRadius: 12,
-    minWidth: 50,
+    minWidth: 25,
     textAlign: 'center',
   },
   avatar: {

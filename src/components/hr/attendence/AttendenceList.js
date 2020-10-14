@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
+import moment from 'moment';
 import {insertAttendence, updateAttendence, deleteAttendence} from '../../../redux/actions/hrActions/AttendenceActions'
 
 const useStyles = makeStyles((theme) => ({
@@ -32,9 +33,9 @@ function AttendenceList(props) {
       
     ]);
     const attendences = useSelector(state => state.firestore.ordered.attendence)
-    const data = (null) //(attendences.map(attendence => ({...attendence,
-    //date:moment().format("MM-DD-YYYY").toString(),
-    //totalworkinghrs:parseFloat(attendence.departure) - parseFloat(attendence.arrival)}))) : 
+    const data =attendences ? (attendences.map(attendence => ({...attendence, 
+    date:moment().format("MM-DD-YYYY").toString(),
+    totalworkinghrs:parseFloat(attendence.departure) - parseFloat(attendence.arrival)}))) : (null)
     
     const [state, setState] = React.useState({
       open: false,
