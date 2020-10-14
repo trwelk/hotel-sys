@@ -69,9 +69,9 @@ function PurchasesRequest(props) {
 
   const classes = useStyles();
 
-  const [request, setRequest] = useState({pId: '',pType: "Water",qty: '',priority:"Normal" ,date: '',department: "front office" })
+  const [request, setRequest] = useState({pId: '',pType: '' ,qty: '',priority: '' ,date: '',department: '' })
   const [priority, setPriority] = React.useState("Normal");
-  const [department, setDepartment] = React.useState("front Office");
+  const [department, setDepartment] = React.useState("frontoffice");
   const [pType,setProductType] = React.useState();
   
 
@@ -91,7 +91,7 @@ function PurchasesRequest(props) {
     new Promise((resolve, reject) => {
       const error = validateData___(request);
       if (error != null) {
-        alert(JSON.stringify(request))
+        // alert(JSON.stringify(request))
         setState({ ...state, open: true, error: error });
         reject();
       } else {
@@ -132,14 +132,14 @@ function PurchasesRequest(props) {
       console.log(data.pId)
       return "ID field Cannot be null"
     }
-    else if (data.pType == null || data.pType == "") {
-      console.log(data.pType)
-      return "First Product Name Cannot be null"
-    }
+    // else if (data.pType == null || data.pType == "") {
+    //   console.log(data.pType)
+    //   return "First Product Name Cannot be null"
+    // }
     else if(data.qty == 0 || data.qty < 0){
       return "Quantity shold be a postive value"
     }
-    else if(data.chkBox != true){
+    else if(data.chkBox == false){
       return "Please Agree Terms and Conditions"
     }
     else 
@@ -192,6 +192,7 @@ function PurchasesRequest(props) {
                 id="pId"
                 label="Product Id"
                 name="pId"
+                autoComplete="off"
                 onChange={handleRequest}
               />
             </Grid>
@@ -202,6 +203,7 @@ function PurchasesRequest(props) {
                 id="pType"
                 name="pType"
                 lable="Product Name"
+                autoComplete="off"
                 value={pType}
                 onChange={handleProductType}
               >
@@ -279,8 +281,9 @@ function PurchasesRequest(props) {
             Request Now
               </Button>
         </form>
+        {feedBackToast}
       </div>
-      {feedBackToast}
+    
     </Container>
 
   );
