@@ -13,7 +13,7 @@ import Editable from '../components/frontOffice/rooms/Editable';
 import PoolService from '../components/maintainence/PoolService';
 import currentSuppliers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
 import purchasesRequestManagement from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment'
-import purchasesOrder from '../components/purchasesnInventory/purchasesManagment/purchasesOrder'
+import purchasesOrder from '../components/purchasesnInventory/purchasesManagment/purchasesOrder' 
 // import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import EmployeeList from '../components/hr/employee/EmployeeList';
