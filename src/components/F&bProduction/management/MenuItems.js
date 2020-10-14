@@ -47,7 +47,7 @@ function MenuItem(props) {
       { title: 'Dessert 2', field: 'Dsitem2' },
       { title: 'Dessert 3', field: 'Dsitem3' },
     ]
-  ):([{ title: 'Name', field: 'name'},{ title: 'Price (LKR)', field: 'price', type: 'numeric'}])
+  ):([{ title: 'Item Id', field: 'itemId', editable: 'never'},{ title: 'Name', field: 'name'},{ title: 'Price (LKR)', field: 'price', type: 'numeric'}])
   
   const tableTitle = "Menu Items - " + MenuNo
 
@@ -60,7 +60,7 @@ function MenuItem(props) {
          onRowUpdate: (newData, oldData) =>
           new Promise((resolve, reject) => {
               console.log(newData, oldData)
-              props.updateMenuItems(newData,props.MenuType)
+              props.updateMenuItems(newData,props.MenuType,MenuNo)
               resolve();
               }, 1000),
 
@@ -71,8 +71,8 @@ function MenuItem(props) {
               const index = oldData.tableData.id;
               dataDelete.splice(index, 1);
               //setData([...dataDelete]);
-              console.log(oldData)
-              props.deleteMenuItems(oldData.id)
+              console.log(oldData.id)
+              props.deleteMenuItems(oldData,props.MenuType,MenuNo)
               resolve()
             }, 1000)
           }),
@@ -90,8 +90,8 @@ function MenuItem(props) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      updateMenuItems: (payload,MenuType) => dispatch(updateMenuItems(payload,MenuType)),
-      deleteMenuItems: (MenuId) => dispatch(deleteMenuItems(MenuId))
+      updateMenuItems: (payload,MenuType,MenuNo) => dispatch(updateMenuItems(payload,MenuType,MenuNo)),
+      deleteMenuItems: (oldData,MenuType,MenuNo) => dispatch(deleteMenuItems(oldData,MenuType,MenuNo))
     }
   }
 

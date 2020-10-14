@@ -315,7 +315,7 @@ else{
             <Route exact path='/frontoffice/reservation' component={ReservatonBoxView}/>
             <Route exact path='/frontoffice/roomtypes' component={RoomTypeTable}/>
             <Route exact path='/frontoffice/overview' component={FrontOfficeOverview}/>
-            //<Route exact path='/trewon' component={FrontOfficeDashboard}/>
+            {/* //<Route exact path='/trewon' component={FrontOfficeDashboard}/> */}
 
 
             <Route exact path='/finance/assetss' component={AssetMain}/>

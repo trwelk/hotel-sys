@@ -17,7 +17,7 @@ import GeneralMenuTemplate from '../Templates/GeneralMenuTemplate';
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab';
 import AddMenuItem from '../Templates/AddMenuItem';
-
+import {db} from '../../../../config/fbConfig'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -111,25 +111,46 @@ function MenuForm(props) {
   };
 
   const validateData___  = (data) => {
+    let exists = false;
+    let msg;
+    db.collection('Menu').get().then((snapshot)=>{
+      snapshot.docs.forEach(doc => {
+      console.log(doc.data().id);
+      console.log(Menu.id);
+      if(data.id == doc.data().id){
+        console.log("Found one!")
+        exists = true;
+      }
+    });
     if(data.id == null || data.id == ""){
-      return "Field ID Cannot be null"
-
+      msg = "Field ID Cannot be null"
+      setState({ ...state, open: true,error:msg })
     }
     else if(data.id.length != 5 ){
-      return "Field ID sould contain 5 characters"
-
+      msg = "Field ID sould contain 5 characters"
+      setState({ ...state, open: true,error:msg })
     }
     else if(data.menuName == null || data.menuName == ""){
-      return "Field Menu Name Cannot be null"
+      msg = "Field Menu Name Cannot be null"
+      setState({ ...state, open: true,error:msg })
     }
     else if(data.menuType == 1 && (data.price == null || data.price == "")){
-      return "Field price Cannot be null for wedding Menus"
+      msg = "Field price Cannot be null for wedding Menus"
+      setState({ ...state, open: true,error:msg })
     }
     else if(data.menuType == null || data.menuType == ""){
-      return "Field Menu Type Cannot be null"
+      msg = "Field Menu Type Cannot be null"
+      setState({ ...state, open: true,error:msg })
+    }
+    else if(exists){
+      msg = "Menu Id already exists"
+      setState({ ...state, open: true,error:msg })
+
     }
     else
-    return null;
+    msg = null;
+    }
+    )
   }
 
   const [state, setState] = React.useState({
@@ -147,7 +168,7 @@ function MenuForm(props) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
   new Promise((resolve,reject)=>{
-      const error = validateData___(Menu);
+      validateData___(Menu);
       if (error != null){
         setState({ ...state, open: true,error:error });
         reject();
