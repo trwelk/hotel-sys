@@ -1,4 +1,4 @@
-export const updateSupplierInfo = (payload) => {
+export const updateSupplierInfo = (payload,location,department) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();

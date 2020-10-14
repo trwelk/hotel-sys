@@ -70,7 +70,7 @@ function AddSuppliers(props) {
   const classes = useStyles();
 
   const [supplier, setSupplier] = useState({sId: '', firstName: '', lastName: '', email: '', itemtype: '', unitprice: '', phone: '', location: '' , department: '', date:''});
-  const [location, setLocation] = React.useState(1);
+  const [location, setLocation] = React.useState("Kilinochchi");
   const [department, setDepartment] = React.useState("frontoffice");
 
   const handleLocation = (event) => {
@@ -101,7 +101,7 @@ function AddSuppliers(props) {
         setState({ ...state, open: true, error: error });
         reject();
       } else {
-        alert(JSON.stringify(supplier))
+        // alert(JSON.stringify(supplier))
         setTimeout(() => {
           props.insertSupplierInfo(supplier,location,department);
           resolve();
@@ -166,8 +166,7 @@ function AddSuppliers(props) {
       </Alert>
     </div>
   </Snackbar>)
-  console.log(location)
-  console.log(department)
+  
   
   return (
     <Container component="main" maxWidth="xs">
@@ -271,31 +270,31 @@ function AddSuppliers(props) {
                   name= "location"
                   onChange={handleLocation}>
                   <MenuItem value = "" disabled></MenuItem>
-                  <MenuItem key={1} value={1}>Kilinochchi</MenuItem>
-                  <MenuItem key={2} value={2}>Jaffna</MenuItem>
-                  <MenuItem key={3} value={3}>Mannar</MenuItem>
-                  <MenuItem key={4} value={4}>Mullaitivu</MenuItem>
-                  <MenuItem key={5} value={5}>Vavuniya</MenuItem>
-                  <MenuItem key={6} value={6}>Puttalam</MenuItem>
-                  <MenuItem key={7} value={7}>Kurunegala</MenuItem>
-                  <MenuItem key={8} value={8}>Gampaha</MenuItem>
-                  <MenuItem key={9} value={9}>Colombo</MenuItem>
-                  <MenuItem key={10} value={10}>Kalutara</MenuItem>
-                  <MenuItem key={11} value={11}>Anuradhapura</MenuItem>
-                  <MenuItem key={12} value={12}>Polonnaruwa</MenuItem>
-                  <MenuItem key={13} value={13}>Matale</MenuItem>
-                  <MenuItem key={14} value={14}>Kandy</MenuItem>
-                  <MenuItem key={15} value={15}>Nuwara Eliya</MenuItem>
-                  <MenuItem key={16} value={16}>Kegalle</MenuItem>
-                  <MenuItem key={17} value={17}>Ratnapura</MenuItem>
-                  <MenuItem key={18} value={18}>Trincomalee</MenuItem>
-                  <MenuItem key={19} value={19}>Batticaloa</MenuItem>
-                  <MenuItem key={20} value={20}>Ampara</MenuItem>
-                  <MenuItem key={21} value={21}>Badulla</MenuItem>
-                  <MenuItem key={22} value={22}>Monaragala</MenuItem>
-                  <MenuItem key={23} value={23}>Hambantota</MenuItem>
-                  <MenuItem key={24} value={24}>Matara</MenuItem>
-                  <MenuItem key={25} value={25}>Galle</MenuItem>
+                  <MenuItem key={1} value={"Kilinochchi"}>Kilinochchi</MenuItem>
+                  <MenuItem key={2} value={"Jaffna"}>Jaffna</MenuItem>
+                  <MenuItem key={3} value={"Mannar"}>Mannar</MenuItem>
+                  <MenuItem key={4} value={"Mullaitivu"}>Mullaitivu</MenuItem>
+                  <MenuItem key={5} value={"Vavuniya"}>Vavuniya</MenuItem>
+                  <MenuItem key={6} value={"Puttalam"}>Puttalam</MenuItem>
+                  <MenuItem key={7} value={"Kurunegala"}>Kurunegala</MenuItem>
+                  <MenuItem key={8} value={"Gampaha"}>Gampaha</MenuItem>
+                  <MenuItem key={9} value={"Colombo"}>Colombo</MenuItem>
+                  <MenuItem key={10} value={"Kalutara"}>Kalutara</MenuItem>
+                  <MenuItem key={11} value={"Anuradhapura"}>Anuradhapura</MenuItem>
+                  <MenuItem key={12} value={"Polonnaruwa"}>Polonnaruwa</MenuItem>
+                  <MenuItem key={13} value={"Matale"}>Matale</MenuItem>
+                  <MenuItem key={14} value={"Kandy"}>Kandy</MenuItem>
+                  <MenuItem key={15} value={"NuwaraEliya"}>Nuwara Eliya</MenuItem>
+                  <MenuItem key={16} value={"Kegalle"}>Kegalle</MenuItem>
+                  <MenuItem key={17} value={"Ratnapura"}>Ratnapura</MenuItem>
+                  <MenuItem key={18} value={"Trincomalee"}>Trincomalee</MenuItem>
+                  <MenuItem key={19} value={"Batticaloa"}>Batticaloa</MenuItem>
+                  <MenuItem key={20} value={"Ampara"}>Ampara</MenuItem>
+                  <MenuItem key={21} value={"Badulla"}>Badulla</MenuItem>
+                  <MenuItem key={22} value={"Monaragala"}>Monaragala</MenuItem>
+                  <MenuItem key={23} value={'Hambantota'}>Hambantota</MenuItem>
+                  <MenuItem key={24} value={"Matara"}>Matara</MenuItem>
+                  <MenuItem key={25} value={"Galle"}>Galle</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

@@ -286,7 +286,7 @@ else{
                 <Route exact path="/" component={RoomHandling}/>
             <Route exact path='/res' component={ReservatonBoxView}/>
             <Route exact path='/ed' component={RoomTypeTable}/>
-            <Route exact path='/form' component={InsertReservationForm}/>
+            {/*<Route exact path='/form' component={InsertReservationForm}/>*/}
             {/* <Route exact path='/Food&Beverages' component={fnbProdMgmt}/> */}
             <Route exact path='/m' component={PermanentDrawerLeft}/>
             <Route exact path="/hr/employee" component={EmployeeList}/>
@@ -345,13 +345,13 @@ else{
             <Route exact path='/finance/pettycash' component={PettyCashMain}/>
             <Route exact path='/finance/salary' component={SalaryMain}/>
             {/*<Route exact path="/Purchases & Inventory" component={addSuppliers}/>
-            <Route exact path="/pReq" component={purchasesRequest}/>
+            <Route exact path="/pReq" component={purchasesRequest}/>*/}
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/hr/absence/abtype" component={AbsenceTypeList}/>
             <Route exact path="/hr/absence/ablist" component={AbsenceList}/>
             <Route exact path="/hr/attendence" component={AttendenceList}/>
 
-            <Route exact path="/pOrd" component={purchasesOrder}/>*/}
+            {/*<Route exact path="/pOrd" component={purchasesOrder}/>*/}
 
 
             <Route exact path="/maintenance/pool" component={PoolService}/>
