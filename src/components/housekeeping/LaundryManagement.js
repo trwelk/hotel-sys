@@ -11,15 +11,15 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 
-import {updateCleaningSchedule} from '../../redux/actions/houseKeepingActions/CleaningScheduleActions'
-import {insertCleaningSchedule} from '../../redux/actions/houseKeepingActions/CleaningScheduleActions'
-import {deleteCleaningSchedule} from '../../redux/actions/houseKeepingActions/CleaningScheduleActions'
+import {updateLaundryManagement} from '../../redux/actions/houseKeepingActions/LaundryManagementActions'
+import {insertLaundryManagement} from '../../redux/actions/houseKeepingActions/LaundryManagementActions'
+import {deleteLaundryManagement} from '../../redux/actions/houseKeepingActions/LaundryManagementActions'
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-function CleaningSchedule
+function LaundryManagement
 (props) {
  
     const { useState } = React;
@@ -38,11 +38,10 @@ function CleaningSchedule
     const { vertical, horizontal, open ,error} = state;
 
 
-    const cleaningSchedules = useSelector(state => state.firestore.ordered.cleaningSchedule)    
-    const data = cleaningSchedules ? (cleaningSchedules.map(cleaningSchedule => ({...cleaningSchedule}))) : (null)
-    const datacopy = data ? data.map(d => ({...d,timee:new Date(d.time.seconds * 1000)})) : null
+    const LaundryManagements = useSelector(state => state.firestore.ordered.laundryManagement)    
+    const data = LaundryManagements ? (LaundryManagements.map(LaundryManagement => ({...LaundryManagement}))) : (null)
+    const datacopy = data ? data.map(d => ({...d,timee:d ? new Date(d.time.seconds * 1000):null})) : null
     console.log(data )
-    console.log(data ? new Date(data[0].time.seconds * 1000) : data)
     //--------------------------------------------INTERNAL METHODS--------------------------------------------------------------------------------
   const handleClick = (newState) => () => {
     setState({ open: true, ...newState });
@@ -65,7 +64,7 @@ const table = datacopy ? (
              
                   setTimeout(() => {
                     console.log(data)
-                    props.insertCleaningSchedule(newData);
+                    props.insertLaundryManagement(newData);
                     resolve();
                   }, 1000)
                 
@@ -88,7 +87,7 @@ const table = datacopy ? (
                 dataDelete.splice(index, 1);
                 //setData([...dataDelete]);
                 console.log(oldData)
-                props.deleteCleaningSchedule(oldData.id)
+                props.deleteLaundryManagement(oldData.id)
                 resolve()
               }, 1000)
             }),
@@ -128,13 +127,13 @@ const table = datacopy ? (
  
   const mapDispatchToProps = (dispatch) => {
     return {
-        updateCleaningSchedule: (payload) => dispatch(updateCleaningSchedule(payload)),
-      insertCleaningSchedule: (payload) => dispatch(insertCleaningSchedule(payload)),
-      deleteCleaningSchedule: (customerId) => dispatch(deleteCleaningSchedule(customerId))
+        updateLaundryManagement: (payload) => dispatch(updateLaundryManagement(payload)),
+      insertLaundryManagement: (payload) => dispatch(insertLaundryManagement(payload)),
+      deleteLaundryManagement: (customerId) => dispatch(deleteLaundryManagement(customerId))
 
     }
 }
   export default compose(connect(null,mapDispatchToProps),firestoreConnect([
-    {collection: 'cleaningSchedule'}
-  ])) (CleaningSchedule
+    {collection: 'laundryManagement'}
+  ])) (LaundryManagement
     )

@@ -85,6 +85,8 @@ import CustomerOverview from '../components/frontOffice/overview/CustomerOvervie
 import CustomerLocation from '../components/frontOffice/customer/CustomerLocation';
 import { CircularProgress } from 'material-ui';
 import tableChart from '../components/F&bProduction/Charts/Chart';
+import CleaningSchedule from '../components/housekeeping/CleaningSchedule';
+import LaundryManagement from '../components/housekeeping/LaundryManagement';
 // import EditOrderTable from '../components/fnbServices/EditOrderTable';
 // import OrderForm from '../components/fnbServices/OrderForm';
 
@@ -369,6 +371,8 @@ else{
 
             <Route exact path="/edit" component={Editable}/>
             <Route exact path="/map" component={CustomerLocation}/>
+            <Route exact path="/cleaning" component={CleaningSchedule}/>
+            <Route exact path="/laundry" component={LaundryManagement}/>
             </Switch>
           </main>
           <footer className={classes.footer}>
