@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import Dashboard from './pages/Dashboard';
+import { BrowserRouter } from 'react-router-dom';
+import { Switch } from '@material-ui/core';
 
 function App() {
   const room = useSelector(state => {
@@ -13,8 +15,8 @@ function App() {
 //    <Dashboard/>
 
   return (
-    <div className="App">
-    <Dashboard/>
+    <div className="App">    
+      <Dashboard/>
     </div>
   );
 }
