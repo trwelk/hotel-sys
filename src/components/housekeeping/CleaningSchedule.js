@@ -11,17 +11,18 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 
-import {updateCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
-import {insertCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
-import {deleteCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
-import NewReservationForm from '../reservation/forms/NewReservationForm';
+// import {updateCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
+// import {insertCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
+// import {deleteCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
+// import NewReservationForm from '../reservation/forms/NewReservationForm';
 import SendMailForm from './form/SendMailForm';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-function CustomerTable(props) {
+function CleaningSchedule
+(props) {
  
     const { useState } = React;
     const [columns, setColumns] = useState([
@@ -183,5 +184,6 @@ const table = data ? (
     }
 }
   export default compose(connect(null,mapDispatchToProps),firestoreConnect([
-    {collection: 'customer'}
-  ])) (CustomerTable)
+    {collection: 'cleaningSchedule'}
+  ])) (CleaningSchedule
+    )

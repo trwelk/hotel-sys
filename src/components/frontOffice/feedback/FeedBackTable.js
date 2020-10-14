@@ -68,6 +68,7 @@ function FeedBackTable(props) {
           { title: 'Customer', field: 'customer',editable: 'never' },
           { title: 'Rating', field: 'rating'},
           { title: 'Type', field: 'type'},
+          { title: 'Department', field: 'department'},
         ]}
         options={{
         headerStyle: {

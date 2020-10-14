@@ -43,3 +43,4 @@ function withResizeAware(WrappedComponent) {
 
 
 export default withResizeAware;
+

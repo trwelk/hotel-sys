@@ -11,7 +11,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import { firestoreConnect, isLoaded } from 'react-redux-firebase';
+import { firestoreConnect, isLoaded, withFirebase } from 'react-redux-firebase';
 import Dialog from '@material-ui/core/Dialog';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ['Reservation Details'];
                                                         
-function SendMailForm(props) {
+function SendMailForm(props,firebase) {
     const [open, setOpen] = React.useState(false);
     const [stat, setStat] = React.useState({
       openn: false,
@@ -85,26 +85,22 @@ function SendMailForm(props) {
     const handleSubmit = (evt) => {
         evt.preventDefault();
 
-          props.sendMail(state)
+            if(state.checked)
+                props.sendMail(state,subscribers)
+            else
+                props.sendMail(state,null)
+
           handleClose()
       }
 
-    const customersDb = useSelector(state => state.firestore.ordered.customer )
+    const customersDb = useSelector(state => state.firestore.ordered.customers )
+    const subscribersDb = useSelector(state => state.firestore.ordered.subscribers )
     const customers = customersDb ? (customersDb.map(customer => ({...customer}))) : (null)
-    const [state, setState] = useState({subject:"",message:"",customer:""});
+    const subscribers = subscribersDb ? (subscribersDb.map(customer => ({...customer}))) : (null)
+    const [state, setState] = useState({subject:"",message:"",customer:"",checked:false});
 
 
-    const customerSelector = customers ? (customers.map((customer,index) => {
-        return  <MenuItem key={index} value={customer.id}>{customer.firstName + ' ' + customer.lastName}</MenuItem>
-      })) :(null)
-
-      const handleCustomerTypeSelector = (event) => {
-        // console.log(event.target.value)
-         setState(prevState => ({
-           ...prevState,
-           customer: event.target.value
-       }));
-       }
+  
 
        const handleSubject = (event) => {
         setState(prevState => ({
@@ -122,6 +118,14 @@ function SendMailForm(props) {
         console.log(state)
        }
 
+       const handleChange = e => {
+        const { name, value } = e.target;
+        setState(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+        };
+
       const { vertical, horizontal, openn ,error} = stat
       const handleClickOpen = () => {
           setOpen(true);
@@ -129,6 +133,27 @@ function SendMailForm(props) {
       const handleClose = () => {
         setOpen(false);
       };
+
+      
+  const customerSelector = customers ? (customers.map((customer,index) => {
+    return  <MenuItem key={index} value={customer.id}>{customer.firstName + ' ' + customer.lastName}</MenuItem>
+  })) :(null)
+
+  const handleCustomerTypeSelector = (event) => {
+   // console.log(event.target.value)
+    setState(prevState => ({
+      ...prevState,
+      customer: event.target.value
+  }));
+  }
+
+  const handleCheck = (event) =>{
+    setState(prevState => ({
+        ...prevState,
+        checked:!prevState.checked
+    }));
+    console.log(state)
+}
 
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -138,8 +163,9 @@ function SendMailForm(props) {
 
   return (
 <React.Fragment>
-    <AddCircleIcon variant="outlined" color="secondary" onClick={handleClickOpen}/>
-
+    <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+        Send Mail
+    </Button>
 <Dialog
 style={{background: "transparent",overflowY: "hidden"}}
 open={open}
@@ -149,39 +175,50 @@ onClose={handleClose}
       <CssBaseline />
       <main className={classes.layout} style={{display:"flex",justifyContent: "center"}}>
         <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="center">
-            Reservation Details
-          </Typography>
-          <form className={classes.root} noValidate autoComplete="off">
-            <TextField id="subject" label="Subject" onChange={handleSubject}/>
-            <TextField id="message" label="Message" onChange={handleMessage}  />
-            <FormControl className={classes.formControl} style={{width:"500px"}}>
-        <Select
-         label="Customer"
-          id="customer"
-          value={state.customer}
-          onChange={handleCustomerTypeSelector}
-        >
-         {customerSelector}
-        </Select>
-      </FormControl>
-        </form>
-          <React.Fragment>
-            { (
-              <React.Fragment>
-              <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-              Reservation Details
-      </Typography>
+             <Grid container spacing={3}>
+                <Grid item xs={12} sm={6} style={{width:"300px"}}>
+                <FormControl className={classes.formControl} style={{width:"500px"}}>
+                <Select
+                data-testid="SendMailFormCustomerSelect"
+                label="Customer"
+                id="demo-simple-select"
+                value={state.customer}
+                onChange={handleCustomerTypeSelector}
+                >
+                {customerSelector}
+                </Select>
+                </FormControl>
+                </Grid>
 
-    </React.Fragment>                <div className={classes.buttons}>
-                  <Button variant="contained" color="primary"   onClick={handleSubmit}  className={classes.button}>
+                <Grid item xs={12}>
+                <TextField
+                    required
+                    id="subject"
+                    name="subject"
+                    label="Additional detials"
+                    fullWidth
+                    autoComplete="shipping address-line1"
+                    onChange={handleChange}
+                />
+                </Grid>
+                <Grid item xs={12} >
+                <TextField id="message" name="message" label="Message" fullWidth  onChange={handleChange}
+
+               />
+                </Grid>
+                
+                <Grid item xs={6}>
+                <FormControlLabel
+                    control={<Checkbox color="secondary" name="saveAddress" checked={state.checked} onChange={handleCheck} />}
+                    label="Send to all subscribed"
+                />
+                </Grid>
+                <Grid item xs={6}>
+                <Button variant="contained" color="primary" onClick={handleSubmit}  className={classes.button}>
                     Submit
                   </Button>
-                </div>
-              </React.Fragment>
-            )}
-          </React.Fragment>
+                </Grid>
+            </Grid>
         </Paper>
       </main>
     </React.Fragment>
@@ -193,10 +230,13 @@ onClose={handleClose}
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      sendMail: (payload) => dispatch(sendMail(payload)),
+      sendMail: (payload,subscribers) => dispatch(sendMail(payload,subscribers)),
   }
 }
 
-export default compose(connect(null,mapDispatchToProps),firestoreConnect([
-  {collection: 'customer'}
-]))(SendMailForm) 
+export default  withFirebase(compose(connect(null,mapDispatchToProps),firestoreConnect([
+    {collection: 'customer',
+    storeAs: 'customers'},
+    {collection: 'customer',
+    where: [['subscribed', '==', true]],
+    storeAs: 'subscribers'}]))(SendMailForm))
