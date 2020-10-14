@@ -73,6 +73,8 @@ function Navigator2(props) {
   const { classes, ...other } = props;
   const [frontOffice, setFrontOffice] = React.useState(false);
   const [finance, setFinance] = React.useState(false);
+  const [frontOfficeChart, setFrontOfficeChart] = React.useState(false);
+
   const [maintenance, setMaintenance] = React.useState(false);
   const [fnb,setFnb] = React.useState(false);
   const [production,setProduction] = React.useState(false);
@@ -84,6 +86,11 @@ function Navigator2(props) {
         props.setModule("Finance")
     };
 
+  const handleFrontOfficeChart = () => {
+    setFrontOfficeChart(!frontOfficeChart);
+      props.setModule("Front Office")
+     };
+  
   const handleFrontOffice = () => {
     setFrontOffice(!frontOffice);
     props.setModule("Front Office")
@@ -173,7 +180,7 @@ const maintenanceNav = (
 
 const frontOfficeNav = (
     <div>
-  <ListItem button onClick={handleFrontOffice} className={clsx(classes.item,classes.itemActiveItem)}>
+    <ListItem button onClick={handleFrontOffice} className={clsx(classes.item,classes.itemActiveItem)}>
       <ListItemIcon className={classes.itemIcon}>
         <PeopleIcon />
       </ListItemIcon>
@@ -185,17 +192,53 @@ const frontOfficeNav = (
     </ListItem>
     <Collapse in={frontOffice} timeout="auto" unmountOnExit>
       <List component="div" disablePadding>
-        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItem button onClick={handleFrontOfficeChart} className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
           <ListItemIcon className={classes.itemIcon}>
             <PeopleIcon />
           </ListItemIcon>
           <Link to="/frontoffice/overview" >
           <ListItemText  
               classes={{
+            primary: classes.categoryHeaderPrimary,
+          }}
+          >Analytics</ListItemText></Link>
+          {frontOfficeChart ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={frontOfficeChart} timeout="auto" unmountOnExit>
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+          <ListItemIcon className={classes.itemIcon}>
+            <PeopleIcon />
+          </ListItemIcon>
+          <Link to="/frontoffice/analytics/reservation" >
+          <ListItemText  
+              classes={{
             primary: classes.itemPrimary,
           }}
-          >Front Office Overview</ListItemText></Link>
+          >Reservation Analytics</ListItemText> </Link>
         </ListItem>
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+          <ListItemIcon className={classes.itemIcon}>
+            <PeopleIcon />
+          </ListItemIcon>
+          <Link to="/frontoffice/analytics/feedback" >
+          <ListItemText  
+              classes={{
+            primary: classes.itemPrimary,
+          }}
+          >Feedback Analytics</ListItemText> </Link>
+        </ListItem>
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+          <ListItemIcon className={classes.itemIcon}>
+            <PeopleIcon />
+          </ListItemIcon>
+          <Link to="/frontoffice/analytics/customer" >
+          <ListItemText  
+              classes={{
+            primary: classes.itemPrimary,
+          }}
+          >Customer Analytics</ListItemText> </Link>
+        </ListItem>
+        </Collapse>
         <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
           <ListItemIcon className={classes.itemIcon}>
             <PeopleIcon />
@@ -203,7 +246,7 @@ const frontOfficeNav = (
           <Link to="/frontoffice/rooms" >
           <ListItemText  
               classes={{
-            primary: classes.itemPrimary,
+            primary: classes.categoryHeaderPrimary,
           }}
           >Room Handling</ListItemText> </Link>
         </ListItem>
@@ -214,7 +257,7 @@ const frontOfficeNav = (
           <Link to="/frontoffice/customers" >
           <ListItemText  
               classes={{
-            primary: classes.itemPrimary,
+            primary: classes.categoryHeaderPrimary,
           }}
           >Customer Handling</ListItemText></Link>
         </ListItem>
@@ -225,7 +268,7 @@ const frontOfficeNav = (
           <Link to="/frontoffice/feedback" >
           <ListItemText  
               classes={{
-            primary: classes.itemPrimary,
+            primary: classes.categoryHeaderPrimary,
           }}
           >Feedback Handling</ListItemText></Link>
         </ListItem>
@@ -236,7 +279,7 @@ const frontOfficeNav = (
           <Link to="/frontoffice/reservation" >
           <ListItemText  
               classes={{
-            primary: classes.itemPrimary,
+            primary: classes.categoryHeaderPrimary,
           }}
           >Reservation Handling</ListItemText></Link>
         </ListItem>
@@ -247,7 +290,7 @@ const frontOfficeNav = (
           <Link to="/frontoffice/roomtypes" >
           <ListItemText  
               classes={{
-            primary: classes.itemPrimary,
+            primary: classes.categoryHeaderPrimary,
           }}
           >Room Types</ListItemText></Link>
         </ListItem>

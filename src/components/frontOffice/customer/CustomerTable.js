@@ -15,6 +15,7 @@ import {updateCustomer} from '../../../redux/actions/frontOfficeActions/Customer
 import {insertCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
 import {deleteCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
 import NewReservationForm from '../reservation/forms/NewReservationForm';
+import SendMailForm from './form/SendMailForm';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -88,10 +89,12 @@ function CustomerTable(props) {
     setState({ ...state, open: false });
   };
 
+  const button = <SendMailForm/>
+
 //--------------------------------------------------------UI-ELEMENTS-------------------------------------------------------------     
 const table = data ? (
         <MaterialTable style={{padding:"0px"}}
-        title="CustomerTable Preview"
+        title={button}
         columns={columns}
         data={data}
         editable={{

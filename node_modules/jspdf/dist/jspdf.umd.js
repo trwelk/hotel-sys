@@ -1,7 +1,7 @@
 /** @license
  *
  * jsPDF - PDF Document creation from JavaScript
- * Version 2.0.0 Built on 2020-08-11T07:57:54.900Z
+ * Version 2.1.1 Built on 2020-09-07T12:58:19.948Z
  *                      CommitID 00000000
  *
  * Copyright (c) 2010-2020 James Hall <james@parall.ax>, https://github.com/MrRio/jsPDF
@@ -3395,16 +3395,16 @@
 
       out("xref");
       out("0 " + (objectNumber + 1));
-      out("0000000000 65535 f");
+      out("0000000000 65535 f ");
       for (var i = 1; i <= objectNumber; i++) {
         var offset = offsets[i];
         if (typeof offset === "function") {
-          out((p + offsets[i]()).slice(-10) + " 00000 n");
+          out((p + offsets[i]()).slice(-10) + " 00000 n ");
         } else {
           if (typeof offsets[i] !== "undefined") {
-            out((p + offsets[i]).slice(-10) + " 00000 n");
+            out((p + offsets[i]).slice(-10) + " 00000 n ");
           } else {
-            out("0000000000 00000 n");
+            out("0000000000 00000 n ");
           }
         }
       }
@@ -3549,7 +3549,7 @@
               "<style>html, body { padding: 0; margin: 0; } iframe { width: 100%; height: 100%; border: 0;}  </style>" +
               '<body><iframe id="pdfViewer" src="' +
               pdfJsUrl +
-              '?file=" width="500px" height="400px" />' +
+              '?file=&downloadName=' + options.filename + '" width="500px" height="400px" />' +
               "</body></html>";
             var PDFjsNewWindow = globalObject.open();
 
@@ -3559,6 +3559,7 @@
               PDFjsNewWindow.document.documentElement.querySelector(
                 "#pdfViewer"
               ).onload = function() {
+                PDFjsNewWindow.document.title = options.filename;
                 PDFjsNewWindow.document.documentElement
                   .querySelector("#pdfViewer")
                   .contentWindow.PDFViewerApplication.open(
@@ -6390,7 +6391,7 @@
    * @type {string}
    * @memberof jsPDF#
    */
-  jsPDF.version = "2.0.0";
+  jsPDF.version = "2.1.1";
 
   /* global jsPDF */
 
@@ -11506,9 +11507,13 @@
       var tempWidth = 0;
 
       if (!Array.isArray(text) && typeof text !== "string") {
-        throw new Error(
-          "getTextDimensions expects text-parameter to be of type String or an Array of Strings."
-        );
+        if (typeof text === "number") {
+          text = String(text);
+        } else {
+          throw new Error(
+            "getTextDimensions expects text-parameter to be of type String or type Number or an Array of Strings."
+          );
+        }
       }
 
       const maxWidth = options.maxWidth;
@@ -18147,36 +18152,6 @@
     }
   })(jsPDF.API);
 
-  /* eslint-disable no-unreachable */
-
-  function loadOptionalLibrary(name, globalName) {
-    globalName = globalName || name;
-    if (globalObject[globalName]) {
-      return Promise.resolve(globalObject[globalName]);
-    }
-
-
-    if (typeof exports === "object" && typeof module !== "undefined") {
-      return new Promise(function(resolve, reject) {
-        try {
-          resolve(require(name));
-        } catch (e) {
-          reject(e);
-        }
-      });
-    }
-    if (typeof define === "function" && define.amd) {
-      return new Promise(function(resolve, reject) {
-        try {
-          require([name], resolve);
-        } catch (e) {
-          reject(e);
-        }
-      });
-    }
-    return Promise.reject(new Error("Could not load " + name));
-  }
-
   /**
    * @license
    * Copyright (c) 2018 Erik Koopmans
@@ -18195,15 +18170,73 @@
   (function(jsPDFAPI) {
 
     function loadHtml2Canvas() {
-      return loadOptionalLibrary("html2canvas").catch(function(e) {
-        return Promise.reject(new Error("Could not load html2canvas: " + e));
-      });
+      return (function() {
+        if (globalObject["html2canvas"]) {
+          return Promise.resolve(globalObject["html2canvas"]);
+        }
+
+
+        if (typeof exports === "object" && typeof module !== "undefined") {
+          return new Promise(function(resolve, reject) {
+            try {
+              resolve(require("html2canvas"));
+            } catch (e) {
+              reject(e);
+            }
+          });
+        }
+        if (typeof define === "function" && define.amd) {
+          return new Promise(function(resolve, reject) {
+            try {
+              require(["html2canvas"], resolve);
+            } catch (e) {
+              reject(e);
+            }
+          });
+        }
+        return Promise.reject(new Error("Could not load " + name));
+      })()
+        .catch(function(e) {
+          return Promise.reject(new Error("Could not load dompurify: " + e));
+        })
+        .then(function(html2canvas) {
+          return html2canvas.default ? html2canvas.default : html2canvas;
+        });
     }
 
     function loadDomPurify() {
-      return loadOptionalLibrary("dompurify", "DOMPurify").catch(function(e) {
-        return Promise.reject(new Error("Could not load dompurify: " + e));
-      });
+      return (function() {
+        if (globalObject["DOMPurify"]) {
+          return Promise.resolve(globalObject["DOMPurify"]);
+        }
+
+
+        if (typeof exports === "object" && typeof module !== "undefined") {
+          return new Promise(function(resolve, reject) {
+            try {
+              resolve(require("dompurify"));
+            } catch (e) {
+              reject(e);
+            }
+          });
+        }
+        if (typeof define === "function" && define.amd) {
+          return new Promise(function(resolve, reject) {
+            try {
+              require(["dompurify"], resolve);
+            } catch (e) {
+              reject(e);
+            }
+          });
+        }
+        return Promise.reject(new Error("Could not load " + name));
+      })()
+        .catch(function(e) {
+          return Promise.reject(new Error("Could not load dompurify: " + e));
+        })
+        .then(function(dompurify) {
+          return dompurify.default ? dompurify.default : dompurify;
+        });
     }
 
     /**
@@ -19075,7 +19108,14 @@
      * @function
      * @param {HTMLElement|string} source The source HTMLElement or a string containing HTML.
      * @param {Object} [options] Collection of settings
-     * @param {string} [options.callback] The mandatory callback-function gets as first parameter the current jsPDF instance
+     * @param {function} [options.callback] The mandatory callback-function gets as first parameter the current jsPDF instance
+     * @param {number|array} [options.margin] Array of margins [left, bottom, right, top]
+     * @param {string} [options.filename] name of the file 
+     * @param {HTMLOptionImage} [options.image] image settings when converting HTML to image 
+     * @param {Html2CanvasOptions} [options.html2canvas] html2canvas options
+     * @param {jsPDF} [options.jsPDF] jsPDF instance
+     * @param {number} [options.x] x position on the PDF document
+     * @param {number} [options.y] y position on the PDF document
      *
      * @example
      * var doc = new jsPDF();
@@ -19083,7 +19123,9 @@
      * doc.html(document.body, {
      *    callback: function (doc) {
      *      doc.save();
-     *    }
+     *    },
+     *    x: 10,
+     *    y: 10
      * });
      */
     jsPDFAPI.html = function(src, options) {
@@ -29800,7 +29842,7 @@
       if (Array.isArray(text)) {
         paragraphs = text;
       } else {
-        paragraphs = text.split(/\r?\n/);
+        paragraphs = String(text).split(/\r?\n/);
       }
 
       // now we convert size (max length of line) into "font size units"
@@ -30245,6 +30287,41 @@
    */
   (function(jsPDFAPI) {
 
+    function loadCanvg() {
+      return (function() {
+        if (globalObject["canvg"]) {
+          return Promise.resolve(globalObject["canvg"]);
+        }
+
+
+        if (typeof exports === "object" && typeof module !== "undefined") {
+          return new Promise(function(resolve, reject) {
+            try {
+              resolve(require("canvg"));
+            } catch (e) {
+              reject(e);
+            }
+          });
+        }
+        if (typeof define === "function" && define.amd) {
+          return new Promise(function(resolve, reject) {
+            try {
+              require(["canvg"], resolve);
+            } catch (e) {
+              reject(e);
+            }
+          });
+        }
+        return Promise.reject(new Error("Could not load " + name));
+      })()
+        .catch(function(e) {
+          return Promise.reject(new Error("Could not load dompurify: " + e));
+        })
+        .then(function(canvg) {
+          return canvg.default ? canvg.default : canvg;
+        });
+    }
+
     /**
      * Parses SVG XML and saves it as image into the PDF.
      *
@@ -30299,7 +30376,7 @@
         ignoreDimensions: true
       };
       var doc = this;
-      return loadOptionalLibrary("canvg")
+      return loadCanvg()
         .then(
           function(canvg) {
             return canvg.Canvg.fromString(ctx, svg, options);

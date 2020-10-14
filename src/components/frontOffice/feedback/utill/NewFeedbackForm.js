@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
                                                         
 function NewFeedbackForm(props) {
     const [open, setOpen] = React.useState(false);
-    const [state, setState] = useState({customer:"",platform:"",date:"",type:"",description:"",action:"",title:"",rating:0});
+    const [state, setState] = useState({customer:"",platform:"",date:"",type:"",description:"",action:"",title:"",rating:0,department:""});
     const [selectedDate, setSelectedDate] = React.useState(new Date('2020-09-17T21:11:54'));
 
     const customersDb = useSelector(state => state.firestore.ordered.customer )
@@ -129,7 +129,7 @@ const handleSubmit = (evt) => {
         evt.preventDefault();
         //validate
         var error = null
-        error = validateData___(state)
+        //error = validateData___(state)
         console.log(error)
         if(error != null){
             setStat({ ...stat, openn: true,error:error });
@@ -152,6 +152,13 @@ const handleSubmit = (evt) => {
       ...prevState,
       customer: event.target.value
   }));
+  }
+
+  const handleDepartmentSelector = (event) => {
+    setState(prevState =>({
+      ...prevState,
+        department:event.target.value
+    }))
   }
 
   const handleChange = e => {
@@ -248,7 +255,7 @@ const handleSubmit = (evt) => {
         </Select>
       </FormControl>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={4}>
           <TextField
             required
             id="title"
@@ -259,12 +266,23 @@ const handleSubmit = (evt) => {
 
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={4}>
           <TextField id="rating" name="rating" label="Rating"   onChange={handleChange}
 
           InputProps={{
             readOnly: false,
           }}/>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+        <FormControl className={classes.formControl} style={{width:"500px"}}>
+        <InputLabel id="customer">Department</InputLabel>
+        <Select label="Customer" id="demo-simple-select"  value={state.department} onChange={handleDepartmentSelector}>
+        <MenuItem  value={"HR"}>HR</MenuItem> 
+        <MenuItem  value={"F&B"}>F@B</MenuItem> 
+        <MenuItem  value={"FRONTOFFICE"}>Front Office</MenuItem> 
+        <MenuItem  value={"MAINTENANCE"}>Maintenance</MenuItem> 
+        </Select>
+        </FormControl>
         </Grid>
         <Grid item xs={12} sm={4}>
           <TextField
