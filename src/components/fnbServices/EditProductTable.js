@@ -15,6 +15,11 @@ import { deleteProductType } from '../../redux/actions/FnBServiceActions/FoodOrd
 
 function EditProductTable(props) {
 
+  
+
+  // .collection('product').get().then((snapshot) =>{
+  //   console.log(snapshot.docs);
+  // })
   const { useState } = React;
   const orderNo = props.orderNo
   // const products = useSelector(state => state.firestore.ordered.products)
@@ -55,6 +60,7 @@ function EditProductTable(props) {
   const OrderPro = useSelector(state => state.firestore.ordered.orderProducts)
   const datacopy = OrderPro ? (OrderPro.map(OrderPro => ({ ...OrderPro }))) : (null)
   const data = datacopy ? (datacopy.filter(data => data.orderNo == orderNo)) : datacopy
+  
   // alert(JSON.stringify(data));
   // const products = useSelector(state => state.firestore.ordered.product)
   // const producteSelector = products ? (products.map(products => ({ ...products }))) : (null)
@@ -67,6 +73,7 @@ function EditProductTable(props) {
 // })) :(null)
   // ------------------new ----------------
 
+ 
   const validateData___  = (data) => {
     if(data.id == null || data.id == ""){
       return "Field ID Cannot be null"
@@ -222,6 +229,7 @@ function EditProductTable(props) {
     <div style={{ padding_left: "5px" }}>
       {table}
       {feedBackToast}
+      
     </div>
 
   )
