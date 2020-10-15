@@ -1,14 +1,26 @@
 import { BorderColor } from '@material-ui/icons';
 import React from 'react';
 import {Bar} from 'react-chartjs-2'
+import { firestoreConnect, isLoaded } from 'react-redux-firebase';
+import { useSelector, connect } from 'react-redux';
 // import { Bar } from 'recharts';
 
 function BarChart () {
+//     const [state, setState] = React.useState({
+//         open: false,
+//         vertical: 'bottom',
+//         horizontal: 'right',
+//       });
+//       const { vertical, horizontal, open, error } = state;
+//     const feedbacks = useSelector(state => state.firestore.ordered.product)
+//   const datas = feedbacks ? (feedbacks.map(feedback => ({ ...feedback }))) : (null)
     const data = {
+        // labels: [...datas.ProName,],
         labels: ['rice','hooper','kott','name'],
         datasets:[
             {
                 label: 'stock quantity',
+                // data:[...datas.price],
                 data:[3,5,6,7],
                 borderColor:['rgba(255,206,86,0.2)','rgba(255,206,86,0.2)','rgba(255,206,86,0.2)','rgba(255,206,86,0.2)'],
                 backgroundColor:['rgba(255,206,86,0.2)','rgba(255,206,86,0.2)','rgba(255,206,86,0.2)','rgba(255,206,86,0.2)'],

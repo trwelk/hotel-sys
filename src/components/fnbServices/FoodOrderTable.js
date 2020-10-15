@@ -252,8 +252,18 @@ function FeedBackTable(props) {
   const feedbacks = useSelector(state => state.firestore.ordered.foodOrder)
 
   const data = feedbacks ? (feedbacks.map(feedback => ({ ...feedback }))) : (null)
+  // const err = getID(data);
+  // const getID = (data) =>{
+  //   const ID='00000';
+  //     while(data.orderNo){
+  //      const ID=data.orderNo;  
+        
+  //     }
+  //     alert(JSON.stringify( ID+1));
+  //     return ID+1;
+  // }
   // const data = datacopy ? (datacopy.filter(data => data.status != 1)) : datacopy
-
+  //  alert(JSON.stringify(data));
 
 
   const handleChangeOfDescription = (event) => {
@@ -382,7 +392,6 @@ function FeedBackTable(props) {
             render: rowData => {
               return (
                 <div>
-                  
                   <EditProductTable orderNo={rowData.orderNo} />
                 </div>
               )
