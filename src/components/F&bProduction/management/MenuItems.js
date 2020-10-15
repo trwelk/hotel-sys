@@ -8,7 +8,8 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
-import { updateMenuItems, deleteMenuItems } from '../../../redux/actions/fnbProductionActions/MenuActions';
+import { updateMenuItems, deleteMenuItems, insertGenItems } from '../../../redux/actions/fnbProductionActions/MenuActions';
+import { Menu } from 'material-ui';
 
 
 function MenuItem(props) {
@@ -47,7 +48,7 @@ function MenuItem(props) {
       { title: 'Dessert 2', field: 'Dsitem2' },
       { title: 'Dessert 3', field: 'Dsitem3' },
     ]
-  ):([{ title: 'Item Id', field: 'itemId', editable: 'never'},{ title: 'Name', field: 'name'},{ title: 'Price (LKR)', field: 'price', type: 'numeric'}])
+  ):([{ title: 'Item Id', field: 'itemId', editable: 'onAdd'},{ title: 'Name', field: 'name'},{ title: 'Price (LKR)', field: 'price', type: 'numeric'}])
   
   const tableTitle = "Menu Items - " + MenuNo
 
@@ -57,6 +58,15 @@ function MenuItem(props) {
       columns={cols}
       data={data}
       editable={{
+        onRowAdd:props.MenuType != 1 ? (newData =>
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            // setData([...data, newData]);
+            props.insertGenItems(newData,MenuNo);
+            resolve();
+          }, 1000)
+        })):(null)
+        ,
          onRowUpdate: (newData, oldData) =>
           new Promise((resolve, reject) => {
               console.log(newData, oldData)
@@ -90,6 +100,7 @@ function MenuItem(props) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+      insertGenItems: (payload,MenuNo) => dispatch(insertGenItems(payload,MenuNo)),
       updateMenuItems: (payload,MenuType,MenuNo) => dispatch(updateMenuItems(payload,MenuType,MenuNo)),
       deleteMenuItems: (oldData,MenuType,MenuNo) => dispatch(deleteMenuItems(oldData,MenuType,MenuNo))
     }

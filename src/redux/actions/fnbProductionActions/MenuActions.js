@@ -1,6 +1,17 @@
 import { Alert } from "@material-ui/lab";
 import React  from 'react';
 
+export const insertGenItems = (payload, MenuNo) => {
+    return (dispatch, getState, { getFirestore, getFirebase }) => {
+        const firestore = getFirestore();
+        firestore.collection('Menu').doc(MenuNo).collection('MenuItems').doc(payload.itemId).set({
+            itemId: payload.itemId,
+            name: payload.name,
+            price: payload.price
+        });
+    }
+}
+
 export const updateMenu = (payload) => {
     console.log(payload)
     return (dispatch, getState, { getFirestore, getFirebase }) => {

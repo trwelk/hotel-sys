@@ -110,9 +110,16 @@ function MenuForm(props) {
   }));
   };
 
-  const validateData___  = (data) => {
-    let exists = false;
-    let msg;
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'bottom',
+    horizontal: 'right',
+  });
+
+  const { vertical, horizontal, open ,error} = state;
+
+  const CheckExist___  = (data) => {
+    let exists = false; 
     db.collection('Menu').get().then((snapshot)=>{
       snapshot.docs.forEach(doc => {
       console.log(doc.data().id);
@@ -122,44 +129,37 @@ function MenuForm(props) {
         exists = true;
       }
     });
-    if(data.id == null || data.id == ""){
-      msg = "Field ID Cannot be null"
-      setState({ ...state, open: true,error:msg })
-    }
-    else if(data.id.length != 5 ){
-      msg = "Field ID sould contain 5 characters"
-      setState({ ...state, open: true,error:msg })
-    }
-    else if(data.menuName == null || data.menuName == ""){
-      msg = "Field Menu Name Cannot be null"
-      setState({ ...state, open: true,error:msg })
-    }
-    else if(data.menuType == 1 && (data.price == null || data.price == "")){
-      msg = "Field price Cannot be null for wedding Menus"
-      setState({ ...state, open: true,error:msg })
-    }
-    else if(data.menuType == null || data.menuType == ""){
-      msg = "Field Menu Type Cannot be null"
-      setState({ ...state, open: true,error:msg })
-    }
-    else if(exists){
-      msg = "Menu Id already exists"
-      setState({ ...state, open: true,error:msg })
-
-    }
-    else
-    msg = null;
-    }
-    )
+  })
+  return exists;
   }
 
-  const [state, setState] = React.useState({
-    open: false,
-    vertical: 'bottom',
-    horizontal: 'right',
-  });
+  const validateData___  = (data) => {
+    let exist = CheckExist___(data);
+    console.log(exist)
+    if(data.id == null || data.id == ""){
+      return "Field ID Cannot be null"
 
-  const { vertical, horizontal, open ,error} = state;
+    }
+    else if(data.id.length != 5 ){
+      return "Field ID sould contain 5 characters"
+
+    }
+    else if(data.menuName == null || data.menuName == ""){
+      return "Field Menu Name Cannot be null"
+    }
+    else if(data.menuType == 1 && (data.price == null || data.price == "")){
+      return "Field price Cannot be null for wedding Menus"
+    }
+    else if(data.menuType == null || data.menuType == ""){
+      return "Field Menu Type Cannot be null"
+    }       
+    else if(exist){
+      return "Menu Id already exists"
+    }
+    else{
+    return null;
+    }
+  }
 
   const handleClose = () => {
     setState({ ...state, open: false });
@@ -168,7 +168,8 @@ function MenuForm(props) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
   new Promise((resolve,reject)=>{
-      validateData___(Menu);
+      const error = validateData___(Menu);
+      console.log(error);
       if (error != null){
         setState({ ...state, open: true,error:error });
         reject();
