@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { PieChart, Pie, Sector } from 'recharts';
+import { PieChart, Pie, Sector,ResponsiveContainer } from 'recharts';
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
@@ -93,7 +93,7 @@ const renderActiveShape = (props) => {
 
 
     return (
-      <PieChart width={500} height={400}>
+      <PieChart width={500} height={300} fill="#8884d8">
         <Pie
           activeIndex={this.state.activeIndex}
           activeShape={renderActiveShape}

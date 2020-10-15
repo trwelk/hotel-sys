@@ -11,25 +11,23 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 
-import {updateCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
-import {insertCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
-import {deleteCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
-import NewReservationForm from '../reservation/forms/NewReservationForm';
-import SendMailForm from './form/SendMailForm';
+import {updateCleaningSchedule} from '../../redux/actions/houseKeepingActions/CleaningScheduleActions'
+import {insertCleaningSchedule} from '../../redux/actions/houseKeepingActions/CleaningScheduleActions'
+import {deleteCleaningSchedule} from '../../redux/actions/houseKeepingActions/CleaningScheduleActions'
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-function CustomerTable(props) {
+function CleaningSchedule
+(props) {
  
     const { useState } = React;
     const [columns, setColumns] = useState([
-        { title: 'ID',field: 'id', },
-      { title: 'First Name', field: 'firstName' ,},
-      { title: 'Last Name', field: 'lastName' },
-      { title: 'Phone Number', field: 'phone', type: 'numeric' },
-      { title: 'Email', field: 'email'},
+        { title: 'Employee',field: 'empId', },
+      { title: 'Description', field: 'description' },
+      { title: 'time', field: 'timee' , type: 'datetime'},
+      { title: 'Status', field: 'status'},
     ]); 
 
     const [state, setState] = React.useState({
@@ -40,47 +38,12 @@ function CustomerTable(props) {
     const { vertical, horizontal, open ,error} = state;
 
 
-    const customers = useSelector(state => state.firestore.ordered.customer)    
-    const data = customers ? (customers.map(customer => ({...customer}))) : (null)
-    const datacopy = data
+    const cleaningSchedules = useSelector(state => state.firestore.ordered.cleaningSchedule)    
+    const data = cleaningSchedules ? (cleaningSchedules.map(cleaningSchedule => ({...cleaningSchedule}))) : (null)
+    const datacopy = data ? data.map(d => ({...d,timee:new Date(d.time.seconds * 1000)})) : null
+    console.log(data )
+    console.log(data ? new Date(data[0].time.seconds * 1000) : data)
     //--------------------------------------------INTERNAL METHODS--------------------------------------------------------------------------------
-    const validateData___  = (data,type) => {
-      if(data.id == null || data.id == ""){
-        return "Field ID Cannot be null"
-
-      }
-      else if(data.firstName == null || data.firstName == ""){
-        return "Field First Name Cannot be null"
-      }
-      else if(data.lastName == null || data.lastName == ""){
-        return "Field Last Name Cannot be null"
-      }
-      else if(data.phone == null || data.phone == ""){
-        return "Field Phone Cannot be null"
-      }
-      else if(data.phone.toString().length != 10 ){
-        return "Please enter a valid phone number,Should contain 10 digits"
-      }
-      else if(data.email == null || data.email == ""){
-        return "Field Email Cannot be null"
-      }
-      else if( !(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(data.email)) && type == 'INSERT'){
-        return "Field Email is invalid"
-      }
-      else if(datacopy.filter(dat => dat.id == data.id).length > 0 && type == 'INSERT'){
-        console.log("some",datacopy.filter(dat => dat.id == data.id) )
-        return "The User Id is already existing"
-      }
-      else if(datacopy.filter(dat => dat.email == data.email).length > 0 && type == 'INSERT'){
-        console.log("some")
-        return "The Email is already existing"
-      }
-      else
-      return null;
-    }
-
-
-
   const handleClick = (newState) => () => {
     setState({ open: true, ...newState });
   };
@@ -89,44 +52,33 @@ function CustomerTable(props) {
     setState({ ...state, open: false });
   };
 
-  const button = <SendMailForm/>
 
 //--------------------------------------------------------UI-ELEMENTS-------------------------------------------------------------     
-const table = data ? (
+const table = datacopy ? (
         <MaterialTable style={{padding:"0px"}}
-        title={button}
+        title="cleaning Schedule"
         columns={columns}
-        data={data}
+        data={datacopy}
         editable={{
           onRowAdd: newData =>
             new Promise((resolve, reject) => {
-              const error = validateData___(newData,"INSERT");
-                if (error != null){
-                  setState({ ...state, open: true,error:error });
-                  reject();
-                }
-                else{
+             
                   setTimeout(() => {
                     console.log(data)
-                    props.insertCustomer(newData);
+                    props.insertCleaningSchedule(newData);
                     resolve();
                   }, 1000)
-                }
+                
               
             }),
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
-              const error = validateData___(newData,"UPDATE");
-                if (error != null){
-                  reject();
-                  setState({ ...state, open: true,error:error });
-                }
-                else{
+
                   setTimeout(() => {
                     props.updateCustomer(newData)
                     resolve();
                   }, 1000)
-                }
+                
             }),
           onRowDelete: oldData =>
             new Promise((resolve, reject) => {
@@ -136,7 +88,7 @@ const table = data ? (
                 dataDelete.splice(index, 1);
                 //setData([...dataDelete]);
                 console.log(oldData)
-                props.deleteCustomer(oldData.id)
+                props.deleteCleaningSchedule(oldData.id)
                 resolve()
               }, 1000)
             }),
@@ -176,12 +128,13 @@ const table = data ? (
  
   const mapDispatchToProps = (dispatch) => {
     return {
-      updateCustomer: (payload) => dispatch(updateCustomer(payload)),
-      insertCustomer: (payload) => dispatch(insertCustomer(payload)),
-      deleteCustomer: (customerId) => dispatch(deleteCustomer(customerId))
+        updateCleaningSchedule: (payload) => dispatch(updateCleaningSchedule(payload)),
+      insertCleaningSchedule: (payload) => dispatch(insertCleaningSchedule(payload)),
+      deleteCleaningSchedule: (customerId) => dispatch(deleteCleaningSchedule(customerId))
 
     }
 }
   export default compose(connect(null,mapDispatchToProps),firestoreConnect([
-    {collection: 'customer'}
-  ])) (CustomerTable)
+    {collection: 'cleaningSchedule'}
+  ])) (CleaningSchedule
+    )

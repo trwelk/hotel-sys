@@ -41,24 +41,24 @@ export const deleteCustomer = (roomId) => {
 
 }
 
-export const sendMail = (payload) => {
+export const sendMail = (payload,subscribers) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
     
-        const messageHtml =  renderEmail(<MyEmail name="Trewon"> This is my message</MyEmail>);
+        const messageHtml =  renderEmail(<MyEmail name="Trewon"> {payload.message}</MyEmail>);
         const firestore = getFirestore();
-   
+        console.log(subscribers)
         axios({
             method: "POST", 
             url:"http://localhost:9000/send", 
             data: {
-      	name: payload.name,
-      	email: payload.email,
-      	messageHtml: messageHtml
+      	subject: payload.subject,
+      	message: payload.message,
+        messageHtml: messageHtml,
+        mailList:subscribers ? subscribers : payload.customer
             }
         }).then((response)=>{
             if (response.data.msg === 'success'){
                 alert("Email sent, awesome!"); 
-                this.resetForm()
             }else if(response.data.msg === 'fail'){
                 alert("Oops, something went wrong. Try again")
             }

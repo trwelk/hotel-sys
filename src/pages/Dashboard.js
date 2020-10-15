@@ -13,7 +13,7 @@ import Editable from '../components/frontOffice/rooms/Editable';
 import PoolService from '../components/maintainence/PoolService';
 import currentSuppliers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
 import purchasesRequestManagement from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment'
-import purchasesOrder from '../components/purchasesnInventory/purchasesManagment/purchasesOrder'
+import purchasesOrder from '../components/purchasesnInventory/purchasesManagment/purchasesOrder' 
 // import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import EmployeeList from '../components/hr/employee/EmployeeList';
@@ -65,10 +65,10 @@ import MenuForm from '../components/F&bProduction/management/Forms/MenuForm';
 import FrontOfficeOverview from '../components/frontOffice/FrontOfficeOverview';
 import SignIn from '../components/auth/Signin';
 import { useSelector, connect } from 'react-redux';
-
-
-// import RequireAuth from '../components/auth/RequireAuth';
-// import Voice from '../components/frontOffice/experiment/Voice';
+import Signin from '../components/auth/Signin';
+import RequireAuth from '../components/auth/RequireAuth';
+//import Voice from '../components/frontOffice/experiment/Voice';
+import FrontOfficeDashboard from '../components/frontOffice/FrontOfficeDashBoard';
 
 
 // import MenuForm from "../components/F&bProduction/management/Forms/MenuForm";
@@ -79,7 +79,14 @@ import FnBserviceMng from '../components/fnbServices/FnBserviceMng';
 import FnBServiceBarMng from '../components/fnbServices/FnBServiceBarMng';
 import OrderForm from '../components/fnbServices/OrderForm';
 import InventoryForm from '../components/fnbServices/InventoryForm';
+import { ModuleNames } from 'ag-grid-community';
+import FeedbackOverview from '../components/frontOffice/overview/FeedbackOverview';
+import CustomerOverview from '../components/frontOffice/overview/CustomerOverview';
+import CustomerLocation from '../components/frontOffice/customer/CustomerLocation';
+import { CircularProgress } from 'material-ui';
 import tableChart from '../components/F&bProduction/Charts/Chart';
+import CleaningSchedule from '../components/housekeeping/CleaningSchedule';
+import LaundryManagement from '../components/housekeeping/LaundryManagement';
 // import EditOrderTable from '../components/fnbServices/EditOrderTable';
 // import OrderForm from '../components/fnbServices/OrderForm';
 
@@ -247,7 +254,8 @@ function Dashboard(props) {
   const auth = useSelector(state => state.firebase.auth)  
 console.log(auth)
 if(!auth.isLoaded){
-  return (<div>Loading</div>)
+  return (<div>    Loading
+  </div>)
 }else{
 
 if (!auth.uid){
@@ -334,9 +342,11 @@ else{
             <Route exact path='/frontoffice/feedback' component={FeedBackTable}/>
             <Route exact path='/frontoffice/reservation' component={ReservatonBoxView}/>
             <Route exact path='/frontoffice/roomtypes' component={RoomTypeTable}/>
-            <Route exact path='/frontoffice/overview' component={FrontOfficeOverview}/>
-            {/* //<Route exact path='/trewon' component={FrontOfficeDashboard}/> */}
-
+            <Route exact path='/frontoffice/overview' component={CustomerOverview}/>
+            <Route exact path='/frontoffice/analytics/feedback' component={FeedbackOverview}/>
+            <Route exact path='/frontoffice/analytics/customer' component={CustomerOverview}/>
+            <Route exact path='/frontoffice/analytics/reservation' component={FrontOfficeDashboard}/>
+            
 
             <Route exact path='/finance/assetss' component={AssetMain}/>
             <Route exact path='/finance/cashflow' component={CashFlowMain}/>
@@ -358,6 +368,11 @@ else{
             <Route exact path="/maintenance/serviceprovider" component={serviceProvider}/>
             <Route exact path="/maintenance/movement" component={MovementActivity}/>
             <Route exact path="/maintenance/service" component={MaintenenceService}/>
+
+            <Route exact path="/edit" component={Editable}/>
+            <Route exact path="/map" component={CustomerLocation}/>
+            <Route exact path="/cleaning" component={CleaningSchedule}/>
+            <Route exact path="/laundry" component={LaundryManagement}/>
             </Switch>
           </main>
           <footer className={classes.footer}>
