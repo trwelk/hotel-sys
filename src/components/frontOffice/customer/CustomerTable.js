@@ -93,7 +93,7 @@ function CustomerTable(props) {
 
 //--------------------------------------------------------UI-ELEMENTS-------------------------------------------------------------     
 const table = data ? (
-        <MaterialTable style={{padding:"0px"}}
+        <MaterialTable style={{padding:"0px",boxShadow: "0 0 2px 2px black"}}
         title={button}
         columns={columns}
         data={data}
@@ -166,7 +166,7 @@ const table = data ? (
                             </Snackbar>)
   
     return(
-        <div style={{padding_left: "5px"}}>
+        <div style={{padding: "20px"}}>
              {table}
              {feedBackToast}
         </div>

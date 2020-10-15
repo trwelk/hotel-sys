@@ -60,97 +60,100 @@ function FeedBackTable(props) {
       
       if(feedbacks){
     return (
-        
-      <MaterialTable
+      <div style={{padding: "20px"}}>
+        <MaterialTable style={{padding:"0px",boxShadow: "0 0 2px 2px black"}}
         title={addButton}
-        columns={[
-          { title: 'Title', field: 'title' },
-          { title: 'Customer', field: 'customer',editable: 'never' },
-          { title: 'Rating', field: 'rating'},
-          { title: 'Type', field: 'type'},
-          { title: 'Department', field: 'department'},
-        ]}
-        options={{
-        headerStyle: {
-          backgroundColor: '#01579b',
-          color: '#FFF',
-          borderBottom: '1px solid #333',
-        width: '100px',
-        boxShadow: "0 10px 5px -2px #888"
-        }
-      }}
-        data={data}
-        detailPanel={[
-          {
-            tooltip: 'Show Description',
-            render: rowData => {
-              console.log('asdasd',rowData)
-              return (
-                 <div> 
-                    <DescriptionForm id={rowData.id} description={rowData.description}/>
-                </div>
-
-                  
-              )
-            },
-          },
-          {
-            icon: 'account_circle',
-            tooltip: 'Show Surname',
-            render: rowData => {
-              return (
-                <CustomerCard customerId={rowData.customer}/>
-              )
-            },
-          },
-          {
-            icon: 'AnnouncementIcon',
-            openIcon: 'AnnouncementIcon',
-            tooltip: 'Show Both',
-            render: rowData => {
-              return (
-                <div>
-                    <FeedbackActionsForm id={rowData.id} action={rowData.action}/>
-                </div>
-              )
-            },
-          },
-        ]}
-        editable={{
-          onRowUpdate: (newData, oldData) =>
-            new Promise((resolve, reject) => {
-              //const error = validateData___(newData);
-                if (error != null){
-                  reject();
-                  setState({ ...state, open: true,error:error });
-                }
-                else{
-                  setTimeout(() => {
-                  props.updateFeedback(newData)
-                    resolve();
-                  }, 1000)
-                }
-            }),
-          onRowDelete: oldData =>
-            new Promise((resolve, reject) => {
-              setTimeout(() => {
-                const dataDelete = [...data];
-                const index = oldData.tableData.id;
-                dataDelete.splice(index, 1);
-                //setData([...dataDelete]);
-                console.log(oldData)
-                props.deleteFeedback(oldData.id)
-                resolve()
-              }, 1000)
-            }),
+          columns={[
+            { title: 'Title', field: 'title' },
+            { title: 'Customer', field: 'customer',editable: 'never' },
+            { title: 'Rating', field: 'rating',lookup: { 1:1,2:2,3:3,4:4,5:5}},
+            { title: 'Type', field: 'type',lookup: { COMPLAINT: 'COMPLAINT', COMPLIMENT: 'COMPLIMENT'}},
+            { title: 'Department', field: 'department'},
+          ]}
+          options={{
+          headerStyle: {
+            backgroundColor: '#01579b',
+            color: '#FFF',
+            borderBottom: '1px solid #333',
+          width: '100px',
+          boxShadow: "0 10px 5px -2px #888"
+          }
         }}
+          data={data}
+          detailPanel={[
+            {
+              icon:'D',
+              tooltip: 'Show Description',
+              render: rowData => {
+                console.log('asdasd',rowData)
+                return (
+                  <div> 
+                      <DescriptionForm id={rowData.id} description={rowData.description}/>
+                  </div>
 
-      />
+                    
+                )
+              },
+            },
+            {
+              icon: 'account_circle',
+              tooltip: 'Show Customer',
+              render: rowData => {
+                return (
+                  <CustomerCard customerId={rowData.customer}/>
+                )
+              },
+            },
+            {
+              icon: 'AnnouncementIcon',
+              openIcon: 'AnnouncementIcon',
+              tooltip: 'Show Both',
+              render: rowData => {
+                return (
+                  <div>
+                      <FeedbackActionsForm id={rowData.id} action={rowData.action}/>
+                  </div>
+                )
+              },
+            },
+          ]}
+          editable={{
+            onRowUpdate: (newData, oldData) =>
+              new Promise((resolve, reject) => {
+                //const error = validateData___(newData);
+                  if (error != null){
+                    reject();
+                    setState({ ...state, open: true,error:error });
+                  }
+                  else{
+                    setTimeout(() => {
+                    props.updateFeedback(newData)
+                      resolve();
+                    }, 1000)
+                  }
+              }),
+            onRowDelete: oldData =>
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  const dataDelete = [...data];
+                  const index = oldData.tableData.id;
+                  dataDelete.splice(index, 1);
+                  //setData([...dataDelete]);
+                  console.log(oldData)
+                  props.deleteFeedback(oldData.id)
+                  resolve()
+                }, 1000)
+              }),
+          }}
+
+        />
+      </div>
     )
   }
   else
-  return <div>      <CircularProgress style={{marginTop:"200px"}}/>
-  </div>
+  return <div>     
+           <CircularProgress style={{marginTop:"200px"}}/>
+          </div>
 }
 
 const mapDispatchToProps = (dispatch) => {

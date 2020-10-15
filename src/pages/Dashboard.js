@@ -381,10 +381,6 @@ else{
             <Route exact path="/laundry" component={LaundryManagement}/>
             </Switch>
           </main>
-          <footer className={classes.footer}>
-            <Copyright />
-          </footer>
-
         </div>
         </div>
       </ThemeProvider>

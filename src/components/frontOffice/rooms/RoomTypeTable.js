@@ -75,8 +75,8 @@ function RoomTypeTable(props) {
 
 //--------------------------------------------------------UI-ELEMENTS-------------------------------------------------------------     
     const table = data ? (
-        <MaterialTable style={{padding:"0px"}}
-        title="RoomTypeTable Preview"
+      <MaterialTable style={{padding:"0px",boxShadow: "0 0 2px 2px black"}}
+      title="RoomTypeTable Preview"
         columns={columns}
         data={data}
         editable={{
@@ -151,8 +151,8 @@ function RoomTypeTable(props) {
 
   
     return(
-        <div style={{padding_left: "5px"}}>
-             {table}
+        <div style={{padding: "20px"}}>
+            {table}
              {feedBackToast}
         </div>
        
