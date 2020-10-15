@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import { FormControl } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import { useSelector, connect } from 'react-redux';
-
+import DoneIcon from '@material-ui/icons/Done';
 
 import {updateFeedbackDescription} from '../../../../redux/actions/frontOfficeActions/FeedbackActions'
 //import {insertCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
@@ -32,8 +32,8 @@ const DescriptionForm = (props) => {
               <FormControl fullWidth>
                 <TextField  id="outlined-basic" defaultValue={description} multiline  label="Description" variant="outlined" onChange={handleChangeOfDescription}/>
               </FormControl>
-              <IconButton color="primary" aria-label="add to shopping cart" disabled={descriptionChanged != true}  onClick={handleDescriptionSubmit}>
-                <MenuBookIcon />
+              <IconButton color="primary" aria-label="Description" disabled={descriptionChanged != true}  onClick={handleDescriptionSubmit}>
+                <DoneIcon />
               </IconButton>
             </div>
     )

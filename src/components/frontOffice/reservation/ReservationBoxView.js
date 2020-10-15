@@ -77,6 +77,8 @@ function  ReservatonBoxView (props)  {
   const state = useSelector(state => state.frontOffice )
   const customersDb = useSelector(state => state.firestore.ordered.customer )
   const customers = customersDb ? (customersDb.map(customer => ({...customer}))) : (null)
+
+
   
   let rooms = null;
   let reservations= null;
@@ -193,7 +195,7 @@ function  ReservatonBoxView (props)  {
                       }}>
           
           {rIndex%2 == 0 ? <EventIcon style={{fill:"white"}}/> : <EventIcon style={{fill:"black"}}/>}
-          {rIndex%2 == 0 ?  <h2 style={{color:"white"}}>{rIndex } </h2> :  <h2 style={{color:"black"}}>{rIndex } </h2>}
+          {rIndex%2 == 0 ?  <h2 style={{color:"white",marginBottom:"0px"}}>{rIndex } </h2> :  <h2 style={{color:"black",marginBottom:"0px"}}>{rIndex } </h2>}
         </div>
         {paper}
       </Grid>
@@ -213,6 +215,13 @@ function  ReservatonBoxView (props)  {
     return  <MenuItem key={index} value={customer.id}>{customer.firstName + ' ' + customer.lastName}</MenuItem>
   })) :(null)
 //---------------------------------------------------rendering element-------------------------------------------------------
+
+if (!isLoaded(reservationsDb) && rows != null){
+  return(
+    <CircularProgress style={{marginTop:"200px"}}/>
+  )
+}
+
   if(isLoaded(roomTypeDb)){
   return (
     <div style={{display: "flex",
@@ -280,5 +289,6 @@ const mapDispatchToProps = (dispatch) => {
 export default compose(connect(null,mapDispatchToProps),firestoreConnect([
   {collection: 'reservation'},
   {collection: 'room'},
-  {collection: 'roomtype'}
+  {collection: 'roomtype'},
+  {collection: 'customer'}
 ])) (ReservatonBoxView)

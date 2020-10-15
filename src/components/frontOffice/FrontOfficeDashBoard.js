@@ -285,7 +285,7 @@ console.log(monthlyData)
                 fill: true,
                 backgroundColor: gradientStroke,
                 hoverBackgroundColor: gradientStroke,
-                borderColor: "#d048b6",
+                borderColor: "#00f2c3",
                 borderWidth: 2,
                 borderDash: [],
                 borderDashOffset: 0.0,
