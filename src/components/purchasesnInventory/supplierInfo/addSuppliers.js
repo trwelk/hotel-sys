@@ -80,18 +80,6 @@ function AddSuppliers(props) {
     setDepartment(event.target.value);
   }
 
-//   const handleLocation = (event) => {
-//     setState(prevState => ({
-//       ...prevState,
-//       location:event.target.value
-//   }));
-// }
-//   const handleDepartment = (event) => {
-//     setState(prevState => ({
-//       ...prevState,
-//       department:event.target.value
-//   }));
-// }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -176,7 +164,7 @@ function AddSuppliers(props) {
         <Avatar className={classes.avatar}>
           <AddIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" style={{color:"black"}}>
           Add Supplier
         </Typography>
         <form className={classes.form} noValidate >
@@ -312,7 +300,7 @@ function AddSuppliers(props) {
                   <MenuItem key={30} value={"hr"}>HR</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
+            </Grid>   
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
