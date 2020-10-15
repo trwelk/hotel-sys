@@ -3,7 +3,7 @@ import MaterialTable from 'material-table'
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import {insertProduct, updateProduct, deleteProdoct} from '../../../redux/actions/PnIActions/productHandler';
+import {insertProduct, updateProduct, deleteProduct} from '../../../redux/actions/PnIActions/productHandler';
 
 // import headerPnI from '../headerPnI';
 
@@ -13,6 +13,10 @@ import {insertProduct, updateProduct, deleteProdoct} from '../../../redux/action
     const [columns, setColumns] = useState([
       { title: 'Product ID', field: 'pId'},
       { title: 'Product Name', field: 'pType' },
+      {title: 'Supplier Name', field: 'sName'},
+      {title:'Quantity', field: 'qty'},
+      {title: 'Priority', field: 'qty'},
+      {title: 'Date', field: 'date'}
       
     ]); 
     const Pro = useSelector(state => state.firestore.ordered.productMng)
@@ -77,7 +81,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         insertProduct: (payload) => dispatch(insertProduct(payload)),
         updateProduct: (payload) => dispatch(updateProduct(payload)),
-        deleteProduct: (productId) => dispatch(deleteProdoct(productId))
+        deleteProduct: (productId) => dispatch(deleteProduct(productId))
 
 
     }
