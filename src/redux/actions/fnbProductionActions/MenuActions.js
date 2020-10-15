@@ -1,6 +1,17 @@
 import { Alert } from "@material-ui/lab";
 import React  from 'react';
 
+export const insertGenItems = (payload, MenuNo) => {
+    return (dispatch, getState, { getFirestore, getFirebase }) => {
+        const firestore = getFirestore();
+        firestore.collection('Menu').doc(MenuNo).collection('MenuItems').doc(payload.itemId).set({
+            itemId: payload.itemId,
+            name: payload.name,
+            price: payload.price
+        });
+    }
+}
+
 export const updateMenu = (payload) => {
     console.log(payload)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
@@ -16,7 +27,7 @@ export const updateMenu = (payload) => {
 
 }
 
-export const updateMenuItems = (payload,MenuType) => {
+export const updateMenuItems = (payload,MenuType,MenuNo) => {
     console.log(payload)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
@@ -29,7 +40,7 @@ export const updateMenuItems = (payload,MenuType) => {
         });
     }
         else{
-            firestore.collection('Menu').doc(payload.id).collection('MenuItems').doc(payload.id).update({
+            firestore.collection('Menu').doc(MenuNo).collection('MenuItems').doc(payload.itemId).update({
                 name:payload.name,
                 price:payload.price
             }); 
@@ -66,7 +77,7 @@ export const insertMenu = (payload, ItemsPayload) => {
         }
         else {
             for (let index = 0; index < ItemsPayload.length; index++) {
-                firestore.collection('Menu').doc(payload.id).collection("MenuItems").doc("item".concat([index+1].toString())).set(ItemsPayload[index]);
+                firestore.collection('Menu').doc(payload.id).collection("MenuItems").doc(ItemsPayload[index].itemId).set(ItemsPayload[index]);
             }
         }
     }
@@ -87,11 +98,20 @@ export const deleteMenu = (MenuId) => {
 
 }
 
-export const deleteMenuItems = (MenuId) => {
-    console.log(MenuId)
+export const deleteMenuItems = (oldData,MenuType,MenuNo) => {
+    console.log(oldData.id)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
-        firestore.collection('Menu').doc(MenuId).collection('MenuItems').doc(MenuId).delete()
+        if(MenuType == 1){
+        firestore.collection('Menu').doc(oldData.id).collection('MenuItems').doc(oldData.id).delete()
+            .then((response) => {
+                console.log(response)
+            }).catch((error) => {
+                console.log(error)
+            })
+     }
+        else{
+        firestore.collection('Menu').doc(MenuNo).collection('MenuItems').doc(oldData.itemId).delete()
             .then((response) => {
                 console.log(response)
             }).catch((error) => {
@@ -99,4 +119,4 @@ export const deleteMenuItems = (MenuId) => {
             })
     }
 
-}
+}}

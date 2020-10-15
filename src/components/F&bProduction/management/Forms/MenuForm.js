@@ -17,7 +17,7 @@ import GeneralMenuTemplate from '../Templates/GeneralMenuTemplate';
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab';
 import AddMenuItem from '../Templates/AddMenuItem';
-
+import {db} from '../../../../config/fbConfig'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -110,7 +110,32 @@ function MenuForm(props) {
   }));
   };
 
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'bottom',
+    horizontal: 'right',
+  });
+
+  const { vertical, horizontal, open ,error} = state;
+
+  const CheckExist___  = (data) => {
+    let exists = false; 
+    db.collection('Menu').get().then((snapshot)=>{
+      snapshot.docs.forEach(doc => {
+      console.log(doc.data().id);
+      console.log(Menu.id);
+      if(data.id == doc.data().id){
+        console.log("Found one!")
+        exists = true;
+      }
+    });
+  })
+  return exists;
+  }
+
   const validateData___  = (data) => {
+    let exist = CheckExist___(data);
+    console.log(exist)
     if(data.id == null || data.id == ""){
       return "Field ID Cannot be null"
 
@@ -127,18 +152,14 @@ function MenuForm(props) {
     }
     else if(data.menuType == null || data.menuType == ""){
       return "Field Menu Type Cannot be null"
+    }       
+    else if(exist){
+      return "Menu Id already exists"
     }
-    else
+    else{
     return null;
+    }
   }
-
-  const [state, setState] = React.useState({
-    open: false,
-    vertical: 'bottom',
-    horizontal: 'right',
-  });
-
-  const { vertical, horizontal, open ,error} = state;
 
   const handleClose = () => {
     setState({ ...state, open: false });
@@ -148,6 +169,7 @@ function MenuForm(props) {
     evt.preventDefault();
   new Promise((resolve,reject)=>{
       const error = validateData___(Menu);
+      console.log(error);
       if (error != null){
         setState({ ...state, open: true,error:error });
         reject();
