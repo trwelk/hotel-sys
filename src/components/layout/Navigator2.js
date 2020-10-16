@@ -35,9 +35,10 @@ const styles = (theme) => ({
   item: {
     paddingTop: 1,
     paddingBottom: 1,
+    height:"46px",
     color: 'rgba(255, 255, 255, 0.7)',
     '&:hover,&:focus': {
-      backgroundColor: 'rgba(255, 255, 255, 0.08)',
+      backgroundColor: 'rgba(0,135,193,.7)',
     },
   },
   itemCategory: {

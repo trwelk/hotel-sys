@@ -87,6 +87,7 @@ import { CircularProgress } from 'material-ui';
 import tableChart from '../components/F&bProduction/Charts/Chart';
 import CleaningSchedule from '../components/housekeeping/CleaningSchedule';
 import LaundryManagement from '../components/housekeeping/LaundryManagement';
+import ErrorPage from './ErrorPage';
 // import EditOrderTable from '../components/fnbServices/EditOrderTable';
 // import OrderForm from '../components/fnbServices/OrderForm';
 
@@ -373,6 +374,8 @@ else{
             <Route exact path="/map" component={CustomerLocation}/>
             <Route exact path="/housekeeping/laundry" component={CleaningSchedule}/>
             <Route exact path="/housekeeping/cleaning" component={LaundryManagement}/>
+            <Route path= '*' component={ErrorPage} /> 
+
             </Switch>
           </main>
         </div>
