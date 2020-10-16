@@ -73,7 +73,7 @@ function PurchasesOrder(props) {
 
   const [productMng, setOrder] = useState({oId: '',pType: '', sName:'',qty: '',priority:'' ,date: ''})
   const [priority, setPriority] = React.useState("Normal");
-  const [pType,setProductType] = React.useState();
+  const [pType,setProductType] = React.useState(null);
   const [sName,setSupplierName] = React.useState();
   
 
@@ -118,15 +118,15 @@ function PurchasesOrder(props) {
 
    const data = purchasesOrderDB ? (purchasesOrderDB.map(product => ({...product}))) : (null)
    const sup = supplierNameDB ? (supplierNameDB.map(supplier => ({...supplier}))):(null)
+   const filterdSupplier = pType ? sup.filter(supplier => supplier.itemtype == pType) : null
 
-  //  console.log(productTypeDB)
 
 
    const productTypeSelector = data ? (data.map((pType,index) => {
     return  <MenuItem key={index} value={pType.pType}>{pType.pType}</MenuItem>
   })) :(null)
 
-  const supplierNameSelector = sup ? (sup.map((sName,index) => {
+  const supplierNameSelector = filterdSupplier ? (filterdSupplier.map((sName,index) => {
       return <MenuItem key={index} value={sName.firstName}>{sName.firstName}</MenuItem>
   })):(null)
 
@@ -306,4 +306,3 @@ export default compose(connect(null, mapDispatchToProps), firestoreConnect([
   {collection: 'request'},
   {collection: 'supplier'}
 ]))(PurchasesOrder)
-
