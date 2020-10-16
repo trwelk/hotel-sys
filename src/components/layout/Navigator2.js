@@ -200,6 +200,39 @@ const purchasesnInventoryNav  = (
         }}
         >Purchases Order</ListItemText></Link>
       </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+    <Link to="/pTable" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Order Table</ListItemText></Link>
+      </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+    <Link to="/addCon" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Add Contract</ListItemText></Link>
+      </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+    <Link to="/conTable" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Contract Details</ListItemText></Link>
+      </ListItem>
     </List>
   </Collapse>
   </div>

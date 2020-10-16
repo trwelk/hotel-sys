@@ -179,7 +179,7 @@ function PurchasesRequest(props) {
         <Avatar className={classes.avatar}>
           <AddIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" style={{color:"black"}}>
           Place Your Purchases Request Here...
         </Typography>
         <form className={classes.form} noValidate>
@@ -198,6 +198,7 @@ function PurchasesRequest(props) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl varient="outlined" fullWidth>
+              <InputLabel id="pType">Product Type</InputLabel>
               <Select
                 labelId="Product Name"
                 id="pType"
