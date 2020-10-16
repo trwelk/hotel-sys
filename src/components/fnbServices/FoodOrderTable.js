@@ -392,7 +392,7 @@ function FeedBackTable(props) {
             render: rowData => {
               return (
                 <div>
-                  <EditProductTable orderNo={rowData.orderNo} />
+                  <EditProductTable orderNo={rowData.orderNo} />                  
                 </div>
               )
             },
@@ -400,8 +400,8 @@ function FeedBackTable(props) {
         ]}
         actions={[
           {
-            icon: 'save',
-            tooltip: 'Save User',
+            icon: 'Button',
+            tooltip: 'create a bill',
             onClick: (event, rowData) => alert("You saved " + rowData.orderNo)
           }
         ]}
@@ -410,14 +410,13 @@ function FeedBackTable(props) {
     )
   }
   else
-    return <div>loading</div>
+    return   <div>loading</div>
+   
 }
 const mapDispatchToProps = (dispatch) => {
   return {
     updateOrderType: (payload) => dispatch(updateOrderType(payload)),
     deleteOrderType: (orderId) => dispatch(deleteOrderType(orderId))
-
-
   }
 }
 export default compose(connect(null, mapDispatchToProps), firestoreConnect([
