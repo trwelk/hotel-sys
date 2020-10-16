@@ -78,7 +78,7 @@ function AbsenceRequest(props) {
     horizontal: 'right',
   });
   const { vertical, horizontal, open, error } = state;
-  const [absence, setAbsence] = useState({employee: '', abtype: '', fromdate: '', todate: '', days: '', reason: '', status: 'Open'});
+  const [absence, setAbsence] = useState({employee: '', abtype: '', from: '', to: '', days: '', reason: '', status: 'Open'});
 
   const absencetypesDB = useSelector(state => state.firestore.ordered.absencetype)
   const absencetypes = absencetypesDB ? (absencetypesDB.map(absencetype => ({...absencetype}))) : (null)
@@ -119,6 +119,7 @@ function AbsenceRequest(props) {
     }));
   }
 
+
   const handleAbsenceTypeSelector = (event) => {
     setState(prevState => ({
         ...prevState,
@@ -134,22 +135,37 @@ function AbsenceRequest(props) {
     else if (data.employee.length != 5) {
       return "Field EMPLOYEE ID should contain 5 characters"
     }
-    else if (data.firstName == null || data.firstName == "") {
-      return "First Name Cannot be null"
+    else if (data.from == null || data.from == "") {
+      return "fromdate Cannot be null"
     }
-    else if (data.lastName == null || data.lastName == "") {
-      return "Last Name cannot be  null"
-    }
-    else if (data.email == null || data.email == "") {
-      return "Email field cannot be null"
-    }
-    else if(data.chkBox == false){
-      return "Please accept tearms and conditions"
+    else if (data.to == null || data.to == "") {
+      return "To Date cannot be  null"
     }
     else
       return null
   }
 
+  const getFormattedDate = (date) => {
+    var year = date.getFullYear();
+    
+  
+    var month = (1 + date.getMonth()).toString();
+    month = month.length > 1 ? month : '0' + month;
+  
+    var day = date.getDate().toString();
+    day = day.length > 1 ? day : '0' + day;
+    
+    return month + '/' + day + '/' + year;
+  }
+
+  
+  const handleAbsenceDate = (event) => {
+    const { name, value } = event.target;
+    setAbsence(prevState => ({
+      ...prevState,
+      [name]: getFormattedDate(new Date(value))
+    }));
+  }
 
   const handleClose = () => {
     setState({ ...state, open: false });
@@ -207,38 +223,30 @@ function AbsenceRequest(props) {
                 </Select>
               </FormControl>
             </Grid><Grid item xs={12} sm={4}>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                    disableToolbar
-                    variant="inline"
-                    format="MM/dd/yyyy"
-                    margin="normal"
-                    id="fromdate"
-                    label="From Date "
-                    //value={selectedDate}
-                    onChange={handleAbsence}
-                    KeyboardButtonProps={{
-                        'aria-label': 'change date',
-                    }}
-                    />
-                </MuiPickersUtilsProvider>
+            <TextField
+                  id="from"
+                  name="from"
+                  label="From Date "
+                  type="date"
+                  defaultValue="2020-05-24"
+                  style={{width:"89%",marginTop:"10px"}}
+                  onChange={handleAbsenceDate}
+                  InputLabelProps={{
+                  shrink: true,
+                  }}/>
             </Grid>
             <Grid item xs={12} sm={4}>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                    disableToolbar
-                    variant="inline"
-                    format="MM/dd/yyyy"
-                    margin="normal"
-                    id="todate"
-                    label="To Date"
-                    //value={selectedDate}
-                    onChange={handleAbsence}
-                    KeyboardButtonProps={{
-                        'aria-label': 'change date',
-                    }}
-                    />
-                </MuiPickersUtilsProvider>
+            <TextField
+                  id="to"
+                  name="to"
+                  label="To Date "
+                  type="date"
+                  defaultValue="2020-05-24"
+                  style={{width:"89%",marginTop:"10px"}}
+                  onChange={handleAbsenceDate}
+                  InputLabelProps={{
+                  shrink: true,
+                  }}/>
             </Grid>
             <Grid item xs={12} >
               <TextField
