@@ -19,6 +19,7 @@ import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import EmployeeList from '../components/hr/employee/EmployeeList';
 import AbsenceTypeList from '../components/hr/absence/AbsenceTypeList';
 import AbsenceList from '../components/hr/absence/AbsenceList';
+import AbsenceForm from '../components/hr/absence/AbsenceForm';
 import AttendenceList from '../components/hr/attendence/AttendenceList';
 import PettyRequest from '../components/finance/petty/PettyRequest';
 import PettyCashManagement from '../components/finance/petty/PettyCashManagement';
@@ -360,6 +361,7 @@ else{
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/hr/absence/abtype" component={AbsenceTypeList}/>
             <Route exact path="/hr/absence/ablist" component={AbsenceList}/>
+            <Route exact path="/hr/absence/abform" component={AbsenceForm}/>
             <Route exact path="/hr/attendence" component={AttendenceList}/>
 
             {/*<Route exact path="/pOrd" component={purchasesOrder}/>*/}
