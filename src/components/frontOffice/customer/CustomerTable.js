@@ -1,5 +1,5 @@
 import React from 'react'
-import MaterialTable from 'material-table'
+import MaterialTable, { MTableToolbar } from 'material-table'
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
@@ -25,7 +25,7 @@ function CustomerTable(props) {
  
     const { useState } = React;
     const [columns, setColumns] = useState([
-        { title: 'ID',field: 'id', },
+        { title: 'ID',field: 'id', editable:false},
       { title: 'First Name', field: 'firstName' ,},
       { title: 'Last Name', field: 'lastName' },
       { title: 'Phone Number', field: 'phone', type: 'numeric' },
@@ -89,6 +89,16 @@ function CustomerTable(props) {
     setState({ ...state, open: false });
   };
 
+  const handleDemo = () => {
+    props.insertCustomer({
+      id:"demo@demo.com",
+      email:"demo@demo.com",
+      phone:parseInt("0771231231"),
+      lastName:"lastDemo",
+      firstName:"firstDemo"
+    });
+  }
+
   const button = <SendMailForm/>
 
 //--------------------------------------------------------UI-ELEMENTS-------------------------------------------------------------     
@@ -142,6 +152,9 @@ const table = data ? (
             }),
         }}
         options={{
+          pageSize:10,
+        exportButton: true,
+                filtering: true,
         headerStyle: {
           backgroundColor: '#01579b',
           color: '#FFF',
@@ -150,6 +163,16 @@ const table = data ? (
     /* height: 100px; */
         boxShadow: "0 10px 5px -2px #888"
         }
+      }}
+      components={{
+        Toolbar: props => (
+          <div>
+            <MTableToolbar {...props} />
+            <div style={{padding: '0px 10px'}}>
+              <Button onClick={handleDemo}>Demo</Button>
+          </div>
+          </div>
+        ),
       }}
       />
     ) : (<div><CircularProgress style={{marginTop:"200px"}} /></div>)
