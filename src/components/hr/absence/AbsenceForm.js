@@ -222,26 +222,24 @@ function AbsenceRequest(props) {
                   {absenceTypeSelector}
                 </Select>
               </FormControl>
-            </Grid><Grid item xs={12} sm={4}>
+            </Grid><Grid item xs={12} sm={6}>
             <TextField
                   id="from"
                   name="from"
                   label="From Date "
                   type="date"
-                  defaultValue="2020-05-24"
                   style={{width:"89%",marginTop:"10px"}}
                   onChange={handleAbsenceDate}
                   InputLabelProps={{
                   shrink: true,
                   }}/>
             </Grid>
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={6}>
             <TextField
                   id="to"
                   name="to"
                   label="To Date "
                   type="date"
-                  defaultValue="2020-05-24"
                   style={{width:"89%",marginTop:"10px"}}
                   onChange={handleAbsenceDate}
                   InputLabelProps={{
