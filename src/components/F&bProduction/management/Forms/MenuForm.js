@@ -121,23 +121,15 @@ function MenuForm(props) {
 
   const { vertical, horizontal, open ,error} = state;
 
-  const CheckExist___  = (data) => {
-    let exists = false; 
-  //   db.collection('Menu').get().then((snapshot)=>{
-  //     snapshot.docs.forEach(doc => {
-  //     console.log(doc.data().id);
-  //     console.log(Menu.id);
-  //     if(data.id == doc.data().id){
-  //       console.log("Found one!")
-  //       exists = true;
-  //     }
-  //   });
-  // })
-  const menuItem = menus.filter(menu => menu.id == data.id);
-  if (menuItem > 0)
-    exists = true
 
-  return exists;
+  const CheckExist___ = (data) => {
+    let exists = false;
+    const menuItem = menus.filter(menu => menu.id == data.id);
+    console.log(menuItem);
+    if (menuItem.length > 0)
+      exists = true
+
+    return exists;
   }
 
   const validateData___  = (data) => {
@@ -193,7 +185,7 @@ function MenuForm(props) {
   })}
 
   const feedBackToast =  (<Snackbar 
-    autoHideDuration={200000}
+    autoHideDuration={100000}
     anchorOrigin={{ vertical, horizontal }}
     open={open}
     onClose={handleClose}

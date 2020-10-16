@@ -372,8 +372,9 @@ else{
 
             <Route exact path="/edit" component={Editable}/>
             <Route exact path="/map" component={CustomerLocation}/>
-            <Route exact path="/housekeeping/laundry" component={CleaningSchedule}/>
-            <Route exact path="/housekeeping/cleaning" component={LaundryManagement}/>
+            <Route exact path="/housekeeping/laundry" component={LaundryManagement}/>
+            <Route exact path="/housekeeping/cleaning" component={CleaningSchedule}/>
+            
             <Route path= '*' component={ErrorPage} /> 
 
             </Switch>
