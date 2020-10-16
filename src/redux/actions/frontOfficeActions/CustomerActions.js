@@ -7,7 +7,7 @@ export const updateCustomer = (payload) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection("customer").doc(payload.id).update({
+        firestore.collection("customer").doc(payload.email).update({
           ...payload
         });
     }
@@ -17,7 +17,7 @@ export const updateCustomer = (payload) => {
 export const insertCustomer = (payload) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('customer').doc(payload.id).set({
+        firestore.collection('customer').doc(payload.email).set({
             ...payload,
         }).then((response) => {
             console.log(response)
@@ -27,11 +27,11 @@ export const insertCustomer = (payload) => {
     }
 }
 
-export const deleteCustomer = (roomId) => {
-    console.log(roomId)
+export const deleteCustomer = (customer) => {
+    console.log(customer)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('customer').doc(roomId).delete()
+        firestore.collection('customer').doc(customer).delete()
             .then((response) => {
                 console.log(response)
             }).catch((error) => {

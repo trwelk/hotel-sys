@@ -377,8 +377,8 @@ else{
 
             <Route exact path="/edit" component={Editable}/>
             <Route exact path="/map" component={CustomerLocation}/>
-            <Route exact path="/cleaning" component={CleaningSchedule}/>
-            <Route exact path="/laundry" component={LaundryManagement}/>
+            <Route exact path="/housekeeping/laundry" component={CleaningSchedule}/>
+            <Route exact path="/housekeeping/cleaning" component={LaundryManagement}/>
             </Switch>
           </main>
         </div>

@@ -76,6 +76,11 @@ export default function SimpleTabs() {
         <BarInventory/> */}
         <div className='chart'>
         <BarChart/>
+          <div>
+            <form id="add-cafe-form">
+            <ul id="product-list"></ul>
+            </form>
+          </div>
         </div>
         
       </TabPanel>
