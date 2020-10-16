@@ -81,99 +81,99 @@ import 'jspdf-autotable';
             </div>
           </Snackbar>)
 
-        const exportCsv = () =>{
-          let Row=[];
-          let A = [['Item Id','Item Name','Unit Price(LKR)','In stock(kg/pkts/cans)','Total(LKR)', 'Last Modified', 'Status','Expiry Date']];
-          let re = fnbInv;
-          console.log(fnbInv);
-          let Status;
-          for(let item = 0;item < re.length;item++){
-            switch (parseInt(re[item].stkStatus)) {
-              case 1:
-                Status = 'Out of Stock'
-                break;
-              case 2:
-                Status = 'Low'
-                 break;
-              case 3:
-                Status = 'Adequate'
-                 break;
-              case 4:
-                Status = 'High'
-                break;
-              default:
-                break;
-            }
-            A.push([re[item].id,re[item].itemName,re[item].unitPrice,re[item].qty,re[item].total,re[item].lastModified,Status,re[item].expDate])
-          }
-          console.warn(A);
-          for(let i=0; i<A.length; i++){
-            Row.push(A[i].join(","));
-          }
-          console.warn(Row);
-          let fileString=Row.join("%0A");
-          let a = document.createElement("a");
-          a.href='data:attachment/csv,' + fileString;
-          a.target="_Blank";
-          a.download="FnBInventory.csv";
-          document.body.appendChild(a);
-          a.click();
+        // const exportCsv = () =>{
+        //   let Row=[];
+        //   let A = [['Item Id','Item Name','Unit Price(LKR)','In stock(kg/pkts/cans)','Total(LKR)', 'Last Modified', 'Status','Expiry Date']];
+        //   let re = fnbInv;
+        //   console.log(fnbInv);
+        //   let Status;
+        //   for(let item = 0;item < re.length;item++){
+        //     switch (parseInt(re[item].stkStatus)) {
+        //       case 1:
+        //         Status = 'Out of Stock'
+        //         break;
+        //       case 2:
+        //         Status = 'Low'
+        //          break;
+        //       case 3:
+        //         Status = 'Adequate'
+        //          break;
+        //       case 4:
+        //         Status = 'High'
+        //         break;
+        //       default:
+        //         break;
+        //     }
+        //     A.push([re[item].id,re[item].itemName,re[item].unitPrice,re[item].qty,re[item].total,re[item].lastModified,Status,re[item].expDate])
+        //   }
+        //   console.warn(A);
+        //   for(let i=0; i<A.length; i++){
+        //     Row.push(A[i].join(","));
+        //   }
+        //   console.warn(Row);
+        //   let fileString=Row.join("%0A");
+        //   let a = document.createElement("a");
+        //   a.href='data:attachment/csv,' + fileString;
+        //   a.target="_Blank";
+        //   a.download="FnBInventory.csv";
+        //   document.body.appendChild(a);
+        //   a.click();
       
-          console.warn(fileString);
-        }
+        //   console.warn(fileString);
+        // }
       
-        const exportPdf = () =>{
-          let doc = new jsPDF('p', 'pt');
-          let header=[['Item Id','Item Name','Unit Price(LKR)','In stock(kg/pkts/cans)','Total(LKR)', 'Last Modified', 'Status','Expiry Date']]
-          let A = [[]];
-          let re = fnbInv;
-          let Status;
-          console.log(fnbInv);
-          for(let item = 0;item < re.length;item++){
-            switch (parseInt(re[item].stkStatus)) {
-              case 1:
-                Status = 'Out of Stock'
-                break;
-              case 2:
-                Status = 'Low'
-                 break;
-              case 3:
-                Status = 'Adequate'
-                 break;
-              case 4:
-                Status = 'High'
-                break;
-              default:
-                break;
-            }
-            A.push([re[item].id,re[item].itemName,re[item].unitPrice,re[item].qty,re[item].total,re[item].lastModified,Status,re[item].expDate])
-          }
+        // const exportPdf = () =>{
+        //   let doc = new jsPDF('p', 'pt');
+        //   let header=[['Item Id','Item Name','Unit Price(LKR)','In stock(kg/pkts/cans)','Total(LKR)', 'Last Modified', 'Status','Expiry Date']]
+        //   let A = [[]];
+        //   let re = fnbInv;
+        //   let Status;
+        //   console.log(fnbInv);
+        //   for(let item = 0;item < re.length;item++){
+        //     switch (parseInt(re[item].stkStatus)) {
+        //       case 1:
+        //         Status = 'Out of Stock'
+        //         break;
+        //       case 2:
+        //         Status = 'Low'
+        //          break;
+        //       case 3:
+        //         Status = 'Adequate'
+        //          break;
+        //       case 4:
+        //         Status = 'High'
+        //         break;
+        //       default:
+        //         break;
+        //     }
+        //     A.push([re[item].id,re[item].itemName,re[item].unitPrice,re[item].qty,re[item].total,re[item].lastModified,Status,re[item].expDate])
+        //   }
 
-          doc.text("Inventory Report",220,50);
+        //   doc.text("Inventory Report",220,50);
       
-          doc.autoTable({
-            head: header,
-            body: A,
-            startY: 80,
-            foot:[["Generated By HotelSys"]],
-            footStyles:{halign:'center',}
-          })          
+        //   doc.autoTable({
+        //     head: header,
+        //     body: A,
+        //     startY: 80,
+        //     foot:[["Generated By HotelSys"]],
+        //     footStyles:{halign:'center',}
+        //   })          
 
-          doc.save("InventoryReport.pdf");          
-        }
+        //   doc.save("InventoryReport.pdf");          
+        // }
 
         const fnbInv = useSelector(state => state.firestore.ordered.fnbInventory)
         const data = fnbInv ? (fnbInv.map(fnb_Inv => ({...fnb_Inv,total:parseFloat(fnb_Inv.qty)*parseFloat(fnb_Inv.unitPrice)}))) : (null)
         const table = data ? (
           <div>
-          <ButtonGroup>
+          {/* <ButtonGroup>
           <Button variant="contained" color="default" onClick={()=>exportCsv()}>
           Export as Csv
         </Button>
         <Button variant="contained" color="secondary" onClick={()=>exportPdf()}>
           Export as Pdf
         </Button>
-        </ButtonGroup>
+        </ButtonGroup> */}
             <MaterialTable
             title="Inventory List"
             columns={columns}
@@ -225,6 +225,10 @@ import 'jspdf-autotable';
                   }, 1000)
                 }),
             }}
+            options={{
+              exportButton: true
+            }      
+            }
           /></div>
         ) : (<div>Loading</div>)
    
