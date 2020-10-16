@@ -120,7 +120,6 @@ function PurchasesOrder(props) {
    const sup = supplierNameDB ? (supplierNameDB.map(supplier => ({...supplier}))):(null)
    const filterdSupplier = pType ? sup.filter(supplier => supplier.itemtype == pType) : null
 
-  //  console.log(productTypeDB)
 
 
    const productTypeSelector = data ? (data.map((pType,index) => {
