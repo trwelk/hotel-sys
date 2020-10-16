@@ -273,7 +273,7 @@ const houseKeepingNav = (
     <ListItemIcon className={classes.itemIcon}>
       <PeopleIcon />
     </ListItemIcon>
-    <ListItemText primary="Maintenance" 
+    <ListItemText primary="Housekeeping" 
     classes={{
               primary: classes.categoryHeaderPrimary,
             }}/>
@@ -714,6 +714,7 @@ const fnbNav = (
       {purchasesnInventoryNav}
       {fnbNav}
       {humanResourceNav}
+      {houseKeepingNav}
     </Drawer>
   );
 }
