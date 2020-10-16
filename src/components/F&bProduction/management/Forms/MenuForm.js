@@ -18,6 +18,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab';
 import AddMenuItem from '../Templates/AddMenuItem';
 import {db} from '../../../../config/fbConfig'
+import { Label } from 'reactstrap';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -204,10 +205,10 @@ function MenuForm(props) {
         <Avatar className={classes.avatar}>
           <ImportContactsIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" color="textPrimary">
           Add Menu
         </Typography>
-        <h4>* Required Fields</h4>        
+          <Label>* Required Fields</Label>
         <form className={classes.form} noValidate>
         <FormControl className={classes.formControl} margin="normal">
         <InputLabel id="MenuType">Menu Type</InputLabel>
