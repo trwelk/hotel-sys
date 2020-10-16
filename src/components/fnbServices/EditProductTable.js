@@ -14,9 +14,25 @@ import { insertProductType } from '../../redux/actions/FnBServiceActions/FoodOrd
 import { deleteProductType } from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
 
 function EditProductTable(props) {
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'bottom',
+    horizontal: 'right',
+  });
+  const { vertical, horizontal, open ,error} = state;
 
+  const productsDb = useSelector(state => state.firestore.ordered.product)
+    const products = productsDb ? (productsDb.map(product => ({...product}))) : (null)
+  const productSelector = products ? (products.map((product,index) => {
+    return   {index:product.ProName,}
+  })) :(null)
+
+  // const customersDb = useSelector(state => state.firestore.ordered.customer )
+  //   const customers = customersDb ? (customersDb.map(customer => ({...customer}))) : (null)
+  // const customerSelector = customers ? (customers.map((customer,index) => {
+  //   return  <MenuItem key={index} value={customer.id}>{customer.firstName + ' ' + customer.lastName}</MenuItem>
+  // })) :(null)
   
-
   // .collection('product').get().then((snapshot) =>{
   //   console.log(snapshot.docs);
   // })
@@ -31,7 +47,7 @@ function EditProductTable(props) {
     // initialEditValue: 'orderNo+id'
   },
     
-    { title: 'ProductName', field: 'ProName'},
+    { title: 'ProductName', field: 'ProName',lookup:{productSelector}},
     { title: 'Amount', field: 'amount', type :'numeric', filtering: false },
     { title: 'ProductID', field: 'id' }, 
     { title: 'ID', field: 'orderNo',initialEditValue:orderNo ,editable: 'never'},
@@ -49,13 +65,7 @@ function EditProductTable(props) {
   //   // lookup: { 1: 'done', 2: 'in pogress' },
 
   // ]);
-  const [state, setState] = React.useState({
-    open: false,
-    vertical: 'bottom',
-    horizontal: 'right',
-  });
-  const { vertical, horizontal, open ,error} = state;
-
+ 
   
   const OrderPro = useSelector(state => state.firestore.ordered.orderProducts)
   const datacopy = OrderPro ? (OrderPro.map(OrderPro => ({ ...OrderPro }))) : (null)
