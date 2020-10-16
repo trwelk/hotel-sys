@@ -8,8 +8,8 @@ export const updateProduct = (payload,pType,priority,sName) => {
             pType:payload.pType,
             priority:payload.priority,
             qty:payload.qty,
-            date:payload.date
-            //status:payload.status
+            date:payload.date,
+            status:payload.status
         }); 
     }
 
@@ -25,7 +25,8 @@ export const insertProduct = (payload,pType,priority,sName) => {
             pType:pType,
             priority:priority,
             qty:payload.qty,
-            date:payload.date
+            date:payload.date,
+            status:"PENDING",
         }).then((response) => {
             console.log(response)
         }).catch((response) => {

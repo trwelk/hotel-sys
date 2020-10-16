@@ -24,3 +24,14 @@ export const signIn = (Credentials) => {
         })
     }
 }
+
+
+export const signOut = () => {
+    return(dispatch,getState,{getFirestore,getFirebase}) =>{
+        const firebase = getFirebase();
+        firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+          }).catch(function(error) {
+            // An error happened.
+          });    }
+}

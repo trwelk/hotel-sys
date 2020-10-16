@@ -136,20 +136,19 @@ function PurchasesOrder(props) {
 
   //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
   const validateData___= (data) => {
-    // if (data.oId.length != 5) {
-    //   console.log(data.oId.length)
-    //   return "Field ID should contain 5 characters"
-    // }
-    // // else if (data.oId == null || data.oId == "") {
-    // //   return "ID field Cannot be null"
-    // // }
-    // // else if(data.qty == 0 || data.qty < 0){
-    // //   return "Quantity shold be a postive value"
-    // // }
-    // else if(data.Checkbox.check == true){
-    //   return "Please Accept Terms and Conditions"
-    // }
-    //   return null
+    if (data.oId.length != 5) {
+      return "Field ID should contain 5 characters"
+    }
+    else if (data.oId == null || data.oId == "") {
+      return "ID field Cannot be null"
+    }
+    else if (data.sName == null || data.sName == ""){
+      return "Supplier Name Cannot be null"
+    }
+    else if(data.qty == 0 || data.qty < 0){
+      return "Quantity shold be a postive value"
+    }
+      return null
   }
 
   const [state, setState] = React.useState({
@@ -240,7 +239,7 @@ function PurchasesOrder(props) {
                 required
                 fullWidth
                 id="qty"
-                lableId="Quantity"
+                label ="Quantity"
                 name="qty"
                 type='number'
                 autoComplete="off"
@@ -269,12 +268,6 @@ function PurchasesOrder(props) {
                 name="date"
                 type='date'
                 onChange={handleProduct}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="check" name="check" color="primary" />}
-                label="I accept the Terms and Conditions"
               />
             </Grid>
           </Grid>

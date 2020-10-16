@@ -1,11 +1,32 @@
 import React from 'react'
 import MaterialTable from 'material-table'
 import { useSelector, connect } from 'react-redux';
+import Typography from '@material-ui/core/Typography';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import { withStyles } from "@material-ui/core/styles";
+import Snackbar from '@material-ui/core/Snackbar';
+import { Alert } from '@material-ui/lab';
 import {insertProduct, updateProduct, deleteProduct} from '../../../redux/actions/PnIActions/productHandler';
-
-// import headerPnI from '../headerPnI';
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  CardHeader,
+  CardBody,
+  CardTitle,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown,
+  Label,
+  FormGroup,
+  Input,
+  Table,
+  Row,
+  Col,
+  UncontrolledTooltip
+} from "reactstrap";
 
  function ProductTable(props) {
  
@@ -16,9 +37,52 @@ import {insertProduct, updateProduct, deleteProduct} from '../../../redux/action
       {title: 'Supplier Name', field: 'sName'},
       {title:'Quantity', field: 'qty'},
       {title: 'Priority', field: 'priority'},
+      {title: 'Status', field: 'status',lookup: { PENDING: 'PENDING', DELIVERED: 'DELIVERED'}},
       {title: 'Date', field: 'date'}
       
     ]); 
+
+    const validateData___= (data) => {
+      if (data.oId.length != 5) {
+        return "Field ID should contain 5 characters"
+      }
+      else if (data.oId == null || data.oId == "") {
+        return "ID field Cannot be null"
+      }
+      else if (data.sName == null || data.sName == ""){
+        return "Supplier Name Cannot be null"
+      }
+      else if(data.qty == 0 || data.qty < 0){
+        return "Quantity shold be a postive value"
+      }
+        return null
+    }
+
+    const [state, setState] = React.useState({
+      open: false,
+      vertical: ' bottom',
+      horizontal: 'right'
+    });
+  
+    const { vertical, horizontal, open, error } = state;
+  
+    const handleClose = () => {
+      setState({ ...state, open: false });
+    }
+   
+    const feedBackToast = (<Snackbar
+      autoHideDuration={20000}
+      anchorOrigin={{ vertical, horizontal }}
+      open={open}
+      onClose={handleClose}
+      key={vertical + horizontal}
+    >
+      <div >
+        <Alert variant="filled" severity="error" style={{ display: "flex", alignItems: "center" }}>
+          <h3>{error}</h3>
+        </Alert>
+      </div>
+    </Snackbar>)
     const Pro = useSelector(state => state.firestore.ordered.productMng)
     const data = Pro ? (Pro.map(pro => ({...pro}))) : (null)
     const table = data ? (
@@ -27,17 +91,14 @@ import {insertProduct, updateProduct, deleteProduct} from '../../../redux/action
         columns={columns}
         data={data}
         editable={{
-          // onRowAdd: newData =>
-          //   new Promise((resolve, reject) => {
-          //     setTimeout(() => {
-          //       //setData([...data, newData]);
-          //       props.insertPurchasesRequest(newData)
-                
-          //       resolve();
-          //     }, 1000)
-          //   }),
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
+              const error = validateData___(newData);
+              if (error != null){
+                setState({ ...state,open: true,error:error});
+                reject();
+              }
+              else{
               setTimeout(() => {
                 const dataUpdate = [...data];
                 const index = oldData.tableData.oId;
@@ -46,7 +107,7 @@ import {insertProduct, updateProduct, deleteProduct} from '../../../redux/action
                 console.log(newData,oldData)
                 props.updateProduct(newData)
                 resolve();
-              }, 1000)
+              }, 1000)}
             }),
           onRowDelete: oldData =>
             new Promise((resolve, reject) => {
@@ -61,9 +122,19 @@ import {insertProduct, updateProduct, deleteProduct} from '../../../redux/action
               }, 1000)
             }),
         }}
+        options={{
+          exportButton: true
+        }      
+        }
       />
     ) : (<div>Loading</div>)
 
+    //--------------------------------------------------------Theme--------------------------------------------------------------------------------------//
+    const WhiteTextTypography = withStyles({
+      root: {
+        color: "#00f2c3 !important"
+      }
+    })(Typography);
 
   
 
@@ -72,6 +143,66 @@ import {insertProduct, updateProduct, deleteProduct} from '../../../redux/action
         <div>
           {/* <headerPnI /> */}
              {table}
+             <Row style={{margin:"0px",marginTop:"15px"}}>
+            <Col lg="3">
+              <Card className="card-chart" style={{height: "165px",border: "#1d8cf8 solid"}}>
+                <CardHeader>
+                  <h4 className="card-category" style={{color:"white",fontSize: "medium"}}>Total Purchases Price</h4>
+                </CardHeader>
+                <CardBody style={{display: "flex",justifyContent: "center",padding: "2px"}}>
+                  <div style={{width: "150px",height: "93px",}}>
+                    <WhiteTextTypography variant="h1" component="h2" gutterBottom>
+        76
+                    </WhiteTextTypography>             
+                 </div>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col lg="3">
+              <Card className="card-chart" style={{height: "165px",border: "#1d8cf8 solid"}}>
+                <CardHeader>
+                  <h4 className="card-category" style={{color:"white",fontSize: "medium"}}>Pending Orders</h4>
+                </CardHeader>
+                <CardBody style={{display: "flex",justifyContent: "center",padding: "2px"}}>
+                  <div style={{width: "150px",height: "93px",}}>
+                    <WhiteTextTypography variant="h1" component="h2" gutterBottom>
+        76
+                    </WhiteTextTypography>             
+                 </div>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col lg="3">
+              <Card className="card-chart" style={{height: "165px",border: "#1d8cf8 solid"}}>
+                <CardHeader>
+                  <h4 className="card-category" style={{color:"white",fontSize: "medium"}}>Deliverd Orders</h4>
+                </CardHeader>
+                <CardBody style={{display: "flex",justifyContent: "center",padding: "2px"}}>
+                  <div style={{width: "150px",height: "93px",}}>
+                    <WhiteTextTypography variant="h1" component="h2" gutterBottom>
+        76
+                    </WhiteTextTypography>             
+                 </div>
+                </CardBody>
+              </Card>
+            </Col>
+            <Col lg="3">
+              <Card className="card-chart" style={{height: "165px",border: "#1d8cf8 solid"}}>
+                <CardHeader>
+                  <h4 className="card-category" style={{color:"white",fontSize: "medium"}}>Cancle Orders</h4>
+                </CardHeader>
+                <CardBody style={{display: "flex",justifyContent: "center",padding: "2px"}}>
+                  <div style={{width: "150px",height: "93px",}}>
+                    <WhiteTextTypography variant="h1" component="h2" gutterBottom>
+        76
+                    </WhiteTextTypography>             
+                 </div>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+
+          {feedBackToast}
         </div>
        
         )
