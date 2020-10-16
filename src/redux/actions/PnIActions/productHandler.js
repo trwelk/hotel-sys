@@ -23,7 +23,6 @@ export const insertProduct = (payload,pType,priority,sName) => {
             oId:payload.oId,
             sName:sName,
             pType:pType,
-            department:payload.department,
             priority:priority,
             qty:payload.qty,
             date:payload.date,

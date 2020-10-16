@@ -48,6 +48,10 @@ import { insertContractInfo, updateContractInfo, deleteContractInfo} from '../..
               }, 1000)
             }),
         }}
+        options={{
+          exportButton: true
+        }      
+        }
       />
     ) : (<div>Loading</div>)
 

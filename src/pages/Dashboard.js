@@ -60,6 +60,9 @@ import purchasesnInventory from '../components/purchasesnInventory/supplierInfo/
 import currentSupplers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
 import purchasesRequest from '../components/purchasesnInventory/purchasesManagment/purchasesRequest';
 import purchasesRequestManagment from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment';
+import productTable from '../components/purchasesnInventory/purchasesManagment/productTable'
+import addContract from '../components/purchasesnInventory/contractManagement/addContract'
+import contractDetails from '../components/purchasesnInventory/contractManagement/contractDetails'
 
 
 import MenuForm from '../components/F&bProduction/management/Forms/MenuForm';
@@ -305,8 +308,11 @@ else{
             <Route exact path="/PnI" component={purchasesnInventory}/>
             <Route exact path="/sup" component={currentSuppliers}/>
             <Route exact path="/pReq" component={purchasesRequest}/>
-            <Route exact path="/pOrd" component={purchasesOrder}/>
             <Route exact path="/pReqMng" component={purchasesRequestManagement}/>
+            <Route exact path="/pOrd" component={purchasesOrder}/>
+            <Route exact path="/pOrdTable" component={productTable}/>
+            <Route exact path="/addCon" component={addContract}/>
+            <Route exact path="/conDetails" component={contractDetails}/>
             <Route exact path="/poolservice" component={PoolService}/>
             <Route exact path="/newMenu" component={MenuForm} />
             {/* <Route exact path='/newOrder' component={OrderForm}/> */}

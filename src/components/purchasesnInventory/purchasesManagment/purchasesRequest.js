@@ -132,10 +132,9 @@ function PurchasesRequest(props) {
       console.log(data.pId)
       return "ID field Cannot be null"
     }
-    // else if (data.pType == null || data.pType == "") {
-    //   console.log(data.pType)
-    //   return "First Product Name Cannot be null"
-    // }
+    else if (data.pType == null || data.pType == "") {
+      return "Product Type Cannot be null"
+    }
     else if(data.qty == 0 || data.qty < 0){
       return "Quantity shold be a postive value"
     }
@@ -262,12 +261,6 @@ function PurchasesRequest(props) {
                   <MenuItem value={"hr"}>HR</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" id = "chkBox"/>}
-                label="I accept the Terms and Conditions"
-              />
             </Grid>
           </Grid>
           <Button
