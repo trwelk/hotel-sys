@@ -74,7 +74,7 @@ const table = datacopy ? (
             new Promise((resolve, reject) => {
 
                   setTimeout(() => {
-                    props.updateCustomer(newData)
+                    props.updateLaundryManagement(newData)
                     resolve();
                   }, 1000)
                 

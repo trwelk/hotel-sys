@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
                                                         
 function NewFeedbackForm(props) {
     const [open, setOpen] = React.useState(false);
-    const [state, setState] = useState({customer:"",platform:"",date:"",type:"",description:"",action:"",title:"",rating:0,department:""});
+    const [state, setState] = useState({customer:"",platform:"",date:null,type:"",description:"",action:"",title:"",rating:0,department:""});
     const [selectedDate, setSelectedDate] = React.useState(new Date('2020-09-17T21:11:54'));
 
     const customersDb = useSelector(state => state.firestore.ordered.customer )
