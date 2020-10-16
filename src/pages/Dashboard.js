@@ -58,7 +58,6 @@ import MaintenenceService from '../components/maintainence/MaintenenceService';
 import purchasesnInventory from '../components/purchasesnInventory/supplierInfo/addSuppliers';
 import currentSupplers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
 import purchasesRequest from '../components/purchasesnInventory/purchasesManagment/purchasesRequest';
-import productTable from '../components/purchasesnInventory/purchasesManagment/productTable'
 import purchasesRequestManagment from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment';
 
 
@@ -84,12 +83,11 @@ import { ModuleNames } from 'ag-grid-community';
 import FeedbackOverview from '../components/frontOffice/overview/FeedbackOverview';
 import CustomerOverview from '../components/frontOffice/overview/CustomerOverview';
 import CustomerLocation from '../components/frontOffice/customer/CustomerLocation';
-import AddContract from '../components/purchasesnInventory/contractManagement/addContract';
 import { CircularProgress } from 'material-ui';
 import tableChart from '../components/F&bProduction/Charts/Chart';
 import CleaningSchedule from '../components/housekeeping/CleaningSchedule';
 import LaundryManagement from '../components/housekeeping/LaundryManagement';
-import contractDetails from '../components/purchasesnInventory/contractManagement/contractDetails';
+import ErrorPage from './ErrorPage';
 // import EditOrderTable from '../components/fnbServices/EditOrderTable';
 // import OrderForm from '../components/fnbServices/OrderForm';
 
@@ -304,13 +302,10 @@ else{
             <Route exact path="/cust" component={CustomerTable}/>
             <Route exact path="/feed" component={FeedBackTable}/>
             <Route exact path="/PnI" component={purchasesnInventory}/>
-            <Route exact path="/addCon" component={AddContract}/>
-            <Route exact path="/conTable" component={contractDetails}/>
             <Route exact path="/sup" component={currentSuppliers}/>
             <Route exact path="/pReq" component={purchasesRequest}/>
             <Route exact path="/pOrd" component={purchasesOrder}/>
             <Route exact path="/pReqMng" component={purchasesRequestManagement}/>
-            <Route exact path="/pTable" component={productTable}/>
             <Route exact path="/poolservice" component={PoolService}/>
             <Route exact path="/newMenu" component={MenuForm} />
             {/* <Route exact path='/newOrder' component={OrderForm}/> */}
@@ -377,8 +372,11 @@ else{
 
             <Route exact path="/edit" component={Editable}/>
             <Route exact path="/map" component={CustomerLocation}/>
-            <Route exact path="/housekeeping/laundry" component={CleaningSchedule}/>
-            <Route exact path="/housekeeping/cleaning" component={LaundryManagement}/>
+            <Route exact path="/housekeeping/laundry" component={LaundryManagement}/>
+            <Route exact path="/housekeeping/cleaning" component={CleaningSchedule}/>
+            
+            <Route path= '*' component={ErrorPage} /> 
+
             </Switch>
           </main>
         </div>

@@ -71,6 +71,8 @@ function FeedBackTable(props) {
             { title: 'Department', field: 'department'},
           ]}
           options={{
+            exportButton: true,
+            filtering: true,
           headerStyle: {
             backgroundColor: '#01579b',
             color: '#FFF',

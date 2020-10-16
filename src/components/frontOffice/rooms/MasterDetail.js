@@ -102,6 +102,9 @@ const useStyles = makeStyles((theme) => ({
   },
   listItems:{
     borderBottom: "black 1px solid",
+    '&:hover,&:focus': {
+      backgroundColor: 'rgba(0,135,193,.7)',
+    },
   }
 }));
 
