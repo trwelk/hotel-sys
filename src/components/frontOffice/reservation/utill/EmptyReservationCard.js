@@ -56,6 +56,8 @@ const useStyles = makeStyles(({ palette }) => ({
   },
 }));
 
+
+
 function EmptyReservationCard (props) {
   const styles = useStyles();
   const shadowStyles = useFadedShadowStyles();
@@ -69,16 +71,37 @@ function EmptyReservationCard (props) {
     console.log("clicked dayy " , props.startDay)
     props.handleDayPick(props.startDay)
   }
-  const handleNewReservation = (e) => {
-    props.handleDayPick(props.startDay)
-    props.insertReservationItem(props.roomType,props.roomNo)
+ 
+//---------------------------------------Internal methods------------------------------------------------------------------------------\
+const validateData___  = (data,type) => {
+  if(data.selectedMonth == null || data.selectedMonth == ""){
+    return "Field Month Cannot be null"
+
   }
+  else if(data.selectedCustomer == null || data.selectedCustomer == ""){
+    return "Field Customer Cannot be null"
+  }
+  else if(data.reservationType == null || data.reservationType == ""){
+    return "Field Reservation Type Cannot be null"
+  }
+  else if(data.numberOfPacks == null || data.numberOfPacks == ""){
+    return "Field Number Of Packs Cannot be null"
+  }
+  else
+  return null;
+}
 
+
+const handleNewReservation = (e) => {
+  props.handleDayPick(props.startDay)
+  let error = null
+  error = validateData___(state)
+  console.log(error) 
+  props.insertReservationItem(props.roomType,props.roomNo)
+}
   //------------------------------------------ui elements---------------------------------------------------------
-  const showButton = state.selectedCustomer ?     <AddCircleIcon variant="outlined" color="secondary" onClick={handleNewReservation}/> : (
-    <NewReservationForm  roomType={props.roomType}  startDay={props.startDay} roomNo={props.roomNo} />
-
-  )
+  const showButton = <AddCircleIcon variant="outlined" color="secondary" onClick={handleNewReservation}/> 
+  
 
   return (
     <Card className={cx(styles.card, shadowStyles.root)}>

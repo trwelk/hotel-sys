@@ -4,6 +4,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import TextField from '@material-ui/core/TextField';
 import { FormControl } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
+import DoneIcon from '@material-ui/icons/Done';
 import { useSelector, connect } from 'react-redux';
 
 
@@ -31,10 +32,10 @@ const FeedbackActionsForm = (props) => {
     return(
         <div>   
             <FormControl fullWidth>
-                <TextField  id="outlined-basic" defaultValue={action} multiline  label="Description" variant="outlined" onChange={handleChangeOfAction}/>
+                <TextField  id="outlined-basic" defaultValue={action} multiline  label="Action" variant="outlined" onChange={handleChangeOfAction}/>
             </FormControl>
-            <IconButton color="primary" aria-label="add to shopping cart" disabled={actionChanged != true}  onClick={handleActionSubmit}>
-                <MenuBookIcon />
+            <IconButton color="primary" aria-label="Actions" disabled={actionChanged != true}  onClick={handleActionSubmit}>
+                <DoneIcon />
             </IconButton>
         </div>
 

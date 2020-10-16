@@ -25,6 +25,7 @@ import { Alert } from '@material-ui/lab';
 import { insertSupplierInfo } from '../../../redux/actions/PnIActions/SupplierList';
 import { useSelector } from 'react-redux';
 import { Feedback } from '@material-ui/icons';
+import { insertProduct } from '../../../redux/actions/PnIActions/productHandler';
 
 
 
@@ -70,9 +71,9 @@ function PurchasesRequest(props) {
 
   const classes = useStyles();
 
-  const [request, setRequest] = useState({pId: '',pType: "Water",qty: '',priority:"Normal" ,date: '',department: "front office" })
+  const [request, setRequest] = useState({pId: '',pType: '', sName:'',qty: '',priority:'' ,date: ''})
   const [priority, setPriority] = React.useState("Normal");
-  const [pType,setProductType] = React.useState();
+  const [pType,setProductType] = React.useState( );
   const [sName,setSupplierName] = React.useState();
   
 
@@ -92,12 +93,12 @@ function PurchasesRequest(props) {
     new Promise((resolve, reject) => {
       const error = validateData___(request);
       if (error != null) {
+        alert(JSON.stringify(request))
         setState({ ...state, open: true, error: error });
         reject();
       } else {
         setTimeout(() => {
-          
-          props.insertPurchasesRequest(request);
+          props.insertPurchasesRequest(request,pType,priority,sName);
           resolve();
         }, 1000)
       }}
@@ -138,10 +139,6 @@ function PurchasesRequest(props) {
     else if (data.pId == null || data.pId == "") {
       console.log(data.pId)
       return "ID field Cannot be null"
-    }
-    else if (data.pType == null || data.pType == "") {
-      console.log(data.pType)
-      return "First Product Name Cannot be null"
     }
     else if(data.qty == 0 || data.qty < 0){
       return "Quantity shold be a postive value"
@@ -185,7 +182,7 @@ function PurchasesRequest(props) {
         <Avatar className={classes.avatar}>
           <AddIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" style={{color:"black"}}>
           Place Your Purchases Order Here...
         </Typography>
         <form className={classes.form} noValidate>
@@ -198,16 +195,19 @@ function PurchasesRequest(props) {
                 id="pId"
                 label="Product Id"
                 name="pId"
+                autoComplete="off"
                 onChange={handleRequest}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl varient="outlined" fullWidth>
+              <InputLabel id="pType">Product Type</InputLabel>
               <Select
                 labelId="Product Name"
                 id="pType"
                 name="pType"
                 lable="Product Name"
+                autoComplete="off"
                 value={pType}
                 onChange={handleProductType}
               >
@@ -217,11 +217,13 @@ function PurchasesRequest(props) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl varient="outlined" fullWidth>
+                <InputLabel id="sName">Supplier Name</InputLabel>
               <Select
                 labelId="Supplier Name"
                 id="sName"
                 name="sName"
                 lable="Supplier Name"
+                autoComplete="off"
                 value={sName}
                 onChange={handleSupplierName}
               >
@@ -293,7 +295,7 @@ function PurchasesRequest(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    insertPurchasesRequest: (payload) => dispatch(insertPurchasesRequest(payload)),
+    insertProduct: (payload,sName,pType,priority) => dispatch(insertProduct(payload,sName,pType,priority)),
   }
 }
 export default compose(connect(null, mapDispatchToProps), firestoreConnect([

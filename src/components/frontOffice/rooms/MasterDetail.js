@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: "100%",
     position: "relative",
-    background: "#00203ca6",
+    background: "#232f3e",
     color: "white"
 
   },
@@ -121,13 +121,13 @@ function PermanentDrawerLeft(props) {
   return (
       <div style={{height:"100%"}}>
       <AppBar position="static" style={{boxShadow:"0px"}} className="Tre">
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" style={{minHeight:" 59px"}}>
           <Tab label="Room Management" {...a11yProps(0)} />
           <Tab label="Room amenities" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
    <div style={{display: "flex",
-                height: "654px",
+                height: "684px",
                 position: "fixed",
                 width: "81%"}}>
       <Drawer
