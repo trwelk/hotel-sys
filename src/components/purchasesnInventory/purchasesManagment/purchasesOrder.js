@@ -71,10 +71,11 @@ function PurchasesOrder(props) {
 
   const classes = useStyles();
 
-  const [productMng, setOrder] = useState({oId: '',pType: '', sName:'',qty: '',priority:'' ,date: ''})
-  const [priority, setPriority] = React.useState("Normal");
-  const [pType,setProductType] = React.useState();
-  const [sName,setSupplierName] = React.useState();
+   const [productMng, setOrder] = useState({oId: '',pType: '', sName:'',qty: '',priority:'' ,date: ''})
+   const [priority, setPriority] = React.useState("Normal");
+   const [pType,setProductType] = React.useState(null);
+   const [sName,setSupplierName] = React.useState();
+
   
 
   const handlePriority = (event) => {
@@ -117,7 +118,9 @@ function PurchasesOrder(props) {
    const supplierNameDB = useSelector(state=> state.firestore.ordered.supplier)
 
    const data = purchasesOrderDB ? (purchasesOrderDB.map(product => ({...product}))) : (null)
-   const sup = supplierNameDB ? (supplierNameDB.map(supplier => ({...supplier}))):(null)
+    const sup = supplierNameDB ? (supplierNameDB.map(supplier => ({...supplier}))):(null)
+    const filterdSupplier = pType ? sup.filter(supplier => supplier.itemtype == pType) : null
+
 
   //  console.log(productTypeDB)
 
@@ -126,9 +129,10 @@ function PurchasesOrder(props) {
     return  <MenuItem key={index} value={pType.pType}>{pType.pType}</MenuItem>
   })) :(null)
 
-  const supplierNameSelector = sup ? (sup.map((sName,index) => {
-      return <MenuItem key={index} value={sName.firstName}>{sName.firstName}</MenuItem>
-  })):(null)
+   const supplierNameSelector = filterdSupplier ? (filterdSupplier.map((sName,index) => {
+       return <MenuItem key={index} value={sName.firstName}>{sName.firstName}</MenuItem>
+   })):(null)
+
 
   // const quantitySelector = data? (data.map((qty,index)=>{
   //   return <TextField ikey = {index} value = {qty.qty}>{qty.qty}</TextField>
