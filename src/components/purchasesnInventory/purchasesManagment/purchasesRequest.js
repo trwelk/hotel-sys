@@ -69,7 +69,7 @@ function PurchasesRequest(props) {
 
   const classes = useStyles();
 
-  const [request, setRequest] = useState({pId: '',pType: '' ,qty: '',priority: '' ,date: '',department: '' })
+  const [request, setRequest] = useState({pId: '',pType: '' ,department: '',priority: '', qty: '' ,date: '' })
   const [priority, setPriority] = React.useState("Normal");
   const [department, setDepartment] = React.useState("frontoffice");
   const [pType,setProductType] = React.useState();
@@ -91,13 +91,13 @@ function PurchasesRequest(props) {
     new Promise((resolve, reject) => {
       const error = validateData___(request);
       if (error != null) {
-        // alert(JSON.stringify(request))
+        
         setState({ ...state, open: true, error: error });
         reject();
       } else {
         setTimeout(() => {
-          
-          props.insertPurchasesRequest(request);
+          // alert(JSON.stringify(request))
+          props.insertPurchasesRequest(request,pType,priority,department);
           resolve();
         }, 1000)
       }}
@@ -119,7 +119,7 @@ function PurchasesRequest(props) {
   //  console.log(productTypeDB)
 
    const productTypeSelector = data ? (data.map((pType,index) => {
-    return  <MenuItem key={index} value={pType.id}>{pType.itemtype}</MenuItem>
+    return  <MenuItem key={index} value={pType.itemtype}>{pType.itemtype}</MenuItem>
   })) :(null)
 
   //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
@@ -292,7 +292,7 @@ function PurchasesRequest(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    insertPurchasesRequest: (payload) => dispatch(insertPurchasesRequest(payload)),
+    insertPurchasesRequest: (payload,pType,priority,department) => dispatch(insertPurchasesRequest(payload,pType,priority,department)),
   }
 }
 export default compose(connect(null, mapDispatchToProps), firestoreConnect([
