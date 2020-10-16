@@ -45,6 +45,7 @@ function MenuForm(props) {
 
   const [menuType, setType] = React.useState(1);
   const menus =  useSelector(state => state.firestore.ordered.Menu)      
+
   const [hide,hideField] = React.useState(false);
   const [Menu, setMenu] = useState({id:'', menuName:'', menuType:1, price:''});
   const [WedItems,setItems] = useState({
@@ -110,6 +111,7 @@ function MenuForm(props) {
       [name]: value
   }));
   };
+  
 
   const [state, setState] = React.useState({
     open: false,
@@ -118,6 +120,7 @@ function MenuForm(props) {
   });
 
   const { vertical, horizontal, open ,error} = state;
+
 
   const CheckExist___ = (data) => {
     let exists = false;

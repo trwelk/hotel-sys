@@ -77,6 +77,7 @@ function Navigator2(props) {
   const [frontOfficeChart, setFrontOfficeChart] = React.useState(false);
 
   const [maintenance, setMaintenance] = React.useState(false);
+  const [houseKeeping, setHouseKeeping] = React.useState(false);
   const [purchasesnInventory, setpurchasesnInventory] = React.useState(false);
   const [fnb,setFnb] = React.useState(false);
   const [production,setProduction] = React.useState(false);
@@ -102,6 +103,10 @@ function Navigator2(props) {
    const handleMaintnance = () => {
     setMaintenance(!maintenance);
     props.setModule("Maintenance")
+};
+const handleHouseKeeping = () => {
+  setHouseKeeping(!maintenance);
+  props.setModule("House Keeping")
 };
    const handlePurchasesnInventory = () => {
     setpurchasesnInventory(!purchasesnInventory);
@@ -293,6 +298,47 @@ const maintenanceNav = (
       </List>
     </Collapse>
     </div>
+)
+
+const houseKeepingNav = (
+  <div>
+<ListItem button onClick={handleHouseKeeping} className={clsx(classes.item,classes.itemActiveItem)}>
+    <ListItemIcon className={classes.itemIcon}>
+      <PeopleIcon />
+    </ListItemIcon>
+    <ListItemText primary="Housekeeping" 
+    classes={{
+              primary: classes.categoryHeaderPrimary,
+            }}/>
+    {houseKeeping ? <ExpandLess /> : <ExpandMore />}
+  </ListItem>
+  <Collapse in={houseKeeping} timeout="auto" unmountOnExit>
+    <List component="div" disablePadding>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <PeopleIcon />
+        </ListItemIcon>
+    <Link to="/housekeeping/laundry" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Laundry Management</ListItemText></Link>
+      </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <PeopleIcon />
+        </ListItemIcon>
+    <Link to="/housekeeping/cleaning" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Room Cleaning</ListItemText></Link>
+      </ListItem>
+         </List>
+  </Collapse>
+  </div>
 )
 
 const frontOfficeNav = (
@@ -701,6 +747,7 @@ const fnbNav = (
       {purchasesnInventoryNav}
       {fnbNav}
       {humanResourceNav}
+      {houseKeepingNav}
     </Drawer>
   );
 }
