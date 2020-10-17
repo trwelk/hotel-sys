@@ -38,8 +38,8 @@ function EditProductTable(props) {
   // .collection('product').get().then((snapshot) =>{
   //   console.log(snapshot.docs);
   // })
-  // const { useState } = React;
-  // const orderNo = props.orderNo
+  const { useState } = React;
+  const orderNo = props.orderNo
   // const products = useSelector(state => state.firestore.ordered.products)
   // const datacopy1 = products ? (products.map(products => ({ ...products }))) : (null)
  
@@ -50,9 +50,6 @@ function EditProductTable(props) {
     
   //   })
   // })
-  // const productSelector = products ? (products.map((product,index) => {
-  //   return  <MenuItem key={index} value={customer.id}>{customer.firstName + ' ' + customer.lastName}</MenuItem>
-  // })) :(null)
 
   const [columns, setColumns] = useState([
 
@@ -60,7 +57,7 @@ function EditProductTable(props) {
     // initialEditValue: 'orderNo+id'
   },
   { title: 'ID', field: 'orderNo',initialEditValue:orderNo ,editable: 'never'},
-    { title: 'ProductName', field: 'ProName',lookup:{}},//lookup:{productSelector}
+    { title: 'ProductName', field: 'ProName',},//lookup:{productSelector}lookup:{}
     { title: 'ProductID', field: 'id' }, 
     { title: 'Quantity', field: 'quantity', type :'numeric', filtering: false },
     { title: 'Volume', field: 'volume', filtering: false ,initialEditValue:0},
