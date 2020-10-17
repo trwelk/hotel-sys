@@ -13,7 +13,7 @@ function InventoryChart() {
         let data = [];
     
     if(Invdata){
-        let inv = Invdata.filter(fnb_Inv => fnb_Inv.stkStatus != "1");
+        let inv = Invdata.filter(fnb_Inv => (new Date(fnb_Inv.expDate) > new Date()));
         for (let index = 0; index < inv.length; index++) {
             labels.push(inv[index].itemName);
             data.push(inv[index].qty);
@@ -22,7 +22,7 @@ function InventoryChart() {
         const chartData = {
             labels:labels,
             datasets:[{
-                label:'Stock Analysis',
+                label:'Stock Analysis(Kgs/Pkts/Cans)',
                 data: data,
             }]
         }
@@ -30,10 +30,18 @@ function InventoryChart() {
             <div className="chart" id="barChart">
                 <Bar
                     data={chartData}
-                    width={100}
-                    height={200}
-                    options={{
-                    maintainAspectRatio: false}}/>
+                    width={150}
+                    height={50}
+                    fontSize='24px'
+                    options={
+                        {scales: {
+                              yAxes: [{
+                                ticks: {
+                                  beginAtZero: true
+                                }
+                              }]                              
+                            }
+                          }}/>
             </div>
         )
 
