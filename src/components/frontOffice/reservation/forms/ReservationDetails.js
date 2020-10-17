@@ -27,7 +27,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import {insertReservation} from '../../../../redux/actions/frontOfficeActions/ReservationActions'
 import { compose } from "redux";
 function Alert(props) {
@@ -177,7 +177,7 @@ function ReservationDetails(props) {
 
   return (
 <React.Fragment>
-    <AddLocationIcon variant="outlined" color="primary" onClick={handleClickOpen}/>
+    <AssignmentIndIcon variant="outlined" color="rgb(24 32 44)" onClick={handleClickOpen}/>
 
 <Dialog
 style={{background: "transparent",overflowY: "hidden"}}
@@ -205,6 +205,9 @@ onClose={handleClose}
           id="demo-simple-select"
           value={reservation.customer}
           onChange={handleCustomerTypeSelector}
+          InputProps={{
+            readOnly: true,
+          }}
         >
          {customerSelector}
         </Select>
@@ -216,11 +219,12 @@ onClose={handleClose}
             required
             id="additionalInfo"
             name="additionalInfo"
-            label="Additional detials"
+            label="Number of packs"
             fullWidth
-            value={reservation.additionalInfo}
+            value={reservation.numberOfPacks}
             autoComplete="shipping address-line1"
             onChange={handleChange}
+            disabled
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -254,12 +258,6 @@ onClose={handleClose}
             InputProps={{
             readOnly: true,
           }}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-            label="Use this address for payment details"
           />
         </Grid>
       </Grid>

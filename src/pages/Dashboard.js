@@ -113,6 +113,11 @@ let theme = createMuiTheme({
       main: '#232f3e',
       dark: '#006db3',
     },
+    tirtiary: {
+      light: 'rgb(57 130 166)',
+      main: 'rgb(57 130 166)',
+      dark: 'rgb(57 130 166)',
+    },
   },
   typography: {
     h5: {
@@ -293,7 +298,7 @@ else{
             <Header onDrawerToggle={handleDrawerToggle} module={module}/>
             <main className={classes.main}>
             <Switch>    
-                <Route exact path="/" component={RoomHandling}/>
+                <Route exact path="/" component={FrontOfficeDashboard}/>
             <Route exact path='/res' component={ReservatonBoxView}/>
             <Route exact path='/ed' component={RoomTypeTable}/>
             {/*<Route exact path='/form' component={InsertReservationForm}/>*/}

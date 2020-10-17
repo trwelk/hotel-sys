@@ -19,6 +19,7 @@ export const insertCustomer = (payload) => {
         const firestore = getFirestore();
         firestore.collection('customer').doc(payload.email).set({
             ...payload,
+            id:payload.email
         }).then((response) => {
             console.log(response)
         }).catch((response) => {

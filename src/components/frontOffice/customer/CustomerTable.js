@@ -156,7 +156,7 @@ const table = data ? (
         exportButton: true,
                 filtering: true,
         headerStyle: {
-          backgroundColor: '#01579b',
+          backgroundColor: 'rgb(35 47 62) ',
           color: '#FFF',
           borderBottom: '1px solid #333',
         width: '100px',

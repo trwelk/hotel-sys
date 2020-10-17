@@ -18,7 +18,8 @@ import Backdrop from '@material-ui/core/Backdrop';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
-
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
@@ -29,6 +30,9 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import ReservationCard from './utill/ReservationCard'
 import EmptyReservationCard from './utill/EmptyReservationCard';
 import {handleMonthPickReservation,handleCustomerPick,handleReservationTypePick,handleNumberOfPacks} from '../../../redux/actions/frontOfficeActions/FrontOfficeNavActions'
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,17 +73,26 @@ function  ReservatonBoxView (props)  {
   const [month, setMonth] = useState(8);
   const [roomType, setRoomType] = React.useState('EXKINGSUITE');
   const [open, setOpen] = React.useState(false);
+  const [internalError, setInternalError] = React.useState(true);
+  const [stat, setStat] = React.useState({
+    error: "Please fill all fields",
+    vertical: 'bottom',
+    horizontal: 'right',
+  });
+
 
 
   const reservationsDb = useSelector(state => state.firestore.ordered.reservation )
+  const reservationError = useSelector(state => state.frontOffice.reservationError )
   const roomsDb = useSelector(state => state.firestore.ordered.room )
   const roomTypeDb = useSelector(state => state.firestore.ordered.roomtype )
   const state = useSelector(state => state.frontOffice )
   const customersDb = useSelector(state => state.firestore.ordered.customer )
   const customers = customersDb ? (customersDb.map(customer => ({...customer}))) : (null)
+  const { vertical, horizontal ,resError} = state;
 
 
-  
+ 
   let rooms = null;
   let reservations= null;
   let numberOfRooms= null;
@@ -175,7 +188,16 @@ function  ReservatonBoxView (props)  {
   }
 
   //----------------------------------------------------------Ui ELEMSNTS--------------------------------------------------------
-  
+  console.log(vertical,horizontal)
+  const feedBackToast =  (<Snackbar 
+    autoHideDuration={2000}
+    anchorOrigin={{ vertical, horizontal }}
+    open={state.reservationError}
+    key={vertical + horizontal}
+    >
+      <Alert severity="error">{resError}</Alert>
+    </Snackbar>)
+
   const rows = box.map((row,rIndex) => {
     const paper = row.map((element,eIndex) => {
       return(
@@ -185,6 +207,7 @@ function  ReservatonBoxView (props)  {
           ) : (<EmptyReservationCard  month={month} roomType={roomType} roomNo={eIndex} startDay={rIndex}/>)}
         </Grid>      
       )})
+ 
 
     return(
 
@@ -265,6 +288,7 @@ if (!isLoaded(reservationsDb) && rows != null){
     <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
         <CircularProgress color="inherit" />
       </Backdrop>
+      {feedBackToast}
   </div>
  
   
@@ -286,7 +310,11 @@ const mapDispatchToProps = (dispatch) => {
 
   }
 }
-export default compose(connect(null,mapDispatchToProps),firestoreConnect([
+
+const mapStateToProps = (state) => {
+  console.log(state)
+}
+export default compose(connect(mapStateToProps,mapDispatchToProps),firestoreConnect([
   {collection: 'reservation'},
   {collection: 'room'},
   {collection: 'roomtype'},

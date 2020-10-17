@@ -13,9 +13,14 @@ import Collapse from '@material-ui/core/Collapse';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import StarBorder from '@material-ui/icons/StarBorder';
 import { Link } from 'react-router-dom';
+import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
+import BathtubIcon from '@material-ui/icons/Bathtub';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import LocalHotelIcon from '@material-ui/icons/LocalHotel';
+import FindInPageIcon from '@material-ui/icons/FindInPage';
 
 import PeopleIcon from '@material-ui/icons/People';
 import { StarHalfRounded } from '@material-ui/icons';
@@ -313,7 +318,7 @@ const frontOfficeNav = (
     <div>
     <ListItem button onClick={handleFrontOffice} className={clsx(classes.item,classes.itemActiveItem)}>
       <ListItemIcon className={classes.itemIcon}>
-        <PeopleIcon />
+        <AccountBalanceIcon />
       </ListItemIcon>
       <ListItemText primary="Front Office" 
       classes={{
@@ -325,7 +330,7 @@ const frontOfficeNav = (
       <List component="div" disablePadding>
         <ListItem button onClick={handleFrontOfficeChart} className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
           <ListItemIcon className={classes.itemIcon}>
-            <PeopleIcon />
+            <FindInPageIcon />
           </ListItemIcon>
           <Link to="/frontoffice/overview" >
           <ListItemText  
@@ -336,9 +341,9 @@ const frontOfficeNav = (
           {frontOfficeChart ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={frontOfficeChart} timeout="auto" unmountOnExit>
-        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
-          <ListItemIcon className={classes.itemIcon}>
-            <PeopleIcon />
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)} >
+          <ListItemIcon className={classes.itemIcon} style={{marginLeft: "20px"}}>
+            <BathtubIcon />
           </ListItemIcon>
           <Link to="/frontoffice/analytics/reservation" >
           <ListItemText  
@@ -348,8 +353,8 @@ const frontOfficeNav = (
           >Reservation Analytics</ListItemText> </Link>
         </ListItem>
         <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
-          <ListItemIcon className={classes.itemIcon}>
-            <PeopleIcon />
+          <ListItemIcon className={classes.itemIcon} style={{marginLeft: "20px"}}>
+            <EmojiEmotionsIcon />
           </ListItemIcon>
           <Link to="/frontoffice/analytics/feedback" >
           <ListItemText  
@@ -359,7 +364,7 @@ const frontOfficeNav = (
           >Feedback Analytics</ListItemText> </Link>
         </ListItem>
         <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
-          <ListItemIcon className={classes.itemIcon}>
+          <ListItemIcon className={classes.itemIcon} style={{marginLeft: "20px"}}>
             <PeopleIcon />
           </ListItemIcon>
           <Link to="/frontoffice/analytics/customer" >
@@ -372,7 +377,7 @@ const frontOfficeNav = (
         </Collapse>
         <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
           <ListItemIcon className={classes.itemIcon}>
-            <PeopleIcon />
+            <LocalHotelIcon />
           </ListItemIcon>
           <Link to="/frontoffice/rooms" >
           <ListItemText  
@@ -394,7 +399,7 @@ const frontOfficeNav = (
         </ListItem>
         <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
           <ListItemIcon className={classes.itemIcon}>
-            <PeopleIcon />
+            <EmojiEmotionsIcon />
           </ListItemIcon>
           <Link to="/frontoffice/feedback" >
           <ListItemText  
@@ -405,7 +410,7 @@ const frontOfficeNav = (
         </ListItem>
         <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
           <ListItemIcon className={classes.itemIcon}>
-            <PeopleIcon />
+            <BathtubIcon />
           </ListItemIcon>
           <Link to="/frontoffice/reservation" >
           <ListItemText  
@@ -416,7 +421,7 @@ const frontOfficeNav = (
         </ListItem>
         <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
           <ListItemIcon className={classes.itemIcon}>
-            <PeopleIcon />
+            <LocalHotelIcon />
           </ListItemIcon>
           <Link to="/frontoffice/roomtypes" >
           <ListItemText  
