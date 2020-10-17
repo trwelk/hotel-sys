@@ -10,12 +10,14 @@ import { useFadedShadowStyles } from '@mui-treasury/styles/shadow/faded';
 import { useGutterBorderedGridStyles } from '@mui-treasury/styles/grid/gutterBordered';
 import { useSelector, connect } from 'react-redux';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-
+import AddIcon from '@material-ui/icons/Add';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import PersonIcon from '@material-ui/icons/Person';
 import IconButton from '@material-ui/core/IconButton';
 import NewReservationForm from '../forms/NewReservationForm';
 import {handleDayPick} from '../../../../redux/actions/frontOfficeActions/FrontOfficeNavActions'
 import {insertReservationItem} from '../../../../redux/actions/frontOfficeActions/ReservationActions'
+import { AddCircle } from '@material-ui/icons';
 
 const useStyles = makeStyles(({ palette }) => ({
   card: {
@@ -56,6 +58,8 @@ const useStyles = makeStyles(({ palette }) => ({
   },
 }));
 
+
+
 function EmptyReservationCard (props) {
   const styles = useStyles();
   const shadowStyles = useFadedShadowStyles();
@@ -69,22 +73,43 @@ function EmptyReservationCard (props) {
     console.log("clicked dayy " , props.startDay)
     props.handleDayPick(props.startDay)
   }
-  const handleNewReservation = (e) => {
-    props.handleDayPick(props.startDay)
-    props.insertReservationItem(props.roomType,props.roomNo)
+ 
+//---------------------------------------Internal methods------------------------------------------------------------------------------\
+const validateData___  = (data,type) => {
+  if(data.selectedMonth == null || data.selectedMonth == ""){
+    return "Field Month Cannot be null"
+
   }
+  else if(data.selectedCustomer == null || data.selectedCustomer == ""){
+    return "Field Customer Cannot be null"
+  }
+  else if(data.reservationType == null || data.reservationType == ""){
+    return "Field Reservation Type Cannot be null"
+  }
+  else if(data.numberOfPacks == null || data.numberOfPacks == ""){
+    return "Field Number Of Packs Cannot be null"
+  }
+  else
+  return null;
+}
 
+
+const handleNewReservation = (e) => {
+  props.handleDayPick(props.startDay)
+  let error = null
+  error = validateData___(state)
+  console.log(error) 
+  props.insertReservationItem(props.roomType,props.roomNo)
+}
   //------------------------------------------ui elements---------------------------------------------------------
-  const showButton = state.selectedCustomer ?     <AddCircleIcon variant="outlined" color="secondary" onClick={handleNewReservation}/> : (
-    <NewReservationForm  roomType={props.roomType}  startDay={props.startDay} roomNo={props.roomNo} />
-
-  )
+  const showButton = <AddCircle variant="outlined" color="secondary"/> 
+  
 
   return (
     <Card className={cx(styles.card, shadowStyles.root)}>
       <Box display={'flex'} style={{padding: "8px 0"}}>
         <Box p={2} flex={'auto'} className={borderedGridStyles.item}>
-        <IconButton  aria-label="add to shopping cart" onClick={handleClick}>
+        <IconButton  aria-label="add to shopping cart"  onClick={handleNewReservation}>
         {showButton}
       
       </IconButton>

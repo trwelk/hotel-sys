@@ -57,10 +57,9 @@ export const insertReservationItem = (roomType,roomNo) => {
         const firestore = getFirestore();
         //const {name,customerEmail ,additional,roomType,startDay,endDay,phone,roomId,roomNo} = payload;
         const state = getState();
-        console.log("actionn dayyy",state.frontOffice.selectedDay)
-
-        console.log( new Date(Date.parse(state.frontOffice.selectedMonth + ' ' + (state.frontOffice.selectedDay) +' 2020'))
-        )
+        if( state.frontOffice.selectedCustomer != null || state.frontOffice.numberOfPacks != 0){
+            console.log(state.frontOffice.selectedCustomer)
+            console.log(state.frontOffice.numberOfPacks)
         firestore.collection('reservation').add({
             customer:state.frontOffice.selectedCustomer,
             endDay:firebase.firestore.Timestamp.fromDate(  new Date(Date.parse((state.frontOffice.selectedMonth + 1)+ ' ' + (state.frontOffice.selectedDay ) +' 2020'))
@@ -75,8 +74,14 @@ export const insertReservationItem = (roomType,roomNo) => {
 
         }).then((doc) => {
             console.log("Document written with ID: ", doc.id);
+            dispatch({type:'RESERVATION_INSERT_SUCCESS'})
         }).catch((error) => {
             console.log("Error writing reservation ", error);
         })
+    }
+    else{
+        dispatch({type:'ERROR_INSERTING_RESERVATION',
+        erro:"Darn it"})
+    }
     }
 }

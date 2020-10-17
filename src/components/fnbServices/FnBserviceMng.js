@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import FoodOrderTable from './FoodOrderTable';
 import OrderForm from './OrderForm';
+import BarChart from './BarChart';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -73,6 +74,15 @@ export default function SimpleTabs() {
       <TabPanel value={value} index={1}>
         {/* <InventoryForm/>
         <BarInventory/> */}
+        <div className='chart'>
+        <BarChart/>
+          <div>
+            <form id="add-cafe-form">
+            <ul id="product-list"></ul>
+            </form>
+          </div>
+        </div>
+        
       </TabPanel>
     </div>
   );

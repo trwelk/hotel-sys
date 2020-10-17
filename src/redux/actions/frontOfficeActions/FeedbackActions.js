@@ -1,3 +1,5 @@
+import firebase from 'firebase/app'
+
 export const updateFeedbackDescription = (id,payload) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
@@ -28,6 +30,7 @@ export const insertFeedback = (payload) => {
         const firestore = getFirestore();
         firestore.collection('feedback').add({
             ...payload,
+            date:firebase.firestore.Timestamp.fromDate(new Date(payload.date))
         }).then((response) => {
             console.log(response)
         }).catch((response) => {

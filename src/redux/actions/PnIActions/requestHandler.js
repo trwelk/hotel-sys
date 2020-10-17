@@ -1,4 +1,4 @@
-export const updatePurchasesRequest = (payload) => {
+export const updatePurchasesRequest = (payload,pType,priority,department) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
@@ -15,15 +15,15 @@ export const updatePurchasesRequest = (payload) => {
 
 }
 
-export const insertPurchasesRequest = (payload) => {
+export const insertPurchasesRequest = (payload,pType,priority,department) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
         firestore.collection('request').doc(payload.pId).set({
             pId:payload.pId,
-            pType:payload.pType,
-            department:payload.department,
-            priority:payload.priority,
+            pType:pType,
+            department:department,
+            priority:priority,
             qty:payload.qty,
             date:payload.date
         }).then((response) => {

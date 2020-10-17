@@ -2,10 +2,12 @@ import { SIGNIN_SUCCESS, SIGNIN_ERROR } from "./ActionTypes";
 
 const initState = {
     loginError:null,
+    userType:"basic"
 
 }
 
 const AuthReducer = (state = initState, action) => {
+    console.log(action)
     switch (action.type){
         case SIGNIN_SUCCESS :
                     return ({
@@ -18,6 +20,11 @@ const AuthReducer = (state = initState, action) => {
                     ...state,
                     loginError:true
                 })
+            case 'USER_TYPE_SET':
+                return ({
+                    ...state,
+                    userType:action.payLoad.userType
+                    })
                                                                   
         default :
             return state;

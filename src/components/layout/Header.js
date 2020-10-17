@@ -16,6 +16,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import {signOut} from '../../redux/actions/authActions/AuthActions'
+import { connect } from 'react-redux';
 
 const lightColor = 'rgba(255, 255, 255, 0.7)';
 
@@ -45,6 +47,9 @@ function Header(props) {
   const { classes, onDrawerToggle } = props;
   const activeModule = props.module;
   console.log(props)
+  const handleLogOut = () => {
+    props.signOut()
+  }
   return (
     <React.Fragment>
       <AppBar color="primary" position="sticky" elevation={0}>
@@ -70,13 +75,13 @@ function Header(props) {
             </Grid>
             <Grid item>
               <Tooltip title="Alerts • No alerts">
-                <IconButton color="inherit">
+                <IconButton color="inherit" >
                   <NotificationsIcon />
                 </IconButton>
               </Tooltip>
             </Grid>
             <Grid item>
-              <IconButton color="inherit" className={classes.iconButtonAvatar}>
+              <IconButton color="inherit" onClick={handleLogOut} className={classes.iconButtonAvatar}>
                 <Avatar src="/static/images/avatar/1.jpg" alt="My Avatar" />
               </IconButton>
             </Grid>
@@ -91,5 +96,10 @@ Header.propTypes = {
   classes: PropTypes.object.isRequired,
   onDrawerToggle: PropTypes.func.isRequired,
 };
+const mapDispatchToProps = (dispatch) => {
+    return{
+        signOut: () => dispatch(signOut())
+    }
+} 
+export default withStyles(styles)(connect(null,mapDispatchToProps)(Header));
 
-export default withStyles(styles)(Header);

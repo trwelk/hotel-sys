@@ -8,7 +8,7 @@ export const updateCustomer = (payload) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection("customer").doc(payload.id).update({
+        firestore.collection("customer").doc(payload.email).update({
           ...payload
         });
     }
@@ -18,8 +18,9 @@ export const updateCustomer = (payload) => {
 export const insertCustomer = (payload) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('customer').doc(payload.id).set({
+        firestore.collection('customer').doc(payload.email).set({
             ...payload,
+            id:payload.email
         }).then((response) => {
             console.log(response)
         }).catch((response) => {
@@ -28,11 +29,11 @@ export const insertCustomer = (payload) => {
     }
 }
 
-export const deleteCustomer = (roomId) => {
-    console.log(roomId)
+export const deleteCustomer = (customer) => {
+    console.log(customer)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('customer').doc(roomId).delete()
+        firestore.collection('customer').doc(customer).delete()
             .then((response) => {
                 console.log(response)
             }).catch((error) => {
@@ -42,24 +43,25 @@ export const deleteCustomer = (roomId) => {
 
 }
 
-export const sendMail = (payload) => {
+export const sendMail = (payload,subscribers) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
     
-        //const messageHtml =  renderEmail(<MyEmail name="Trewon"> This is my message</MyEmail>);
+
+        const messageHtml =  renderEmail(<MyEmail name="Trewon"> {payload.message}</MyEmail>);
         const firestore = getFirestore();
-   
+        console.log(subscribers)
         axios({
             method: "POST", 
             url:"http://localhost:9000/send", 
             data: {
-      	name: payload.name,
-      	email: payload.email,
-      	//messageHtml: messageHtml
+      	subject: payload.subject,
+      	message: payload.message,
+        messageHtml: messageHtml,
+        mailList:subscribers ? subscribers : payload.customer
             }
         }).then((response)=>{
             if (response.data.msg === 'success'){
                 alert("Email sent, awesome!"); 
-                this.resetForm()
             }else if(response.data.msg === 'fail'){
                 alert("Oops, something went wrong. Try again")
             }
