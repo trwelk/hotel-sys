@@ -7,6 +7,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { withStyles } from "@material-ui/core/styles";
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab';
+import {db} from '../../../config/fbConfig'
 import {insertProduct, updateProduct, deleteProduct} from '../../../redux/actions/PnIActions/productHandler';
 import {
   Button,
@@ -37,7 +38,7 @@ import {
       {title: 'Supplier Name', field: 'sName'},
       {title:'Quantity', field: 'qty'},
       {title: 'Priority', field: 'priority'},
-      {title: 'Status', field: 'status',lookup: { PENDING: 'PENDING', DELIVERED: 'DELIVERED'}},
+      {title: 'Status', field: 'status',lookup: { PENDING: 'PENDING', DELIVERED: 'DELIVERED', CANCELED: 'CANCELED'}},
       {title: 'Date', field: 'date'}
       
     ]); 
@@ -85,6 +86,10 @@ import {
     </Snackbar>)
     const Pro = useSelector(state => state.firestore.ordered.productMng)
     const data = Pro ? (Pro.map(pro => ({...pro}))) : (null)
+        
+    const supplierDB = useSelector(state => state.firestore.ordered.supplier)
+    const unitPrice = supplierDB ? (supplierDB.map(supplier => ({...supplier}))):(null)
+    
     const table = data ? (
         <MaterialTable
         title="Purchases Order"
@@ -136,7 +141,8 @@ import {
       }
     })(Typography);
 
-  
+    
+    
 
   
     return(
@@ -218,5 +224,6 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
   export default compose(connect(null,mapDispatchToProps),firestoreConnect([
-    {collection: 'productMng'}
+    {collection: 'productMng'},
+    {collection: 'supplier'}
   ])) (ProductTable)
