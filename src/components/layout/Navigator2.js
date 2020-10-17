@@ -666,7 +666,7 @@ const fnbNav = (
   </ListItem>
          <Collapse in={production} timeout="auto" unmountOnExit>
     <List component="div" disablePadding>
-      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)} style={{display: userType == "ADMIN" ? "flex " :"none"}}>
         <ListItemIcon className={classes.itemIcon}  style={{marginLeft: "20px"}}>
           <StarBorder />
         </ListItemIcon>

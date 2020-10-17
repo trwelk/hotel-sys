@@ -116,7 +116,6 @@ import { CircularProgress } from '@material-ui/core';
                     const dataUpdate = [...data];
                     const index = oldData.tableData.id;
                     dataUpdate[index] = newData;
-                    //setData([...dataUpdate]);
                     console.log(newData,oldData)
                     props.updateInvRec(newData)
                     resolve();
@@ -128,7 +127,6 @@ import { CircularProgress } from '@material-ui/core';
                     const dataDelete = [...data];
                     const index = oldData.tableData.id;
                     dataDelete.splice(index, 1);
-                    //setData([...dataDelete]);
                     console.log(oldData)
                     props.deleteInvRec(oldData.id)
                     resolve()
