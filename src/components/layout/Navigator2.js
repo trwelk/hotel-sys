@@ -201,6 +201,39 @@ const purchasesnInventoryNav  = (
         }}
         >Purchases Order</ListItemText></Link>
       </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+    <Link to="/pOrdTable" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Purchases Table</ListItemText></Link>
+      </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+    <Link to="/addCon" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Add Contract</ListItemText></Link>
+      </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <ShoppingCartIcon />
+        </ListItemIcon>
+    <Link to="/conDetails" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Contract Details</ListItemText></Link>
+      </ListItem>
     </List>
   </Collapse>
   </div>
@@ -570,6 +603,17 @@ const humanResourceNav = (
           primary: classes.itemPrimary,
         }}
         >Absence List</ListItemText></Link>
+      </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <PeopleIcon />
+        </ListItemIcon>
+          <Link to="/hr/absence/abform" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Absence Request</ListItemText></Link>
       </ListItem>
     </List>
   </Collapse>

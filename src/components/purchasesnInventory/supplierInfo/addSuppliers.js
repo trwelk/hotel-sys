@@ -122,9 +122,6 @@ function AddSuppliers(props) {
     else if (data.email == null || data.email == "") {
       return "Email field cannot be null"
     }
-    else if(data.chkBox == false){
-      return "Please accept tearms and conditions"
-    }
     else
       return null
   }
@@ -310,12 +307,6 @@ function AddSuppliers(props) {
                 name="date"
                 type='date'
                 onChange={handleSupplier} />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" id = "chkBox" />}
-                label="I accept the Terms and Conditions"
-              />
             </Grid>
           </Grid>
           <Button

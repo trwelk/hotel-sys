@@ -76,7 +76,7 @@ if(MonthlyReservationsData){
 }
 console.log(monthlyData)
 
-    const chart1 = canvas => {
+  const chart1 = canvas => {
         let ctx = canvas.getContext("2d");
     
         let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
@@ -355,148 +355,16 @@ console.log(monthlyData)
     return(
         <>
         <div className="content">
-        
-            <Row style={{margin:"0px",marginTop:"15px"}}>
-            <Col lg="3">
-              <Card className="card-chart" style={{height: "165px",border: "#1d8cf8 solid"}}>
-                <CardHeader>
-                  <h4 className="card-category" style={{color:"white",fontSize: "medium"}}>Total Shipments</h4>
-                </CardHeader>
-                <CardBody style={{display: "flex",justifyContent: "center",padding: "2px"}}>
-                  <div style={{width: "150px",height: "93px",}}>
-                    <WhiteTextTypography variant="h1" component="h2" gutterBottom>
-        76
-                    </WhiteTextTypography>             
-                 </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col lg="3">
-              <Card className="card-chart" style={{height: "165px",border: "#1d8cf8 solid"}}>
-                <CardHeader>
-                  <h4 className="card-category" style={{color:"white",fontSize: "medium"}}>Total Shipments</h4>
-                </CardHeader>
-                <CardBody style={{display: "flex",justifyContent: "center",padding: "2px"}}>
-                  <div style={{width: "150px",height: "93px",}}>
-                    <WhiteTextTypography variant="h1" component="h2" gutterBottom>
-        76
-                    </WhiteTextTypography>             
-                 </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col lg="3">
-              <Card className="card-chart" style={{height: "165px",border: "#1d8cf8 solid"}}>
-                <CardHeader>
-                  <h4 className="card-category" style={{color:"white",fontSize: "medium"}}>Total Shipments</h4>
-                </CardHeader>
-                <CardBody style={{display: "flex",justifyContent: "center",padding: "2px"}}>
-                  <div style={{width: "150px",height: "93px",}}>
-                    <WhiteTextTypography variant="h1" component="h2" gutterBottom>
-        76
-                    </WhiteTextTypography>             
-                 </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col lg="3">
-              <Card className="card-chart" style={{height: "165px",border: "#1d8cf8 solid"}}>
-                <CardHeader>
-                  <h4 className="card-category" style={{color:"white",fontSize: "medium"}}>Total Shipments</h4>
-                </CardHeader>
-                <CardBody style={{display: "flex",justifyContent: "center",padding: "2px"}}>
-                  <div style={{width: "150px",height: "93px",}}>
-                    <WhiteTextTypography variant="h1" component="h2" gutterBottom>
-        76
-                    </WhiteTextTypography>             
-                 </div>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-          <Row style={{margin:"0px"}}>
+          <Row style={{margin:"0px",marginTop:"20px"}}>
             <Col xs="12">
-              <Card className="card-chart">
+              <Card className="card-chart" style={{boxShadow:"0px 1px 20px 2px rgb(0 0 0 / 79%)"}}>
                 <CardHeader>
                   <Row>
                     <Col className="text-left" sm="6">
                       <h5 className="card-category">Reservations</h5>
                       <CardTitle tag="h2">Yearly Reservation Overview</CardTitle>
                     </Col>
-                    <Col sm="6">
-                      <ButtonGroup
-                        className="btn-group-toggle float-right"
-                        data-toggle="buttons"
-                      >
-                        <Button
-                          tag="label"
-                          className={classNames("btn-simple", {
-                            active: bigChartData === "chart1"
-                          })}
-                          color="info"
-                          id="0"
-                          size="sm"
-                          onClick={() => setBigChartData("chart1")}
-                        >
-                          <input
-                            defaultChecked
-                            className="d-none"
-                            name="options"
-                            type="radio"
-                          />
-                          <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                            Accounts
-                          </span>
-                          <span className="d-block d-sm-none">
-                            <i className="tim-icons icon-single-02" />
-                          </span>
-                        </Button>
-                        <Button
-                          color="info"
-                          id="1"
-                          size="sm"
-                          tag="label"
-                          className={classNames("btn-simple", {
-                            active: bigChartData === "data2"
-                          })}
-                          onClick={() => setBigChartData("data2")}
-                        >
-                          <input
-                            className="d-none"
-                            name="options"
-                            type="radio"
-                          />
-                          <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                            Purchases
-                          </span>
-                          <span className="d-block d-sm-none">
-                            <i className="tim-icons icon-gift-2" />
-                          </span>
-                        </Button>
-                        <Button
-                          color="info"
-                          id="2"
-                          size="sm"
-                          tag="label"
-                          className={classNames("btn-simple", {
-                            active: bigChartData === "data3"
-                          })}
-                          onClick={() => setBigChartData("data3")}
-                        >
-                          <input
-                            className="d-none"
-                            name="options"
-                            type="radio"
-                          />
-                          <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                            Sessions
-                          </span>
-                          <span className="d-block d-sm-none">
-                            <i className="tim-icons icon-tap-02" />
-                          </span>
-                        </Button>
-                      </ButtonGroup>
-                    </Col>
+                    
                   </Row>
                 </CardHeader>
                 <CardBody>
@@ -514,7 +382,7 @@ console.log(monthlyData)
           </Row>
           <Row style={{margin:"0px"}}>
             <Col lg="4">
-              <Card className="card-chart">
+              <Card className="card-chart" style={{boxShadow:"0px 1px 20px 2px rgb(0 0 0 / 79%)"}}>
                 <CardHeader>
                   <h5 className="card-category">Overall</h5>
                   <CardTitle tag="h3">
@@ -533,7 +401,7 @@ console.log(monthlyData)
               </Card>
             </Col>
             <Col lg="4">
-              <Card className="card-chart">
+              <Card className="card-chart" style={{boxShadow:"0px 1px 20px 2px rgb(0 0 0 / 79%)"}}>
                 <CardHeader>
                   <h5 className="card-category">yearly</h5>
                   <CardTitle tag="h3">
@@ -553,7 +421,7 @@ console.log(monthlyData)
               </Card>
             </Col>
             <Col lg="4">
-              <Card className="card-chart">
+              <Card className="card-chart" style={{boxShadow:"0px 1px 20px 2px rgb(0 0 0 / 79%)"}}>
                 <CardHeader>
                   <h5 className="card-category">Completed Tasks</h5>
                   <CardTitle tag="h3">
