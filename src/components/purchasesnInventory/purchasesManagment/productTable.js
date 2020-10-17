@@ -7,6 +7,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { withStyles } from "@material-ui/core/styles";
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab';
+import {db} from '../../../config/fbConfig'
 import {insertProduct, updateProduct, deleteProduct} from '../../../redux/actions/PnIActions/productHandler';
 import {
   Button,
@@ -37,7 +38,7 @@ import {
       {title: 'Supplier Name', field: 'sName'},
       {title:'Quantity', field: 'qty'},
       {title: 'Priority', field: 'priority'},
-      {title: 'Status', field: 'status',lookup: { PENDING: 'PENDING', DELIVERED: 'DELIVERED'}},
+      {title: 'Status', field: 'status',lookup: { PENDING: 'PENDING', DELIVERED: 'DELIVERED', CANCELED: 'CANCELED'}},
       {title: 'Date', field: 'date'}
       
     ]); 
@@ -105,6 +106,7 @@ import {
         })
     }
     console.log(totalPurchase)
+
     const table = data ? (
         <MaterialTable
         title="Purchases Order"
@@ -156,7 +158,8 @@ import {
       }
     })(Typography);
 
-  
+    
+    
 
   
     return(

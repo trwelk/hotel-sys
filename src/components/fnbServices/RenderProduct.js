@@ -5,7 +5,7 @@ const productList = document.querySelector('#product-list');
      let ProName = document.createElement('span');
      let price = document.createElement('span');
 
-     li.setAttribute('data-id',doc.id);
+     li.setAttribute('data-id',doc.data().id);
      ProName.textContent = doc.data().ProName;
      price.textContent = doc.data().price;
 
@@ -18,7 +18,7 @@ const productList = document.querySelector('#product-list');
 
   db.collection('product').get().then((snapshot)=>{
     
-    snapshot.doc.forEach(doc=>{
+    snapshot.docs.forEach(doc=>{
        console.log(doc.data());
        RenderProduct(doc);
     })
