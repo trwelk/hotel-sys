@@ -16,6 +16,7 @@ import {insertCustomer} from '../../../redux/actions/frontOfficeActions/Customer
 import {deleteCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
 import NewReservationForm from '../reservation/forms/NewReservationForm';
 import SendMailForm from './form/SendMailForm';
+import { Redirect } from "react-router-dom";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -43,6 +44,11 @@ function CustomerTable(props) {
     const customers = useSelector(state => state.firestore.ordered.customer)    
     const data = customers ? (customers.map(customer => ({...customer}))) : (null)
     const datacopy = data
+    const userType = useSelector(state => state.auth.userType)    
+    if(userType != "ADMIN"){
+      return <Redirect to="/error" />
+  
+    }
     //--------------------------------------------INTERNAL METHODS--------------------------------------------------------------------------------
     const validateData___  = (data,type) => {
       if(data.id == null || data.id == ""){
