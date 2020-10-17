@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%', 
     marginTop: theme.spacing(2),
   },
   submit: {
@@ -78,7 +78,7 @@ function AbsenceRequest(props) {
     horizontal: 'right',
   });
   const { vertical, horizontal, open, error } = state;
-  const [absence, setAbsence] = useState({employee: '', abtype: '', fromdate: '', todate: '', days: '', reason: '', status: 'Open'});
+  const [absence, setAbsence] = useState({employee: '', abtype: '', from: '', to: '', days: '', reason: '', status: 'Open'});
 
   const absencetypesDB = useSelector(state => state.firestore.ordered.absencetype)
   const absencetypes = absencetypesDB ? (absencetypesDB.map(absencetype => ({...absencetype}))) : (null)
@@ -96,7 +96,7 @@ function AbsenceRequest(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     new Promise((resolve, reject) => {
-      //totalDays(absence);
+      totalDays(absence);
       const error = validateData___(absence);
       if (error != null) {
         setState({ ...state, open: true, error: error });
@@ -126,6 +126,42 @@ function AbsenceRequest(props) {
     }));
   }
 
+  const getFormattedDate = (date) => {
+    var year = date.getFullYear();
+    
+  
+    var month = (1 + date.getMonth()).toString();
+    month = month.length > 1 ? month : '0' + month;
+  
+    var day = date.getDate().toString();
+    day = day.length > 1 ? day : '0' + day;
+    
+    return month + '/' + day + '/' + year;
+  }
+
+  
+  const handleAbsenceDate = (event) => {
+    const { name, value } = event.target;
+    setAbsence(prevState => ({
+      ...prevState,
+      [name]: getFormattedDate(new Date(value))
+    }));
+  }
+
+  const handleDemoData = (e) => {
+    props.insertAbsence({
+      employee: 'EM001',
+      abtype: 'SICK',
+      from: '10/19/2020',
+      to: '10/19/2020',
+      days: '1',
+      reason: 'High Fever',
+      status: 'Open'
+      
+    });
+  }
+
+
   //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
   const validateData___ = (data) => {
     if (data.employee == null || data.employee == "") {
@@ -133,18 +169,6 @@ function AbsenceRequest(props) {
     }
     else if (data.employee.length != 5) {
       return "Field EMPLOYEE ID should contain 5 characters"
-    }
-    else if (data.firstName == null || data.firstName == "") {
-      return "First Name Cannot be null"
-    }
-    else if (data.lastName == null || data.lastName == "") {
-      return "Last Name cannot be  null"
-    }
-    else if (data.email == null || data.email == "") {
-      return "Email field cannot be null"
-    }
-    else if(data.chkBox == false){
-      return "Please accept tearms and conditions"
     }
     else
       return null
@@ -195,7 +219,7 @@ function AbsenceRequest(props) {
                 onChange={handleAbsence}
               />
             </Grid>
-            <Grid item xs={12}>
+             <Grid item xs={12}>
               <FormControl varient="outlined" required fullWidth>
                 <InputLabel>Absence Type</InputLabel>
                 <Select id="abtype"
@@ -206,39 +230,30 @@ function AbsenceRequest(props) {
                   {absenceTypeSelector}
                 </Select>
               </FormControl>
-            </Grid><Grid item xs={12} sm={4}>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                    disableToolbar
-                    variant="inline"
-                    format="MM/dd/yyyy"
-                    margin="normal"
-                    id="fromdate"
-                    label="From Date "
-                    //value={selectedDate}
-                    onChange={handleAbsence}
-                    KeyboardButtonProps={{
-                        'aria-label': 'change date',
-                    }}
-                    />
-                </MuiPickersUtilsProvider>
+            </Grid> 
+            <Grid item xs={12} sm={6}>
+            <TextField
+                  id="from"
+                  name="from"
+                  label="From Date "
+                  type="date"
+                  style={{width:"89%",marginTop:"10px"}}
+                  onChange={handleAbsenceDate}
+                  InputLabelProps={{
+                  shrink: true,
+                  }}/>
             </Grid>
-            <Grid item xs={12} sm={4}>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                    disableToolbar
-                    variant="inline"
-                    format="MM/dd/yyyy"
-                    margin="normal"
-                    id="todate"
-                    label="To Date"
-                    //value={selectedDate}
-                    onChange={handleAbsence}
-                    KeyboardButtonProps={{
-                        'aria-label': 'change date',
-                    }}
-                    />
-                </MuiPickersUtilsProvider>
+            <Grid item xs={12} sm={6}>
+            <TextField
+                  id="to"
+                  name="to"
+                  label="To Date "
+                  type="date"
+                  style={{width:"89%",marginTop:"10px"}}
+                  onChange={handleAbsenceDate}
+                  InputLabelProps={{
+                  shrink: true,
+                  }}/>
             </Grid>
             <Grid item xs={12} >
               <TextField
@@ -265,7 +280,7 @@ function AbsenceRequest(props) {
                   <MenuItem key={30} value={"hr"}>HR</MenuItem>
                 </Select>
               </FormControl>
-            </Grid> */}
+            </Grid> }
             {/* <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" id = "chkBox" />}
@@ -284,6 +299,18 @@ function AbsenceRequest(props) {
           >
             Request Absence
               </Button>
+
+            <Button
+            type="submit"
+            id="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={handleDemoData}
+          >
+            Demo
+            </Button>
               
         </form>
         {feedBackToast}

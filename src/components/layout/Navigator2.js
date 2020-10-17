@@ -495,6 +495,17 @@ const humanResourceNav = (
         <ListItemIcon className={classes.itemIcon}>
           <PeopleIcon />
         </ListItemIcon>
+          <Link to="/hr/employee/info" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Employee</ListItemText></Link>
+      </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <PeopleIcon />
+        </ListItemIcon>
           <Link to="/hr/attendence" >
         <ListItemText  
             classes={{

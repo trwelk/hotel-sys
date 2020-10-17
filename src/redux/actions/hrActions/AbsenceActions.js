@@ -13,6 +13,7 @@ export const insertAbsence = (payload) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
+        console.log(payload)
         firestore.collection('absence').add({
             ...payload
         }).then((response) => {
