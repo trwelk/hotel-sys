@@ -3,7 +3,7 @@ import React from 'react'
  import { firestoreConnect } from 'react-redux-firebase';
  import { useSelector, connect } from 'react-redux';
  import { compose } from 'redux';
-import { insertBarInvRec, deleteBarInvRec, updateBarInvRec } from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions';
+import { insertBarInvRec, deleteBarInvRec, updateBarInvRec } from '../../redux/actions/FnBServiceActions/BarInventoryAction';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import CancelIcon from '@material-ui/icons/Cancel';
 import TextField from '@material-ui/core/TextField';
