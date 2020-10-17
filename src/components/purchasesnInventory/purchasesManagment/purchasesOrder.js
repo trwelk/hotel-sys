@@ -145,6 +145,9 @@ function PurchasesOrder(props) {
     else if (data.sName == null || data.sName == ""){
       return "Supplier Name Cannot be null"
     }
+    else if(data.pType == null || data.pType == ""){
+      return "Product Type cannot be null"
+    }
     else if(data.qty == 0 || data.qty < 0){
       return "Quantity shold be a postive value"
     }
