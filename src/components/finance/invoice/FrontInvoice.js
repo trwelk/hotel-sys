@@ -1,16 +1,15 @@
+//importing docs & default components
 import React from 'react'
-import MaterialTable from 'material-table'
-
+import MaterialTable, { MTableToolbar } from 'material-table'
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
-
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 
-
+//Import CRUD Operation for Front Invoice
 import {updateFrontInvoice} from '../../../redux/actions/financeActions/FrontInvoiceActions'
 import {insertFrontInvoice} from '../../../redux/actions/financeActions/FrontInvoiceActions'
 import {deleteFrontInvoice} from '../../../redux/actions/financeActions/FrontInvoiceActions'
@@ -19,12 +18,10 @@ import {deleteFrontInvoice} from '../../../redux/actions/financeActions/FrontInv
  
     const { useState } = React;
     const [columns, setColumns] = useState([
-        { title: 'Invoice No', field: 'frontInvoice' },
-        //{ title: 'Date', field: 'date' },
+        { title: 'Invoice No', field: 'id' },
+        { title: 'Date', field: 'date', type:'date' },
         { title: 'Prepared BY', field: 'preparedBy' },
         { title: 'Customer Type', field: 'customerType', lookup: {30: 'Guest', 31: 'Non-Guest'}},
-        { title: 'Reservation ID', field: 'reservationID'},
-        { title: 'Guest ID', field: 'guestID' },
         { title: 'Room Charges', field: 'roomCharges', type:'numeric'},
         { title: 'Housekeeping Charges', field: 'houseCharges', type:'numeric'},
         { title: 'F&B Charges', field: 'fnbCharges',type:'numeric'},
@@ -33,47 +30,62 @@ import {deleteFrontInvoice} from '../../../redux/actions/financeActions/FrontInv
         { title: 'Other Charges', field: 'otherCharges', type:'numeric'},
         { title: 'Payment Type', field: 'paymentType', lookup:{30:'Cash', 31:'Card'}},
         { title: 'Tax %', field: 'tax', type:'numeric'},
-        { title: 'Total Amount', field: 'totalAmount', type:'numeric'},
+        { title: 'Total Amount', field: 'totalAmount', type:'numeric', editable:'never'},
        
     ]); 
+
+    //Constant Variables
     const [state, setState] = React.useState({
       open: false,
       vertical: 'bottom',
       horizontal: 'right',
     });
+
     const { vertical, horizontal, open ,error} = state;
 
+     //Demo Button Style
+     const useStyles = makeStyles({
+      root: {
+        background: 'white',
+        border: 0,
+        borderRadius: 6,
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        color: '#000080',
+        height: 48,
+        padding: '0 30px',
+      },
+    });
+
+    const classes = useStyles();
+
+    //Validations Begins
     const validateData___  = (data) => {
-      if(data.frontInvoice == null || data.frontInvoice === ""){
-        return "Invoice ID Cannot be Null"
+      if (data.id == null || data.id === ""){
+         return "Assign a Value, Invoice ID Cannot be Null"
       }
 
-      else if(data.frontInvoice.length !== 5 || data.frontInvoice.length > 5 ){
-        return "Invoice ID should contain 5 chars"
+      else if(data.id.length !== 5 || data.id.length > 5 ){
+        return "Invalid Length, accepted length -> 'FI000'"
       }
-
+      
+      else if(data.date == null || data.date === ""){
+        return "Select a Date"
+      }
+      
       if(data.preparedBy == null || data.preparedBy === ""){
-        return "Field Cannot be Null"
+        return "Assign a Value, Employee ID Cannot be Null"
+      }
+
+      else if(data.paymentType == null || data.paymentType === ""){
+        return "Select a Payment Type"
       }
 
       else if(data.preparedBy.length !== 5 || data.preparedBy.length > 5 ){
-        return "ID should contain 5 chars"
+        return "Invalid Length, accepted length -> 'EM000'"
       }
 
-      if(data.reservationID == null || data.reservationID === ""){
-        return "Reservation ID Cannot be Null"
-      }
-
-      else if(data.reservationID.length !== 5 || data.rereservationIDquestID.length > 5 ){
-        return "Reservation ID should contain 5 chars"
-      }
-
-      if(data.guestID == null || data.guestID === ""){
-        return "Guest ID Cannot be Null"
-      }
-
-      else if(data.guestID.length !== 5 || data.guestID.length > 5 ){
-        return "Guest ID should contain 5 chars"
+      else if(data.customerType == null || data.customerType === ""){
+        return "Select a Customer Type"
       }
 
       else if(data.roomCharges == null || data.roomCharges === "" || data.roomCharges < 0){
@@ -106,26 +118,60 @@ import {deleteFrontInvoice} from '../../../redux/actions/financeActions/FrontInv
 
       else
       return null;
-    }
+    } //Validations Ends here
 
-  const handleClick = (newState) => () => {
+  /*const handleClick = (newState) => () => {
     setState({ open: true, ...newState });
-  };
+  };*/
 
   const handleClose = () => {
     setState({ ...state, open: false });
   };
     
+  //To insert Demo Data
+  const handleDemoData = () => {
+    props.insertFrontInvoice({
+      id:"FI001",
+      date:"Tue Sep 15 2020",
+      preparedBy:"EM001",
+      customerType:"30",
+      roomCharges:"5000.00",
+      houseCharges:"500.00",
+      fnbCharges:"3000.00",
+      shuttleCharges:"200.00",
+      serviceCharges:"1000.00",
+      otherCharges:"750.00",
+      paymentType:"30",
+      tax:"750.00"
+
+    });
+  }
     const frontin = useSelector(state => state.firestore.ordered.frontInvoice)
-    const data = frontin ? (frontin.map(frontin => ({...frontin}))) : (null)
-    
+    const data = frontin ? (frontin.map(frontin => ({...frontin,
+    //Calculation of Invoice
+    totalAmount: parseFloat(frontin.roomCharges) + parseFloat(frontin.houseCharges)
+  + parseFloat(frontin.fnbCharges) + parseFloat(frontin.shuttleCharges) +
+  parseFloat(frontin.serviceCharges) + parseFloat(frontin.otherCharges) + 
+  parseFloat(frontin.tax)}))) : (null)
+  
+  //Front Office Table
     const table = data ? (
         <MaterialTable
+
+        //For reports, pivot and data filter
+        options={{
+          exportButton: true,
+          grouping: true,
+          filtering: true
+        }}
+
         title="Front-Office Invoices"
         columns={columns}
         data={data}
+
         editable={{
 
+          //add new record
           onRowAdd: newData =>
             new Promise((resolve, reject) => {
               const error = validateData___(newData);
@@ -135,13 +181,13 @@ import {deleteFrontInvoice} from '../../../redux/actions/financeActions/FrontInv
               }
               else{
                 setTimeout(() => {
-                  //setData([...data, newData]);
                   props.insertFrontInvoice(newData);
                   resolve();
                 }, 1000)
               }
             }),
 
+          //update existing record
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
               const error = validateData___(newData);
@@ -154,7 +200,6 @@ import {deleteFrontInvoice} from '../../../redux/actions/financeActions/FrontInv
                   const dataUpdate = [...data];
                   const index = oldData.tableData.id;
                   dataUpdate[index] = newData;
-                  //setData([...dataUpdate]);
                   console.log(newData,oldData)
                   props.updateFrontInvoice(newData)
                   resolve();
@@ -163,22 +208,36 @@ import {deleteFrontInvoice} from '../../../redux/actions/financeActions/FrontInv
               
             }),
 
+          //delete existing record
           onRowDelete: oldData =>
             new Promise((resolve, reject) => {
               setTimeout(() => {
                 const dataDelete = [...data];
                 const index = oldData.tableData.id;
                 dataDelete.splice(index, 1);
-                //setData([...dataDelete]);
                 console.log(oldData)
                 props.deleteFrontInvoice(oldData.id)
                 resolve()
               }, 1000)
             }),
         }}
+
+      //Button to Insert Demo Data
+      components={{
+        Toolbar: props => (
+          <div>
+            <MTableToolbar {...props} />
+            <div>
+              <Button className={classes.root} onClick={handleDemoData}>Click to Insert Demo Data </Button>
+            </div>
+          </div>
+        ),
+      }}
+
       />
     ) : (<div>Loading</div>)
 
+    //Custom Toasts for Validations
     const feedBackToast =  (<Snackbar 
       autoHideDuration={200000}
       anchorOrigin={{ vertical, horizontal }}
@@ -204,6 +263,7 @@ import {deleteFrontInvoice} from '../../../redux/actions/financeActions/FrontInv
         )
   }
 
+  //CRUD Operations for Front Invoice Table
 const mapDispatchToProps = (dispatch) => {
     return {
         updateFrontInvoice: (payload) => dispatch(updateFrontInvoice(payload)),
@@ -214,8 +274,7 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
   export default compose(connect(null,mapDispatchToProps),firestoreConnect([
+    //Database for Front Office Invoice
     {collection: 'frontInvoice'}
   ])) (FrontInvoice)
 
-
- /// export default FrontInvoice

@@ -360,6 +360,7 @@ else{
             <Route exact path='/frontoffice/feedback' component={FeedBackTable}/>
             <Route exact path='/frontoffice/reservation' component={ReservatonBoxView}/>
             <Route exact path='/frontoffice/roomtypes' component={RoomTypeTable}/>
+
             <Route exact path='/frontoffice/overview' component={CustomerOverview}/>
             <Route exact path='/frontoffice/analytics/feedback' component={FeedbackOverview}/>
             <Route exact path='/frontoffice/analytics/customer' component={CustomerOverview}/>
