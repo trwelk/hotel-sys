@@ -1,5 +1,6 @@
 import React from 'react'
-import MaterialTable from 'material-table'
+import MaterialTable, { MTableToolbar } from 'material-table'
+import { Button } from '@material-ui/core';
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
       { title: 'Room Id', field: 'id' },
       { title: 'Room No', field: 'roomNo' ,type: 'numeric'},
       { title: 'Location', field: 'location', lookup: { 'Left Wing': 'Left Wing', 'Right Wing': 'Right Wing', 'Mid Wing': 'Mid Wing'}},
-      { title: 'Floor Number', field: 'floor' ,type: 'numeric'},
+      { title: 'Floor Number', field: 'floor' ,lookup: { 1: '1', 2: '2', 3: '3'}},
       {
         title: 'Maintainance needed',
         field: 'maintainanceRequired' ,
@@ -49,6 +50,15 @@ const useStyles = makeStyles((theme) => ({
     });
     const { vertical, horizontal, open ,error} = state;
 
+    const handleDemo = () => {
+      props.insertRoom({
+        id:"FAMSTD3",
+        roomNo:3,
+        location:"Left Wing",
+        floor:3,
+        maintainanceRequired:12
+      },"FAMSTUDIO");
+    }
 
     const rooms = useSelector(state => state.firestore.ordered.room)
     const roomsCopy = rooms ? (rooms.map(room => ({...room}))) : (null)
@@ -135,15 +145,28 @@ const useStyles = makeStyles((theme) => ({
               }, 1000)
             }),
         }}
-        options={{
+          options={{
+          pageSize:10,
+        exportButton: true,
+                filtering: true,
         headerStyle: {
-          backgroundColor: '#01579b',
+          backgroundColor: 'rgb(35 47 62) ',
           color: '#FFF',
           borderBottom: '1px solid #333',
         width: '100px',
     /* height: 100px; */
         boxShadow: "0 10px 5px -2px #888"
         }
+      }}
+      components={{
+        Toolbar: props => (
+          <div>
+            <MTableToolbar {...props} />
+            <div style={{padding: '0px 10px'}}>
+              <Button onClick={handleDemo}>Demo</Button>
+          </div>
+          </div>
+        ),
       }}
 
       />

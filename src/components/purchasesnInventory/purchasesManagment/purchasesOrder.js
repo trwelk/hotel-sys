@@ -136,6 +136,7 @@ function PurchasesOrder(props) {
 
   //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
   const validateData___= (data) => {
+      console.log(data)
     if (data.oId.length != 5) {
       return "Field ID should contain 5 characters"
     }
@@ -214,7 +215,7 @@ function PurchasesOrder(props) {
                 lable="Product Name"
                 autoComplete="off"
                 value={pType}
-                onChange={handleProductType}
+                onChange={handleProduct}
               >
                 {productTypeSelector}
               </Select>
@@ -230,7 +231,7 @@ function PurchasesOrder(props) {
                 lable="Supplier Name"
                 autoComplete="off"
                 value={sName}
-                onChange={handleSupplierName}
+                onChange={handleProduct}
               >
                 {supplierNameSelector}
               </Select>
