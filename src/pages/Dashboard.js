@@ -60,6 +60,8 @@ import purchasesnInventory from '../components/purchasesnInventory/supplierInfo/
 import currentSupplers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
 import purchasesRequest from '../components/purchasesnInventory/purchasesManagment/purchasesRequest';
 import purchasesRequestManagment from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment';
+import Auth from '../components/auth/Auth'
+import ReactDOM from 'react-dom'
 import productTable from '../components/purchasesnInventory/purchasesManagment/productTable'
 import addContract from '../components/purchasesnInventory/contractManagement/addContract'
 import contractDetails from '../components/purchasesnInventory/contractManagement/contractDetails'
@@ -92,6 +94,7 @@ import fnbInventoryChart from '../components/F&bProduction/Charts/InventoryChart
 import CleaningSchedule from '../components/housekeeping/CleaningSchedule';
 import LaundryManagement from '../components/housekeeping/LaundryManagement';
 import ErrorPage from './ErrorPage';
+import UserTable from '../components/auth/UserTable';
 // import EditOrderTable from '../components/fnbServices/EditOrderTable';
 // import OrderForm from '../components/fnbServices/OrderForm';
 
@@ -109,12 +112,19 @@ function Copyright() {
   );
 }
 
+
+
 let theme = createMuiTheme({
   palette: {
     primary: {
       light: '#63ccff',
       main: '#232f3e',
       dark: '#006db3',
+    },
+    tirtiary: {
+      light: 'rgb(57 130 166)',
+      main: 'rgb(57 130 166)',
+      dark: 'rgb(57 130 166)',
     },
   },
   typography: {
@@ -296,7 +306,7 @@ else{
             <Header onDrawerToggle={handleDrawerToggle} module={module}/>
             <main className={classes.main}>
             <Switch>    
-                <Route exact path="/" component={RoomHandling}/>
+                <Route exact path="/" component={FrontOfficeDashboard}/>
             <Route exact path='/res' component={ReservatonBoxView}/>
             <Route exact path='/ed' component={RoomTypeTable}/>
             {/*<Route exact path='/form' component={InsertReservationForm}/>*/}
@@ -382,6 +392,7 @@ else{
             <Route exact path="/map" component={CustomerLocation}/>
             <Route exact path="/housekeeping/laundry" component={LaundryManagement}/>
             <Route exact path="/housekeeping/cleaning" component={CleaningSchedule}/>
+            <Route exact path="/users" component={UserTable}/>
             
             <Route path= '*' component={ErrorPage} /> 
 

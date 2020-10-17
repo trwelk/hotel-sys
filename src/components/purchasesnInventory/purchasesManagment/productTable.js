@@ -85,11 +85,28 @@ import {
       </div>
     </Snackbar>)
     const Pro = useSelector(state => state.firestore.ordered.productMng)
+    const supplierDb = useSelector(state => state.firestore.ordered.supplier)
+    const suppliers = supplierDb ? (supplierDb.map(supplier => ({...supplier}))) : (null)
+
     const data = Pro ? (Pro.map(pro => ({...pro}))) : (null)
-        
-    const supplierDB = useSelector(state => state.firestore.ordered.supplier)
-    const unitPrice = supplierDB ? (supplierDB.map(supplier => ({...supplier}))):(null)
-    
+    const pendingRequests = data ? data.filter(dat => dat.status == "PENDING").length : 0
+    const deliverRequests = data ? data.filter(dat => dat.status == "DELIVERED").length : 0
+    const canceledRequests = data ? data.filter(dat => dat.status == "CANCELED").length : 0
+    var totalPurchase = 0;
+    if(data && suppliers){
+        data.forEach((product,index) => {
+            suppliers.forEach((supplier,ind) => {
+
+                if(product.sName == supplier.firstName && product.pType == supplier.itemtype){
+                    console.log(product.qty , supplier.unitprice,(parseInt(product.qty) * parseInt(supplier.unitprice)) )
+                    console.log(totalPurchase)
+                    totalPurchase = totalPurchase + (parseInt(product.qty) * parseInt(supplier.unitprice)) 
+                }
+            })
+        })
+    }
+    console.log(totalPurchase)
+
     const table = data ? (
         <MaterialTable
         title="Purchases Order"
@@ -157,8 +174,8 @@ import {
                 </CardHeader>
                 <CardBody style={{display: "flex",justifyContent: "center",padding: "2px"}}>
                   <div style={{width: "150px",height: "93px",}}>
-                    <WhiteTextTypography variant="h1" component="h2" gutterBottom>
-        76
+                    <WhiteTextTypography variant="h4" component="h4" gutterBottom style={{marginTop:"20px"}}>
+                        {totalPurchase}
                     </WhiteTextTypography>             
                  </div>
                 </CardBody>
@@ -172,7 +189,7 @@ import {
                 <CardBody style={{display: "flex",justifyContent: "center",padding: "2px"}}>
                   <div style={{width: "150px",height: "93px",}}>
                     <WhiteTextTypography variant="h1" component="h2" gutterBottom>
-        76
+                        {pendingRequests}
                     </WhiteTextTypography>             
                  </div>
                 </CardBody>
@@ -186,7 +203,7 @@ import {
                 <CardBody style={{display: "flex",justifyContent: "center",padding: "2px"}}>
                   <div style={{width: "150px",height: "93px",}}>
                     <WhiteTextTypography variant="h1" component="h2" gutterBottom>
-        76
+                            {deliverRequests}
                     </WhiteTextTypography>             
                  </div>
                 </CardBody>
@@ -200,7 +217,7 @@ import {
                 <CardBody style={{display: "flex",justifyContent: "center",padding: "2px"}}>
                   <div style={{width: "150px",height: "93px",}}>
                     <WhiteTextTypography variant="h1" component="h2" gutterBottom>
-        76
+                        {canceledRequests}
                     </WhiteTextTypography>             
                  </div>
                 </CardBody>
