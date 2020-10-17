@@ -4,7 +4,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 import { insertMenu, updateMenu, deleteMenu } from '../../../redux/actions/fnbProductionActions/MenuActions';
-import { Button, ButtonGroup } from '@material-ui/core';
+import { Button, ButtonGroup, CircularProgress } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab';
 import MenuItems from './MenuItems';
@@ -276,11 +276,14 @@ function MenuEditable(props) {
           }),
       }}
       options={{
-        exportButton: true
+        exportButton: true,
+        headerStyle: {
+        backgroundColor: '#01579b',
+        color: '#FFF'
       }      
-      }
+      }}
     /></div>
-  ) : (<div>Loading</div>)
+  ) : (<div><CircularProgress style={{marginTop:"200px"}}/></div>)
 
   return (
     <div>
