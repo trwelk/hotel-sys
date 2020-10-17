@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
@@ -21,13 +21,16 @@ import BathtubIcon from '@material-ui/icons/Bathtub';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import LocalHotelIcon from '@material-ui/icons/LocalHotel';
 import FindInPageIcon from '@material-ui/icons/FindInPage';
-
+import { useSelector, connect } from 'react-redux';
 import PeopleIcon from '@material-ui/icons/People';
 import { StarHalfRounded } from '@material-ui/icons';
 import { StepIcon } from '@material-ui/core';
 import { SvgIcon } from 'material-ui';
 import { SpeedDialIcon } from '@material-ui/lab';
-
+import { firestoreConnect } from 'react-redux-firebase';
+import { auth } from '../../config/fbConfig';
+import {db} from '../../config/fbConfig'
+import {setUserType} from '../../redux/actions/authActions/AuthActions'
 
 const styles = (theme) => ({
   categoryHeader: {
@@ -81,6 +84,10 @@ function Navigator2(props) {
   const [frontOffice, setFrontOffice] = React.useState(false);
   const [finance, setFinance] = React.useState(false);
   const [frontOfficeChart, setFrontOfficeChart] = React.useState(false);
+  const [basic,setBasic] = React.useState("flex")
+  const [admin,setAdmin] = React.useState("none")
+  const userType = useSelector(state => state.auth.userType)    
+
 
   const [maintenance, setMaintenance] = React.useState(false);
   const [houseKeeping, setHouseKeeping] = React.useState(false);
@@ -90,6 +97,13 @@ function Navigator2(props) {
   const [services,setServices] = React.useState(false);
   const [humanResource, setHumanResource] = React.useState(false);
 
+  console.log(userType)
+  useEffect(() => {
+    auth.onAuthStateChanged(userAuth => {
+      props.setUserType(userAuth.uid)
+    });
+
+});
 
    const handleFinance = () => {
         setFinance(!finance);
@@ -274,7 +288,7 @@ const maintenanceNav = (
 )
 
 const houseKeepingNav = (
-  <div>
+  <div >
 <ListItem button onClick={handleHouseKeeping} className={clsx(classes.item,classes.itemActiveItem)}>
     <ListItemIcon className={classes.itemIcon}>
       <PeopleIcon />
@@ -328,7 +342,7 @@ const frontOfficeNav = (
     </ListItem>
     <Collapse in={frontOffice} timeout="auto" unmountOnExit>
       <List component="div" disablePadding>
-        <ListItem button onClick={handleFrontOfficeChart} className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItem button onClick={handleFrontOfficeChart} className={clsx(classes.item,classes.nested, classes.itemActiveItem,"basic-user-login")}>
           <ListItemIcon className={classes.itemIcon}>
             <FindInPageIcon />
           </ListItemIcon>
@@ -341,7 +355,7 @@ const frontOfficeNav = (
           {frontOfficeChart ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={frontOfficeChart} timeout="auto" unmountOnExit>
-        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)} >
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem,"basic-user-login")} >
           <ListItemIcon className={classes.itemIcon} style={{marginLeft: "20px"}}>
             <BathtubIcon />
           </ListItemIcon>
@@ -352,7 +366,7 @@ const frontOfficeNav = (
           }}
           >Reservation Analytics</ListItemText> </Link>
         </ListItem>
-        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem,"basic-user-login")}>
           <ListItemIcon className={classes.itemIcon} style={{marginLeft: "20px"}}>
             <EmojiEmotionsIcon />
           </ListItemIcon>
@@ -363,7 +377,7 @@ const frontOfficeNav = (
           }}
           >Feedback Analytics</ListItemText> </Link>
         </ListItem>
-        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem,"basic-user-login")}>
           <ListItemIcon className={classes.itemIcon} style={{marginLeft: "20px"}}>
             <PeopleIcon />
           </ListItemIcon>
@@ -375,7 +389,7 @@ const frontOfficeNav = (
           >Customer Analytics</ListItemText> </Link>
         </ListItem>
         </Collapse>
-        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)} >
           <ListItemIcon className={classes.itemIcon}>
             <LocalHotelIcon />
           </ListItemIcon>
@@ -386,7 +400,7 @@ const frontOfficeNav = (
           }}
           >Room Handling</ListItemText> </Link>
         </ListItem>
-        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem,)} style={{display: userType == "ADMIN" ? "flex" :"none"}}>
           <ListItemIcon className={classes.itemIcon}>
             <PeopleIcon />
           </ListItemIcon>
@@ -397,7 +411,7 @@ const frontOfficeNav = (
           }}
           >Customer Handling</ListItemText></Link>
         </ListItem>
-        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)} style={{display: userType == "ADMIN" ? "flex " :"none"}}>
           <ListItemIcon className={classes.itemIcon}>
             <EmojiEmotionsIcon />
           </ListItemIcon>
@@ -408,7 +422,7 @@ const frontOfficeNav = (
           }}
           >Feedback Handling</ListItemText></Link>
         </ListItem>
-        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem,"basic-user-login")}>
           <ListItemIcon className={classes.itemIcon}>
             <BathtubIcon />
           </ListItemIcon>
@@ -419,7 +433,7 @@ const frontOfficeNav = (
           }}
           >Reservation Handling</ListItemText></Link>
         </ListItem>
-        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem,"basic-user-login")}>
           <ListItemIcon className={classes.itemIcon}>
             <LocalHotelIcon />
           </ListItemIcon>
@@ -740,4 +754,9 @@ Navigator2.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Navigator2);
+const mapDispatchToProps = (dispatch) => {
+  return {
+      setUserType: (payload) => dispatch(setUserType(payload)),
+  }
+}
+export default withStyles(styles)(connect(null,mapDispatchToProps)(Navigator2))

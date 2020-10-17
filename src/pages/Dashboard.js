@@ -60,7 +60,8 @@ import purchasesnInventory from '../components/purchasesnInventory/supplierInfo/
 import currentSupplers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
 import purchasesRequest from '../components/purchasesnInventory/purchasesManagment/purchasesRequest';
 import purchasesRequestManagment from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment';
-
+import Auth from '../components/auth/Auth'
+import ReactDOM from 'react-dom'
 
 import MenuForm from '../components/F&bProduction/management/Forms/MenuForm';
 import FrontOfficeOverview from '../components/frontOffice/FrontOfficeOverview';
@@ -89,6 +90,7 @@ import tableChart from '../components/F&bProduction/Charts/Chart';
 import CleaningSchedule from '../components/housekeeping/CleaningSchedule';
 import LaundryManagement from '../components/housekeeping/LaundryManagement';
 import ErrorPage from './ErrorPage';
+import UserTable from '../components/auth/UserTable';
 // import EditOrderTable from '../components/fnbServices/EditOrderTable';
 // import OrderForm from '../components/fnbServices/OrderForm';
 
@@ -105,6 +107,8 @@ function Copyright() {
     </Typography>
   );
 }
+
+
 
 let theme = createMuiTheme({
   palette: {
@@ -381,6 +385,7 @@ else{
             <Route exact path="/map" component={CustomerLocation}/>
             <Route exact path="/housekeeping/laundry" component={LaundryManagement}/>
             <Route exact path="/housekeeping/cleaning" component={CleaningSchedule}/>
+            <Route exact path="/users" component={UserTable}/>
             
             <Route path= '*' component={ErrorPage} /> 
 
