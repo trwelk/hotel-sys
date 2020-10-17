@@ -667,7 +667,7 @@ const fnbNav = (
             classes={{
           primary: classes.itemPrimary,
         }}
-        >Reports</ListItemText></Link>
+        >Inventory Analysis</ListItemText></Link>
       </ListItem>
     </List>
   </Collapse>

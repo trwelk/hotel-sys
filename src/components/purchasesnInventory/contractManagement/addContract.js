@@ -113,9 +113,6 @@ function AddContract(props) {
     else if (data.supplierName == null || data.supplierName == "") {
       return "Supplier Name Cannot be null"
     }
-    else if(data.chkBox == false){
-      return "Please accept tearms and conditions"
-    }
     else
       return null
   }
@@ -232,12 +229,6 @@ function AddContract(props) {
                 name="description"
                 onChange={handleContract} />
             </Grid>  
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" id = "chkBox" />}
-                label="I accept the Terms and Conditions"
-              />
-            </Grid>
           </Grid>
           <Button
             type="submit"
