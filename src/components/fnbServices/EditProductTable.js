@@ -9,6 +9,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import jsPdf from 'jspdf'
+import 'jspdf-autotable'
 
 import { updateProductType } from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
 import { insertProductType } from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
@@ -42,21 +43,27 @@ function EditProductTable(props) {
   // const products = useSelector(state => state.firestore.ordered.products)
   // const datacopy1 = products ? (products.map(products => ({ ...products }))) : (null)
  
+  // db.collection('product').get().then((snapshot)=>{
+    
+  //   snapshot.docs.forEach(doc=>{
+  //      console.log(doc.data());
+    
+  //   })
+  // })
+
   const [columns, setColumns] = useState([
 
     { title: 'orderProductID', field: 'OPId',editable: 'never'
     // initialEditValue: 'orderNo+id'
   },
   { title: 'ID', field: 'orderNo',initialEditValue:orderNo ,editable: 'never'},
-    { title: 'ProductName', field: 'ProName',},//lookup:{productSelector}
+    { title: 'ProductName', field: 'ProName',},//lookup:{productSelector}lookup:{}
     { title: 'ProductID', field: 'id' }, 
     { title: 'Quantity', field: 'quantity', type :'numeric', filtering: false },
-    { title: 'Volume', field: 'volume', filtering: false },
+    { title: 'Volume', field: 'volume', filtering: false ,initialEditValue:0},
     { title: 'Amount', field: 'amount', type :'numeric', filtering: false },
   ]);
   // const [column, setColumn] = useState([
-
-    
   //   { title: 'ProductName', field: 'ProName'},
   //   { title: 'ProductID', field: 'id' }, 
   //   { title: 'Price', field: 'price' },

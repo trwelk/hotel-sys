@@ -22,14 +22,15 @@ function EnterBarInventoryItem(props) {
 //     { title: 'Amount', field: 'amount', type :'numeric', filtering: false },
 //     { title: 'orderProductID', field: 'OPId',editable: 'never'
 //     // initialEditValue: 'orderNo+id'
-//   }, 
+//   },
+{ title: 'BarInventory ID', field: 'BarInvNo',initialEditValue:BarInvNo ,editable: 'never' },
+{ title: 'BarInventoryProduct ID', field: 'BIID',editable: 'never'},
   { title: 'product ID', field: 'id' },
-  { title: 'BarInventory ID', field: 'BarInvNo',initialEditValue:BarInvNo ,editable: 'never' },
           { title: 'Product Name', field: 'itemName' },
-          { title: 'Price', field: 'price',type :'numeric', filtering: false},
           { title: 'Quantity', field: 'qty',type :'numeric', filtering: false},
-        //   { title: 'Last Modified', field: 'lastModified' },
-          { title: 'BarInventoryProduct ID', field: 'BIID',editable: 'never'}
+          { title: 'Price', field: 'price',type :'numeric', filtering: false},
+                  //   { title: 'Last Modified', field: 'lastModified' },
+          
         //   { title: 'Stock Status', field: 'stkStatus'},
 
   ]);

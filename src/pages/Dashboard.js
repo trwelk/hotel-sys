@@ -19,6 +19,7 @@ import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import EmployeeList from '../components/hr/employee/EmployeeList';
 import AbsenceTypeList from '../components/hr/absence/AbsenceTypeList';
 import AbsenceList from '../components/hr/absence/AbsenceList';
+import AbsenceForm from '../components/hr/absence/AbsenceForm';
 import AttendenceList from '../components/hr/attendence/AttendenceList';
 import PettyRequest from '../components/finance/petty/PettyRequest';
 import PettyCashManagement from '../components/finance/petty/PettyCashManagement';
@@ -87,7 +88,7 @@ import FeedbackOverview from '../components/frontOffice/overview/FeedbackOvervie
 import CustomerOverview from '../components/frontOffice/overview/CustomerOverview';
 import CustomerLocation from '../components/frontOffice/customer/CustomerLocation';
 import { CircularProgress } from 'material-ui';
-import tableChart from '../components/F&bProduction/Charts/Chart';
+import fnbInventoryChart from '../components/F&bProduction/Charts/InventoryChart';
 import CleaningSchedule from '../components/housekeeping/CleaningSchedule';
 import LaundryManagement from '../components/housekeeping/LaundryManagement';
 import ErrorPage from './ErrorPage';
@@ -337,7 +338,7 @@ else{
 
             <Route exact path='/fnb/production/management' component={fnbProdMgmt}/>
             <Route exact path='/fnb/production/newMenu' component={MenuForm}/>
-            <Route exact path='/fnb/production/reports' component={tableChart} />
+            <Route exact path='/fnb/production/reports' component={fnbInventoryChart} />
 
             <Route exact path='/fnb/services/barInvMng' component={FnBServiceBarMng}/>
             <Route exact path="/fnb/services/orderMng" component={FnBserviceMng} />
@@ -366,6 +367,7 @@ else{
             <Route exact path="/hr/employee" component={EmployeeList}/>
             <Route exact path="/hr/absence/abtype" component={AbsenceTypeList}/>
             <Route exact path="/hr/absence/ablist" component={AbsenceList}/>
+            <Route exact path="/hr/absence/abform" component={AbsenceForm}/>
             <Route exact path="/hr/attendence" component={AttendenceList}/>
 
             {/*<Route exact path="/pOrd" component={purchasesOrder}/>*/}

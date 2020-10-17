@@ -604,6 +604,17 @@ const humanResourceNav = (
         }}
         >Absence List</ListItemText></Link>
       </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <PeopleIcon />
+        </ListItemIcon>
+          <Link to="/hr/absence/abform" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Absence Request</ListItemText></Link>
+      </ListItem>
     </List>
   </Collapse>
   </div>
@@ -656,7 +667,7 @@ const fnbNav = (
             classes={{
           primary: classes.itemPrimary,
         }}
-        >Reports</ListItemText></Link>
+        >Inventory Analysis</ListItemText></Link>
       </ListItem>
     </List>
   </Collapse>
