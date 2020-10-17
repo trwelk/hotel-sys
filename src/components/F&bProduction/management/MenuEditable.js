@@ -9,6 +9,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab';
 import MenuItems from './MenuItems';
 import jsPdf from 'jspdf'
+import 'jspdf-autotable'
+import {db} from '../../../config/fbConfig'
 
 function MenuEditable(props) {
 
@@ -70,104 +72,145 @@ function MenuEditable(props) {
       </div>
     </Snackbar>)
 
-  // const exportCsv = () =>{
+  const exportCsv = () =>{
 
-  //   let Row=[];
-  //   let A = [['Menu Id','Menu Name','Menu Type','Price(LKR)','Last Modified']];
-  //   let re = Menu;
-  //   console.log(Menu);
-  //   let Type;
+    let Row=[];
+    let A = [['Menu Id','Menu Name','Menu Type','Price(LKR)','Last Modified']];
+    let mItems = [[]];
+    let re = Menu;
+    let Type;
     
-  //   for(let item = 0;item < re.length;item++){
-  //     switch (parseInt(re[item].menutype)) {
-  //       case 1:
-  //         Type = 'Wedding'
-  //         break;
-  //       case 2:
-  //         Type = 'Breakfast'
-  //          break;
-  //       case 3:
-  //         Type = 'Lunch'
-  //          break;
-  //       case 4:
-  //         Type = 'Dinner'
-  //         break;
-  //       case 5:
-  //         Type = 'Beverage'
-  //         break;
-  //       default:
-  //         break;
-  //     }
-  //     if (re[item].price == "")
-  //       A.push([re[item].id,re[item].menuName,Type,"N/A",re[item].lastModified])
-  //     else
-  //     A.push([re[item].id,re[item].menuName,Type,re[item].price,re[item].lastModified])
-  //   }
+    for(let item = 0;item < re.length;item++){
+      switch (parseInt(re[item].menutype)) {
+        case 1:
+          Type = 'Wedding'
+          break;
+        case 2:
+          Type = 'Breakfast'
+           break;
+        case 3:
+          Type = 'Lunch'
+           break;
+        case 4:
+          Type = 'Dinner'
+          break;
+        case 5:
+          Type = 'Beverage'
+          break;
+        default:
+          break;
+      }
+      if (re[item].price == "")
+        A.push([re[item].id,re[item].menuName,Type,"N/A",re[item].lastModified])
+      else
+        A.push([re[item].id,re[item].menuName,Type,re[item].price,re[item].lastModified])
+      if (re[item].menutype != 1) {
+          A.push(["Item Id", "Item Name", "Item Price(LKR)"])
+      db.collection("Menu").doc(re[item].id).collection("MenuItems").get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            console.log(doc.id, " => ", doc.data().name);
+            A.push([doc.data().itemId, doc.data().name, doc.data().price])
+          });
+        });
 
-  //   console.warn(A);
-  //   for(let i=0; i<A.length; i++){
-  //     Row.push(A[i].join(","));
-  //   }
-  //   console.warn(Row);
-  //   let fileString=Row.join("%0A");
-  //   let a = document.createElement("a");
-  //   a.href='data:attachment/csv,' + fileString;
-  //   a.target="_Blank";
-  //   a.download="Menus.csv";
-  //   document.body.appendChild(a);
-  //   a.click();
+      }
+      else{
+      A.push(['Welcome Drink','Main Dish 1', 'Main Dish 2', 'Main Dish 3', 'Side Dish 1','Side Dish 2','Side Dish 3',
+      'Dessert 1','Dessert 2','Dessert 3']);
+      for (let index = 0; index < mItems.length; index++)
+            A.push([mItems[index].Wlitem1,mItems[index].Mditem1,mItems[index].Mditem2,mItems[index].Mditem3,mItems[index].Sditem1,mItems[index].Sditem2,
+              mItems[index].Sditem3,mItems[index].Dsitem1,mItems[index].Dsitem2,mItems[index].Dsitem3]);   
+      }
+    }
 
-  //   console.warn(fileString);
+    console.warn(A);
+    for(let i=0; i<A.length; i++){
+      Row.push(A[i].join(","));
+    }
+    console.warn(Row);
+    let fileString=Row.join("%0A");
+    let a = document.createElement("a");
+    a.href='data:attachment/csv,' + fileString;
+    a.target="_Blank";
+    a.download="Menus.csv";
+    document.body.appendChild(a);
+    a.click();
 
-  // }
+    console.warn(fileString);
 
-  // const exportPdf = () =>{
-  //   let doc = new jsPdf('p', 'pt');
+  }
 
-  //   let header = [['Menu Id','Menu Name','Menu Type','Price(LKR)','Last Modified']];
-  //   let A = [[]];
-  //   let re = Menu;
-  //   let Type;
+  const exportPdf = () =>{
+    let doc = new jsPdf('p', 'pt');
 
-  //   for(let item = 0;item < re.length;item++){
-  //     switch (parseInt(re[item].menutype)) {
-  //       case 1:
-  //         Type = 'Wedding'
-  //         break;
-  //       case 2:
-  //         Type = 'Breakfast'
-  //          break;
-  //       case 3:
-  //         Type = 'Lunch'
-  //          break;
-  //       case 4:
-  //         Type = 'Dinner'
-  //         break;
-  //       case 5:
-  //         Type = 'Beverage'
-  //         break;
-  //       default:
-  //         break;
-  //     }
-  //     if (re[item].price == "")
-  //       A.push([re[item].id,re[item].menuName,Type,"N/A",re[item].lastModified])
-  //     else
-  //     A.push([re[item].id,re[item].menuName,Type,re[item].price,re[item].lastModified])
-  //   }
+    let header = [['Menu Id','Menu Name','Menu Type','Price(LKR)','Last Modified']];
+    let A = [[]];
+    let re = Menu;
+    let mItems = [][[]];
+    let Type;
 
-  //   doc.text(250,50,"Menu Details");
+      db.collection("Menu").get()
+      .then(()=>{
+        for (let index = 0; index < re.length; index++) {
+        db.collection("Menu").doc(re[index].id).collection("MenuItems").get().then(snapshot => {
+          snapshot.forEach(doc => {
+          console.log(doc.id, " => ", doc.data().name);
+            mItems[index].push([doc.data().itemId, doc.data().name, doc.data().price])
+        })
+      })
+      };
+
+      }
+      ).then(()=>{
+    for(let item = 0;item < re.length;item++){
+
+          switch (parseInt(re[item].menutype)) {
+            case 1:
+              Type = 'Wedding'
+              break;
+            case 2:
+              Type = 'Breakfast'
+               break;
+            case 3:
+              Type = 'Lunch'
+               break;
+            case 4:
+              Type = 'Dinner'
+              break;
+            case 5:
+              Type = 'Beverage'
+              break;
+            default:
+              break;
+          }
+          if (re[item].price == "")
+          A.push([re[item].id,re[item].menuName,Type,"N/A",re[item].lastModified])
+        else
+          A.push([re[item].id, re[item].menuName, Type, re[item].price, re[item].lastModified])
+        if (re[item].menutype != 1) {
+            A.push(["Item Id", "Item Name", "Item Price(LKR)"])
+            for (let index = 0; index < mItems[item].length; index++)
+              A.push([mItems[item][index].itemId,mItems[item][index].name,mItems[item][index].price]);            
+        };
+
+      }
+
+    doc.text(250,50,"Menu Details");
       
-  //   doc.autoTable({
-  //     head: header,
-  //     body: A,
-  //     startY: 80,
-  //     foot:[["Generated By HotelSys"]],
-  //     footStyles:{halign:'center',}
-  //   })          
+    doc.autoTable({
+      head: header,
+      body: A,
+      startY: 80,
+      foot:[["Generated By HotelSys"]],
+      footStyles:{halign:'center',}
+    })          
 
-  //   doc.save("MenuDetails.pdf");  
-    
-  // }
+    doc.save("MenuDetails.pdf");
+
+  });
+
+  }
 
   const Menu = useSelector(state => state.firestore.ordered.Menu)
   const data = Menu ? (Menu.map(menu => ({ ...menu}))) : (null)
@@ -177,26 +220,26 @@ function MenuEditable(props) {
       <Button variant="contained" color="primary" href='/fnb/production/newMenu'>
         Add a Menu
       </Button>
-      {/* <Button variant="contained" color="default" onClick={()=>exportCsv()}>
+      <Button variant="contained" color="default" onClick={()=>exportCsv()}>
         Export as Csv
       </Button>
       <Button variant="contained" color="secondary" onClick={()=>exportPdf()}>
         Export as Pdf
-      </Button> */}
+      </Button>
       </ButtonGroup>
     <MaterialTable
       title="Menu List"
       columns={columns}
       data={data}
       detailPanel={[
-        {                    
+        {
           tooltip: 'Show Menu',
-          render: rowData => {           
-              return (
-                                   <div> 
-                                      <MenuItems MenuNo={rowData.id} MenuType={rowData.menutype}/>
-                                  </div>            
-              )
+          render: rowData => {
+            return (
+              <div>
+                <MenuItems MenuNo={rowData.id} MenuType={rowData.menutype} />
+              </div>
+            )
           }
 
         }]}

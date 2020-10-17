@@ -86,7 +86,7 @@ import CustomerOverview from '../components/frontOffice/overview/CustomerOvervie
 import CustomerLocation from '../components/frontOffice/customer/CustomerLocation';
 import AddContract from '../components/purchasesnInventory/contractManagement/addContract';
 import { CircularProgress } from 'material-ui';
-import tableChart from '../components/F&bProduction/Charts/Chart';
+import fnbInventoryChart from '../components/F&bProduction/Charts/InventoryChart';
 import CleaningSchedule from '../components/housekeeping/CleaningSchedule';
 import LaundryManagement from '../components/housekeeping/LaundryManagement';
 import contractDetails from '../components/purchasesnInventory/contractManagement/contractDetails';
@@ -336,7 +336,7 @@ else{
 
             <Route exact path='/fnb/production/management' component={fnbProdMgmt}/>
             <Route exact path='/fnb/production/newMenu' component={MenuForm}/>
-            <Route exact path='/fnb/production/reports' component={tableChart} />
+            <Route exact path='/fnb/production/reports' component={fnbInventoryChart} />
 
             <Route exact path='/fnb/services/barInvMng' component={FnBServiceBarMng}/>
             <Route exact path="/fnb/services/orderMng" component={FnBserviceMng} />
