@@ -2,15 +2,15 @@ export const updateProductType = (payload) => {
     console.log(payload)
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
-        // payload.OPId = payload.id + payload.orderNo;
+        payload.OPId = payload.id + payload.orderNo;
         firestore.collection("orderProducts").doc(payload.OPId).update({
             OPId:payload.OPId,
-            ProName:payload.ProName,
-            amount:payload.amount,
-            id:payload.id,
             orderNo:payload.orderNo,
+            ProName:payload.ProName,
+            id:payload.id,
             quantity:payload.quantity,
-            Volume:payload.volume,
+            volume:payload.volume,
+            amount:payload.amount,
             // tableNO: payload.tableNO,
             // room: payload.room,
             // description: payload.description,
@@ -51,38 +51,6 @@ export const deleteProductType = (orderId) => {
 
 }
 
-export const updateBarInvRec = (payload) => {
-    console.log(payload)
-    return (dispatch,getState,{getFirestore,getFirebase}) => {
-        const firestore = getFirestore();
-        firestore.collection('barInventory').doc(payload.id).update({
-            id:payload.id,
-            itemName:payload.itemName,
-            price:payload.price,
-            qty:payload.qty,
-            expDate:payload.expDate,
-            lastModified:payload.lastModified,
-            stkStatus:payload.stkStatus
-        });
-    }
-
-}
-
-
-
-export const deleteBarInvRec = (InventoryId) => {
-    console.log(InventoryId)
-    return (dispatch,getState,{getFirestore,getFirebase}) => {
-        const firestore = getFirestore();
-        firestore.collection('barInventory').doc(InventoryId).delete()
-            .then((response) => {
-                console.log(response)
-            }).catch((error) => {
-                console.log(error)
-            })
-    }
-
-}
 
 
 

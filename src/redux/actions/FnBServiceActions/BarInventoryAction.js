@@ -4,12 +4,12 @@ export const updateBarProduct = (payload) => {
         const firestore = getFirestore();
         payload.BIID = payload.id + payload.BarInvNo;
         firestore.collection("inventoryProducts").doc(payload.BIID).update({
-            id:payload.id,
             BarInvNo:payload.BarInvNo,
-            itemName:payload.itemName,
-            price:payload.price,
-            quantity:payload.qty,
             BIID:payload.BIID,
+            id:payload.id,
+            itemName:payload.itemName,
+            qty:payload.qty,
+            price:payload.price,
             // tableNO: payload.tableNO,
             // room: payload.room,
             // description: payload.description,
@@ -60,6 +60,38 @@ export const insertBarInvRec = (payload) => {
         }).catch((response) => {
             console.log(response)
         })
+    }
+
+}
+export const updateBarInvRec = (payload) => {
+    console.log(payload)
+    return (dispatch,getState,{getFirestore,getFirebase}) => {
+        const firestore = getFirestore();
+        firestore.collection('barInventory').doc(payload.id).update({
+            id:payload.id,
+            itemName:payload.itemName,
+            price:payload.price,
+            qty:payload.qty,
+            expDate:payload.expDate,
+            lastModified:payload.lastModified,
+            stkStatus:payload.stkStatus
+        });
+    }
+
+}
+
+
+
+export const deleteBarInvRec = (InventoryId) => {
+    console.log(InventoryId)
+    return (dispatch,getState,{getFirestore,getFirebase}) => {
+        const firestore = getFirestore();
+        firestore.collection('barInventory').doc(InventoryId).delete()
+            .then((response) => {
+                console.log(response)
+            }).catch((error) => {
+                console.log(error)
+            })
     }
 
 }
