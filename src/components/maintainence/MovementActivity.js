@@ -67,8 +67,14 @@ function Alert(props) {
       else if(data.Contact_no == null || data.Contact_no == ""){
         return "Field Phone Cannot be null"
       }
+      else if(data.Contact_no.toString().length != 10){
+        return "Please provide a valid contact number"
+      }
       else if(data.Nic_no == null || data.Nic_no == ""){
         return "Field no_of_guests Name Cannot be null"
+      }
+      else if(data.Nic_no.toString().length != 10){
+        return "Please provide a valid nic number"
       }
       else if(data.Name == null || data.Name == ""){
         return "Field guest_type Cannot be null"

@@ -40,7 +40,7 @@ function Alert(props) {
         paymentMade:100
       });
     }
-  
+    
     const [state, setState] = React.useState({
       open: false,
       vertical: 'bottom',
