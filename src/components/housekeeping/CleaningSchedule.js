@@ -6,10 +6,8 @@ import { compose } from 'redux';
 
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-
+import MuiAlert from '@material-ui/lab/Alert';
 
 import {updateCleaningSchedule} from '../../redux/actions/houseKeepingActions/CleaningScheduleActions'
 import {insertCleaningSchedule} from '../../redux/actions/houseKeepingActions/CleaningScheduleActions'
@@ -31,6 +29,23 @@ function CleaningSchedule
       { title: 'Status', field: 'status'},
     ]); 
 
+    const validateData___  = (data,type) => {
+      if(data.status == null || data.status == ""){
+        return "Field status Cannot be null"
+
+      }
+      else if(data.roomNo == null || data.roomNo == ""){
+        return "Field roomNo Cannot be null"
+      }
+      else if(data.description == null || data.description == ""){
+        return "Field description Cannot be null"
+      }
+      else if(data.empId == null || data.empId == ""){
+        return "Field empId Cannot be null"
+      }
+      else
+      return null;
+    }
     const [state, setState] = React.useState({
       open: false,
       vertical: 'bottom',
@@ -62,23 +77,30 @@ const table = datacopy ? (
         editable={{
           onRowAdd: newData =>
             new Promise((resolve, reject) => {
-             
+              const error = validateData___(newData,"INSERT");
+                if (error != null){
+                  setState({ ...state, open: true,error:error });
+                  reject();
+                }
+                else{
                   setTimeout(() => {
                     console.log(data)
                     props.insertCleaningSchedule(newData);
                     resolve();
                   }, 1000)
-                
-              
+                }
             }),
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
-
-                  setTimeout(() => {
-                    props.updateCleaningSchedule(newData)
-                    resolve();
-                  }, 1000)
-                
+              setTimeout(() => {
+                const dataUpdate = [...data];
+                const index = oldData.tableData.id;
+                dataUpdate[index] = newData;
+                //setData([...dataUpdate]);
+                console.log(newData,oldData)
+                props.updateCleaningSchedule(newData)
+                resolve();
+              }, 1000)
             }),
           onRowDelete: oldData =>
             new Promise((resolve, reject) => {

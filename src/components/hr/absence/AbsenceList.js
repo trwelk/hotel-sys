@@ -1,5 +1,5 @@
 import React from 'react'
-import MaterialTable from 'material-table'
+import MaterialTable, { MTableToolbar } from 'material-table'
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
@@ -8,6 +8,7 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import {insertAbsence, updateAbsence, deleteAbsence} from '../../../redux/actions/hrActions/AbsenceActions'
+import Button from '@material-ui/core/Button';
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
@@ -79,6 +80,19 @@ function AbsenceList(props) {
       setState({ ...state, open: false });
     };
 
+    const handleDemo = () => {
+      props.insertAbsence({
+        id:"EM125",
+        emptype:"PERMANENT",
+        name:"TREVENGER",
+        reportsto:40,
+        contactnumber:"0771231231",
+        department:"FINANCE",
+        designation:"SOMETHING",
+        address:"ABC/d"
+      });
+    }
+  
 
     const table = data ? (
         <div>
@@ -137,7 +151,18 @@ function AbsenceList(props) {
               }, 1000)
             }),
         }}
-      /></div>
+        components={{
+        Toolbar: props => (
+          <div>
+            <MTableToolbar {...props} />
+            <div style={{padding: '0px 10px'}}>
+              <Button onClick={handleDemo}>Demo</Button>
+          </div>
+          </div>
+        ),
+      }}
+      />
+      </div>
     ) : (<div>Loading</div>)
 
 

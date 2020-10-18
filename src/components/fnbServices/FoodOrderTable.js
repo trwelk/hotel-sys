@@ -208,6 +208,7 @@ import { deleteOrderType, updateOrderType } from '../../redux/actions/FnBService
 import jsPdf from 'jspdf'
 
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: '2px 4px',
@@ -238,7 +239,7 @@ const useStyles = makeStyles((theme) => ({
 
 function FeedBackTable(props) {
 
-
+ 
   const [descriptionButtonHidden, setDescriptionButtonHidden] = React.useState(true)
   const [state, setState] = React.useState({
     open: false,
@@ -362,20 +363,20 @@ function FeedBackTable(props) {
               //setData([...dataDelete]);
               console.log(oldData)
               props.deleteOrderType(oldData)
-              resolve()
+              resolve();
             }, 1000)
           }),
-          Action: props => (
-            <Button
-              // onClick={()=>exportPdf()}
-              color="primary"
-              variant="contained"
-              style={{textTransform: 'none'}}
-              size="small"
-            >
-              My Button
-            </Button>
-          ),
+          // Action: props => (
+          //   <Button
+          //     // onClick={()=>exportPdf()}
+          //     color="primary"
+          //     variant="contained"
+          //     style={{textTransform: 'none'}}
+          //     size="small"
+          //   >
+          //     My Button
+          //   </Button>
+          // ),
         }}
         
         // actions={[
@@ -436,13 +437,13 @@ function FeedBackTable(props) {
             },
           },
         ]}
-        actions={[
-          {
-            icon: 'Button',
-            tooltip: 'create a bill',
-            // onClick:()=>exportPdf()
-          }
-        ]}
+        // actions={[
+        //   {
+        //     icon: 'Button',
+        //     tooltip: 'create a bill',
+        //     // onClick:()=>exportPdf()
+        //   }
+        // ]}
         
       />
     )
