@@ -31,7 +31,6 @@ export const setUserType = (uid) => {
         const firestore = getFirestore()
         firestore.collection('user').doc(uid).get()
         .then(function(doc) {
-
             if (doc.exists) {
                 console.log(doc.data())
                 dispatch({
@@ -98,6 +97,8 @@ export const deleteUser = (User) => {
     console.log(User)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
+        const firebase = getFirebase()
+
         firestore.collection('user').doc(User).delete()
             .then((response) => {
                 console.log(response)
