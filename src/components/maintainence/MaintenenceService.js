@@ -7,7 +7,11 @@ import { compose } from 'redux';
 import {updatemaintenanceServices} from '../../redux/actions/maintainanceActions/maintainanceServicesActions'
 import {insertmaintenanceServices} from '../../redux/actions/maintainanceActions/maintainanceServicesActions'
 import {deletemaintenanceServices} from '../../redux/actions/maintainanceActions/maintainanceServicesActions'
-
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
  function MaintenanceServices(props) {
  
     const { useState } = React;
@@ -24,10 +28,51 @@ import {deletemaintenanceServices} from '../../redux/actions/maintainanceActions
         field: 'description',
       },
     ]); 
-    const maintainanceServices = useSelector(state => state.firestore.ordered)
+    const [state, setState] = React.useState({
+      open: false,
+      vertical: 'bottom',
+      horizontal: 'right',
+    });
+
+    const { vertical, horizontal, open ,error} = state;
+
+    const handleClose = () => {
+      setState({ ...state, open: false });
+    };
+
+    const validateData___  = (data,type) => {
+      if(data.paymentMade == null || data.paymentMade == ""){
+        return "Field paymentMade Cannot be null"
+
+      }
+      else if(data.payment_type == null || data.payment_type == ""){
+        return "Field payment_type Name Cannot be null"
+      }
+      else if(data.machine_Type == null || data.machine_Type == ""){
+        return "Field machine_Type Cannot be null"
+      }
+      else if(data.machine_ID == null || data.machine_ID == ""){
+        return "Field Phone Cannot be null"
+      }
+      else if(data.machine_ID.toString().length != 5 ){
+        return "Please enter a valid id ,Should contain 5 characters"
+      }
+      else if(data.Service_type == null || data.Service_type == ""){
+        return "Field machine_Type Cannot be null"
+      }
+      else if(data.Department == null || data.Department == ""){
+        return "Field Department Cannot be null"
+      }
+      else if(data.M_Service_id == null || data.M_Service_id == ""){
+        return "Field M_Service_id Cannot be null"
+      }
+      else
+      return null;
+    }
+
+    const maintainanceServices = useSelector(state => state.firestore.ordered.maintenanceServices)
 console.log(maintainanceServices)
-   // const data = maintainanceServices ? (maintainanceServices.map(maintainanceService => ({...maintainanceService   }))) : (null)
-   const data = null 
+    const data = maintainanceServices ? (maintainanceServices.map(maintainanceService => ({...maintainanceService   }))) : (null)
    const table = data ? (
         <MaterialTable
         title="Maintenance Services Preview"
@@ -36,12 +81,18 @@ console.log(maintainanceServices)
         editable={{
           onRowAdd: newData =>
             new Promise((resolve, reject) => {
-              setTimeout(() => {
-                //setData([...data, newData]);
-                props.insertmaintenanceServices(newData);
-                
-                resolve();
-              }, 1000)
+              const error = validateData___(newData,"INSERT");
+                if (error != null){
+                  setState({ ...state, open: true,error:error });
+                  reject();
+                }
+                else{
+                  setTimeout(() => {
+                    console.log(data)
+                    props.insertmaintenanceServices(newData);
+                    resolve();
+                  }, 1000)
+                }
             }),
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
@@ -51,8 +102,7 @@ console.log(maintainanceServices)
                 dataUpdate[index] = newData;
                 //setData([...dataUpdate]);
                 console.log(newData,oldData)
-                props.updatemaintenanceServices(newData);
-                props.update(newData)
+                props.updatemaintenanceServices(newData)
                 resolve();
               }, 1000)
             }),
@@ -64,7 +114,7 @@ console.log(maintainanceServices)
                 dataDelete.splice(index, 1);
                 //setData([...dataDelete]);
                 console.log(oldData)
-                props.deletemaintenanceServices(oldData);
+                props.deletemaintenanceServices(oldData.id)
                 resolve()
               }, 1000)
             }),
@@ -73,12 +123,22 @@ console.log(maintainanceServices)
     ) : (<div>Loading</div>)
 
 
-  
+    const feedBackToast =  (<Snackbar 
+      autoHideDuration={2000}
+      anchorOrigin={{ vertical, horizontal }}
+      open={open}
+      onClose={handleClose}
+      key={vertical + horizontal}
+      >
+        <Alert severity="error">{error}</Alert>
+      </Snackbar>)
+
 
   
     return(
         <div>
              {table}
+             {feedBackToast}
         </div>
        
         )
