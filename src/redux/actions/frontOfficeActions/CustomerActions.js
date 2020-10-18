@@ -45,7 +45,7 @@ export const deleteCustomer = (customer) => {
 export const sendMail = (payload,subscribers) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
     
-        const messageHtml =  renderEmail(<MyEmail name="Trewon"> {payload.message}</MyEmail>);
+        const messageHtml =  renderEmail(<MyEmail > {payload.message}</MyEmail>);
         const firestore = getFirestore();
         console.log(subscribers)
         axios({

@@ -8,6 +8,11 @@ import {updatemovementActivity} from '../../redux/actions/maintainanceActions/mo
 import {insertmovementActivity} from '../../redux/actions/maintainanceActions/movementActivityActions'
 import {deletemovementActivity} from '../../redux/actions/maintainanceActions/movementActivityActions'
 
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
  function MovementActivity(props) {
  
     const { useState } = React;
@@ -24,6 +29,44 @@ import {deletemovementActivity} from '../../redux/actions/maintainanceActions/mo
         field: 'descriptions',
       },
     ]); 
+    const [state, setState] = React.useState({
+      open: false,
+      vertical: 'bottom',
+      horizontal: 'right',
+    });
+
+    const { vertical, horizontal, open ,error} = state;
+    
+    const handleClose = () => {
+      setState({ ...state, open: false });
+    };
+
+    const validateData___  = (data,type) => {
+      if(data.vehicle_no == null || data.vehicle_no == ""){
+        return "Field vehicle_no Cannot be null"
+
+      }
+      else if(data.no_of_guests == null || data.no_of_guests == ""){
+        return "Field no_of_guests Name Cannot be null"
+      }
+      else if(data.guest_type == null || data.guest_type == ""){
+        return "Field guest_type Cannot be null"
+      }
+      else if(data.Contact_no == null || data.Contact_no == ""){
+        return "Field Phone Cannot be null"
+      }
+      else if(data.Nic_no == null || data.Nic_no == ""){
+        return "Field no_of_guests Name Cannot be null"
+      }
+      else if(data.Name == null || data.Name == ""){
+        return "Field guest_type Cannot be null"
+      }
+      else if(data.Visit_id == null || data.Visit_id == ""){
+        return "Field Phone Cannot be null"
+      }
+      else
+      return null;
+    }
     const movementActivity = useSelector(state => state.firestore.ordered.movementActivity)
     const data = movementActivity ? (movementActivity.map(movementActivity => ({...movementActivity}))) : (null)
     const table = data ? (
@@ -34,12 +77,18 @@ import {deletemovementActivity} from '../../redux/actions/maintainanceActions/mo
         editable={{
           onRowAdd: newData =>
             new Promise((resolve, reject) => {
-              setTimeout(() => {
-                //setData([...data, newData]);
-                props.insertmovementActivity(newData);
-                
-                resolve();
-              }, 1000)
+              const error = validateData___(newData,"INSERT");
+                if (error != null){
+                  setState({ ...state, open: true,error:error });
+                  reject();
+                }
+                else{
+                  setTimeout(() => {
+                    console.log(data)
+                    props.insertmovementActivity(newData);
+                    resolve();
+                  }, 1000)
+                }
             }),
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
@@ -69,6 +118,15 @@ import {deletemovementActivity} from '../../redux/actions/maintainanceActions/mo
       />
     ) : (<div>Loading</div>)
 
+    const feedBackToast =  (<Snackbar 
+      autoHideDuration={2000}
+      anchorOrigin={{ vertical, horizontal }}
+      open={open}
+      onClose={handleClose}
+      key={vertical + horizontal}
+      >
+        <Alert severity="error">{error}</Alert>
+      </Snackbar>)
 
   
 
@@ -76,6 +134,7 @@ import {deletemovementActivity} from '../../redux/actions/maintainanceActions/mo
     return(
         <div>
              {table}
+             {feedBackToast}
         </div>
        
         )

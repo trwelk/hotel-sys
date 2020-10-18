@@ -86,12 +86,14 @@ function PurchasesOrder(props) {
   const handleProductType = (event) => {
     setProductType(event.target.value);
   }
-  const handleSupplierName = (event) => {
+  const handleSupplier = (event) => {
       setSupplierName(event.target.value);
   }
 
   const handleSubmit = (e) =>{ 
     e.preventDefault();
+    console.log(productMng,pType,priority,sName)
+
     new Promise((resolve, reject) => {
       const error = validateData___(productMng);
       if (error != null) {
@@ -100,6 +102,7 @@ function PurchasesOrder(props) {
         reject();
       } else {
         setTimeout(() => {
+          console.log(productMng,pType,priority,sName)
           props.insertProduct(productMng,pType,priority,sName);
           resolve();
         }, 1000)
@@ -137,18 +140,19 @@ function PurchasesOrder(props) {
 
   //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
   const validateData___= (data) => {
-    if (data.oId.length != 5) {
-      return "Field ID should contain 5 characters"
-    }
-    else if (data.oId == null || data.oId == "") {
+      console.log(data)
+    // if (data.oId.length != 5) {
+    //   return "Field ID should contain 5 characters"
+    // }
+     if (data.oId == null || data.oId == "") {
       return "ID field Cannot be null"
     }
-    // else if (data.sName == null || data.sName == ""){
-    //   return "Supplier Name Cannot be null"
-    // }
-    // else if(data.pType == null || data.pType == ""){
-    //   return "Product Type cannot be null"
-    // }
+    else if (data.sName == null || data.sName == ""){
+      return "Supplier Name Cannot be null"
+    }
+    else if(pType == null || pType == ""){
+      return "Product Type cannot be null"
+    }
     else if(data.qty == 0 || data.qty < 0){
       return "Quantity shold be a postive value"
     }
@@ -237,7 +241,7 @@ function PurchasesOrder(props) {
                 lable="Supplier Name"
                 autoComplete="off"
                 value={sName}
-                onChange={handleSupplierName}
+                onChange={handleProduct}
               >
                 {supplierNameSelector}
               </Select>

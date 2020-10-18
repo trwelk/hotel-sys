@@ -2,7 +2,7 @@ import { SIGNIN_SUCCESS, SIGNIN_ERROR } from "./ActionTypes";
 
 const initState = {
     loginError:null,
-    userType:"basic"
+    userType:null
 
 }
 

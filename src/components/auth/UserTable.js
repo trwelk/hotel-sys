@@ -27,7 +27,8 @@ function UserTable(props) {
       { title: 'Email', field: 'email' ,},
       { title: 'Name', field: 'name' },
       { title: 'password', field: 'pass', },
-      { title: 'User Type', field: 'userType',lookUp:{ADMIN:"ADMIN",BASIC:"BASIC"}},
+      { title: 'User Type', field: 'userType',
+      lookup: { ADMIN: 'ADMIN', BASIC: 'BASIC'}},
     ]); 
 
     const [state, setState] = React.useState({

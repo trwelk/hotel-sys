@@ -1,5 +1,5 @@
 import React from 'react'
-import MaterialTable from 'material-table'
+import MaterialTable, { MTableToolbar } from 'material-table'
 import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
@@ -13,7 +13,10 @@ import NewFeedbackForm from './utill/NewFeedbackForm';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {updateFeedback} from '../../../redux/actions/frontOfficeActions/FeedbackActions'
 import {deleteFeedback} from '../../../redux/actions/frontOfficeActions/FeedbackActions'
-import { Redirect } from 'react-router-dom';
+import {insertFeedback} from '../../../redux/actions/frontOfficeActions/FeedbackActions'
+import { Button } from '@material-ui/core';
+import { Redirect } from "react-router-dom";
+import ErrorPage from '../../../pages/ErrorPage';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -55,6 +58,22 @@ function FeedBackTable(props) {
   const addButton = <div><NewFeedbackForm/></div>
   const feedbacks = useSelector(state => state.firestore.ordered.feedback)      
   const auth = useSelector(state => state.firebase.auth)
+  const userType = useSelector(state => state.auth.userType)    
+  if(userType != "ADMIN"){
+    return <Redirect to="/error" />
+
+  }
+
+  const handleDemo = () => {
+    props.insertFeedback({
+      title:"demoTitle",
+      customer:"trewon@gmail.com",
+      rating:1,
+      type:"COMPLIMENT",
+      department:"HR",
+      date:new Date()
+    });
+  }
 
   const data = feedbacks ? (feedbacks.map(feedback => ({...feedback}))) : (null)
       
@@ -71,16 +90,28 @@ function FeedBackTable(props) {
             { title: 'Department', field: 'department'},
           ]}
           options={{
-            exportButton: true,
-            filtering: true,
-          headerStyle: {
-            backgroundColor: '#01579b',
-            color: '#FFF',
-            borderBottom: '1px solid #333',
-          width: '100px',
-          boxShadow: "0 10px 5px -2px #888"
-          }
-        }}
+          pageSize:10,
+        exportButton: true,
+                filtering: true,
+        headerStyle: {
+          backgroundColor: 'rgb(35 47 62) ',
+          color: '#FFF',
+          borderBottom: '1px solid #333',
+        width: '100px',
+    /* height: 100px; */
+        boxShadow: "0 10px 5px -2px #888"
+        }
+      }}
+      components={{
+        Toolbar: props => (
+          <div>
+            <MTableToolbar {...props} />
+            <div style={{padding: '0px 10px'}}>
+              <Button onClick={handleDemo}>Demo</Button>
+          </div>
+          </div>
+        ),
+      }}
           data={data}
           detailPanel={[
             {
@@ -161,7 +192,9 @@ function FeedBackTable(props) {
 const mapDispatchToProps = (dispatch) => {
   return{
     updateFeedback: (payload) => dispatch(updateFeedback(payload)),
-    deleteFeedback: (customerId) => dispatch(deleteFeedback(customerId))
+    deleteFeedback: (customerId) => dispatch(deleteFeedback(customerId)),
+    insertFeedback: (payload) => dispatch(insertFeedback(payload))
+
   }
 }
   export default compose(connect(null,mapDispatchToProps),firestoreConnect([
