@@ -21,6 +21,7 @@ function Alert(props) {
       { title: 'Payment', field: 'paymentMade' },
       { title: 'Compapny', field: 'company'},
       { title: 'Agent', field: 'agent'},
+      { title: 'Date', field: 'date', type:'date' },
       { title: 'Service Type', field: 'sType',lookup: { Chlorification: 'Chlorification', Cleaning: 'Cleaning'}},
       {
         title: 'Description',
@@ -29,7 +30,7 @@ function Alert(props) {
     ]); 
 
     const handleDemo = () => {
-      props.insertpoolService({
+      props.insertpoolService ({
         id:"demo@demo.com",
         paymentMade:"123",
         company:"demoCompany",
