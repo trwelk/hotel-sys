@@ -1,5 +1,5 @@
 import React from 'react'
-import MaterialTable from 'material-table'
+import MaterialTable, { MTableToolbar } from 'material-table'
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
@@ -16,6 +16,7 @@ import {insertCustomer} from '../../../redux/actions/frontOfficeActions/Customer
 import {deleteCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
 import NewReservationForm from '../reservation/forms/NewReservationForm';
 import SendMailForm from './form/SendMailForm';
+import { Redirect } from "react-router-dom";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -25,7 +26,7 @@ function CustomerTable(props) {
  
     const { useState } = React;
     const [columns, setColumns] = useState([
-        { title: 'ID',field: 'id', },
+        { title: 'ID',field: 'id', editable:false},
       { title: 'First Name', field: 'firstName' ,},
       { title: 'Last Name', field: 'lastName' },
       { title: 'Phone Number', field: 'phone', type: 'numeric' },
@@ -43,6 +44,13 @@ function CustomerTable(props) {
     const customers = useSelector(state => state.firestore.ordered.customer)    
     const data = customers ? (customers.map(customer => ({...customer}))) : (null)
     const datacopy = data
+    const userType = useSelector(state => state.auth.userType)    
+    if(userType){
+      if(userType != "ADMIN"){
+        return <Redirect to="/error" />
+    
+      }
+    }
     //--------------------------------------------INTERNAL METHODS--------------------------------------------------------------------------------
     const validateData___  = (data,type) => {
       if(data.id == null || data.id == ""){
@@ -89,11 +97,21 @@ function CustomerTable(props) {
     setState({ ...state, open: false });
   };
 
+  const handleDemo = () => {
+    props.insertCustomer({
+      id:"demo@demo.com",
+      email:"demo@demo.com",
+      phone:parseInt("0771231231"),
+      lastName:"lastDemo",
+      firstName:"firstDemo"
+    });
+  }
+
   const button = <SendMailForm/>
 
 //--------------------------------------------------------UI-ELEMENTS-------------------------------------------------------------     
 const table = data ? (
-        <MaterialTable style={{padding:"0px"}}
+        <MaterialTable style={{padding:"0px",boxShadow: "0 0 2px 2px black"}}
         title={button}
         columns={columns}
         data={data}
@@ -142,14 +160,27 @@ const table = data ? (
             }),
         }}
         options={{
+          pageSize:10,
+        exportButton: true,
+                filtering: true,
         headerStyle: {
-          backgroundColor: '#01579b',
+          backgroundColor: 'rgb(35 47 62) ',
           color: '#FFF',
           borderBottom: '1px solid #333',
         width: '100px',
     /* height: 100px; */
         boxShadow: "0 10px 5px -2px #888"
         }
+      }}
+      components={{
+        Toolbar: props => (
+          <div>
+            <MTableToolbar {...props} />
+            <div style={{padding: '0px 10px'}}>
+              <Button onClick={handleDemo}>Demo</Button>
+          </div>
+          </div>
+        ),
       }}
       />
     ) : (<div><CircularProgress style={{marginTop:"200px"}} /></div>)
@@ -166,7 +197,7 @@ const table = data ? (
                             </Snackbar>)
   
     return(
-        <div style={{padding_left: "5px"}}>
+        <div style={{padding: "20px"}}>
              {table}
              {feedBackToast}
         </div>

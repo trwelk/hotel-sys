@@ -27,6 +27,7 @@ function CleaningSchedule
         { title: 'Employee',field: 'empId', },
       { title: 'Description', field: 'description' },
       { title: 'time', field: 'timee' , type: 'datetime'},
+      { title: 'Room No', field: 'roomNo' , type: 'numeric'},
       { title: 'Status', field: 'status'},
     ]); 
 
@@ -41,8 +42,7 @@ function CleaningSchedule
     const cleaningSchedules = useSelector(state => state.firestore.ordered.cleaningSchedule)    
     const data = cleaningSchedules ? (cleaningSchedules.map(cleaningSchedule => ({...cleaningSchedule}))) : (null)
     const datacopy = data ? data.map(d => ({...d,timee:new Date(d.time.seconds * 1000)})) : null
-    console.log(data )
-    console.log(data ? new Date(data[0].time.seconds * 1000) : data)
+
     //--------------------------------------------INTERNAL METHODS--------------------------------------------------------------------------------
   const handleClick = (newState) => () => {
     setState({ open: true, ...newState });
@@ -75,7 +75,7 @@ const table = datacopy ? (
             new Promise((resolve, reject) => {
 
                   setTimeout(() => {
-                    props.updateCustomer(newData)
+                    props.updateCleaningSchedule(newData)
                     resolve();
                   }, 1000)
                 

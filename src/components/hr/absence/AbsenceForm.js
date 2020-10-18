@@ -119,6 +119,7 @@ function AbsenceRequest(props) {
     }));
   }
 
+
   const handleAbsenceTypeSelector = (event) => {
     setState(prevState => ({
         ...prevState,
@@ -170,10 +171,37 @@ function AbsenceRequest(props) {
     else if (data.employee.length != 5) {
       return "Field EMPLOYEE ID should contain 5 characters"
     }
+    else if (data.from == null || data.from == "") {
+      return "fromdate Cannot be null"
+    }
+    else if (data.to == null || data.to == "") {
+      return "To Date cannot be  null"
+    }
     else
       return null
   }
 
+  const getFormattedDate = (date) => {
+    var year = date.getFullYear();
+    
+  
+    var month = (1 + date.getMonth()).toString();
+    month = month.length > 1 ? month : '0' + month;
+  
+    var day = date.getDate().toString();
+    day = day.length > 1 ? day : '0' + day;
+    
+    return month + '/' + day + '/' + year;
+  }
+
+  
+  const handleAbsenceDate = (event) => {
+    const { name, value } = event.target;
+    setAbsence(prevState => ({
+      ...prevState,
+      [name]: getFormattedDate(new Date(value))
+    }));
+  }
 
   const handleClose = () => {
     setState({ ...state, open: false });

@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 // react plugin used to create charts
 import { Line, Bar ,Pie } from "react-chartjs-2";
 import { withStyles } from "@material-ui/core/styles";
-import html2canvas from "html2canvas";
 import ReactDOM from "react-dom";
 
 
@@ -37,33 +36,30 @@ import {
     chartOptions2
   } from './overview/ChartOptions';
   import jsPDF from 'jspdf';
+  import html2canvas from "html2canvas";
 
-  const div2PDF = e => {
-    /////////////////////////////
-    // Hide/show button if you need
-    /////////////////////////////
-
-    const but = e.target;
-    but.style.display = "none";
-    let input = window.document.getElementsByClassName("div2PDF")[0];
-
-    html2canvas(input).then(canvas => {
-      const img = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("l", "px");
-      pdf.addImage(
-        img,
-        "png",
-        input.offsetLeft,
-        input.offsetTop,
-        input.clientWidth,
-        input.clientHeight
-      );
-      pdf.save("chart.pdf");
-      but.style.display = "block";
-    });
-  };
 function FrontOfficeDashboard(props){
+///////////////////////////////////////////////////////////////
+const demoFromHTML = (className,name) => {
+  let input = window.document.getElementsByClassName(className)[0];
+  const divHeight = input.clientHeight
+  const divWidth = input.clientWidth
+  const ratio = divHeight / divWidth;
 
+  html2canvas(input)
+    .then(canvas => {
+      console.log(canvas);
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("l", "mm", "a0");
+
+      const width = pdf.internal.pageSize.getWidth();
+      let height = pdf.internal.pageSize.getHeight();
+      height = ratio * width;
+      pdf.addImage(imgData, "JPEG", 0, 0, width - 20, height + 10)
+      pdf.save(name+".pdf");
+    })
+    .catch(err => console.log(err.message));
+}
 
 //------------------------------------CHART 1 Details-------------------------------------------------------------------------
 const reservations = props.reservation
@@ -76,7 +72,7 @@ if(MonthlyReservationsData){
 }
 console.log(monthlyData)
 
-    const chart1 = canvas => {
+  const chart1 = canvas => {
         let ctx = canvas.getContext("2d");
     
         let gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
@@ -253,13 +249,14 @@ console.log(monthlyData)
     const today = new Date()
     today.setHours(0,0,0,0)
     var availableRooms = [5,5,5,5,5,5]
-    availableRooms[0] -= chartRoomsAvailTodayData ? chartRoomsAvailTodayData.filter(res => res.roomType == 'EXKINGSUITE' && res.date.getDay() == today.getDay() && res.date.getMonth() == today.getMonth()).length : null
-    availableRooms[1] -= chartRoomsAvailTodayData ? chartRoomsAvailTodayData.filter(res => res.roomType == 'FAMSTUDIO' && res.date.getDay() == today.getDay() && res.date.getMonth() == today.getMonth()).length : null
-    availableRooms[2] -= chartRoomsAvailTodayData ? chartRoomsAvailTodayData.filter(res => res.roomType == 'PRESSUITE'&& res.date.getDay() == today.getDay() && res.date.getMonth() == today.getMonth()).length : null
-    availableRooms[3] -= chartRoomsAvailTodayData ? chartRoomsAvailTodayData.filter(res => res.roomType == 'SEAKING' && res.date.getDay() == today.getDay() && res.date.getMonth() == today.getMonth()).length : null
-    availableRooms[4] -= chartRoomsAvailTodayData ? chartRoomsAvailTodayData.filter(res => res.roomType == 'CMASTER'&& res.date.getDay() == today.getDay() && res.date.getMonth() == today.getMonth()).length : null
-    availableRooms[5] -= chartRoomsAvailTodayData ? chartRoomsAvailTodayData.filter(res => res.roomType == 'SEASINGLE' && res.date.getDay() == today.getDay() && res.date.getMonth() == today.getMonth()).length : null
-
+    availableRooms[0] -= chartRoomsAvailTodayData ? chartRoomsAvailTodayData.filter(res => res.roomType == 'EXKINGSUITE' && res.date.getDate() == today. getDate() && res.date.getMonth() == today.getMonth()).length : null
+    availableRooms[1] -= chartRoomsAvailTodayData ? chartRoomsAvailTodayData.filter(res => res.roomType == 'FAMSTUDIO' && res.date.getDate() == today.getDate() && res.date.getMonth() == today.getMonth()).length : null
+    availableRooms[2] -= chartRoomsAvailTodayData ? chartRoomsAvailTodayData.filter(res => res.roomType == 'PRESSUITE'&& res.date.getDate() == today.getDate() && res.date.getMonth() == today.getMonth()).length : null
+    availableRooms[3] -= chartRoomsAvailTodayData ? chartRoomsAvailTodayData.filter(res => res.roomType == 'SEAKING' && res.date.getDate() == today.getDate() && res.date.getMonth() == today.getMonth()).length : null
+    availableRooms[4] -= chartRoomsAvailTodayData ? chartRoomsAvailTodayData.filter(res => res.roomType == 'CMASTER'&& res.date.getDate() == today.getDate() && res.date.getMonth() == today.getMonth()).length : null
+    availableRooms[5] -= chartRoomsAvailTodayData ? chartRoomsAvailTodayData.filter(res => res.roomType == 'SEASINGLE' && res.date.getDate() == today.getDate() && res.date.getMonth() == today.getMonth()).length : null
+    
+    console.log(chartRoomsAvailTodayData ? chartRoomsAvailTodayData.filter(res => res.roomType == 'EXKINGSUITE' && res.date.getDate() == today.getDate() && res.date.getMonth() == today.getMonth()) : null)
     const chartDataForRoomsAvailable = {
         data: canvas => {
           let ctx = canvas.getContext("2d");
@@ -285,7 +282,7 @@ console.log(monthlyData)
                 fill: true,
                 backgroundColor: gradientStroke,
                 hoverBackgroundColor: gradientStroke,
-                borderColor: "#d048b6",
+                borderColor: "#00f2c3",
                 borderWidth: 2,
                 borderDash: [],
                 borderDashOffset: 0.0,
@@ -355,68 +352,10 @@ console.log(monthlyData)
     return(
         <>
         <div className="content">
-        
-            <Row style={{margin:"0px",marginTop:"15px"}}>
-            <Col lg="3">
-              <Card className="card-chart" style={{height: "165px",border: "#1d8cf8 solid"}}>
-                <CardHeader>
-                  <h4 className="card-category" style={{color:"white",fontSize: "medium"}}>Total Shipments</h4>
-                </CardHeader>
-                <CardBody style={{display: "flex",justifyContent: "center",padding: "2px"}}>
-                  <div style={{width: "150px",height: "93px",}}>
-                    <WhiteTextTypography variant="h1" component="h2" gutterBottom>
-        76
-                    </WhiteTextTypography>             
-                 </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col lg="3">
-              <Card className="card-chart" style={{height: "165px",border: "#1d8cf8 solid"}}>
-                <CardHeader>
-                  <h4 className="card-category" style={{color:"white",fontSize: "medium"}}>Total Shipments</h4>
-                </CardHeader>
-                <CardBody style={{display: "flex",justifyContent: "center",padding: "2px"}}>
-                  <div style={{width: "150px",height: "93px",}}>
-                    <WhiteTextTypography variant="h1" component="h2" gutterBottom>
-        76
-                    </WhiteTextTypography>             
-                 </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col lg="3">
-              <Card className="card-chart" style={{height: "165px",border: "#1d8cf8 solid"}}>
-                <CardHeader>
-                  <h4 className="card-category" style={{color:"white",fontSize: "medium"}}>Total Shipments</h4>
-                </CardHeader>
-                <CardBody style={{display: "flex",justifyContent: "center",padding: "2px"}}>
-                  <div style={{width: "150px",height: "93px",}}>
-                    <WhiteTextTypography variant="h1" component="h2" gutterBottom>
-        76
-                    </WhiteTextTypography>             
-                 </div>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col lg="3">
-              <Card className="card-chart" style={{height: "165px",border: "#1d8cf8 solid"}}>
-                <CardHeader>
-                  <h4 className="card-category" style={{color:"white",fontSize: "medium"}}>Total Shipments</h4>
-                </CardHeader>
-                <CardBody style={{display: "flex",justifyContent: "center",padding: "2px"}}>
-                  <div style={{width: "150px",height: "93px",}}>
-                    <WhiteTextTypography variant="h1" component="h2" gutterBottom>
-        76
-                    </WhiteTextTypography>             
-                 </div>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-          <Row style={{margin:"0px"}}>
+          <Row style={{margin:"0px",marginTop:"20px"}}>
             <Col xs="12">
-              <Card className="card-chart">
+            <div className="divToPDF1">
+              <Card className="card-chart" style={{boxShadow:"0px 1px 20px 2px rgb(0 0 0 / 79%)"}}>
                 <CardHeader>
                   <Row>
                     <Col className="text-left" sm="6">
@@ -430,13 +369,10 @@ console.log(monthlyData)
                       >
                         <Button
                           tag="label"
-                          className={classNames("btn-simple", {
-                            active: bigChartData === "chart1"
-                          })}
                           color="info"
                           id="0"
                           size="sm"
-                          onClick={() => setBigChartData("chart1")}
+                          onClick={() => console.log("ici") || demoFromHTML("divToPDF1","Reservations_Yearly")}
                         >
                           <input
                             defaultChecked
@@ -445,54 +381,10 @@ console.log(monthlyData)
                             type="radio"
                           />
                           <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                            Accounts
+                            Download Pdf
                           </span>
                           <span className="d-block d-sm-none">
                             <i className="tim-icons icon-single-02" />
-                          </span>
-                        </Button>
-                        <Button
-                          color="info"
-                          id="1"
-                          size="sm"
-                          tag="label"
-                          className={classNames("btn-simple", {
-                            active: bigChartData === "data2"
-                          })}
-                          onClick={() => setBigChartData("data2")}
-                        >
-                          <input
-                            className="d-none"
-                            name="options"
-                            type="radio"
-                          />
-                          <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                            Purchases
-                          </span>
-                          <span className="d-block d-sm-none">
-                            <i className="tim-icons icon-gift-2" />
-                          </span>
-                        </Button>
-                        <Button
-                          color="info"
-                          id="2"
-                          size="sm"
-                          tag="label"
-                          className={classNames("btn-simple", {
-                            active: bigChartData === "data3"
-                          })}
-                          onClick={() => setBigChartData("data3")}
-                        >
-                          <input
-                            className="d-none"
-                            name="options"
-                            type="radio"
-                          />
-                          <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
-                            Sessions
-                          </span>
-                          <span className="d-block d-sm-none">
-                            <i className="tim-icons icon-tap-02" />
                           </span>
                         </Button>
                       </ButtonGroup>
@@ -501,8 +393,6 @@ console.log(monthlyData)
                 </CardHeader>
                 <CardBody>
                   <div className="chart-area">
-               
-
                     <Line
                       data={chart1}
                       options={chartOptions1}
@@ -510,69 +400,158 @@ console.log(monthlyData)
                   </div>
                 </CardBody>
               </Card>
+              </div>
             </Col>
           </Row>
           <Row style={{margin:"0px"}}>
             <Col lg="4">
-              <Card className="card-chart">
+            <div className="divToPDF2">
+              <Card className="card-chart" style={{boxShadow:"0px 1px 20px 2px rgb(0 0 0 / 79%)"}}>
                 <CardHeader>
-                  <h5 className="card-category">Overall</h5>
-                  <CardTitle tag="h3">
-                    <i className="tim-icons icon-bell-55 text-info" />{" "}
-                     Reservations of Roomtype
-                  </CardTitle>
+                  <Row>
+                    <Col className="text-left" sm="6">
+                      <h5 className="card-category">Reservations</h5>
+                      <CardTitle tag="h2">Reservations of Roomtype</CardTitle>
+                    </Col>
+                    <Col sm="6">
+                      <ButtonGroup
+                        className="btn-group-toggle float-right"
+                        data-toggle="buttons"
+                      >
+                        <Button
+                          tag="label"
+                          color="info"
+                          id="0"
+                          size="sm"
+                          onClick={() => console.log("ici") || demoFromHTML("divToPDF2","Reservations_RoomType")}
+                        >
+                          <input
+                            defaultChecked
+                            className="d-none"
+                            name="options"
+                            type="radio"
+                          />
+                          <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                            Download Pdf
+                          </span>
+                          <span className="d-block d-sm-none">
+                            <i className="tim-icons icon-single-02" />
+                          </span>
+                        </Button>
+                      </ButtonGroup>
+                    </Col>
+                  </Row>
                 </CardHeader>
                 <CardBody>
-                  <div className="chart-area">
-                    <Line
-                      data={chartReservationsOfRoomType}
-                      options={chartOptions2}
-                    />
+                <div className="chart-area">
+                  <Line
+                    data={chartReservationsOfRoomType}
+                    options={chartOptions2}
+                  />
                   </div>
                 </CardBody>
               </Card>
+              </div>
             </Col>
             <Col lg="4">
-              <Card className="card-chart">
+            <div className="divToPDF3">
+              <Card className="card-chart" style={{boxShadow:"0px 1px 20px 2px rgb(0 0 0 / 79%)"}}>
                 <CardHeader>
-                  <h5 className="card-category">yearly</h5>
-                  <CardTitle tag="h3">
-                    <i className="tim-icons icon-delivery-fast text-primary" />{" "}
-                    Reserved Platform
-                  </CardTitle>
+                  <Row>
+                    <Col className="text-left" sm="6">
+                      <h5 className="card-category">Reservations</h5>
+                      <CardTitle tag="h2">Reserved Platform</CardTitle>
+                    </Col>
+                    <Col sm="6">
+                      <ButtonGroup
+                        className="btn-group-toggle float-right"
+                        data-toggle="buttons"
+                      >
+                        <Button
+                          tag="label"
+                          color="info"
+                          id="0"
+                          size="sm"
+                          onClick={() => console.log("ici") || demoFromHTML("divToPDF3","Reservations_Platform")}
+                        >
+                          <input
+                            defaultChecked
+                            className="d-none"
+                            name="options"
+                            type="radio"
+                          />
+                          <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                            Download Pdf
+                          </span>
+                          <span className="d-block d-sm-none">
+                            <i className="tim-icons icon-single-02" />
+                          </span>
+                        </Button>
+                      </ButtonGroup>
+                    </Col>
+                  </Row>
                 </CardHeader>
                 <CardBody>
-                  <div className="chart-area">
-                  
-                    <Bar
+                <div className="chart-area">
+                <Bar
                       data={chartReservationPlatform.data}
                       options={chartReservationPlatform.options}
                     />
                   </div>
                 </CardBody>
               </Card>
+              </div>
             </Col>
             <Col lg="4">
-              <Card className="card-chart">
+            <div className="divToPDF4">
+              <Card className="card-chart" style={{boxShadow:"0px 1px 20px 2px rgb(0 0 0 / 79%)"}}>
                 <CardHeader>
-                  <h5 className="card-category">Completed Tasks</h5>
-                  <CardTitle tag="h3">
-                    <i className="tim-icons icon-send text-success" /> Rooms Available Today
-                  </CardTitle>
+                  <Row>
+                    <Col className="text-left" sm="6">
+                      <h5 className="card-category">Reservations</h5>
+                      <CardTitle tag="h2">Rooms Available Today</CardTitle>
+                    </Col>
+                    <Col sm="6">
+                      <ButtonGroup
+                        className="btn-group-toggle float-right"
+                        data-toggle="buttons"
+                      >
+                        <Button
+                          tag="label"
+                          color="info"
+                          id="0"
+                          size="sm"
+                          onClick={() => console.log("ici") || demoFromHTML("divToPDF4","RoomsAvailable")}
+                        >
+                          <input
+                            defaultChecked
+                            className="d-none"
+                            name="options"
+                            type="radio"
+                          />
+                          <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                            Download Pdf
+                          </span>
+                          <span className="d-block d-sm-none">
+                            <i className="tim-icons icon-single-02" />
+                          </span>
+                        </Button>
+                      </ButtonGroup>
+                    </Col>
+                  </Row>
                 </CardHeader>
                 <CardBody>
-                  <div className="chart-area">
-                    {/* <Pie
-                      data={chartDataForRoomsAvailable}
-                      options={chartDataForRoomsAvailable.options}
-                    /> */}
-                           <Bar
+                <div className="chart-area">
+                <Bar
                       data={chartDataForRoomsAvailable.data}
                       options={chartDataForRoomsAvailable.options}
+                      height={50}
+
                     />
                   </div>
                 </CardBody>
               </Card>
+              </div>
             </Col>
           </Row>
         </div>

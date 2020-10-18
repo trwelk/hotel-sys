@@ -5,12 +5,15 @@ import DeleteIcon from '@material-ui/icons/Delete'
 export default function AddItem(props) {
     const [subData,setSubData] = useState([])
     const [dispData,setDisData] = useState([])
+    const [counter,setCounter] = useState(1);
 
     function submitData(subData) {
+        subData['itemId'] = "item".concat((counter).toString());
         props.setFinalData(finalData=>[...finalData,subData])
         setDisData(dispData=>[...dispData,subData])
         setSubData(subData={});
         document.myform.reset();
+        setCounter(counter+1);
     }
     // function DeleteItem(data){
     //     console.log("called delete");
@@ -39,11 +42,13 @@ export default function AddItem(props) {
                 <Table style={{width:'50%',justifyContent:'center',}} size="small">
                 <TableBody name="tableBody">
                     <TableRow>
+                        <TableCell>Item Id</TableCell>
                         <TableCell>Name</TableCell>
                         <TableCell>Price (LKR)</TableCell>
                     </TableRow>
                     {dispData.map(data=> (
                         <TableRow>
+                            <TableCell>{data.itemId}</TableCell>
                             <TableCell>{data.name}</TableCell>
                             <TableCell>{data.price}</TableCell>
                         </TableRow>

@@ -16,7 +16,7 @@ import { InputLabel, Select } from '@material-ui/core';
 import { MenuItem } from '@material-ui/core';
 import { FormControl } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { compose } from 'redux'
+import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase'
 import { useForm, Controller } from 'react-hook-form';
 import { insertPurchasesRequest } from '../../../redux/actions/PnIActions/requestHandler'
@@ -29,6 +29,8 @@ import { useSelector } from 'react-redux';
 
 
 function Copyright() {
+  
+  
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
@@ -69,7 +71,7 @@ function PurchasesRequest(props) {
 
   const classes = useStyles();
 
-  const [request, setRequest] = useState({pId: '',pType: '' ,qty: '',priority: '' ,date: '',department: '' })
+  const [request, setRequest] = useState({pId: '',pType: '' ,department: '',priority: '', qty: '' ,date: '' })
   const [priority, setPriority] = React.useState("Normal");
   const [department, setDepartment] = React.useState("frontoffice");
   const [pType,setProductType] = React.useState();
@@ -91,13 +93,13 @@ function PurchasesRequest(props) {
     new Promise((resolve, reject) => {
       const error = validateData___(request);
       if (error != null) {
-        // alert(JSON.stringify(request))
+        
         setState({ ...state, open: true, error: error });
         reject();
       } else {
         setTimeout(() => {
-          
-          props.insertPurchasesRequest(request);
+          // alert(JSON.stringify(request))
+          props.insertPurchasesRequest(request,pType,priority,department);
           resolve();
         }, 1000)
       }}
@@ -119,7 +121,7 @@ function PurchasesRequest(props) {
   //  console.log(productTypeDB)
 
    const productTypeSelector = data ? (data.map((pType,index) => {
-    return  <MenuItem key={index} value={pType.id}>{pType.itemtype}</MenuItem>
+    return  <MenuItem key={index} value={pType.itemtype}>{pType.itemtype}</MenuItem>
   })) :(null)
 
   //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
@@ -133,8 +135,7 @@ function PurchasesRequest(props) {
       return "ID field Cannot be null"
     }
     // else if (data.pType == null || data.pType == "") {
-    //   console.log(data.pType)
-    //   return "First Product Name Cannot be null"
+    //   return "Product Type Cannot be null"
     // }
     else if(data.qty == 0 || data.qty < 0){
       return "Quantity shold be a postive value"
@@ -151,6 +152,8 @@ function PurchasesRequest(props) {
     vertical: ' bottom',
     horizontal: 'right'
   });
+
+
 
   const { vertical, horizontal, open, error } = state;
 
@@ -179,7 +182,7 @@ function PurchasesRequest(props) {
         <Avatar className={classes.avatar}>
           <AddIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" style={{color:"black"}}>
           Place Your Purchases Request Here...
         </Typography>
         <form className={classes.form} noValidate>
@@ -198,6 +201,7 @@ function PurchasesRequest(props) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl varient="outlined" fullWidth>
+              <InputLabel id="pType">Product Type</InputLabel>
               <Select
                 labelId="Product Name"
                 id="pType"
@@ -262,12 +266,6 @@ function PurchasesRequest(props) {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" id = "chkBox"/>}
-                label="I accept the Terms and Conditions"
-              />
-            </Grid>
           </Grid>
           <Button
             type="submit"
@@ -291,7 +289,7 @@ function PurchasesRequest(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    insertPurchasesRequest: (payload) => dispatch(insertPurchasesRequest(payload)),
+    insertPurchasesRequest: (payload,pType,priority,department) => dispatch(insertPurchasesRequest(payload,pType,priority,department)),
   }
 }
 export default compose(connect(null, mapDispatchToProps), firestoreConnect([

@@ -8,9 +8,17 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import MenuEditable from './MenuEditable';
 import InventoryEditable from './InventoryEditable';
+import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+
+  const userType = useSelector(state => state.auth.userType)    
+  if(userType != "ADMIN"){
+    return <Redirect to="/error" />
+
+  }
 
   return (
     <div

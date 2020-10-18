@@ -8,42 +8,14 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
+import jsPdf from 'jspdf'
+import 'jspdf-autotable'
 
 import { updateProductType } from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
 import { insertProductType } from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
 import { deleteProductType } from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
 
 function EditProductTable(props) {
-
-  const { useState } = React;
-  const orderNo = props.orderNo
-  // const products = useSelector(state => state.firestore.ordered.products)
-  // const datacopy1 = products ? (products.map(products => ({ ...products }))) : (null)
- 
-  const [columns, setColumns] = useState([
-
-    { title: 'orderProductID', field: 'OPId',editable: 'never'
-    // initialEditValue: 'orderNo+id'
-  },
-    
-    { title: 'ProductName', field: 'ProName'},
-    { title: 'Amount', field: 'amount', type :'numeric', filtering: false },
-    { title: 'ProductID', field: 'id' }, 
-    { title: 'ID', field: 'orderNo',initialEditValue:orderNo ,editable: 'never'},
-    { title: 'Quantity', field: 'quantity', type :'numeric', filtering: false },
-    { title: 'Volume', field: 'volume', filtering: false },
-     
-
-  ]);
-  // const [column, setColumn] = useState([
-
-    
-  //   { title: 'ProductName', field: 'ProName'},
-  //   { title: 'ProductID', field: 'id' }, 
-  //   { title: 'Price', field: 'price' },
-  //   // lookup: { 1: 'done', 2: 'in pogress' },
-
-  // ]);
   const [state, setState] = React.useState({
     open: false,
     vertical: 'bottom',
@@ -51,10 +23,96 @@ function EditProductTable(props) {
   });
   const { vertical, horizontal, open ,error} = state;
 
+  // const productsDb = useSelector(state => state.firestore.ordered.product)
+  //   const products = productsDb ? (productsDb.map(product => ({...product}))) : (null)
+  // const productSelector = products ? (products.map((product,index) => {
+  //   return   {index:product.ProName,}
+  // })) :(null)
+
+  // const customersDb = useSelector(state => state.firestore.ordered.customer )
+  //   const customers = customersDb ? (customersDb.map(customer => ({...customer}))) : (null)
+  // const customerSelector = customers ? (customers.map((customer,index) => {
+  //   return  <MenuItem key={index} value={customer.id}>{customer.firstName + ' ' + customer.lastName}</MenuItem>
+  // })) :(null)
   
-  const OrderPro = useSelector(state => state.firestore.ordered.orderProducts)
-  const datacopy = OrderPro ? (OrderPro.map(OrderPro => ({ ...OrderPro }))) : (null)
-  const data = datacopy ? (datacopy.filter(data => data.orderNo == orderNo)) : datacopy
+  // .collection('product').get().then((snapshot) =>{
+  //   console.log(snapshot.docs);
+  // })
+  const { useState } = React;
+  const orderNo = props.orderNo
+  // const products = useSelector(state => state.firestore.ordered.products)
+  // const datacopy1 = products ? (products.map(products => ({ ...products }))) : (null)
+ 
+  // db.collection('product').get().then((snapshot)=>{
+    
+  //   snapshot.docs.forEach(doc=>{
+  //      console.log(doc.data());
+    
+  //   })
+  // })
+
+  const [columns, setColumns] = useState([
+
+    { title: 'orderProductID', field: 'OPId',editable: 'never'
+    // initialEditValue: 'orderNo+id'
+  },
+  { title: 'ID', field: 'orderNo',initialEditValue:orderNo ,editable: 'never'},
+    { title: 'ProductName', field: 'ProName',},//lookup:{productSelector}lookup:{}
+    { title: 'ProductID', field: 'id' }, 
+    { title: 'Quantity', field: 'quantity', type :'numeric', filtering: false },
+    { title: 'Volume', field: 'volume', filtering: false ,initialEditValue:0},
+    { title: 'Amount', field: 'amount', type :'numeric', filtering: false },
+  ]);
+  // const [column, setColumn] = useState([
+  //   { title: 'ProductName', field: 'ProName'},
+  //   { title: 'ProductID', field: 'id' }, 
+  //   { title: 'Price', field: 'price' },
+  //   // lookup: { 1: 'done', 2: 'in pogress' },
+  // const OrderPros = useSelector(state => state.firestore.ordered.orderProducts)
+  // const datacopy = OrderPros ? (OrderPros.map(OrderPros => ({ ...OrderPros }))) : (null)
+  // const OrderPro = datacopy ? (datacopy.filter(data => data.orderNo == orderNo)) : datacopy
+  
+  // const OrderPro = useSelector(state => state.firestore.ordered.orderProducts)
+  // const datacopy = OrderPro ? (OrderPro.map(OrderPro => ({ ...OrderPro }))) : (null)
+  // const data = datacopy ? (datacopy.filter(data => data.orderNo == orderNo)) : datacopy
+  
+  // const  exportPdf = () =>{
+  //   let doc = new jsPdf('p', 'pt');
+
+  //   let Row=[];
+  //   let A = [['product Name','quantity','amount']];
+  //   let re = data;
+
+  //   for(let item = 0;item < re.length;item++){
+  //     A.push([re[item].ProName,re[item].quantity,re[item].amount])
+  //   }
+
+  //   for(let i=0; i<A.length; i++){
+  //     if(i==0)
+  //       Row.push(A[i].join(" "));
+  //     else
+  //     Row.push(A[i].join("    "));
+  //   }
+
+  //   doc.text(250,50,"bill  genarte");
+
+  //   let y = 100;
+  //   for(let j=0;j<Row.length;j++){
+  //     doc.text(20,y,Row[j]);
+  //     if(j==0)
+  //       y = y + 20;
+  //     y = y + 20;
+  //   }
+
+  //   doc.setFont('courier');
+  //   doc.text(200,(y+50),"Generated By HotelSys");
+  //   doc.save("bill.pdf");
+    
+  // }
+
+  
+  
+  
   // alert(JSON.stringify(data));
   // const products = useSelector(state => state.firestore.ordered.product)
   // const producteSelector = products ? (products.map(products => ({ ...products }))) : (null)
@@ -67,6 +125,7 @@ function EditProductTable(props) {
 // })) :(null)
   // ------------------new ----------------
 
+ 
   const validateData___  = (data) => {
     if(data.id == null || data.id == ""){
       return "Field ID Cannot be null"
@@ -107,9 +166,9 @@ function EditProductTable(props) {
 //   const data = OrderPro ? (OrderPro.map(OrderPro => ({ ...OrderPro }))) : (null)
 
   // const orderNo = props.orderNo
-  // const OrderPro = useSelector(state => state.firestore.ordered.orderProducts)
-  // const datacopy = OrderPro ? (OrderPro.map(OrderPro => ({ ...OrderPro }))) : (null)
-  // const data = datacopy ? (datacopy.filter(data => data.orderNo == orderNo)) : datacopy
+  const OrderPro = useSelector(state => state.firestore.ordered.orderProducts)
+  const datacopy = OrderPro ? (OrderPro.map(OrderPro => ({ ...OrderPro }))) : (null)
+  const data = datacopy ? (datacopy.filter(data => data.orderNo == orderNo)) : datacopy
   const table = data ? (
     
     <MaterialTable style={{ padding: "0px" }}
@@ -187,6 +246,7 @@ function EditProductTable(props) {
       }}
       options={{
           filtering: true,
+          exportButton: true,
           headerStyle: {
             backgroundColor: '#01579b',
             color: '#FFF',
@@ -222,6 +282,7 @@ function EditProductTable(props) {
     <div style={{ padding_left: "5px" }}>
       {table}
       {feedBackToast}
+      
     </div>
 
   )
@@ -232,8 +293,6 @@ const mapDispatchToProps = (dispatch) => {
     updateProductType: (payload) => dispatch(updateProductType(payload)),
     insertProductType: (payload) => dispatch(insertProductType(payload)),
     deleteProductType: (orderId) => dispatch(deleteProductType(orderId))
-
-
   }
 }
 export default compose(connect(null, mapDispatchToProps), firestoreConnect([

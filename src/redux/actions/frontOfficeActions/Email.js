@@ -4,7 +4,7 @@ export default function InlineLink({name, children}) {
   return (
   <Email title='link'>
     <Item>
-       Hello {name}
+       Hello 
     </Item>
     <Item>
       {children}

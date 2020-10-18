@@ -7,7 +7,7 @@ export const updateCustomer = (payload) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection("customer").doc(payload.id).update({
+        firestore.collection("customer").doc(payload.email).update({
           ...payload
         });
     }
@@ -17,8 +17,9 @@ export const updateCustomer = (payload) => {
 export const insertCustomer = (payload) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('customer').doc(payload.id).set({
+        firestore.collection('customer').doc(payload.email).set({
             ...payload,
+            id:payload.email
         }).then((response) => {
             console.log(response)
         }).catch((response) => {
@@ -27,11 +28,11 @@ export const insertCustomer = (payload) => {
     }
 }
 
-export const deleteCustomer = (roomId) => {
-    console.log(roomId)
+export const deleteCustomer = (customer) => {
+    console.log(customer)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('customer').doc(roomId).delete()
+        firestore.collection('customer').doc(customer).delete()
             .then((response) => {
                 console.log(response)
             }).catch((error) => {
@@ -44,7 +45,7 @@ export const deleteCustomer = (roomId) => {
 export const sendMail = (payload,subscribers) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
     
-        const messageHtml =  renderEmail(<MyEmail name="Trewon"> {payload.message}</MyEmail>);
+        const messageHtml =  renderEmail(<MyEmail > {payload.message}</MyEmail>);
         const firestore = getFirestore();
         console.log(subscribers)
         axios({
