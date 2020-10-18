@@ -51,13 +51,42 @@ function EditProductTable(props) {
   //   })
   // })
 
+  // const item = useSelector(state => state.firestore.ordered.foodOrder)
+  // const details = item ? (item.map(items => ({...items}))) : (null)
+
+  //     // let name 
+  //     let id 
+     
+  //     // var options= { };
+  // if(details){
+  //     for (let index = 0; index < details.length; index++) {
+  //       // name.push(details[index].orderNo);
+  //       //   id.push(details[index].id); 
+  //       //   options={details.id:details.ProName};
+  //         id=details[index].orderNo;
+  //     }
+  //     // let num =0006+1;
+  //     // id='O'+num;
+  //     const zeroPad = (num, places) => String(num).padStart(places, '0')
+  //     id=id.substr(1,4);
+  //     id=parseInt(id);
+  //     id = id +1;
+  //     // let no=id.length;
+  //     id=zeroPad(id, 5)
+  //     id='O'+id;
+  //     // zeroPad(id, no);
+  //     // id = id +1;
+  //     alert(JSON.stringify(id));
+  // }
+
+
   const [columns, setColumns] = useState([
 
     { title: 'orderProductID', field: 'OPId',editable: 'never'
     // initialEditValue: 'orderNo+id'
   },
   { title: 'ID', field: 'orderNo',initialEditValue:orderNo ,editable: 'never'},
-    { title: 'ProductName', field: 'ProName',},//lookup:{productSelector}lookup:{}
+    { title: 'ProductName', field: 'ProName'},//lookup:{productSelector}lookup:{}
     { title: 'ProductID', field: 'id' }, 
     { title: 'Quantity', field: 'quantity', type :'numeric', filtering: false },
     { title: 'Volume', field: 'volume', filtering: false ,initialEditValue:0},
@@ -160,7 +189,7 @@ function EditProductTable(props) {
   const handleClose = () => {
     setState({ ...state, open: false });
   };
-
+ 
   
 // const OrderPro = useSelector(state => state.firestore.ordered.orderProducts)
 //   const data = OrderPro ? (OrderPro.map(OrderPro => ({ ...OrderPro }))) : (null)
