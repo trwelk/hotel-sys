@@ -17,6 +17,7 @@ import purchasesOrder from '../components/purchasesnInventory/purchasesManagment
 // import editOrderTable from '../components/fnbServices/EditOrderTable';
 import fnbProdMgmt from '../components/F&bProduction/management/fnbProdMgmt';
 import EmployeeList from '../components/hr/employee/EmployeeList';
+import Employee from '../components/hr/employee/Employee';
 import AbsenceTypeList from '../components/hr/absence/AbsenceTypeList';
 import AbsenceList from '../components/hr/absence/AbsenceList';
 import AbsenceForm from '../components/hr/absence/AbsenceForm';
@@ -376,6 +377,7 @@ else{
             {/*<Route exact path="/Purchases & Inventory" component={addSuppliers}/>
             <Route exact path="/pReq" component={purchasesRequest}/>*/}
             <Route exact path="/hr/employee" component={EmployeeList}/>
+            <Route exact path="/hr/employee/info" component={Employee}/>
             <Route exact path="/hr/absence/abtype" component={AbsenceTypeList}/>
             <Route exact path="/hr/absence/ablist" component={AbsenceList}/>
             <Route exact path="/hr/absence/abform" component={AbsenceForm}/>

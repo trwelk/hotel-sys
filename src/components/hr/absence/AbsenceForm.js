@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%', 
     marginTop: theme.spacing(2),
   },
   submit: {
@@ -96,7 +96,7 @@ function AbsenceRequest(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     new Promise((resolve, reject) => {
-      //totalDays(absence);
+      totalDays(absence);
       const error = validateData___(absence);
       if (error != null) {
         setState({ ...state, open: true, error: error });
@@ -126,6 +126,42 @@ function AbsenceRequest(props) {
         abtype: event.target.value
     }));
   }
+
+  const getFormattedDate = (date) => {
+    var year = date.getFullYear();
+    
+  
+    var month = (1 + date.getMonth()).toString();
+    month = month.length > 1 ? month : '0' + month;
+  
+    var day = date.getDate().toString();
+    day = day.length > 1 ? day : '0' + day;
+    
+    return month + '/' + day + '/' + year;
+  }
+
+  
+  const handleAbsenceDate = (event) => {
+    const { name, value } = event.target;
+    setAbsence(prevState => ({
+      ...prevState,
+      [name]: getFormattedDate(new Date(value))
+    }));
+  }
+
+  const handleDemoData = (e) => {
+    props.insertAbsence({
+      employee: 'EM001',
+      abtype: 'SICK',
+      from: '10/19/2020',
+      to: '10/19/2020',
+      days: '1',
+      reason: 'High Fever',
+      status: 'Open'
+      
+    });
+  }
+
 
   //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
   const validateData___ = (data) => {
@@ -211,7 +247,7 @@ function AbsenceRequest(props) {
                 onChange={handleAbsence}
               />
             </Grid>
-            <Grid item xs={12}>
+             <Grid item xs={12}>
               <FormControl varient="outlined" required fullWidth>
                 <InputLabel>Absence Type</InputLabel>
                 <Select id="abtype"
@@ -222,7 +258,8 @@ function AbsenceRequest(props) {
                   {absenceTypeSelector}
                 </Select>
               </FormControl>
-            </Grid><Grid item xs={12} sm={6}>
+            </Grid> 
+            <Grid item xs={12} sm={6}>
             <TextField
                   id="from"
                   name="from"
@@ -271,7 +308,7 @@ function AbsenceRequest(props) {
                   <MenuItem key={30} value={"hr"}>HR</MenuItem>
                 </Select>
               </FormControl>
-            </Grid> */}
+            </Grid> }
             {/* <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" id = "chkBox" />}
@@ -290,6 +327,18 @@ function AbsenceRequest(props) {
           >
             Request Absence
               </Button>
+
+            <Button
+            type="submit"
+            id="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={handleDemoData}
+          >
+            Demo
+            </Button>
               
         </form>
         {feedBackToast}
