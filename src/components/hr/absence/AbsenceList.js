@@ -29,7 +29,7 @@ function AbsenceList(props) {
     const classes = useStyles();
     const { useState } = React;
     const [columns, setColumns] = useState([
-      { title: 'Absence Id', field: 'id', editable: 'never'},
+      // { title: 'Absence Id', field: 'id', editable: 'never'},
       { title: 'Employee Id', field: 'employee'},
       { title: 'Absence Type', field: 'abtype', lookup: {SICK: 'Sick', CASUAL: 'Casual', NOPAY: 'No Pay Leave'}},
       { title: 'From Date', field: 'from'},
@@ -43,16 +43,7 @@ function AbsenceList(props) {
     const data = absences ? (absences.map(absence => ({...absence,
         days:moment(absence.to, 'MM-DD-YYYY').diff(moment(absence.from),'days',true)}))) : (null)
 
-    const monthlyAbsences = absences ? (absences.map(absence => ({...absence,month:absence.from.toDate().getMonth()}))) : (null)
-    var monthlyData = [[],[],[],[],[],[],[],[],[],[],[],[]]
-    let numberOfEmployees = [0,0,0,0,0,0,0,0,0,0,0,0];
-    for (let a = 0 ; a < 12 ; a++){
-        monthlyData[a] = monthlyAbsences ? monthlyAbsences.filter(absence => absence.month == a) : [];
-        monthlyData[a].forEach((item) => {
-            console.log(parseInt(monthlyData[a]))
-            numberOfEmployees[a] += item.numberOfPacks ? parseInt(item.numberOfPacks) : 0
-        })
-    }
+    
     const [state, setState] = React.useState({
       open: false,
       vertical: 'bottom',
@@ -89,11 +80,6 @@ function AbsenceList(props) {
       setState({ ...state, open: false });
     };
 
-    const exportPDF = () =>{
-      const doc = new jsPDF();
-      const tableColumn = ["Id", "Title", "Issue", "Status", "Closed on"];
-      const tableRows = [];
-    }
     const handleDemo = () => {
       props.insertAbsence({
         id:"EM125",
@@ -110,9 +96,6 @@ function AbsenceList(props) {
 
     const table = data ? (
         <div>
-          {/* <Button variant="contained" color="secondary" onClick={()=>exportPdf()}>
-            Export as Pdf
-          </Button> */}
         <MaterialTable
         options={{
           exportButton: true,

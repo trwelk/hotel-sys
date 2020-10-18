@@ -57,6 +57,15 @@ function AttendenceList(props) {
       if(data.employee == null || data.employee == ""){
         return "Field EMPLOYEE ID Cannot be null"
       }
+      else if(data.arrival == null || data.arrival == ""){
+        return "Field Clock In Cannot be null"
+      }
+      else if(data.departure == null || data.departure == ""){
+        return "Field Clock Out Cannot be null"
+      }
+      else if(data.normalworkinghrs == null || data.normalworkinghrs == ""){
+        return "Field Clock In Cannot be null"
+      }
       else if(data.employee.length != 5 ){
         return "Invalid EMPLOYEE ID, Enter EMPLOYEE ID with 5 digits -> EM000"
       }
@@ -80,9 +89,11 @@ function AttendenceList(props) {
 
     const table = data ? (
         <MaterialTable
-        options={{
-          exportButton: true
-        }}
+        options = {{
+          exportButton: true,
+          grouping: true,
+          filtering: true
+          }}
         title="Attendence List"
         columns={columns}
         data={data}
