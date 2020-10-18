@@ -24,7 +24,6 @@ function Alert(props) {
         { title: 'Contact Number', field: 'Contact_no'},
         { title: 'Guest Type', field: 'guest_type', lookup: { GUEST: 'GUEST', VISITOR: 'VISITOR'}},
         { title: 'Number of Guests', field: 'no_of_guests'},
-        { title: 'Date', field: 'date', type:'date' },
         { title: 'Vehicle Number', field: 'vehicle_no'},
       {
         title: 'Description',
