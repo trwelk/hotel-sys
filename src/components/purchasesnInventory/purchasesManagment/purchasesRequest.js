@@ -16,7 +16,7 @@ import { InputLabel, Select } from '@material-ui/core';
 import { MenuItem } from '@material-ui/core';
 import { FormControl } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { compose } from 'redux'
+import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase'
 import { useForm, Controller } from 'react-hook-form';
 import { insertPurchasesRequest } from '../../../redux/actions/PnIActions/requestHandler'
@@ -29,6 +29,8 @@ import { useSelector } from 'react-redux';
 
 
 function Copyright() {
+  
+  
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
@@ -132,9 +134,9 @@ function PurchasesRequest(props) {
       console.log(data.pId)
       return "ID field Cannot be null"
     }
-    else if (data.pType == null || data.pType == "") {
-      return "Product Type Cannot be null"
-    }
+    // else if (data.pType == null || data.pType == "") {
+    //   return "Product Type Cannot be null"
+    // }
     else if(data.qty == 0 || data.qty < 0){
       return "Quantity shold be a postive value"
     }
@@ -150,6 +152,8 @@ function PurchasesRequest(props) {
     vertical: ' bottom',
     horizontal: 'right'
   });
+
+
 
   const { vertical, horizontal, open, error } = state;
 

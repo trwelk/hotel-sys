@@ -141,9 +141,9 @@ import {deleteAssetList} from '../../../redux/actions/financeActions/AssetMgmtAc
     //Calculation of Asset Value
     assetValue : parseFloat(asslist.purchaseValue) - parseFloat(asslist.depriciation)}))) : (null)
 
-    /*const userType = useSelector(state => state.auth.userType)    
+    const userType = useSelector(state => state.auth.userType)    
     if(userType !== "ADMIN"){
-    return <Redirect to="/error" />}*/
+    return <Redirect to="/error" />}
 
     //Asset List Table
      const table = data ? (
