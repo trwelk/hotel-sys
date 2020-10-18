@@ -365,17 +365,17 @@ function FeedBackTable(props) {
               resolve()
             }, 1000)
           }),
-          Action: props => (
-            <Button
-              // onClick={()=>exportPdf()}
-              color="primary"
-              variant="contained"
-              style={{textTransform: 'none'}}
-              size="small"
-            >
-              My Button
-            </Button>
-          ),
+          // Action: props => (
+          //   <Button
+          //     // onClick={()=>exportPdf()}
+          //     color="primary"
+          //     variant="contained"
+          //     style={{textTransform: 'none'}}
+          //     size="small"
+          //   >
+          //     My Button
+          //   </Button>
+          // ),
         }}
         
         // actions={[
@@ -436,13 +436,13 @@ function FeedBackTable(props) {
             },
           },
         ]}
-        actions={[
-          {
-            icon: 'Button',
-            tooltip: 'create a bill',
-            // onClick:()=>exportPdf()
-          }
-        ]}
+        // actions={[
+        //   {
+        //     icon: 'Button',
+        //     tooltip: 'create a bill',
+        //     // onClick:()=>exportPdf()
+        //   }
+        // ]}
         
       />
     )
