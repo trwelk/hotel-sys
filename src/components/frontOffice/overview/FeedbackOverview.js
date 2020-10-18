@@ -43,14 +43,21 @@ function FeedbackOverview(props){
 //////////////--------------------------------------pdf-generator------------------------------------------------
 const demoFromHTML = (className) => {
   let input = window.document.getElementsByClassName(className)[0];
+  const divHeight = input.clientHeight
+  const divWidth = input.clientWidth
+  const ratio = divHeight / divWidth;
   html2canvas(input)
     .then(canvas => {
-      console.log(canvas);
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("l", "pt");
-      pdf.addImage(imgData, "JPEG", 15, 110, 800, 250);
-      pdf.save("test.pdf");
-    })
+    console.log(canvas);
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("l", "mm", "a0");
+
+    const width = pdf.internal.pageSize.getWidth();
+    let height = pdf.internal.pageSize.getHeight();
+    height = ratio * width;
+    pdf.addImage(imgData, "JPEG", 0, 0, width - 20, height + 10)
+    pdf.save('feedback'+".pdf");
+  })
     .catch(err => console.log(err.message));
 }
 

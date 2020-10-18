@@ -59,18 +59,20 @@ function FeedBackTable(props) {
   const feedbacks = useSelector(state => state.firestore.ordered.feedback)      
   const auth = useSelector(state => state.firebase.auth)
   const userType = useSelector(state => state.auth.userType)    
-  if(userType != "ADMIN"){
-    return <Redirect to="/error" />
-
+  if(userType){
+    if(userType != "ADMIN"){
+      return <Redirect to="/error" />
+  
+    }
   }
 
   const handleDemo = () => {
     props.insertFeedback({
       title:"demoTitle",
-      customer:"trewon@gmail.com",
-      rating:1,
+      customer:"Trewon@gmail.com",
+      rating:4,
       type:"COMPLIMENT",
-      department:"HR",
+      department:"F&B",
       date:new Date()
     });
   }
