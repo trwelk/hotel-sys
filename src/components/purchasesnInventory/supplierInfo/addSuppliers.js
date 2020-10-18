@@ -105,6 +105,18 @@ function AddSuppliers(props) {
     }));
   }
 
+  const handleDemo = () => {
+    props.insertSupplierInfo({
+      sId:"S0005",
+      firstName:"Sudesh",
+      lastName:"Deshan",
+      email:"deshn@gmail.com",
+      itemtype:"Coconut",
+      unitprice:parseInt("50"),
+      phone:parseInt("0723467690")
+    });
+  }
+
   //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
   const validateData___ = (data) => {
     if (data.sId == null || data.sId == "") {
@@ -121,6 +133,9 @@ function AddSuppliers(props) {
     }
     else if (data.email == null || data.email == "") {
       return "Email field cannot be null"
+    }
+    else if(data.phone.toString().length != 10){
+      return "Field phone should contain 10 numbers"
     }
     else
       return null
@@ -319,6 +334,11 @@ function AddSuppliers(props) {
             onClick={handleSubmit}
           >
             Add Supplier
+              </Button>
+              <Button
+            onClick={handleDemo}
+          >
+            DEMO
               </Button>
               
         </form>
