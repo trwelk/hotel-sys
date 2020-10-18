@@ -594,17 +594,6 @@ const humanResourceNav = (
         <ListItemIcon className={classes.itemIcon}>
           <PeopleIcon />
         </ListItemIcon>
-          <Link to="/hr/employee/info" >
-        <ListItemText  
-            classes={{
-          primary: classes.itemPrimary,
-        }}
-        >Employee</ListItemText></Link>
-      </ListItem>
-      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
-        <ListItemIcon className={classes.itemIcon}>
-          <PeopleIcon />
-        </ListItemIcon>
           <Link to="/hr/attendence" >
         <ListItemText  
             classes={{
@@ -627,23 +616,23 @@ const humanResourceNav = (
         <ListItemIcon className={classes.itemIcon}>
           <PeopleIcon />
         </ListItemIcon>
-          <Link to="/hr/absence/ablist" >
-        <ListItemText  
-            classes={{
-          primary: classes.itemPrimary,
-        }}
-        >Absence List</ListItemText></Link>
-      </ListItem>
-      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
-        <ListItemIcon className={classes.itemIcon}>
-          <PeopleIcon />
-        </ListItemIcon>
           <Link to="/hr/absence/abform" >
         <ListItemText  
             classes={{
           primary: classes.itemPrimary,
         }}
-        >Absence Request</ListItemText></Link>
+        >Absence Form</ListItemText></Link>
+      </ListItem>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+        <ListItemIcon className={classes.itemIcon}>
+          <PeopleIcon />
+        </ListItemIcon>
+          <Link to="/hr/absence/ablist" >
+        <ListItemText  
+            classes={{
+          primary: classes.itemPrimary,
+        }}
+        >Absences</ListItemText></Link>
       </ListItem>
     </List>
   </Collapse>

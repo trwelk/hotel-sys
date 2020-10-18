@@ -3,7 +3,6 @@ import {MaterialTable, MTableToolbar }  from 'material-table'
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
-import EmployeeForm from '../employee/EmployeeForm'
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import Typography from '@material-ui/core/Typography';
@@ -197,7 +196,10 @@ function EmployeeList(props) {
               }, 1000)
             }),
         }}
-        options = {{exportButton: true}}
+        options = {{
+          exportButton: true,
+          grouping: true,
+          filtering: true}}
         components={{
         Toolbar: props => (
           <div>
@@ -235,7 +237,7 @@ function EmployeeList(props) {
   
     return(
         <div>
-             {/* {CardList} */}
+             
              <Row style={{margin:"0px",marginTop:"15px"}}>
             <Col lg="3">
               <Card className="card-chart" style={{height: "165px",border: "#1d8cf8 solid"}}>
@@ -283,7 +285,5 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
   export default compose(connect(null,mapDispatchToProps),firestoreConnect([
-    {collection: 'employee'},
-    {collection: 'employeetype'},
-    {collection: 'department'}
+    {collection: 'employee'}
   ])) (EmployeeList)
