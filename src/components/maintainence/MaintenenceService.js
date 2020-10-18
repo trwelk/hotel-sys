@@ -23,7 +23,6 @@ function Alert(props) {
       { title: 'Machine ID Number', field: 'machine_ID'},
       { title: 'Type of Machine', field: 'machine_Type'},
       { title: 'Type of Payment made', field: 'payment_type'},
-      { title: 'Date', field: 'date', type:'date' },
       { title: 'Amount Paid', field: 'paymentMade'},
       {
         title: 'Description',

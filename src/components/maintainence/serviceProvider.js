@@ -19,7 +19,6 @@ function Alert(props) {
     const [columns, setColumns] = useState([
       { title: 'Service Provider ID', field: 'Service_Pr_id' },
       { title: 'Company Name', field: 'Company_name' },
-      { title: 'Date', field: 'date', type:'date' },
       {
         title: 'Description',
         field: 'descriptions',
