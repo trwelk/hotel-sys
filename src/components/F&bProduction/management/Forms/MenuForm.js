@@ -11,7 +11,7 @@ import { insertMenu } from '../../../../redux/actions/fnbProductionActions/MenuA
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
-import { FormControl, Grid, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { ButtonGroup, FormControl, Grid, InputLabel, MenuItem, Select } from '@material-ui/core';
 import WeddingTemplate from '../Templates/WeddingMenuTemplate';
 import GeneralMenuTemplate from '../Templates/GeneralMenuTemplate';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -185,6 +185,30 @@ function MenuForm(props) {
     }
   })}
 
+  const handleDemo1 = (evt) => {
+    evt.preventDefault();
+    new Promise((resolve,reject)=>{
+      setTimeout(() => {
+          props.insertMenu({id:'MENU1', menuName:'MENU TEST 1', menuType:parseInt('1'), price:'2500'},{
+            Wlitem1:'Wel 1',
+            Mditem1:'Main 1',Mditem2:'Main 2',Mditem3:'Main 3',
+            Sditem1:'Side 1',Sditem2:'Side 2',Sditem3:'Side 3',
+            Dsitem1:'Des 1',Dsitem2:'Des 2',Dsitem3:'Des 3'
+          });
+          resolve();
+      },1000)
+  }
+  )}
+
+  const handleDemo2 = (evt) => {
+    evt.preventDefault();
+    new Promise((resolve,reject)=>{
+      setTimeout(() => {
+          props.insertMenu({id:'MENU2', menuName:'MENU TEST 2', menuType:parseInt('2'), price:''},{itemId:"iTest1",name:"iName1",price:"iPrice1"},{itemId:"iTest2",name:"iName2",price:"iPrice2"});
+          resolve();
+      },1000)
+  })}
+
   const feedBackToast =  (<Snackbar 
     autoHideDuration={100000}
     anchorOrigin={{ vertical, horizontal }}
@@ -273,6 +297,7 @@ function MenuForm(props) {
             disabled={hide}
           /></Grid> 
                     <div id="selected">{SetMenuType(menuType)}</div>
+          <ButtonGroup>
           <Button
             id="submit"
             type="submit"
@@ -284,6 +309,29 @@ function MenuForm(props) {
           >
             Publish
           </Button>
+          <Button
+            id="submit"
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={handleDemo1} 
+          >
+            Demo - WedMenu
+          </Button>
+          <Button
+            id="submit"
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={handleDemo2} 
+          >
+            Demo - GenMenu
+          </Button>
+          </ButtonGroup>
         </form>
       </div>
       {feedBackToast}
