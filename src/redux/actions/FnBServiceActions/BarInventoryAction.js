@@ -1,16 +1,5 @@
-// export const  formatDate = (string) => {
-//     var options = { year: 'numeric', month: 'long', day: 'numeric' };
-//     return new Date(string).toLocaleDateString([],options);
-// }
 export const updateBarProduct = (payload) => {
     console.log(payload)
-    // let date;
-    // if(payload.date != null || payload.date != ""){
-    //     date = formatDate(payload.date);
-    // }
-    // else{
-    //     date = null;
-    // }
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
         // payload.BIID = payload.id + payload.BarInvNo;
@@ -20,7 +9,7 @@ export const updateBarProduct = (payload) => {
             id:payload.id, 
             qty:payload.qty,
             price:payload.price,
-            date:payload.date
+            // date:payload.date
             // date:(new Date()).toDateString()
             // lastModified:payload.lastModified
             // tableNO: payload.tableNO,
@@ -35,10 +24,6 @@ export const updateBarProduct = (payload) => {
 
 export const insertBarProduct = (payload) => {
     console.log(payload)
-//     payload.date = (new Date()).toDateString();
-//     if(payload.date != null || payload.date != ""){
-//         payload.date = formatDate(payload.date);
-//    }
     return (dispatch, getState, { getFirestore, getFirebase }) => {
         const firestore = getFirestore();
         // payload.BIID = payload.id + payload.BarInvNo;

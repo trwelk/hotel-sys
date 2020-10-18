@@ -9,9 +9,20 @@ import Box from '@material-ui/core/Box';
 import FoodOrderTable from './FoodOrderTable';
 import OrderForm from './OrderForm';
 import BarChart from './BarChart';
+import { Redirect } from "react-router-dom";
+import { connect,useSelector } from 'react-redux';
 
 function TabPanel(props) {
+ 
+
   const { children, value, index, ...other } = props;
+
+  const userType = useSelector(state => state.auth.userType)    
+    if(userType != "ADMIN"){
+      return <Redirect to="/error" />
+  
+    }
+  
 
   return (
     <div
