@@ -3,12 +3,12 @@ import MaterialTable from 'material-table'
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
+
 import {updatepoolService} from '../../redux/actions/maintainanceActions/PoolServiceActions'
 import {deletepoolService} from '../../redux/actions/maintainanceActions/PoolServiceActions'
 import {insertpoolService} from '../../redux/actions/maintainanceActions/PoolServiceActions'
-
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -18,7 +18,8 @@ function Alert(props) {
     const [columns, setColumns] = useState([
       { title: 'ID', field: 'id' },
       { title: 'Payment', field: 'paymentMade' },
-      { title: 'Brief', field: 'brief'},
+      { title: 'Compapny', field: 'company'},
+      { title: 'Agent', field: 'agent'},
       {
         title: 'Description',
         field: 'descriptions',
@@ -39,14 +40,17 @@ function Alert(props) {
         return "Field descriptions Cannot be null"
 
       }
-      else if(data.brief == null || data.brief == ""){
-        return "Field brief Name Cannot be null"
+      else if(data.company == null || data.company == ""){
+        return "Field company Name Cannot be null"
       }
       else if(data.paymentMade == null || data.paymentMade == ""){
         return "Field Last Name Cannot be null"
       }
       else if(data.id == null || data.id == ""){
         return "Field Phone Cannot be null"
+      }
+      else if(data.agent == null || data.agent == ""){
+        return "Field agent Cannot be null"
       }
       else if(data.id.toString().length != 5 ){
         return "Please enter a valid id ,Should contain 5 characters"

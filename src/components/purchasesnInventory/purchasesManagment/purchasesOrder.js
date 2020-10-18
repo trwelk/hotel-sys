@@ -165,11 +165,13 @@ function PurchasesOrder(props) {
     horizontal: 'right'
   });
 
-  const userType = useSelector(state => state.auth.userType)    
+  const userType = useSelector(state => state.auth.userType)  
+  if(userType){  
   if(userType != "ADMIN"){
     return <Redirect to="/error" />
 
   }
+}
 
   const { vertical, horizontal, open, error } = state;
 
@@ -183,6 +185,7 @@ function PurchasesOrder(props) {
     open={open}
     onClose={handleClose}
     key={vertical + horizontal}
+    style={{justifyContent: "flex-end",marginTop: "450px"}}
   >
     <div >
       <Alert variant="filled" severity="error" style={{ display: "flex", alignItems: "center" }}>
@@ -285,7 +288,6 @@ function PurchasesOrder(props) {
               />
             </Grid>
           </Grid>
-          {feedBackToast}
           <Button
             type="submit"
             id="submit"
@@ -298,6 +300,7 @@ function PurchasesOrder(props) {
             Request Now
               </Button>
         </form>
+        {feedBackToast}
       </div>
     </Container>
   );

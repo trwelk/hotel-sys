@@ -147,22 +147,27 @@ function MenuEditable(props) {
     let header = [['Menu Id','Menu Name','Menu Type','Price(LKR)','Last Modified']];
     let A = [[]];
     let re = Menu;
-    let mItems = [][[]];
     let Type;
+    let mItems = [[[]]];
 
       db.collection("Menu").get()
       .then(()=>{
         for (let index = 0; index < re.length; index++) {
+          let i = 0;
+          if(re[index].menutype != 1){
+            console.log(re[index]);
         db.collection("Menu").doc(re[index].id).collection("MenuItems").get().then(snapshot => {
           snapshot.forEach(doc => {
           console.log(doc.id, " => ", doc.data().name);
-            mItems[index].push([doc.data().itemId, doc.data().name, doc.data().price])
+            mItems[index][i].push([doc.data().itemId, doc.data().name, doc.data().price]);
+            i++;
         })
       })
-      };
-
+    }
+      }
       }
       ).then(()=>{
+        console.log(mItems);
     for(let item = 0;item < re.length;item++){
 
           switch (parseInt(re[item].menutype)) {
@@ -190,14 +195,16 @@ function MenuEditable(props) {
           A.push([re[item].id, re[item].menuName, Type, re[item].price, re[item].lastModified])
         if (re[item].menutype != 1) {
             A.push(["Item Id", "Item Name", "Item Price(LKR)"])
-            for (let index = 0; index < mItems[item].length; index++)
-              A.push([mItems[item][index].itemId,mItems[item][index].name,mItems[item][index].price]);            
+            for (let index = 1; index < mItems.length; index++)
+              A.push([mItems[item].itemId,mItems[item][index].name,mItems[item][index].price]);            
         };
 
       }
 
     doc.text(250,50,"Menu Details");
-      
+    
+    console.log(A);
+
     doc.autoTable({
       head: header,
       body: A,
@@ -206,7 +213,7 @@ function MenuEditable(props) {
       footStyles:{halign:'center',}
     })          
 
-    doc.save("MenuDetails.pdf");
+    // doc.save("MenuDetails.pdf");
 
   });
 
