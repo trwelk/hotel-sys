@@ -317,7 +317,7 @@ const handleSubmit = (evt) => {
         </Grid>
         <Grid item xs={12} sm={4}>
           <FormControl className={classes.formControl} style={{width:"300px"}}>
-            <InputLabel id="customer">Customer</InputLabel>
+            <InputLabel id="Platform">Customer</InputLabel>
             <Select
             label="Platform"
               id="platform"

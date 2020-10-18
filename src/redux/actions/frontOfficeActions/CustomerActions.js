@@ -19,6 +19,7 @@ export const insertCustomer = (payload) => {
         const firestore = getFirestore();
         firestore.collection('customer').doc(payload.email).set({
             ...payload,
+            id:payload.email
         }).then((response) => {
             console.log(response)
         }).catch((response) => {
@@ -44,7 +45,7 @@ export const deleteCustomer = (customer) => {
 export const sendMail = (payload,subscribers) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
     
-        const messageHtml =  renderEmail(<MyEmail name="Trewon"> {payload.message}</MyEmail>);
+        const messageHtml =  renderEmail(<MyEmail > {payload.message}</MyEmail>);
         const firestore = getFirestore();
         console.log(subscribers)
         axios({

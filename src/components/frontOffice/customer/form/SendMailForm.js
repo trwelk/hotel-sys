@@ -94,7 +94,7 @@ function SendMailForm(props,firebase) {
       }
 
     const customersDb = useSelector(state => state.firestore.ordered.customers )
-    const subscribersDb = useSelector(state => state.firestore.ordered.subscribers )
+    const subscribersDb = useSelector(state => state.firestore.ordered.emailSubscriptions )
     const customers = customersDb ? (customersDb.map(customer => ({...customer}))) : (null)
     const subscribers = subscribersDb ? (subscribersDb.map(customer => ({...customer}))) : (null)
     const [state, setState] = useState({subject:"",message:"",customer:"",checked:false});
@@ -237,6 +237,4 @@ const mapDispatchToProps = (dispatch) => {
 export default  withFirebase(compose(connect(null,mapDispatchToProps),firestoreConnect([
     {collection: 'customer',
     storeAs: 'customers'},
-    {collection: 'customer',
-    where: [['subscribed', '==', true]],
-    storeAs: 'subscribers'}]))(SendMailForm))
+    {collection: 'emailSubscriptions'}]))(SendMailForm))

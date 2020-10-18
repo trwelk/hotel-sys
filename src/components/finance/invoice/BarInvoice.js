@@ -1,190 +1,260 @@
+//importing docs & default components
 import React from 'react'
-import MaterialTable from 'material-table'
-
+import MaterialTable, { MTableToolbar } from 'material-table'
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
-
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert} from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 
+//Import CRUD Operation for Bar Invoice
 import {updateBarInvoice} from '../../../redux/actions/financeActions/BarInvoiceActions'
 import {insertBarInvoice} from '../../../redux/actions/financeActions/BarInvoiceActions'
 import {deleteBarInvoice} from '../../../redux/actions/financeActions/BarInvoiceActions'
 
- function BarInvoice(props) {
+function BarInvoice(props) {
  
-    const { useState } = React;
-    const [columns, setColumns] = useState([
-        { title: 'Invoice No', field: 'barInvoice' },
-        //{ title: 'Date', field: 'date' },
-        { title: 'Prepared BY', field: 'preparedBy' },
-        { title: 'Customer Type', field: 'customerType', lookup: {30: 'Guest', 31: 'Non-Guest'}},
-        { title: 'Invoice Amount', field: 'invoiceAmount', type:'numeric' },
-        { title: 'Service Charges', field: 'serviceCharges', type:'numeric'},
-        { title: 'Payment Type', field: 'paymentType', lookup:{30:'Cash', 31:'Card'}},
-        { title: 'Tax %', field: 'tax', type:'numeric'},
-        { title: 'Total Amount', field: 'totalAmount', type:'numeric'},
-       
-    ]); 
+  const { useState } = React;
+  const [columns, setColumns] = useState([
+      { title: 'Invoice No', field: 'id' },
+      { title: 'Date', field: 'date', type:'date' },
+      { title: 'Prepared BY', field: 'preparedBy' },
+      { title: 'Customer Type', field: 'customerType', lookup: {30: 'Guest', 31: 'Non-Guest'}},
+      { title: 'Invoice Amount', field: 'invoiceAmount', type:'numeric' },
+      { title: 'Service Charges', field: 'serviceCharges', type:'numeric'},
+      { title: 'Payment Type', field: 'paymentType', lookup:{30:'Cash', 31:'Card'}},
+      { title: 'Tax %', field: 'tax', type:'numeric'},
+      { title: 'Total Amount', field: 'totalAmount', type:'numeric', editable:'never'},
+     
+  ]); 
 
-    const [state, setState] = React.useState({
-      open: false,
-      vertical: 'bottom',
-      horizontal: 'right',
-    });
-    const { vertical, horizontal, open ,error} = state;
+  //Constant Variables
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'bottom',
+    horizontal: 'right',
+  });
 
-    const validateData___  = (data) => {
-      if(data.barInvoice == null || data.barInvoice === ""){
-        return "Invoice ID Cannot be Null"
-      }
+  const { vertical, horizontal, open ,error} = state;
 
-      else if(data.barInvoice.length !== 5 || data.barInvoice.length > 5 ){
-        return "Invoice ID should contain 5 chars"
-      }
+  //Demo Button Style
+  const useStyles = makeStyles({
+    root: {
+      background: 'white',
+      border: 0,
+      borderRadius: 6,
+      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+      color: '#000080',
+      height: 48,
+      padding: '0 30px',
+    },
+  });
 
-      if(data.preparedBy == null || data.preparedBy === ""){
-        return "Field Cannot be Null"
-      }
+  const classes = useStyles();
 
-      else if(data.preparedBy.length !== 5 || data.preparedBy.length > 5 ){
-        return "ID should contain 5 chars"
-      }
-
-      else if(data.invoiceAmount == null || data.invoiceAmount === ""){
-        return "Invoice Amount Cannot be Null"
-      }
-      
-      else if(data.invoiceAmount <= 0){
-          return "Invoice Amount Value should be Greater than 0"
-      }
-
-      else if(data.serviceCharges == null || data.serviceCharges === ""){
-        return "Service Charges Cannot be Null"
-      }
-      
-      else if(data.serviceCharges <= 0){
-          return "Service Charges Value should be Greater than 0"
-      }
-
-      else if(data.tax == null || data.tax === ""){
-        return "Tax Amount Cannot be Null"
-      }
-      
-      else if(data.tax <= 0){
-          return "Tax Amount Value should be Greater than 0"
-      }
-
-      //else if(data.quantity !== [0-9][0-9]){
-       //   return "Enter Only Numeric Values"
-      //}
-
-      else
-      return null;
+   //Validations Begins
+   const validateData___  = (data) => {
+    if (data.id == null || data.id === ""){
+      return "Assign a Value, Invoice ID Cannot be Null"
     }
 
-  const handleClick = (newState) => () => {
-    setState({ open: true, ...newState });
-  };
+    else if(data.id.length !== 5 || data.id.length > 5 ){
+     return "Invalid Length, accepted length -> 'FI000'"
+    }
+   
 
-  const handleClose = () => {
-    setState({ ...state, open: false });
-  };
+    else if(data.customerType == null || data.customerType === ""){
+      return "Select a Customer Type"
+    }
 
+    else if(data.paymentType == null || data.paymentType === ""){
+      return "Select a Payment Type"
+    }
+   
+    else if(data.date == null || data.date === ""){
+      return "Select a Date"
+    }
 
-    const barin = useSelector(state => state.firestore.ordered.barInvoice)
-    const data = barin ? (barin.map(barin => ({...barin}))) : (null)
+    if(data.preparedBy == null || data.preparedBy === ""){
+     return "Assign a Value, Employee ID Cannot be Null"
+    }
+
+    else if(data.preparedBy.length !== 5 || data.preparedBy.length > 5 ){
+     return "Invalid Length, accepted length -> 'EM000'"
+    }
+
+    if(data.invoiceAmount == null || data.invoiceAmount === ""){
+      return "Invoice Amount Cannot be Null"
+    }
     
-    const table = data ? (
-        <MaterialTable
-        title="Bar Invoices"
-        columns={columns}
-        data={data}
-        editable={{
+    else if(data.invoiceAmount <= 0){
+        return "Invoice Amount Value should be Greater than 0"
+    }
 
-          onRowAdd: newData =>
-            new Promise((resolve, reject) => {
-              const error = validateData___(newData);
-              if (error != null) {
-               setState({ ...state, open: true,error:error });
-              reject();
-              }
-              else{
-                setTimeout(() => {
-                  //setData([...data, newData]);
-                  props.insertBarInvoice(newData);
-                  resolve();
-                }, 1000)
-              }
-              
-            }),
+    else if(data.serviceCharges == null || data.serviceCharges === ""){
+      return "Service Charges Cannot be Null"
+    }
+    
+    else if(data.serviceCharges <= 0){
+        return "Service Charges Value should be Greater than 0"
+    }
 
-          onRowUpdate: (newData, oldData) =>
-            new Promise((resolve, reject) => {
-              const error = validateData___(newData);
-              if (error != null) {
-               setState({ ...state, open: true,error:error });
-              reject();
-              }
-              else{
-                setTimeout(() => {
-                  const dataUpdate = [...data];
-                  const index = oldData.tableData.id;
-                  dataUpdate[index] = newData;
-                  //setData([...dataUpdate]);
-                  console.log(newData,oldData)
-                  props.updateBarInvoice(newData)
-                  resolve();
-                }, 1000)
-              }
-             
-            }),
+    else if(data.tax == null || data.tax === ""){
+      return "Tax Amount Cannot be Null"
+    }
+    
+    else if(data.tax <= 0){
+        return "Tax Amount Value should be Greater than 0"
+    }
 
-          onRowDelete: oldData =>
-            new Promise((resolve, reject) => {
-              setTimeout(() => {
-                const dataDelete = [...data];
-                const index = oldData.tableData.id;
-                dataDelete.splice(index, 1);
-                //setData([...dataDelete]);
-                console.log(oldData)
-                props.deleteBarInvoice(oldData.id)
-                resolve()
-              }, 1000)
-            }),
-        }}
-      />
-    ) : (<div>Loading</div>)
+    else
+    return null;
+  } //Validations Ends here
 
-    const feedBackToast =  (<Snackbar 
-      autoHideDuration={200000}
-      anchorOrigin={{ vertical, horizontal }}
-      open={open}
-      onClose={handleClose}
-      key={vertical + horizontal}
-      >
-          <div >
+/*const handleClick = (newState) => () => {
+  setState({ open: true, ...newState });
+};*/
 
-        <Alert variant="filled" severity="error" style={{display: "flex",alignItems: "center"}}>
-        <h3>{error}</h3>
-        
-        </Alert>
-        </div>
-      </Snackbar>)
+const handleClose = () => {
+  setState({ ...state, open: false });
+};
+
+//To insert Demo Data
+const handleDemoData = () => {
+props.insertBarInvoice({
+  id:"BI001",
+  date:"Tue Sep 15 2020",
+  preparedBy:"EM001",
+  customerType:"30",
+  invoiceAmount:"5000.00",
+  serviceCharges:"1000.00",
+  otherCharges:"750.00",
+  paymentType:"30",
+  tax:"750.00"
+
+});
+}
+
+  const barin = useSelector(state => state.firestore.ordered.barInvoice)
+  const data = barin ? (barin.map(barin => ({...barin,
+  totalAmount: parseFloat(barin.invoiceAmount) + parseFloat(barin.serviceCharges) + 
+parseFloat(barin.tax)}))) : (null)
   
-    return(
-        <div>
-             {table}
-             {feedBackToast}
-        </div>
-       
-        )
-  }
+//Bar Invoice Table
+  const table = data ? (
+      <MaterialTable
 
-const mapDispatchToProps = (dispatch) => {
+       //For reports, pivot and data filter
+       options={{
+        exportButton: true,
+        grouping: true,
+        filtering: true
+      }}
+
+      title="Bar Invoices"
+      columns={columns}
+      data={data}
+
+      editable={{
+
+        //add new record
+        onRowAdd: newData =>
+          new Promise((resolve, reject) => {
+            const error = validateData___(newData);
+            if (error != null) {
+             setState({ ...state, open: true,error:error });
+            reject();
+            }
+            else{
+              setTimeout(() => {
+                props.insertBarInvoice(newData);
+                resolve();
+              }, 1000)
+            }
+            
+          }),
+
+        //update existing record
+        onRowUpdate: (newData, oldData) =>
+          new Promise((resolve, reject) => {
+            const error = validateData___(newData);
+            if (error != null) {
+             setState({ ...state, open: true,error:error });
+            reject();
+            }
+            else{
+              setTimeout(() => {
+                const dataUpdate = [...data];
+                const index = oldData.tableData.id;
+                dataUpdate[index] = newData;
+                console.log(newData,oldData)
+                props.updateBarInvoice(newData)
+                resolve();
+              }, 1000)
+            }
+           
+          }),
+
+        //delete existing record
+        onRowDelete: oldData =>
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              const dataDelete = [...data];
+              const index = oldData.tableData.id;
+              dataDelete.splice(index, 1);
+              //setData([...dataDelete]);
+              console.log(oldData)
+              props.deleteBarInvoice(oldData.id)
+              resolve()
+            }, 1000)
+          }),
+      }}
+
+    //Button to Insert Demo Data
+    components={{
+      Toolbar: props => (
+        <div>
+          <MTableToolbar {...props} />
+          <div>
+            <Button className={classes.root} onClick={handleDemoData}>Click to Insert Demo Data </Button>
+          </div>
+        </div>
+      ),
+    }}
+
+    />
+  ) : (<div>Loading</div>)
+
+  //Custom Toasts for Validations
+  const feedBackToast =  (<Snackbar 
+    autoHideDuration={200000}
+    anchorOrigin={{ vertical, horizontal }}
+    open={open}
+    onClose={handleClose}
+    key={vertical + horizontal}
+    >
+        <div >
+
+      <Alert variant="filled" severity="error" style={{display: "flex",alignItems: "center"}}>
+      <h3>{error}</h3>
+      
+      </Alert>
+      </div>
+    </Snackbar>)
+
+  return(
+      <div>
+           {table}
+           {feedBackToast}
+      </div>
+     
+      )
+}
+
+  //CRUD Operations for Bar Invoice Table
+  const mapDispatchToProps = (dispatch) => {
     return {
         updateBarInvoice: (payload) => dispatch(updateBarInvoice(payload)),
         insertBarInvoice: (payload) => dispatch(insertBarInvoice(payload)),
@@ -193,9 +263,8 @@ const mapDispatchToProps = (dispatch) => {
 
     }
 }
-  export default compose(connect(null,mapDispatchToProps),firestoreConnect([
-    {collection: 'barInvoice'}
-  ])) (BarInvoice)
 
-
- // export default BarInvoice
+export default compose(connect(null,mapDispatchToProps),firestoreConnect([
+  //Database for Bar Office Invoice
+ {collection: 'barInvoice'}
+])) (BarInvoice)

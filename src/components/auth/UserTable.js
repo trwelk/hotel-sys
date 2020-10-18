@@ -11,26 +11,24 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 
-import {updateCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
-import {insertCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
-import {deleteCustomer} from '../../../redux/actions/frontOfficeActions/CustomerActions'
-import NewReservationForm from '../reservation/forms/NewReservationForm';
-import SendMailForm from './form/SendMailForm';
-import { Redirect } from "react-router-dom";
+import {updateUser} from '../../redux/actions/authActions/AuthActions'
+import {insertUser} from '../../redux/actions/authActions/AuthActions'
+import {deleteUser} from '../../redux/actions/authActions/AuthActions'
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-function CustomerTable(props) {
+function UserTable(props) {
  
     const { useState } = React;
     const [columns, setColumns] = useState([
         { title: 'ID',field: 'id', editable:false},
-      { title: 'First Name', field: 'firstName' ,},
-      { title: 'Last Name', field: 'lastName' },
-      { title: 'Phone Number', field: 'phone', type: 'numeric' },
-      { title: 'Email', field: 'email'},
+      { title: 'Email', field: 'email' ,},
+      { title: 'Name', field: 'name' },
+      { title: 'password', field: 'pass', },
+      { title: 'User Type', field: 'userType',
+      lookup: { ADMIN: 'ADMIN', BASIC: 'BASIC'}},
     ]); 
 
     const [state, setState] = React.useState({
@@ -41,16 +39,10 @@ function CustomerTable(props) {
     const { vertical, horizontal, open ,error} = state;
 
 
-    const customers = useSelector(state => state.firestore.ordered.customer)    
-    const data = customers ? (customers.map(customer => ({...customer}))) : (null)
+    const users = useSelector(state => state.firestore.ordered.user)    
+    const data = users ? (users.map(u => ({...u,
+                                            pass:"**********"}))) : (null)
     const datacopy = data
-    const userType = useSelector(state => state.auth.userType)    
-    if(userType){
-      if(userType != "ADMIN"){
-        return <Redirect to="/error" />
-    
-      }
-    }
     //--------------------------------------------INTERNAL METHODS--------------------------------------------------------------------------------
     const validateData___  = (data,type) => {
       if(data.id == null || data.id == ""){
@@ -98,7 +90,7 @@ function CustomerTable(props) {
   };
 
   const handleDemo = () => {
-    props.insertCustomer({
+    props.insertUser({
       id:"demo@demo.com",
       email:"demo@demo.com",
       phone:parseInt("0771231231"),
@@ -107,18 +99,17 @@ function CustomerTable(props) {
     });
   }
 
-  const button = <SendMailForm/>
 
 //--------------------------------------------------------UI-ELEMENTS-------------------------------------------------------------     
 const table = data ? (
         <MaterialTable style={{padding:"0px",boxShadow: "0 0 2px 2px black"}}
-        title={button}
+        title={"Users"}
         columns={columns}
         data={data}
         editable={{
           onRowAdd: newData =>
             new Promise((resolve, reject) => {
-              const error = validateData___(newData,"INSERT");
+            //   const error = validateData___(newData,"INSERT");
                 if (error != null){
                   setState({ ...state, open: true,error:error });
                   reject();
@@ -126,7 +117,7 @@ const table = data ? (
                 else{
                   setTimeout(() => {
                     console.log(data)
-                    props.insertCustomer(newData);
+                    props.insertUser({...newData,password:newData.pass});
                     resolve();
                   }, 1000)
                 }
@@ -141,7 +132,7 @@ const table = data ? (
                 }
                 else{
                   setTimeout(() => {
-                    props.updateCustomer(newData)
+                    props.updateUser(newData)
                     resolve();
                   }, 1000)
                 }
@@ -154,7 +145,7 @@ const table = data ? (
                 dataDelete.splice(index, 1);
                 //setData([...dataDelete]);
                 console.log(oldData)
-                props.deleteCustomer(oldData.id)
+                props.deleteUser(oldData.id)
                 resolve()
               }, 1000)
             }),
@@ -207,12 +198,12 @@ const table = data ? (
  
   const mapDispatchToProps = (dispatch) => {
     return {
-      updateCustomer: (payload) => dispatch(updateCustomer(payload)),
-      insertCustomer: (payload) => dispatch(insertCustomer(payload)),
-      deleteCustomer: (customerId) => dispatch(deleteCustomer(customerId))
+      updateUser: (payload) => dispatch(updateUser(payload)),
+      insertUser: (payload) => dispatch(insertUser(payload)),
+      deleteUser: (UserId) => dispatch(deleteUser(UserId))
 
     }
 }
   export default compose(connect(null,mapDispatchToProps),firestoreConnect([
-    {collection: 'customer'}
-  ])) (CustomerTable)
+    {collection: 'user'}
+  ])) (UserTable)

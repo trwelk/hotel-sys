@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 // react plugin used to create charts
 import { Line, Bar ,Pie } from "react-chartjs-2";
 import { withStyles } from "@material-ui/core/styles";
-import html2canvas from "html2canvas";
 import ReactDOM from "react-dom";
 import styles from './style.css'
 
@@ -38,33 +37,22 @@ import {
   } from './ChartOptions';
 
   import jsPDF from 'jspdf';
-
-  const div2PDF = e => {
-    /////////////////////////////
-    // Hide/show button if you need
-    /////////////////////////////
-
-    const but = e.target;
-    but.style.display = "none";
-    let input = window.document.getElementsByClassName("div2PDF")[0];
-
-    html2canvas(input).then(canvas => {
-      const img = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("l", "px");
-      pdf.addImage(
-        img,
-        "png",
-        input.offsetLeft,
-        input.offsetTop,
-        input.clientWidth,
-        input.clientHeight
-      );
-      pdf.save("chart.pdf");
-      but.style.display = "block";
-    });
-  };
+  import html2canvas from "html2canvas";
+  
 function FeedbackOverview(props){
-
+//////////////--------------------------------------pdf-generator------------------------------------------------
+const demoFromHTML = (className) => {
+  let input = window.document.getElementsByClassName(className)[0];
+  html2canvas(input)
+    .then(canvas => {
+      console.log(canvas);
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("l", "pt");
+      pdf.addImage(imgData, "JPEG", 15, 110, 800, 250);
+      pdf.save("test.pdf");
+    })
+    .catch(err => console.log(err.message));
+}
 
     
   
@@ -434,111 +422,251 @@ for(let a = 0 ; a < 12 ; a++){
         <div className="content">
             <Row style={{margin:"0px",marginTop:"20px"}}>
             <Col lg="4">
-              <Card className="card-chart">
+            <div className="divToPDF1">
+              <Card className="card-chart" style={{boxShadow:"0px 1px 20px 2px rgb(0 0 0 / 79%)"}}>
                 <CardHeader>
-                  <h5 className="card-category">Overall</h5>
-                  <CardTitle tag="h3">
-                    <i className="tim-icons icon-bell-55 text-info" />{" "}
-                     Compliments On Departments
-                  </CardTitle>
+                  <Row>
+                    <Col className="text-left" sm="6">
+                      <h5 className="card-category">Feedbacks</h5>
+                      <CardTitle tag="h2">Department Compliments</CardTitle>
+                    </Col>
+                    <Col sm="6">
+                      <ButtonGroup
+                        className="btn-group-toggle float-right"
+                        data-toggle="buttons"
+                      >
+                        <Button
+                          tag="label"
+                          color="info"
+                          id="0"
+                          size="sm"
+                          onClick={() => console.log("ici") || demoFromHTML("divToPDF1")}
+                        >
+                          <input
+                            defaultChecked
+                            className="d-none"
+                            name="options"
+                            type="radio"
+                          />
+                          <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                            Download Pdf
+                          </span>
+                          <span className="d-block d-sm-none">
+                            <i className="tim-icons icon-single-02" />
+                          </span>
+                        </Button>
+                      </ButtonGroup>
+                    </Col>
+                  </Row>
                 </CardHeader>
                 <CardBody>
-                  <div className="chart-area">
-                    <Bar
+                <div className="chart-area">
+                <Bar
                     data={chartForComplimentOnDepartments.data}
                     options={chartForComplimentOnDepartments.options}
                     />
                   </div>
                 </CardBody>
               </Card>
+              </div>
             </Col>
             <Col lg="4">
-              <Card className="card-chart">
+            <div className="divToPDF2">
+              <Card className="card-chart" style={{boxShadow:"0px 1px 20px 2px rgb(0 0 0 / 79%)"}}>
                 <CardHeader>
-                  <h5 className="card-category">yearly</h5>
-                  <CardTitle tag="h3">
-                    <i className="tim-icons icon-delivery-fast text-primary" />{" "}
-                    Complaints On Departments
-                  </CardTitle>
+                  <Row>
+                    <Col className="text-left" sm="6">
+                      <h5 className="card-category">Feedbacks</h5>
+                      <CardTitle tag="h2">Complaints On Departments</CardTitle>
+                    </Col>
+                    <Col sm="6">
+                      <ButtonGroup
+                        className="btn-group-toggle float-right"
+                        data-toggle="buttons"
+                      >
+                        <Button
+                          tag="label"
+                          color="info"
+                          id="0"
+                          size="sm"
+                          onClick={() => console.log("ici") || demoFromHTML("divToPDF2")}
+                        >
+                          <input
+                            defaultChecked
+                            className="d-none"
+                            name="options"
+                            type="radio"
+                          />
+                          <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                            Download Pdf
+                          </span>
+                          <span className="d-block d-sm-none">
+                            <i className="tim-icons icon-single-02" />
+                          </span>
+                        </Button>
+                      </ButtonGroup>
+                    </Col>
+                  </Row>
                 </CardHeader>
                 <CardBody>
-                  <div className="chart-area">
-                  <Bar
+                <div className="chart-area">
+                <Bar
                       data={chartForComplaintOnDepartments.data}
                       options={chartForComplaintOnDepartments.options}
                   />
-               
                   </div>
                 </CardBody>
               </Card>
+              </div>
             </Col>
             <Col lg="4">
-              <Card className="card-chart">
+            <div className="divToPDF3">
+              <Card className="card-chart" style={{boxShadow:"0px 1px 20px 2px rgb(0 0 0 / 79%)"}}>
                 <CardHeader>
-                  <h5 className="card-category">Ratings</h5>
-                  <CardTitle tag="h3">
-                    <i className="tim-icons icon-send text-success" /> Department Ratings
-                  </CardTitle>
+                  <Row>
+                    <Col className="text-left" sm="6">
+                      <h5 className="card-category">Feedbacks</h5>
+                      <CardTitle tag="h2">Department Ratings</CardTitle>
+                    </Col>
+                    <Col sm="6">
+                      <ButtonGroup
+                        className="btn-group-toggle float-right"
+                        data-toggle="buttons"
+                      >
+                        <Button
+                          tag="label"
+                          color="info"
+                          id="0"
+                          size="sm"
+                          onClick={() => console.log("ici") || demoFromHTML("divToPDF3")}
+                        >
+                          <input
+                            defaultChecked
+                            className="d-none"
+                            name="options"
+                            type="radio"
+                          />
+                          <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                            Download Pdf
+                          </span>
+                          <span className="d-block d-sm-none">
+                            <i className="tim-icons icon-single-02" />
+                          </span>
+                        </Button>
+                      </ButtonGroup>
+                    </Col>
+                  </Row>
                 </CardHeader>
                 <CardBody>
-                  <div className="chart-area">
-                    {/* <Pie
-                      data={chartDataForRoomsAvailable}
-                      options={chartDataForRoomsAvailable.options}
-                    /> */}
-                    <Line 
+                <div className="chart-area">
+                <Line 
                         data={chartForRatingsOnDepartments}
                         options={chartOptions2}
                     />
                   </div>
                 </CardBody>
               </Card>
+              </div>
             </Col>
           </Row>
           <Row style={{margin:"0px"}}>
             <Col xs="6">
-              <Card className="card-chart">
+            <div className="divToPDF4">
+              <Card className="card-chart" style={{boxShadow:"0px 1px 20px 2px rgb(0 0 0 / 79%)"}}>
                 <CardHeader>
                   <Row>
                     <Col className="text-left" sm="6">
-                      <h5 className="card-category">Complaints</h5>
+                      <h5 className="card-category">Feedbacks</h5>
                       <CardTitle tag="h2">Monthly Complaints</CardTitle>
+                    </Col>
+                    <Col sm="6">
+                      <ButtonGroup
+                        className="btn-group-toggle float-right"
+                        data-toggle="buttons"
+                      >
+                        <Button
+                          tag="label"
+                          color="info"
+                          id="0"
+                          size="sm"
+                          onClick={() => console.log("ici") || demoFromHTML("divToPDF4")}
+                        >
+                          <input
+                            defaultChecked
+                            className="d-none"
+                            name="options"
+                            type="radio"
+                          />
+                          <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                            Download Pdf
+                          </span>
+                          <span className="d-block d-sm-none">
+                            <i className="tim-icons icon-single-02" />
+                          </span>
+                        </Button>
+                      </ButtonGroup>
                     </Col>
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <div className="chart-area">
-               
-                    <Line 
+                <div className="chart-area">
+                <Line 
                         data={chartForMonthlyComplaints}
                         options={chartOptions1}
                     />
-        
                   </div>
                 </CardBody>
               </Card>
+              </div>
             </Col>
             <Col xs="6">
-              <Card className="card-chart">
+            <div className="divToPDF5">
+              <Card className="card-chart" style={{boxShadow:"0px 1px 20px 2px rgb(0 0 0 / 79%)"}}>
                 <CardHeader>
                   <Row>
                     <Col className="text-left" sm="6">
-                      <h5 className="card-category">Complaints</h5>
+                      <h5 className="card-category">Feedbacks</h5>
                       <CardTitle tag="h2">Monthly Compliments</CardTitle>
+                    </Col>
+                    <Col sm="6">
+                      <ButtonGroup
+                        className="btn-group-toggle float-right"
+                        data-toggle="buttons"
+                      >
+                        <Button
+                          tag="label"
+                          color="info"
+                          id="0"
+                          size="sm"
+                          onClick={() => console.log("ici") || demoFromHTML("divToPDF5")}
+                        >
+                          <input
+                            defaultChecked
+                            className="d-none"
+                            name="options"
+                            type="radio"
+                          />
+                          <span className="d-none d-sm-block d-md-block d-lg-block d-xl-block">
+                            Download Pdf
+                          </span>
+                          <span className="d-block d-sm-none">
+                            <i className="tim-icons icon-single-02" />
+                          </span>
+                        </Button>
+                      </ButtonGroup>
                     </Col>
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <div className="chart-area">
-               
-                    <Line 
+                <div className="chart-area">
+                <Line 
                         data={chartForMonthlyCompliments}
                         options={chartOptions1}
                     />
-        
                   </div>
                 </CardBody>
               </Card>
+              </div>
             </Col>
           </Row>
         </div>
