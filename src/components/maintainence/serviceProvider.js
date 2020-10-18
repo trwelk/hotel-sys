@@ -47,6 +47,9 @@ function Alert(props) {
       else if(data.Service_Pr_id == null || data.Service_Pr_id == ""){
         return "Field Last Name Cannot be null"
       }
+      else if(data.Service_Pr_id.toString().length != 5 ){
+        return "Please enter a valid id ,Should contain 5 characters"
+      }
       else
       return null;
     }

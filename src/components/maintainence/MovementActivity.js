@@ -82,6 +82,10 @@ function Alert(props) {
       else if(data.Visit_id == null || data.Visit_id == ""){
         return "Field Phone Cannot be null"
       }
+      else if(data.Visit_id.toString().length != 5 ){
+        return "Please enter a valid id ,Should contain 5 characters"
+      }
+
       else
       return null;
     }

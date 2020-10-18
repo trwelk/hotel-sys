@@ -79,6 +79,9 @@ function Alert(props) {
       else if(data.M_Service_id == null || data.M_Service_id == ""){
         return "Field M_Service_id Cannot be null"
       }
+      else if(data.M_Service_id.toString().length != 5 ){
+        return "Please enter a valid id ,Should contain 5 characters"
+      }
       else
       return null;
     }
