@@ -242,7 +242,7 @@ const purchasesnInventoryNav  = (
         }}
         >Add Contract</ListItemText></Link>
       </ListItem>
-      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}style={{display: userType == "ADMIN" ? "flex " :"none"}}>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)} style={{display: userType == "ADMIN" ? "flex " :"none"}}>
         <ListItemIcon className={classes.itemIcon}>
           <ShoppingCartIcon />
         </ListItemIcon>
@@ -375,6 +375,17 @@ const frontOfficeNav = (
     </ListItem>
     <Collapse in={frontOffice} timeout="auto" unmountOnExit>
       <List component="div" disablePadding>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem,)} style={{display: userType == "ADMIN" ? "flex" :"none"}}>
+          <ListItemIcon className={classes.itemIcon}>
+            <PeopleIcon />
+          </ListItemIcon>
+          <Link to="/users" >
+          <ListItemText  
+              classes={{
+            primary: classes.categoryHeaderPrimary,
+          }}
+          >User Mangement</ListItemText></Link>
+        </ListItem>
         <ListItem button onClick={handleFrontOfficeChart} className={clsx(classes.item,classes.nested, classes.itemActiveItem,"basic-user-login")}>
           <ListItemIcon className={classes.itemIcon}>
             <FindInPageIcon />

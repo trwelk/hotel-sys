@@ -1,5 +1,6 @@
 import React from 'react'
-import MaterialTable from 'material-table'
+import MaterialTable, { MTableToolbar } from 'material-table'
+import Button from '@material-ui/core/Button';
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
@@ -28,6 +29,18 @@ function Alert(props) {
         field: 'description',
       },
     ]); 
+    const handleDemo = () => {
+      props.insertmaintenanceServices({
+        M_Service_id:"demo@demo.com",
+        Department:"demoDep",
+        Service_type:"serviceDemo",
+        machine_ID:"demoMachine",
+        machine_Type:"demotpe",
+        payment_type:"demoPaymentType",
+        paymentMade:100
+      });
+    }
+  
     const [state, setState] = React.useState({
       open: false,
       vertical: 'bottom',
@@ -119,6 +132,17 @@ console.log(maintainanceServices)
               }, 1000)
             }),
         }}
+        
+      components={{
+        Toolbar: props => (
+          <div>
+            <MTableToolbar {...props} />
+            <div style={{padding: '0px 10px'}}>
+              <Button onClick={handleDemo}>Demo</Button>
+          </div>
+          </div>
+        ),
+      }}
       />
     ) : (<div>Loading</div>)
 

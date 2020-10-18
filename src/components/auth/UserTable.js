@@ -24,9 +24,9 @@ function UserTable(props) {
     const { useState } = React;
     const [columns, setColumns] = useState([
         { title: 'ID',field: 'id', editable:false},
-      { title: 'Email', field: 'email' ,},
+      { title: 'Email', field: 'email' , editable:'onAdd'},
       { title: 'Name', field: 'name' },
-      { title: 'password', field: 'pass', },
+      { title: 'password', field: 'pass', editable:'onAdd'},
       { title: 'User Type', field: 'userType',
       lookup: { ADMIN: 'ADMIN', BASIC: 'BASIC'}},
     ]); 
