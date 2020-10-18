@@ -21,12 +21,12 @@ export const insertProduct = (payload,pType,priority,sName) => {
         const firestore = getFirestore();
         firestore.collection('productMng').doc(payload.oId).set({
             oId:payload.oId,
-            sName:sName,
+            sName:payload.sName,
             pType:pType,
             priority:priority,
             qty:payload.qty,
             date:payload.date,
-            status:"PENDING",
+    
         }).then((response) => {
             console.log(response)
         }).catch((response) => {
