@@ -225,7 +225,6 @@ function EditProductTable(props) {
             }
             // setTimeout(() => {
             //   //setData([...data, newData]);
-             
             //   resolve();
             // }, 1000)
           }),
@@ -269,7 +268,7 @@ function EditProductTable(props) {
               //setData([...dataDelete]);
               console.log(oldData)
               props.deleteProductType(oldData)
-              resolve()
+              resolve();
             }, 1000)
           }),
       }}
