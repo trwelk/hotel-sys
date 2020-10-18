@@ -55,10 +55,12 @@ function AttendenceList(props) {
 
     const validateData___  = (data) => {
       if(data.employee == null || data.employee == ""){
-        return "Field ID Cannot be null"
-
+        return "Field EMPLOYEE ID Cannot be null"
       }
-      else if(data.totalworkinghrs < 4 && data.totalworkinghrs > 0){
+      else if(data.employee.length != 5 ){
+        return "Invalid EMPLOYEE ID, Enter EMPLOYEE ID with 5 digits -> EM000"
+      }
+      else if(data.totalworkinghrs < 4 && data.totalworkinghrs >= 0){
         return "Total working hours should be greater or equal to 4"
       }
       else if(data.totalworkinghrs <= 0){
@@ -78,6 +80,9 @@ function AttendenceList(props) {
 
     const table = data ? (
         <MaterialTable
+        options={{
+          exportButton: true
+        }}
         title="Attendence List"
         columns={columns}
         data={data}

@@ -27,7 +27,7 @@ function AbsenceList(props) {
     const [columns, setColumns] = useState([
       { title: 'Absence Id', field: 'id', editable: 'never'},
       { title: 'Employee Id', field: 'employee'},
-      { title: 'Absence Type', field: 'abtype', lookup: {40: 'Sick', 41: 'Casual', 42: 'No Pay Leave'}},
+      { title: 'Absence Type', field: 'abtype', lookup: {SICK: 'Sick', CASUAL: 'Casual', NOPAY: 'No Pay Leave'}},
       { title: 'From Date', field: 'from'},
       { title: 'To Date', field: 'to'},
       { title: 'Total Days', field: 'days' },
@@ -49,11 +49,19 @@ function AbsenceList(props) {
 
     const validateData___  = (data) => {
       if(data.employee == null || data.employee == ""){
-        return "Field ID Cannot be null"
-
+        return "Field EMPLOYEE Cannot be null"
       }
       else if(data.abtype == null || data.abtype == ""){
         return "Field ABSENCE TYPE Cannot be null"
+      }
+      else if(data.from == null || data.from == ""){
+        return "Field FROM DATE Cannot be null, Enter a date"
+      }
+      else if(data.to == null || data.to == ""){
+        return "Field TO DATE Cannot be null"
+      }
+      else if(data.reason= null || data.reason == ""){
+        return "Must have a reason for Absence"
       }
       else
       return null;
@@ -70,6 +78,11 @@ function AbsenceList(props) {
 
     const table = data ? (
         <MaterialTable
+        options={{
+          exportButton: true,
+          grouping: true,
+          filtering: true
+        }}
         title="Absence List"
         columns={columns}
         data={data}
