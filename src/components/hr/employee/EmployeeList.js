@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from "@material-ui/core/styles";
 import {insertEmployee, updateEmployee, deleteEmployee} from '../../../redux/actions/hrActions/EmployeeActions'
-import EmployeeTypeCard from '../employee/EmployeeTypeCard';
+
 import {
   Button,
   ButtonGroup,
@@ -66,17 +66,17 @@ function EmployeeList(props) {
     const { vertical, horizontal, open ,error} = state;
     
     //Demo Button Styles
-    const useStyles = makeStyles({
-      root: {
-        background: 'white',
-        border: 0,
-        borderRadius: 6,
-        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-        color: '#000080',
-        height: 48,
-        padding: '0 30px',
-      },
-    });
+    // const useStyles = makeStyles({
+    //   root: {
+    //     background: 'white',
+    //     border: 0,
+    //     borderRadius: 6,
+    //     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    //     color: '#000080',
+    //     height: 48,
+    //     padding: '0 30px',
+    //   },
+    // });
 
     const employees = useSelector(state => state.firestore.ordered.employee)
     const data = employees ? (employees.map(employee => ({...employee}))) : (null)
