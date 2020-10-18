@@ -58,6 +58,7 @@ import {insertPurchasesRequest, updatePurchasesRequest, deletePurchasesRequest} 
       open={open}
       onClose={handleClose}
       key={vertical + horizontal}
+      style={{justifyContent: "flex-end",marginTop: "100px"}}
     >
       <div >
         <Alert variant="filled" severity="error" style={{ display: "flex", alignItems: "center" }}>

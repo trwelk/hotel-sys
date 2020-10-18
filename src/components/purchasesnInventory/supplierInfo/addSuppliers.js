@@ -144,10 +144,10 @@ function AddSuppliers(props) {
     open={open}
     onClose={handleClose}
     key={vertical + horizontal}
-    style={{justifyContent: "flex-end",marginTop: "568px"}}
+    style={{justifyContent: "flex-end",marginTop: "450px"}}
   >
     <div >
-      <Alert variant="filled" severity="error" style={{ display: "flex", alignItems: "center" }}>
+      <Alert variant="filled" severity="error" style={{ display: "flex", alignItems: "center"}}>
         <h3>{error}</h3>
       </Alert>
     </div>
