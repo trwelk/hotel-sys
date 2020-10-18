@@ -1,8 +1,7 @@
-/*
-//import MyEmail from './Email'
+import MyEmail from './Email'
 import { renderEmail } from 'react-html-email'
 import React from 'react'
-//import axios from 'axios';
+import axios from 'axios';
 
 export const updateCustomer = (payload) => {
     console.log(payload)
@@ -46,8 +45,7 @@ export const deleteCustomer = (customer) => {
 export const sendMail = (payload,subscribers) => {
     return (dispatch,getState,{getFirestore,getFirebase}) => {
     
-
-        const messageHtml =  renderEmail(<MyEmail name="Trewon"> {payload.message}</MyEmail>);
+        const messageHtml =  renderEmail(<MyEmail > {payload.message}</MyEmail>);
         const firestore = getFirestore();
         console.log(subscribers)
         axios({
@@ -68,4 +66,3 @@ export const sendMail = (payload,subscribers) => {
         })
     }
 }
-*/
