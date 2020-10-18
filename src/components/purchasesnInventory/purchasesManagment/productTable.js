@@ -43,6 +43,8 @@ import {
       
     ]); 
 
+    
+
     const validateData___= (data) => {
       if (data.oId.length != 5) {
         return "Field ID should contain 5 characters"
@@ -156,10 +158,7 @@ import {
       root: {
         color: "#00f2c3 !important"
       }
-    })(Typography);
-
-    
-    
+    })(Typography); 
 
   
     return(
@@ -224,7 +223,6 @@ import {
               </Card>
             </Col>
           </Row>
-
           {feedBackToast}
         </div>
        
