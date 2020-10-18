@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     const { useState } = React;
     const [columns, setColumns] = useState([
       { title: 'Room Type', field: 'roomType' ,editable: 'never' },
-      { title: 'Room Id', field: 'id' },
+      { title: 'Room Id', field: 'id',editable:"onAdd" },
       { title: 'Room No', field: 'roomNo' ,type: 'numeric'},
       { title: 'Location', field: 'location', lookup: { 'Left Wing': 'Left Wing', 'Right Wing': 'Right Wing', 'Mid Wing': 'Mid Wing'}},
       { title: 'Floor Number', field: 'floor' ,lookup: { 1: '1', 2: '2', 3: '3'}},

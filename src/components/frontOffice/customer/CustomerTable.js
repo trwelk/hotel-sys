@@ -45,9 +45,11 @@ function CustomerTable(props) {
     const data = customers ? (customers.map(customer => ({...customer}))) : (null)
     const datacopy = data
     const userType = useSelector(state => state.auth.userType)    
-    if(userType != "ADMIN"){
-      return <Redirect to="/error" />
-  
+    if(userType){
+      if(userType != "ADMIN"){
+        return <Redirect to="/error" />
+    
+      }
     }
     //--------------------------------------------INTERNAL METHODS--------------------------------------------------------------------------------
     const validateData___  = (data,type) => {
