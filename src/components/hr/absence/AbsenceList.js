@@ -1,5 +1,5 @@
 import React from 'react'
-import MaterialTable from 'material-table'
+import MaterialTable, { MTableToolbar } from 'material-table'
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
@@ -8,6 +8,9 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 import {insertAbsence, updateAbsence, deleteAbsence} from '../../../redux/actions/hrActions/AbsenceActions'
+import Button from '@material-ui/core/Button';
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   },
+  
 }));
 
 
@@ -39,6 +43,16 @@ function AbsenceList(props) {
     const data = absences ? (absences.map(absence => ({...absence,
         days:moment(absence.to, 'MM-DD-YYYY').diff(moment(absence.from),'days',true)}))) : (null)
 
+    const monthlyAbsences = absences ? (absences.map(absence => ({...absence,month:absence.from.toDate().getMonth()}))) : (null)
+    var monthlyData = [[],[],[],[],[],[],[],[],[],[],[],[]]
+    let numberOfEmployees = [0,0,0,0,0,0,0,0,0,0,0,0];
+    for (let a = 0 ; a < 12 ; a++){
+        monthlyData[a] = monthlyAbsences ? monthlyAbsences.filter(absence => absence.month == a) : [];
+        monthlyData[a].forEach((item) => {
+            console.log(parseInt(monthlyData[a]))
+            numberOfEmployees[a] += item.numberOfPacks ? parseInt(item.numberOfPacks) : 0
+        })
+    }
     const [state, setState] = React.useState({
       open: false,
       vertical: 'bottom',
@@ -75,19 +89,40 @@ function AbsenceList(props) {
       setState({ ...state, open: false });
     };
 
+    const exportPDF = () =>{
+      const doc = new jsPDF();
+      const tableColumn = ["Id", "Title", "Issue", "Status", "Closed on"];
+      const tableRows = [];
+    }
+    const handleDemo = () => {
+      props.insertAbsence({
+        id:"EM125",
+        emptype:"PERMANENT",
+        name:"TREVENGER",
+        reportsto:40,
+        contactnumber:"0771231231",
+        department:"FINANCE",
+        designation:"SOMETHING",
+        address:"ABC/d"
+      });
+    }
+  
 
     const table = data ? (
+        <div>
+          {/* <Button variant="contained" color="secondary" onClick={()=>exportPdf()}>
+            Export as Pdf
+          </Button> */}
         <MaterialTable
         options={{
           exportButton: true,
           grouping: true,
           filtering: true
         }}
-        title="Absence List"
         columns={columns}
         data={data}
         editable={{
-          onRowAdd: newData =>
+          /* onRowAdd: newData =>
             new Promise((resolve, reject) => {
               const error = validateData___(newData);
                 if (error != null){
@@ -100,7 +135,7 @@ function AbsenceList(props) {
                 props.insertAbsence(newData)
                 resolve();
               }, 1000)}
-            }),
+            }) */
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
               const error = validateData___(newData);
@@ -133,7 +168,18 @@ function AbsenceList(props) {
               }, 1000)
             }),
         }}
+        components={{
+        Toolbar: props => (
+          <div>
+            <MTableToolbar {...props} />
+            <div style={{padding: '0px 10px'}}>
+              <Button onClick={handleDemo}>Demo</Button>
+          </div>
+          </div>
+        ),
+      }}
       />
+      </div>
     ) : (<div>Loading</div>)
 
 

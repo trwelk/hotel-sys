@@ -182,7 +182,6 @@ function AbsenceRequest(props) {
     return month + '/' + day + '/' + year;
   }
 
-  
 
   const handleClose = () => {
     setState({ ...state, open: false });
