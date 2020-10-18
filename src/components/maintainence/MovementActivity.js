@@ -1,5 +1,6 @@
 import React from 'react'
-import MaterialTable from 'material-table'
+import Button from '@material-ui/core/Button';
+import MaterialTable, { MTableToolbar } from 'material-table'
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
@@ -21,7 +22,7 @@ function Alert(props) {
         { title: 'Name', field: 'Name'},
         { title: 'National ID number', field: 'Nic_no'},
         { title: 'Contact Number', field: 'Contact_no'},
-        { title: 'Guest Type', field: 'guest_type'},
+        { title: 'Guest Type', field: 'guest_type', lookup: { GUEST: 'GUEST', VISITER: 'VISITER'}},
         { title: 'Number of Guests', field: 'no_of_guests'},
         { title: 'Vehicle Number', field: 'vehicle_no'},
       {
@@ -29,6 +30,17 @@ function Alert(props) {
         field: 'descriptions',
       },
     ]); 
+    const handleDemo = () => {
+      props.insertmovementActivity({
+        Visit_id:"demo@demo.com",
+        Name:"demoName",
+        Nic_no:"1542809v",
+        Contact_no:"0123123123",
+        guest_type:"GUEST",
+        no_of_guests:2,
+        descriptions:"descdemo"
+      });
+    }
     const [state, setState] = React.useState({
       open: false,
       vertical: 'bottom',
@@ -115,6 +127,16 @@ function Alert(props) {
               }, 1000)
             }),
         }}
+      components={{
+        Toolbar: props => (
+          <div>
+            <MTableToolbar {...props} />
+            <div style={{padding: '0px 10px'}}>
+              <Button onClick={handleDemo}>Demo</Button>
+          </div>
+          </div>
+        ),
+      }}
       />
     ) : (<div>Loading</div>)
 
