@@ -6,6 +6,9 @@ import { compose } from 'redux';
 import { insertInvRec, deleteInvRec, updateInvRec } from '../../../redux/actions/fnbProductionActions/fnbInventoryActions';
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab';
+import 'jspdf-autotable';
+import { CircularProgress } from '@material-ui/core';
+
 
     function InventoryEditable(props) {
 
@@ -36,10 +39,10 @@ import { Alert } from '@material-ui/lab';
           else if(data.unitPrice == null || data.unitPrice == ""){
             return "Field Unit Price Cannot be null"
           }
-          else if(data.qty == null || data.qty == ""){
+          else if((data.qty == null || data.qty == "") && data.stkStatus == "1"){
             return "Field Quantity cannot be null"
           }
-          else if(data.expDate == null || data.expDate == ""){
+          else if(data.expDate == null || data.expDate == "" ){
             return "Field Expiry Date cannot be null"
           }
           else if(data.stkStatus == null || data.stkStatus == ""){
@@ -76,10 +79,11 @@ import { Alert } from '@material-ui/lab';
             </Alert>
             </div>
           </Snackbar>)
-      
+
         const fnbInv = useSelector(state => state.firestore.ordered.fnbInventory)
         const data = fnbInv ? (fnbInv.map(fnb_Inv => ({...fnb_Inv,total:parseFloat(fnb_Inv.qty)*parseFloat(fnb_Inv.unitPrice)}))) : (null)
         const table = data ? (
+          <div>
             <MaterialTable
             title="Inventory List"
             columns={columns}
@@ -112,7 +116,6 @@ import { Alert } from '@material-ui/lab';
                     const dataUpdate = [...data];
                     const index = oldData.tableData.id;
                     dataUpdate[index] = newData;
-                    //setData([...dataUpdate]);
                     console.log(newData,oldData)
                     props.updateInvRec(newData)
                     resolve();
@@ -124,15 +127,22 @@ import { Alert } from '@material-ui/lab';
                     const dataDelete = [...data];
                     const index = oldData.tableData.id;
                     dataDelete.splice(index, 1);
-                    //setData([...dataDelete]);
                     console.log(oldData)
                     props.deleteInvRec(oldData.id)
                     resolve()
                   }, 1000)
                 }),
             }}
-          />
-        ) : (<div>Loading</div>)
+            options={{
+              exportButton: true,
+              headerStyle: {
+              backgroundColor: '#01579b',
+              color: '#FFF'
+            } 
+          }      
+            }      
+          /></div>
+        ) : (<div><CircularProgress style={{marginTop:"200px"}}/></div>)
    
         return(
             <div>

@@ -2,7 +2,9 @@ import React from 'react'
 import MaterialTable from 'material-table'
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
+import Snackbar from '@material-ui/core/Snackbar';
 import { firestoreConnect } from 'react-redux-firebase';
+import { Alert } from '@material-ui/lab';
 import { insertSupplierInfo, updateSupplierInfo, deleteSupplierInfo} from '../../../redux/actions/PnIActions/SupplierList';
 // import headerPnI from '../headerPnI';
 
@@ -21,6 +23,55 @@ import { insertSupplierInfo, updateSupplierInfo, deleteSupplierInfo} from '../..
       { title: 'Department', field: 'department'},
       { title: 'Date', field: 'date'},
     ]); 
+
+    const validateData___ = (data) => {
+      if (data.sId == null || data.sId == "") {
+        return "ID field Cannot be null"
+      }
+      else if (data.sId.length != 5) {
+        return "Field ID should contain 5 characters"
+      }
+      else if (data.firstName == null || data.firstName == "") {
+        return "First Name Cannot be null"
+      }
+      else if (data.lastName == null || data.lastName == "") {
+        return "Last Name cannot be  null"
+      }
+      else if (data.email == null || data.email == "") {
+        return "Email field cannot be null"
+      }
+      else
+        return null
+    }
+
+    const [state, setState] = React.useState({
+      open: false,
+      vertical: 'bottom',
+      horizontal: 'right',
+    });
+
+    const { vertical, horizontal, open ,error} = state;
+      
+        const handleClose = () => {
+          setState({ ...state, open: false });
+        };
+      
+        const feedBackToast =  (<Snackbar 
+          autoHideDuration={200000}
+          anchorOrigin={{ vertical, horizontal }}
+          open={open}
+          onClose={handleClose}
+          key={vertical + horizontal}
+          >
+              <div >
+      
+            <Alert variant="filled" severity="error" style={{display: "flex",alignItems: "center"}}>
+            <h3>{error}</h3>
+            
+            </Alert>
+            </div>
+          </Snackbar>)
+
     const supplier = useSelector(state => state.firestore.ordered.supplier)
     const data = supplier ? (supplier.map(sup => ({...sup}))) : (null)
     const table = data ? (
@@ -38,6 +89,12 @@ import { insertSupplierInfo, updateSupplierInfo, deleteSupplierInfo} from '../..
           //   }),
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
+              const error = validateData___(newData);
+              if (error != null){
+                setState({ ...state,open: true,error:error});
+                reject();
+              }
+              else{
               setTimeout(() => {
                 const dataUpdate = [...data];
                 const index = oldData.tableData.sId;
@@ -45,7 +102,7 @@ import { insertSupplierInfo, updateSupplierInfo, deleteSupplierInfo} from '../..
                 console.log(newData,oldData)
                 props.updateSupplierInfo(newData)
                 resolve();
-              }, 1000)
+              }, 1000)}
             }),
           onRowDelete: oldData =>
             new Promise((resolve, reject) => {
@@ -59,6 +116,10 @@ import { insertSupplierInfo, updateSupplierInfo, deleteSupplierInfo} from '../..
               }, 1000)
             }),
         }}
+        options={{
+          exportButton: true
+        }      
+        }
       />
     ) : (<div>Loading</div>)
 
@@ -69,6 +130,7 @@ import { insertSupplierInfo, updateSupplierInfo, deleteSupplierInfo} from '../..
     return(
         <div>
              {table}
+             {feedBackToast}
         </div>
        
         )

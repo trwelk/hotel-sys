@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
                                                         
 function NewFeedbackForm(props) {
     const [open, setOpen] = React.useState(false);
-    const [state, setState] = useState({customer:"",platform:"",date:"",type:"",description:"",action:"",title:"",rating:0,department:""});
+    const [state, setState] = useState({customer:"",platform:"",date:null,type:"",description:"",action:"",title:"",rating:0,department:""});
     const [selectedDate, setSelectedDate] = React.useState(new Date('2020-09-17T21:11:54'));
 
     const customersDb = useSelector(state => state.firestore.ordered.customer )
@@ -129,7 +129,7 @@ const handleSubmit = (evt) => {
         evt.preventDefault();
         //validate
         var error = null
-        //error = validateData___(state)
+        error = validateData___(state)
         console.log(error)
         if(error != null){
             setStat({ ...stat, openn: true,error:error });
@@ -154,10 +154,33 @@ const handleSubmit = (evt) => {
   }));
   }
 
+  const handlePlatformSelector = (event) => {
+    // console.log(event.target.value)
+     setState(prevState => ({
+       ...prevState,
+       platform: event.target.value
+   }));
+   }
+
+  const handleFeedbackTypeSelector = (event) => {
+    // console.log(event.target.value)
+     setState(prevState => ({
+       ...prevState,
+       type: event.target.value
+   }));
+   }
+
   const handleDepartmentSelector = (event) => {
     setState(prevState =>({
       ...prevState,
         department:event.target.value
+    }))
+  }
+
+  const handleRatingSelector = (event) => {
+    setState(prevState =>({
+      ...prevState,
+        rating:event.target.value
     }))
   }
 
@@ -187,12 +210,6 @@ const handleSubmit = (evt) => {
         else if(data.platform == null || data.platform == ""){
           return "Field platform Cannot be null"
         }
-        else if(data.platform != "ONSITE" || data.platform != "SOCIALMEDIA"){
-            return "Field type Should be either ONSITE or SOCIALMEDIA"
-          }
-        else if(data.type != "COMPLAINT" || data.type == "COMPLIMENT"){
-            return "Field type Should be either COMPLAINT or COMPLIMENT"
-          }
         else
         return null;
       }
@@ -243,57 +260,6 @@ const handleSubmit = (evt) => {
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}  >
-        <FormControl className={classes.formControl} style={{width:"500px"}}>
-        <InputLabel id="customer">Customer</InputLabel>
-        <Select
-         label="Customer"
-          id="demo-simple-select"
-          value={state.customer}
-          onChange={handleCustomerTypeSelector}
-        >
-         {customerSelector}
-        </Select>
-      </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            required
-            id="title"
-            name="title"
-            label="Title"
-            
-            onChange={handleChange}
-
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField id="rating" name="rating" label="Rating"   onChange={handleChange}
-
-          InputProps={{
-            readOnly: false,
-          }}/>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-        <FormControl className={classes.formControl} style={{width:"500px"}}>
-        <InputLabel id="customer">Department</InputLabel>
-        <Select label="Customer" id="demo-simple-select"  value={state.department} onChange={handleDepartmentSelector}>
-        <MenuItem  value={"HR"}>HR</MenuItem> 
-        <MenuItem  value={"F&B"}>F@B</MenuItem> 
-        <MenuItem  value={"FRONTOFFICE"}>Front Office</MenuItem> 
-        <MenuItem  value={"MAINTENANCE"}>Maintenance</MenuItem> 
-        </Select>
-        </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            required
-            id="platform"
-            name="platform"
-            label="Platform"
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDatePicker
           disableToolbar
@@ -308,15 +274,89 @@ const handleSubmit = (evt) => {
             'aria-label': 'change date',
           }}
         />
-            </MuiPickersUtilsProvider>
-
+        </MuiPickersUtilsProvider>
         </Grid>
         <Grid item xs={12} sm={4}>
-          <TextField id="type" name="type" label="Type"              onChange={handleChange}
-
-          InputProps={{
-            readOnly: false,
-          }}/>
+        <FormControl className={classes.formControl} style={{width:"300px"}}>
+          <TextField
+            required
+            id="title"
+            name="title"
+            label="Title"
+            onChange={handleChange}
+          />
+        </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+        <FormControl className={classes.formControl} style={{width:"300px"}}>
+            <InputLabel id="rating">Rating</InputLabel>
+            <Select
+            label="Rating"
+              id="rating"
+              value={state.rating}
+              onChange={handleRatingSelector}
+            >
+              <MenuItem  value={1}>1 Star</MenuItem> 
+              <MenuItem  value={2}>2 Stars</MenuItem> 
+              <MenuItem  value={3}>3 Stars</MenuItem> 
+              <MenuItem  value={4}>4 Stars</MenuItem> 
+              <MenuItem  value={5}>5 Stars</MenuItem> 
+            </Select>
+        </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+        <FormControl className={classes.formControl} style={{width:"300px"}}>
+        <InputLabel id="customer">Department</InputLabel>
+        <Select label="Customer" id="demo-simple-select"  value={state.department} onChange={handleDepartmentSelector}>
+        <MenuItem  value={"HR"}>HR</MenuItem> 
+        <MenuItem  value={"F&B"}>F@B</MenuItem> 
+        <MenuItem  value={"FRONTOFFICE"}>Front Office</MenuItem> 
+        <MenuItem  value={"MAINTENANCE"}>Maintenance</MenuItem> 
+        </Select>
+        </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <FormControl className={classes.formControl} style={{width:"300px"}}>
+            <InputLabel id="customer">Customer</InputLabel>
+            <Select
+            label="Platform"
+              id="platform"
+              value={state.platform}
+              onChange={handlePlatformSelector}
+            >
+              <MenuItem  value={"SOCIALMEDIA"}>Socail Media</MenuItem> 
+              <MenuItem  value={"ONSITE"}>On Site</MenuItem> 
+            </Select>
+        </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+        <FormControl className={classes.formControl} style={{width:"300px"}}>
+        <InputLabel id="customer">Customer</InputLabel>
+        <Select
+         label="Customer"
+          id="demo-simple-select"
+          value={state.customer}
+          onChange={handleCustomerTypeSelector}
+        >
+         {customerSelector}
+        </Select>
+      </FormControl>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+        <FormControl  style={{width:"300px"}}>
+        <InputLabel id="feedbackTypeLabel">Feedback Type</InputLabel>
+          <Select
+            label="Customer"
+            id="demo-simple-select"
+            defaultValue="Feedback Type"
+            value={state.type}
+            onChange={handleFeedbackTypeSelector}
+            fullWidth={true}
+          >
+            <MenuItem  value={"COMPLAINT"}>COMPLAINT</MenuItem> 
+            <MenuItem  value={"COMPLIMENT"}>COMPLIMENT</MenuItem> 
+          </Select>
+          </FormControl>
         </Grid>
         
         <Grid item xs={12}>

@@ -61,6 +61,11 @@ import purchasesnInventory from '../components/purchasesnInventory/supplierInfo/
 import currentSupplers from '../components/purchasesnInventory/supplierInfo/currentSuppliers';
 import purchasesRequest from '../components/purchasesnInventory/purchasesManagment/purchasesRequest';
 import purchasesRequestManagment from '../components/purchasesnInventory/purchasesManagment/purchasesRequestManagment';
+import Auth from '../components/auth/Auth'
+import ReactDOM from 'react-dom'
+import productTable from '../components/purchasesnInventory/purchasesManagment/productTable'
+import addContract from '../components/purchasesnInventory/contractManagement/addContract'
+import contractDetails from '../components/purchasesnInventory/contractManagement/contractDetails'
 
 
 import MenuForm from '../components/F&bProduction/management/Forms/MenuForm';
@@ -86,9 +91,11 @@ import FeedbackOverview from '../components/frontOffice/overview/FeedbackOvervie
 import CustomerOverview from '../components/frontOffice/overview/CustomerOverview';
 import CustomerLocation from '../components/frontOffice/customer/CustomerLocation';
 import { CircularProgress } from 'material-ui';
-import tableChart from '../components/F&bProduction/Charts/Chart';
+import fnbInventoryChart from '../components/F&bProduction/Charts/InventoryChart';
 import CleaningSchedule from '../components/housekeeping/CleaningSchedule';
 import LaundryManagement from '../components/housekeeping/LaundryManagement';
+import ErrorPage from './ErrorPage';
+import UserTable from '../components/auth/UserTable';
 // import EditOrderTable from '../components/fnbServices/EditOrderTable';
 // import OrderForm from '../components/fnbServices/OrderForm';
 
@@ -106,12 +113,19 @@ function Copyright() {
   );
 }
 
+
+
 let theme = createMuiTheme({
   palette: {
     primary: {
       light: '#63ccff',
       main: '#232f3e',
       dark: '#006db3',
+    },
+    tirtiary: {
+      light: 'rgb(57 130 166)',
+      main: 'rgb(57 130 166)',
+      dark: 'rgb(57 130 166)',
     },
   },
   typography: {
@@ -293,7 +307,7 @@ else{
             <Header onDrawerToggle={handleDrawerToggle} module={module}/>
             <main className={classes.main}>
             <Switch>    
-                <Route exact path="/" component={RoomHandling}/>
+                <Route exact path="/" component={FrontOfficeDashboard}/>
             <Route exact path='/res' component={ReservatonBoxView}/>
             <Route exact path='/ed' component={RoomTypeTable}/>
             {/*<Route exact path='/form' component={InsertReservationForm}/>*/}
@@ -305,8 +319,11 @@ else{
             <Route exact path="/PnI" component={purchasesnInventory}/>
             <Route exact path="/sup" component={currentSuppliers}/>
             <Route exact path="/pReq" component={purchasesRequest}/>
-            <Route exact path="/pOrd" component={purchasesOrder}/>
             <Route exact path="/pReqMng" component={purchasesRequestManagement}/>
+            <Route exact path="/pOrd" component={purchasesOrder}/>
+            <Route exact path="/pOrdTable" component={productTable}/>
+            <Route exact path="/addCon" component={addContract}/>
+            <Route exact path="/conDetails" component={contractDetails}/>
             <Route exact path="/poolservice" component={PoolService}/>
             <Route exact path="/newMenu" component={MenuForm} />
             {/* <Route exact path='/newOrder' component={OrderForm}/> */}
@@ -332,7 +349,7 @@ else{
 
             <Route exact path='/fnb/production/management' component={fnbProdMgmt}/>
             <Route exact path='/fnb/production/newMenu' component={MenuForm}/>
-            <Route exact path='/fnb/production/reports' component={tableChart} />
+            <Route exact path='/fnb/production/reports' component={fnbInventoryChart} />
 
             <Route exact path='/fnb/services/barInvMng' component={FnBServiceBarMng}/>
             <Route exact path="/fnb/services/orderMng" component={FnBserviceMng} />
@@ -344,6 +361,7 @@ else{
             <Route exact path='/frontoffice/feedback' component={FeedBackTable}/>
             <Route exact path='/frontoffice/reservation' component={ReservatonBoxView}/>
             <Route exact path='/frontoffice/roomtypes' component={RoomTypeTable}/>
+
             <Route exact path='/frontoffice/overview' component={CustomerOverview}/>
             <Route exact path='/frontoffice/analytics/feedback' component={FeedbackOverview}/>
             <Route exact path='/frontoffice/analytics/customer' component={CustomerOverview}/>
@@ -375,14 +393,14 @@ else{
 
             <Route exact path="/edit" component={Editable}/>
             <Route exact path="/map" component={CustomerLocation}/>
-            <Route exact path="/cleaning" component={CleaningSchedule}/>
-            <Route exact path="/laundry" component={LaundryManagement}/>
+            <Route exact path="/housekeeping/laundry" component={LaundryManagement}/>
+            <Route exact path="/housekeeping/cleaning" component={CleaningSchedule}/>
+            <Route exact path="/users" component={UserTable}/>
+            
+            <Route path= '*' component={ErrorPage} /> 
+
             </Switch>
           </main>
-          <footer className={classes.footer}>
-            <Copyright />
-          </footer>
-
         </div>
         </div>
       </ThemeProvider>

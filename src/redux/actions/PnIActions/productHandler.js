@@ -1,31 +1,32 @@
-export const updateProduct = (payload) => {
+export const updateProduct = (payload,pType,priority,sName) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection("productMng").doc(payload.pId).update({
-            pId:payload.pId,
+        firestore.collection("productMng").doc(payload.oId).update({
+            oId:payload.oId,
+            sName:payload.sName,
             pType:payload.pType,
-            department:payload.department,
             priority:payload.priority,
             qty:payload.qty,
-            date:payload.date
-            //status:payload.status
+            date:payload.date,
+            status:payload.status
         }); 
     }
 
 }
 
-export const insertProduct = (payload) => {
+export const insertProduct = (payload,pType,priority,sName) => {
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();
-        firestore.collection('productMng').doc(payload.pId).set({
-            pId:payload.pId,
-            pType:payload.pType,
-            department:payload.department,
-            priority:payload.priority,
+        firestore.collection('productMng').doc(payload.oId).set({
+            oId:payload.oId,
+            sName:sName,
+            pType:pType,
+            priority:priority,
             qty:payload.qty,
-            date:payload.date
+            date:payload.date,
+            status:"PENDING",
         }).then((response) => {
             console.log(response)
         }).catch((response) => {

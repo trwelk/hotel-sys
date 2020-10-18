@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { insertMenu } from '../../../../redux/actions/fnbProductionActions/MenuActions'
 import { firestoreConnect } from 'react-redux-firebase';
-import { connect } from 'react-redux';
+import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 import { FormControl, Grid, InputLabel, MenuItem, Select } from '@material-ui/core';
 import WeddingTemplate from '../Templates/WeddingMenuTemplate';
@@ -17,7 +17,8 @@ import GeneralMenuTemplate from '../Templates/GeneralMenuTemplate';
 import Snackbar from '@material-ui/core/Snackbar';
 import { Alert } from '@material-ui/lab';
 import AddMenuItem from '../Templates/AddMenuItem';
-
+import {db} from '../../../../config/fbConfig'
+import { Label } from 'reactstrap';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,6 +45,8 @@ function MenuForm(props) {
   const classes = useStyles();
 
   const [menuType, setType] = React.useState(1);
+  const menus =  useSelector(state => state.firestore.ordered.Menu)      
+
   const [hide,hideField] = React.useState(false);
   const [Menu, setMenu] = useState({id:'', menuName:'', menuType:1, price:''});
   const [WedItems,setItems] = useState({
@@ -109,8 +112,30 @@ function MenuForm(props) {
       [name]: value
   }));
   };
+  
+
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'bottom',
+    horizontal: 'right',
+  });
+
+  const { vertical, horizontal, open ,error} = state;
+
+
+  const CheckExist___ = (data) => {
+    let exists = false;
+    const menuItem = menus.filter(menu => menu.id == data.id);
+    console.log(menuItem);
+    if (menuItem.length > 0)
+      exists = true
+
+    return exists;
+  }
 
   const validateData___  = (data) => {
+    let exist = CheckExist___(data);
+    console.log(exist)
     if(data.id == null || data.id == ""){
       return "Field ID Cannot be null"
 
@@ -127,18 +152,14 @@ function MenuForm(props) {
     }
     else if(data.menuType == null || data.menuType == ""){
       return "Field Menu Type Cannot be null"
+    }       
+    else if(exist){
+      return "Menu Id already exists"
     }
-    else
+    else{
     return null;
+    }
   }
-
-  const [state, setState] = React.useState({
-    open: false,
-    vertical: 'bottom',
-    horizontal: 'right',
-  });
-
-  const { vertical, horizontal, open ,error} = state;
 
   const handleClose = () => {
     setState({ ...state, open: false });
@@ -148,6 +169,7 @@ function MenuForm(props) {
     evt.preventDefault();
   new Promise((resolve,reject)=>{
       const error = validateData___(Menu);
+      console.log(error);
       if (error != null){
         setState({ ...state, open: true,error:error });
         reject();
@@ -164,7 +186,7 @@ function MenuForm(props) {
   })}
 
   const feedBackToast =  (<Snackbar 
-    autoHideDuration={200000}
+    autoHideDuration={100000}
     anchorOrigin={{ vertical, horizontal }}
     open={open}
     onClose={handleClose}
@@ -186,10 +208,10 @@ function MenuForm(props) {
         <Avatar className={classes.avatar}>
           <ImportContactsIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" color="textPrimary">
           Add Menu
         </Typography>
-        <h4>* Required Fields</h4>        
+          <Label>* Required Fields</Label>
         <form className={classes.form} noValidate>
         <FormControl className={classes.formControl} margin="normal">
         <InputLabel id="MenuType">Menu Type</InputLabel>

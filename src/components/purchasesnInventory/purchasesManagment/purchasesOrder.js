@@ -25,6 +25,7 @@ import { Alert } from '@material-ui/lab';
 import { insertSupplierInfo } from '../../../redux/actions/PnIActions/SupplierList';
 import { useSelector } from 'react-redux';
 import { Feedback } from '@material-ui/icons';
+import { insertProduct } from '../../../redux/actions/PnIActions/productHandler';
 
 
 
@@ -65,14 +66,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function PurchasesRequest(props) {
+function PurchasesOrder(props) {
 
 
   const classes = useStyles();
 
-  const [request, setRequest] = useState({pId: '',pType: "Water",qty: '',priority:"Normal" ,date: '',department: "front office" })
+  const [productMng, setOrder] = useState({oId: '',pType: '', sName:'',qty: '',priority:'' ,date: ''})
   const [priority, setPriority] = React.useState("Normal");
-  const [pType,setProductType] = React.useState();
+  const [pType,setProductType] = React.useState(null);
   const [sName,setSupplierName] = React.useState();
   
 
@@ -90,23 +91,23 @@ function PurchasesRequest(props) {
   const handleSubmit = (e) =>{ 
     e.preventDefault();
     new Promise((resolve, reject) => {
-      const error = validateData___(request);
+      const error = validateData___(productMng);
       if (error != null) {
+        // alert(JSON.stringify(request))
         setState({ ...state, open: true, error: error });
         reject();
       } else {
         setTimeout(() => {
-          
-          props.insertPurchasesRequest(request);
+          props.insertProduct(productMng,pType,priority,sName);
           resolve();
         }, 1000)
       }}
     )
   }
 
-  const handleRequest = (event) => {
+  const handleProduct = (event) => {
     const { name, value } = event.target;
-  setRequest(prevState => ({
+  setOrder(prevState => ({
     ...prevState,
     [name]: value
 }));
@@ -117,37 +118,38 @@ function PurchasesRequest(props) {
 
    const data = purchasesOrderDB ? (purchasesOrderDB.map(product => ({...product}))) : (null)
    const sup = supplierNameDB ? (supplierNameDB.map(supplier => ({...supplier}))):(null)
+   const filterdSupplier = pType ? sup.filter(supplier => supplier.itemtype == pType) : null
 
-  //  console.log(productTypeDB)
 
 
    const productTypeSelector = data ? (data.map((pType,index) => {
-    return  <MenuItem key={index} value={pType.id}>{pType.pType}</MenuItem>
+    return  <MenuItem key={index} value={pType.pType}>{pType.pType}</MenuItem>
   })) :(null)
 
-  const supplierNameSelector = sup ? (sup.map((sName,index) => {
-      return <MenuItem key={index} value={sName.id}>{sName.firstName}</MenuItem>
+  const supplierNameSelector = filterdSupplier ? (filterdSupplier.map((sName,index) => {
+      return <MenuItem key={index} value={sName.firstName}>{sName.firstName}</MenuItem>
   })):(null)
+
+  // const quantitySelector = data? (data.map((qty,index)=>{
+  //   return <TextField ikey = {index} value = {qty.qty}>{qty.qty}</TextField>
+  // })):(null)
 
   //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
   const validateData___= (data) => {
-    if (data.pId.length != 5) {
-      console.log(data.pId.length)
+    if (data.oId.length != 5) {
       return "Field ID should contain 5 characters"
     }
-    else if (data.pId == null || data.pId == "") {
-      console.log(data.pId)
+    else if (data.oId == null || data.oId == "") {
       return "ID field Cannot be null"
     }
-    else if (data.pType == null || data.pType == "") {
-      console.log(data.pType)
-      return "First Product Name Cannot be null"
+    else if (data.sName == null || data.sName == ""){
+      return "Supplier Name Cannot be null"
+    }
+    else if(data.pType == null || data.pType == ""){
+      return "Product Type cannot be null"
     }
     else if(data.qty == 0 || data.qty < 0){
       return "Quantity shold be a postive value"
-    }
-    else if(data.Checkbox.check == true){
-      return "Please Accept Terms and Conditions"
     }
       return null
   }
@@ -185,7 +187,7 @@ function PurchasesRequest(props) {
         <Avatar className={classes.avatar}>
           <AddIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" style={{color:"black"}}>
           Place Your Purchases Order Here...
         </Typography>
         <form className={classes.form} noValidate>
@@ -195,19 +197,22 @@ function PurchasesRequest(props) {
                 variant="outlined"
                 required
                 fullWidth
-                id="pId"
-                label="Product Id"
-                name="pId"
-                onChange={handleRequest}
+                id="oId"
+                label="Order Id"
+                name="oId"
+                autoComplete="off"
+                onChange={handleProduct}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl varient="outlined" fullWidth>
+              <InputLabel id="pType">Product Type</InputLabel>
               <Select
                 labelId="Product Name"
                 id="pType"
                 name="pType"
                 lable="Product Name"
+                autoComplete="off"
                 value={pType}
                 onChange={handleProductType}
               >
@@ -217,11 +222,13 @@ function PurchasesRequest(props) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl varient="outlined" fullWidth>
+                <InputLabel id="sName">Supplier Name</InputLabel>
               <Select
                 labelId="Supplier Name"
                 id="sName"
                 name="sName"
                 lable="Supplier Name"
+                autoComplete="off"
                 value={sName}
                 onChange={handleSupplierName}
               >
@@ -235,11 +242,11 @@ function PurchasesRequest(props) {
                 required
                 fullWidth
                 id="qty"
-                label="Quantity"
+                label ="Quantity"
                 name="qty"
                 type='number'
                 autoComplete="off"
-                onChange={handleRequest}
+                onChange={handleProduct}
               />
             </Grid>
             <Grid item xs={12}>
@@ -263,13 +270,7 @@ function PurchasesRequest(props) {
                 id="date"
                 name="date"
                 type='date'
-                onChange={handleRequest}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="check" name="check" color="primary" />}
-                label="I accept the Terms and Conditions"
+                onChange={handleProduct}
               />
             </Grid>
           </Grid>
@@ -293,12 +294,11 @@ function PurchasesRequest(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    insertPurchasesRequest: (payload) => dispatch(insertPurchasesRequest(payload)),
+    insertProduct: (payload,pType,priority,sName) => dispatch(insertProduct(payload,pType,priority,sName)),
   }
 }
 export default compose(connect(null, mapDispatchToProps), firestoreConnect([
   {collection: 'productMng'},
   {collection: 'request'},
   {collection: 'supplier'}
-]))(PurchasesRequest)
-
+]))(PurchasesOrder)

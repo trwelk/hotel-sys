@@ -119,6 +119,7 @@ function AbsenceRequest(props) {
     }));
   }
 
+
   const handleAbsenceTypeSelector = (event) => {
     setState(prevState => ({
         ...prevState,
@@ -170,10 +171,17 @@ function AbsenceRequest(props) {
     else if (data.employee.length != 5) {
       return "Field EMPLOYEE ID should contain 5 characters"
     }
+    else if (data.from == null || data.from == "") {
+      return "fromdate Cannot be null"
+    }
+    else if (data.to == null || data.to == "") {
+      return "To Date cannot be  null"
+    }
     else
       return null
   }
 
+  
 
   const handleClose = () => {
     setState({ ...state, open: false });

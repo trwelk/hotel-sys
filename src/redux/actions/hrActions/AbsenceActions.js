@@ -9,7 +9,10 @@ export const updateAbsence = (payload) => {
 
 }
 
+
+
 export const insertAbsence = (payload) => {
+ 
     console.log(payload)
     return (dispatch,getState,{getFirestore,getFirebase}) => {
         const firestore = getFirestore();

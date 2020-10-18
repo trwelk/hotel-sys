@@ -1,281 +1,259 @@
-import React, { useState } from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Paper from '@material-ui/core/Paper';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
+import React, { useState } from 'react';
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
-// import AddressForm from './NewReservation';
-// import PaymentForm from './PaymentForm';
-// import Review from './Review';
-import Dialog from '@material-ui/core/Dialog';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { connect,useSelector } from "react-redux";
-import {insertOrderType} from '../../redux/actions/FnBServiceActions/FoodOrderTypeActions'
-import {FormControl,Grid, InputLabel, ListItemIcon, MenuItem,Select, Snackbar} from '@material-ui/core';
-// import {insertReservation} from '../../../../redux/actions/frontOfficeActions/ReservationActions'
-import { Alert, AlertTitle } from '@material-ui/lab';
-import { insertBarInvRec } from "../../redux/actions/FnBServiceActions/BarInventoryAction";
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import AddIcon from '@material-ui/icons/Add';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import { InputLabel, Select } from '@material-ui/core';
+import { MenuItem } from '@material-ui/core';
+import { FormControl } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { compose } from 'redux'
+import { firestoreConnect } from 'react-redux-firebase'
+import { useForm, Controller } from 'react-hook-form';
+import { insertContractInfo } from "../../../redux/actions/PnIActions/contractHandler";
+import Snackbar from '@material-ui/core/Snackbar';
+import { Alert } from '@material-ui/lab';
+import { SettingsRemoteSharp } from '@material-ui/icons';
+import { keys } from '@material-ui/core/styles/createBreakpoints';
 
+
+
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright ©'}
+      <Link color="inherit" href="https://material-ui.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {
-    position: 'relative',
-  },
-  layout: {
-    width: 'auto',
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-      width: 600,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
-  },
   paper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      marginTop: theme.spacing(6),
-    },
-    width: "87%",
-    boxShadow: "0px 1px 12px black",
-    height: "87",
-    marginTop: "24px"
-  },
-  stepper: {
-    padding: theme.spacing(3, 0, 5),
-  },
-  buttons: {
+    marginTop: theme.spacing(8),
     display: 'flex',
-    justifyContent: 'flex-end',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
-  button: {
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1),
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
   },
-  MuiDialogPaperScrollPaper:{
-    background: "transparent",overflowY: "hidden"
-
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(2),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  formControl: {
+    minWidth: 100
   }
 }));
 
-const steps = ['Order Details'];
+function AddContract(props) {
 
-function InventoryForm(props) {
-    const [opens, setOpens] = React.useState(false);
-    const [state, setState] = useState({ BarInvNo: "", descriptions: "",date:""});
-    // const month = useSelector(state => state.frontOffice.selectedMonth + 1 )
-    // const startDay = new Date(Date.parse(month + ' ' + (props.startDay ) +' 2020'))
-
-//   console.log(startDay)
-//     const [roomNo, setRoomNo] = useState(props.roomNo);
-//     const [roomType, RoomType] = useState(props.roomType);
-
-// const [type, setType] = React.useState(1);
-
-const [states, setStates] = React.useState({
-  open: false,
-  vertical: 'bottom',
-  horizontal: 'right',
-});
-
-const [type, setType] = React.useState(1);
-//const { vertical, horizontal ,error} = states;
-const handleClose1 = () => {
-  setStates({ ...states, open: false });
-};
-const { vertical, horizontal, open ,error} = states;
-
-    const handleChange = e => {
-      const { name, value } = e.target;
-      setState(prevState => ({
-          ...prevState,
-          [name]: value
-      }));
-      };
-      const handleChange1 = (event) => {
-        setType(event.target.value);
-        const { name, value } = event.target;
-      setState(prevState => ({
-          ...prevState,
-          status: value
-      }));
-      };
-      
-  const validateData___  = (data) => {
-    if(state.BarInvNo == null || state.BarInvNo == ""){
-      return "Field order No Cannot be null"
-
-    }
-    else if(state.BarInvNo.length != 5 ){
-      return "Field order No sould contain 5 characters"
-
-    }
-    else if(state.date == null || state.date == ""){
-      return "Field date  Cannot be null"
-    }
-    // else if(state.status == null || state.status == ""){
-    //   return "Field status Cannot be null"
-    // }
-    // else if(data.menuType == null || data.menuType == ""){
-    //   return "Field Menu Type Cannot be null"
-    // }
-    else
-    return null;
-  }
-  const feedBackToast =  (<Snackbar 
-    autoHideDuration={200}
-    anchorOrigin={{ vertical, horizontal }}
-    open={open}
-    key={vertical + horizontal}
-    >
-        <div >
-
-      <Alert variant="filled" severity="error" style={{display: "flex",alignItems: "center"}}>
-      <h3>{error}</h3>
-      
-      </Alert>
-      </div>
-    </Snackbar>)
-
-      const handleClickOpen = () => {
-          setOpens(true);
-        };
-      const handleClose = () => {
-        setOpens(false);
-      };
-      const handleSubmit = (evt) => {
-        evt.preventDefault();
-        //console.log(new Date(Date.parse(' 02 ' + (state.startDay ) +' 2020')),state.startDay);
-        
-        // alert(state)
-        new Promise((resolve,reject)=>{
-          const error = validateData___(state);
-          if (error != null){
-            setStates({ ...states, open: true,error:error });
-            reject();
-          }
-          else{
-          setTimeout(() => {
-              // alert(JSON.stringify(state));
-              props.insertBarInvRec(state)
-              handleClose()
-              resolve();
-          },1000)
-        }
-      }) 
-      // props.insertOrderType(state)
-      }
 
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
-  return (
-<React.Fragment>
-    {/* <AddCircleIcon variant="outlined" color="secondary" onClick={handleClickOpen}/> */}
-    <Button
-        variant="contained"
-        color="default"
-        className={classes.button}
-        onClick={handleClickOpen}
-        // startIcon={<AddIco />}
-      >
-        Add Inventory
-      </Button>
-<Dialog
-style={{background: "transparent",overflowY: "hidden"}}
-open={opens}
-onClose={handleClose}
-> 
-{feedBackToast}
-    <React.Fragment>
-      <CssBaseline />
-      <main className={classes.layout} style={{display:"flex",justifyContent: "center"}}>
-        <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="center">
-            Checkout
-          </Typography>
-          <Stepper className={classes.stepper}>
-              <Step key="label">
-                <StepLabel>label</StepLabel>
-              </Step>
-          </Stepper>
-          <React.Fragment>
-            { (
-              <React.Fragment>
-              <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Inventory Details
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="BarInvNo"
-            name="BarInvNo"
-            label="Bar Inventory Id"
-            fullWidth
-            autoComplete="given-name"
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid  item xs={12} sm={6}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="date"
-                  name="date"
-                  type = 'date'
-                  onChange={handleChange}
-                />
-            </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="descriptions"
-            name="descriptions"
-            label="Description"
-            fullWidth
-            autoComplete="shipping address-level2"
-            onChange={handleChange}
-          />
-        </Grid>
-      </Grid>
 
-    </React.Fragment>                <div className={classes.buttons}>
-                  <Button variant="contained" color="primary" onClick={handleSubmit}  className={classes.button}>
-                    Submit
-                  </Button>
-                </div>
-              </React.Fragment>
-            )}
-          </React.Fragment>
-        </Paper>
-      </main>
-    </React.Fragment>
-    </Dialog>
-</React.Fragment>
+  const [contract, setContract] = useState({cId:'', supplierName:'', pType:'', date:'', department:''});
+  const [department, setDepartment] = React.useState("frontoffice");
+
+ 
+  const handleDepartment = (event) => {
+    setDepartment(event.target.value);
+  }
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    new Promise((resolve, reject) => {
+      const error = validateData___(contract);
+      if (error != null) {
+        setState({ ...state, open: true, error: error });
+        reject();
+      } else {
+        // alert(JSON.stringify(contract))
+        setTimeout(() => {
+          props.insertContractInfo(contract,department);
+          resolve();
+        }, 1000)
+      } 
+    })
+  }
+  const handleContract = (event) => {
+    const { name, value } = event.target;
+    setContract(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  }
+
+  //-----------------------------------------VALIDATE DATA ---------------------------------------------------------------------------//
+  const validateData___ = (data) => {
+    if (data.cId == null || data.cId == "") {
+      return "ID field Cannot be null"
+    }
+    else if (data.cId.length != 5) {
+      return "Field ID should contain 5 characters"
+    }
+    else if (data.supplierName == null || data.supplierName == "") {
+      return "Supplier Name Cannot be null"
+    }
+    else
+      return null
+  }
+
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: ' bottom',
+    horizontal: 'right',
+  });
+
+  const { vertical, horizontal, open, error } = state;
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  }
+
+  const feedBackToast = (<Snackbar
+    autoHideDuration={200000}
+    anchorOrigin={{ vertical, horizontal }}
+    open={open}
+    onClose={handleClose}
+    key={vertical + horizontal}
+    style={{justifyContent: "flex-end",marginTop: "568px"}}
+  >
+    <div >
+      <Alert variant="filled" severity="error" style={{ display: "flex", alignItems: "center" }}>
+        <h3>{error}</h3>
+      </Alert>
+    </div>
+  </Snackbar>)
+  
+  
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <AddIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5" style={{color:"black"}}>
+          Add contract
+        </Typography>
+        <form className={classes.form} noValidate >
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="cId"
+                label="Contract Id"
+                name="cId"
+                autoComplete="off"
+                onChange={handleContract}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="off"
+                name="supplierName"
+                variant="outlined"
+                required
+                fullWidth
+                id="supplierName"
+                label="Supplier Name"
+                onChange={handleContract}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="pType"
+                label="Product Type"
+                name="pType"
+                autoComplete="off"
+                onChange={handleContract} />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                autoComplete="off"
+                id="date"
+                name="date"
+                type='date'
+                onChange={handleContract} />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl varient="outlined" required fullWidth>
+                <InputLabel>Department</InputLabel>
+                <Select id="department"
+                  value={department}
+                  onChange={handleDepartment}>
+                  <MenuItem key={26} value={"frontoffice"}>Front Office</MenuItem>
+                  <MenuItem key={27} value={"foodnbeverages"}>Food and Beverages</MenuItem>
+                  <MenuItem key={28} value={"housekeeping"}>House Keeping</MenuItem>
+                  <MenuItem key={29} value={"finance"}>Finance</MenuItem>
+                  <MenuItem key={30} value={"hr"}>HR</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid> 
+            <Grid item xs={12}>
+                <InputLabel id="decription">Decription</InputLabel>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                autoComplete="off"
+                id="description"
+                name="description"
+                onChange={handleContract} />
+            </Grid>  
+          </Grid>
+          <Button
+            type="submit"
+            id="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={handleSubmit}
+          >
+            Add Contract
+              </Button>
+        </form>
+      </div>
+      {feedBackToast}
+    </Container>
   );
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      //updateRoomType: (payload) => dispatch(updateRoomType(payload)),
-      insertBarInvRec: (payload) => dispatch(insertBarInvRec(payload)),
-      //deleteRoomType: (roomId) => dispatch(deleteRoomType(roomId))
-
-
+    insertContractInfo: (payload,department) => dispatch(insertContractInfo(payload,department)),
   }
 }
+export default compose(connect(null, mapDispatchToProps), firestoreConnect([
+  { collection: 'contract' }
+]))(AddContract)
 
-export default connect(null,mapDispatchToProps)(InventoryForm)

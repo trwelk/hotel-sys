@@ -80,18 +80,6 @@ function AddSuppliers(props) {
     setDepartment(event.target.value);
   }
 
-//   const handleLocation = (event) => {
-//     setState(prevState => ({
-//       ...prevState,
-//       location:event.target.value
-//   }));
-// }
-//   const handleDepartment = (event) => {
-//     setState(prevState => ({
-//       ...prevState,
-//       department:event.target.value
-//   }));
-// }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -134,9 +122,6 @@ function AddSuppliers(props) {
     else if (data.email == null || data.email == "") {
       return "Email field cannot be null"
     }
-    else if(data.chkBox == false){
-      return "Please accept tearms and conditions"
-    }
     else
       return null
   }
@@ -176,7 +161,7 @@ function AddSuppliers(props) {
         <Avatar className={classes.avatar}>
           <AddIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" style={{color:"black"}}>
           Add Supplier
         </Typography>
         <form className={classes.form} noValidate >
@@ -312,7 +297,7 @@ function AddSuppliers(props) {
                   <MenuItem key={30} value={"hr"}>HR</MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
+            </Grid>   
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -322,12 +307,6 @@ function AddSuppliers(props) {
                 name="date"
                 type='date'
                 onChange={handleSupplier} />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" id = "chkBox" />}
-                label="I accept the Terms and Conditions"
-              />
             </Grid>
           </Grid>
           <Button

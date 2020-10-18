@@ -4,35 +4,20 @@ import MaterialTable from 'material-table'
 import { firestoreConnect } from 'react-redux-firebase';
 import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
-import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
-import { Alert, AlertTitle } from '@material-ui/lab';
-import { makeStyles } from '@material-ui/core/styles';
-import { updateMenuItems, deleteMenuItems } from '../../../redux/actions/fnbProductionActions/MenuActions';
-
+import { updateMenuItems, deleteMenuItems, insertGenItems } from '../../../redux/actions/fnbProductionActions/MenuActions';
 
 function MenuItem(props) {
 
-  const { useState } = React;
   const [state, setState] = React.useState({
     open: false,
     vertical: 'bottom',
     horizontal: 'right',
   });
-  const { vertical, horizontal, open ,error} = state;
 
   const MenuNo = props.MenuNo
   const items = useSelector(state => state.firestore.ordered.MenuItems)
 
   let data = items ? (items.map(item => ({ ...item }))) : (null)
-
-  const handleClick = (newState) => () => {
-    setState({ open: true, ...newState });
-  };
-
-  const handleClose = () => {
-    setState({ ...state, open: false });
-  };
 
   let cols = props.MenuType == 1 ? (
     [
@@ -47,7 +32,7 @@ function MenuItem(props) {
       { title: 'Dessert 2', field: 'Dsitem2' },
       { title: 'Dessert 3', field: 'Dsitem3' },
     ]
-  ):([{ title: 'Name', field: 'name'},{ title: 'Price (LKR)', field: 'price', type: 'numeric'}])
+  ):([{ title: 'Item Id', field: 'itemId', editable: 'onAdd'},{ title: 'Name', field: 'name'},{ title: 'Price (LKR)', field: 'price', type: 'numeric'}])
   
   const tableTitle = "Menu Items - " + MenuNo
 
@@ -57,10 +42,19 @@ function MenuItem(props) {
       columns={cols}
       data={data}
       editable={{
+        onRowAdd:props.MenuType != 1 ? (newData =>
+        new Promise((resolve, reject) => {
+          setTimeout(() => {
+            // setData([...data, newData]);
+            props.insertGenItems(newData,MenuNo);
+            resolve();
+          }, 1000)
+        })):(null)
+        ,
          onRowUpdate: (newData, oldData) =>
           new Promise((resolve, reject) => {
               console.log(newData, oldData)
-              props.updateMenuItems(newData,props.MenuType)
+              props.updateMenuItems(newData,props.MenuType,MenuNo)
               resolve();
               }, 1000),
 
@@ -70,13 +64,20 @@ function MenuItem(props) {
               const dataDelete = [...data];
               const index = oldData.tableData.id;
               dataDelete.splice(index, 1);
-              //setData([...dataDelete]);
-              console.log(oldData)
-              props.deleteMenuItems(oldData.id)
+              console.log(oldData.id)
+              props.deleteMenuItems(oldData,props.MenuType,MenuNo)
               resolve()
             }, 1000)
           }),
       }}
+      options={{
+        exportButton: true,
+        headerStyle: {
+        backgroundColor: '#01579b',
+        color: '#FFF'
+      } 
+    }      
+      }
     />
   ) : (<div>Loading</div>)
 
@@ -90,8 +91,9 @@ function MenuItem(props) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      updateMenuItems: (payload,MenuType) => dispatch(updateMenuItems(payload,MenuType)),
-      deleteMenuItems: (MenuId) => dispatch(deleteMenuItems(MenuId))
+      insertGenItems: (payload,MenuNo) => dispatch(insertGenItems(payload,MenuNo)),
+      updateMenuItems: (payload,MenuType,MenuNo) => dispatch(updateMenuItems(payload,MenuType,MenuNo)),
+      deleteMenuItems: (oldData,MenuType,MenuNo) => dispatch(deleteMenuItems(oldData,MenuType,MenuNo))
     }
   }
 
