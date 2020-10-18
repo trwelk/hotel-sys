@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from "@material-ui/core/styles";
 import {insertEmployee, updateEmployee, deleteEmployee} from '../../../redux/actions/hrActions/EmployeeActions'
-import EmployeeTypeCard from '../employee/EmployeeTypeCard';
+
 import {
   Button,
   ButtonGroup,
