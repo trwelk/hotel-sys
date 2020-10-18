@@ -167,6 +167,7 @@ function PurchasesRequest(props) {
     open={open}
     onClose={handleClose}
     key={vertical + horizontal}
+    style={{justifyContent: "flex-end",marginTop: "500px"}}
   >
     <div >
       <Alert variant="filled" severity="error" style={{ display: "flex", alignItems: "center" }}>

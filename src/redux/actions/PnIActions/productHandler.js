@@ -26,6 +26,7 @@ export const insertProduct = (payload,pType,priority,sName) => {
             priority:priority,
             qty:payload.qty,
             date:payload.date,
+            status:"PENDING"
     
         }).then((response) => {
             console.log(response)
