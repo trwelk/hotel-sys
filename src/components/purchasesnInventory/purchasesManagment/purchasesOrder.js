@@ -16,7 +16,8 @@ import { InputLabel, Select } from '@material-ui/core';
 import { MenuItem } from '@material-ui/core';
 import { FormControl } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { compose } from 'redux'
+import { compose } from 'redux';
+import { Redirect } from "react-router-dom";
 import { firestoreConnect } from 'react-redux-firebase'
 import { useForm, Controller } from 'react-hook-form';
 import { insertPurchasesRequest } from '../../../redux/actions/PnIActions/requestHandler'
@@ -67,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function PurchasesOrder(props) {
+
 
 
   const classes = useStyles();
@@ -121,7 +123,6 @@ function PurchasesOrder(props) {
    const filterdSupplier = pType ? sup.filter(supplier => supplier.itemtype == pType) : null
 
 
-
    const productTypeSelector = data ? (data.map((pType,index) => {
     return  <MenuItem key={index} value={pType.pType}>{pType.pType}</MenuItem>
   })) :(null)
@@ -142,12 +143,12 @@ function PurchasesOrder(props) {
     else if (data.oId == null || data.oId == "") {
       return "ID field Cannot be null"
     }
-    else if (data.sName == null || data.sName == ""){
-      return "Supplier Name Cannot be null"
-    }
-    else if(data.pType == null || data.pType == ""){
-      return "Product Type cannot be null"
-    }
+    // else if (data.sName == null || data.sName == ""){
+    //   return "Supplier Name Cannot be null"
+    // }
+    // else if(data.pType == null || data.pType == ""){
+    //   return "Product Type cannot be null"
+    // }
     else if(data.qty == 0 || data.qty < 0){
       return "Quantity shold be a postive value"
     }
@@ -159,6 +160,12 @@ function PurchasesOrder(props) {
     vertical: ' bottom',
     horizontal: 'right'
   });
+
+  const userType = useSelector(state => state.auth.userType)    
+  if(userType != "ADMIN"){
+    return <Redirect to="/error" />
+
+  }
 
   const { vertical, horizontal, open, error } = state;
 

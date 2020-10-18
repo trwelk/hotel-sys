@@ -165,7 +165,7 @@ const purchasesnInventoryNav  = (
   </ListItem>
   <Collapse in={purchasesnInventory} timeout="auto" unmountOnExit>
     <List component="div" disablePadding>
-      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)} style={{display: userType == "ADMIN" ? "flex " :"none"}}>
         <ListItemIcon className={classes.itemIcon}>
           <ShoppingCartIcon />
         </ListItemIcon>
@@ -176,7 +176,7 @@ const purchasesnInventoryNav  = (
         }}
         >Add Suppliers</ListItemText></Link>
       </ListItem>
-      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)} style={{display: userType == "ADMIN" ? "flex " :"none"}}>
         <ListItemIcon className={classes.itemIcon}>
           <ShoppingCartIcon />
         </ListItemIcon>
@@ -198,7 +198,7 @@ const purchasesnInventoryNav  = (
         }}
         >Purchases Request</ListItemText></Link>
       </ListItem>
-      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)} style={{display: userType == "ADMIN" ? "flex " :"none"}}>
         <ListItemIcon className={classes.itemIcon}>
           <ShoppingCartIcon />
         </ListItemIcon>
@@ -209,7 +209,7 @@ const purchasesnInventoryNav  = (
         }}
         >Purchases Request Managment</ListItemText></Link>
       </ListItem>
-      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)} style={{display: userType == "ADMIN" ? "flex " :"none"}}>
         <ListItemIcon className={classes.itemIcon}>
           <ShoppingCartIcon />
         </ListItemIcon>
@@ -220,7 +220,7 @@ const purchasesnInventoryNav  = (
         }}
         >Purchases Order</ListItemText></Link>
       </ListItem>
-      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}style={{display: userType == "ADMIN" ? "flex " :"none"}}>
         <ListItemIcon className={classes.itemIcon}>
           <ShoppingCartIcon />
         </ListItemIcon>
@@ -231,7 +231,7 @@ const purchasesnInventoryNav  = (
         }}
         >Purchases Table</ListItemText></Link>
       </ListItem>
-      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}style={{display: userType == "ADMIN" ? "flex " :"none"}}>
         <ListItemIcon className={classes.itemIcon}>
           <ShoppingCartIcon />
         </ListItemIcon>
@@ -242,7 +242,7 @@ const purchasesnInventoryNav  = (
         }}
         >Add Contract</ListItemText></Link>
       </ListItem>
-      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}>
+      <ListItem button className={clsx(classes.item,classes.nested, classes.itemActiveItem)}style={{display: userType == "ADMIN" ? "flex " :"none"}}>
         <ListItemIcon className={classes.itemIcon}>
           <ShoppingCartIcon />
         </ListItemIcon>
