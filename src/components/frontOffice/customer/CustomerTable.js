@@ -30,7 +30,7 @@ function CustomerTable(props) {
       { title: 'First Name', field: 'firstName' ,},
       { title: 'Last Name', field: 'lastName' },
       { title: 'Phone Number', field: 'phone', type: 'numeric' },
-      { title: 'Email', field: 'email'},
+      { title: 'Email', field: 'email',editable:'onAdd'},
     ]); 
 
     const [state, setState] = React.useState({
@@ -53,11 +53,8 @@ function CustomerTable(props) {
     }
     //--------------------------------------------INTERNAL METHODS--------------------------------------------------------------------------------
     const validateData___  = (data,type) => {
-      if(data.id == null || data.id == ""){
-        return "Field ID Cannot be null"
 
-      }
-      else if(data.firstName == null || data.firstName == ""){
+       if(data.firstName == null || data.firstName == ""){
         return "Field First Name Cannot be null"
       }
       else if(data.lastName == null || data.lastName == ""){
@@ -101,7 +98,7 @@ function CustomerTable(props) {
     props.insertCustomer({
       id:"demo@demo.com",
       email:"demo@demo.com",
-      phone:parseInt("0771231231"),
+      phone:parseInt("7712311231"),
       lastName:"lastDemo",
       firstName:"firstDemo"
     });
